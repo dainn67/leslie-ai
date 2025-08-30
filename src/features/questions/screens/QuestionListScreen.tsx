@@ -1,4 +1,5 @@
 import React, { useCallback, useRef, useState } from "react";
+import MainButton from "../../../components/buttons/MainButton";
 import { View, StyleSheet, ScrollView, Animated, TextInput } from "react-native";
 import { Question, QuestionType, QuestionTypeTitles } from "../../../models/question";
 import { AppBar } from "../../../components/AppBar";
@@ -12,7 +13,6 @@ import { deleteQuestion, getQuestionsByType, insertQuestions } from "../../../st
 import { SimpleTextInput } from "../../../components/input/SimpleTextInput";
 import { useAppTheme } from "../../../theme";
 import { CustomText } from "../../../components/text/customText";
-import MainButton from "../../../components/buttons/MainButton";
 import { createReviseQuestionSet } from "../../../core/service";
 
 type QuestionListScreenRouteProp = RouteProp<RootStackParamList, "QuestionListScreen">;
@@ -106,6 +106,10 @@ export const QuestionListScreen = () => {
     }
   };
 
+  const handleNavigateToChatbotScreen = () => {
+    navigation.navigate("ChatbotScreen");
+  };
+
   return (
     <View style={styles.container}>
       <AppBar
@@ -134,7 +138,14 @@ export const QuestionListScreen = () => {
           </ScrollView>
         ) : (
           <View style={styles.emptyContainer}>
-            <CustomText>Bạn chưa lưu lại câu hỏi nào</CustomText>
+            <CustomText style={styles.emptyText}>
+              {"Các câu hỏi đã lưu sẽ hiển thị ở đây.\nHiện bạn chưa lưu lại câu hỏi nào"}
+            </CustomText>
+            <MainButton
+              title={"Tạo câu hỏi mới"}
+              style={{ borderRadius: 100, marginTop: 16 }}
+              onPress={handleNavigateToChatbotScreen}
+            />
           </View>
         )}
 
@@ -206,6 +217,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    alignContent: "center",
+  },
+  emptyText: {
+    marginHorizontal: 16,
+    textAlign: "center",
   },
   questionListContainer: {
     flex: 1,
