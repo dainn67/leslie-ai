@@ -11,7 +11,7 @@ import { clearAllTables } from "../../storage/database/tables";
 import { clearChat } from "../chatbot/slice/chatbotSlice";
 
 interface ResetProgressButtonProps {
-  navigation: DrawerContentComponentProps['navigation'];
+  navigation: DrawerContentComponentProps["navigation"];
 }
 
 export const ResetProgressButton = ({ navigation }: ResetProgressButtonProps) => {
@@ -26,6 +26,7 @@ export const ResetProgressButton = ({ navigation }: ResetProgressButtonProps) =>
       dispatch(clearChat({}));
       // Đóng drawer sau khi xác nhận
       navigation.closeDrawer();
+      navigation.navigate("ChatbotScreen");
     });
   };
 
