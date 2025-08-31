@@ -149,13 +149,15 @@ export const QuestionListScreen = () => {
           </View>
         )}
 
-        <MainButton
-          title="Ôn tập"
-          style={styles.buttonContainer}
-          textStyle={{ color: "white" }}
-          disabled={filteredQuestions.length === 0}
-          onPress={() => setAmountSelectorVisible(true)}
-        />
+        {filteredQuestions.length > 0 && (
+          <MainButton
+            title="Ôn tập"
+            style={styles.buttonContainer}
+            textStyle={{ color: "white" }}
+            disabled={filteredQuestions.length === 0}
+            onPress={() => setAmountSelectorVisible(true)}
+          />
+        )}
 
         {/* Animated Search input */}
         {isSearchVisible && (
