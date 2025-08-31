@@ -57,7 +57,7 @@ export const DrawerNavigator = () => {
           </DrawerContentScrollView>
 
           {/* Actions */}
-          <ResetProgressButton />
+          <ResetProgressButton navigation={props.navigation} />
           <ThemeToggleButton />
           <VersionText />
         </View>

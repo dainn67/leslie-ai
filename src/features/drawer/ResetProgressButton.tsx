@@ -1,6 +1,7 @@
 import React from "react";
 import { TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { DrawerContentComponentProps } from "@react-navigation/drawer";
 import { useAppTheme } from "../../theme";
 import { CustomText } from "../../components/text/customText";
 import { useDialog } from "../../core/providers";
@@ -9,7 +10,11 @@ import { clearUserProgress } from "../userProgress/userProgressSlice";
 import { clearAllTables } from "../../storage/database/tables";
 import { clearChat } from "../chatbot/slice/chatbotSlice";
 
-export const ResetProgressButton = () => {
+interface ResetProgressButtonProps {
+  navigation: DrawerContentComponentProps['navigation'];
+}
+
+export const ResetProgressButton = ({ navigation }: ResetProgressButtonProps) => {
   const { colors } = useAppTheme();
   const dispatch = useAppDispatch();
   const dialog = useDialog();
@@ -19,6 +24,8 @@ export const ResetProgressButton = () => {
       clearAllTables();
       dispatch(clearUserProgress());
       dispatch(clearChat({}));
+      // Đóng drawer sau khi xác nhận
+      navigation.closeDrawer();
     });
   };
 
