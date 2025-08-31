@@ -21,8 +21,7 @@ export type DrawerParamList = {
 };
 
 export type RootStackParamList = {
-  ChatbotScreen: undefined;
-  QuestionsScreen: undefined;
+  ChatbotScreen: { initialMessage: string };
   QuestionsMain: undefined;
   QuestionListScreen: { type: QuestionType };
   QuestionGameScreen: { questions: Question[] };
@@ -30,7 +29,6 @@ export type RootStackParamList = {
     questions: Question[];
     mapAnswerIds: { [key: number]: number };
   };
-  FeedbackScreen: undefined;
 };
 
 const Drawer = createDrawerNavigator();

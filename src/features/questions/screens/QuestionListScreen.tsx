@@ -107,7 +107,7 @@ export const QuestionListScreen = () => {
   };
 
   const handleNavigateToChatbotScreen = () => {
-    navigation.navigate("ChatbotScreen");
+    navigation.navigate("ChatbotScreen", { initialMessage: `Tạo câu hỏi mới về ${QuestionTypeTitles[type]}` });
   };
 
   return (

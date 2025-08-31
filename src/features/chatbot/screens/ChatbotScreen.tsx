@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { AppBar } from '../../../components/AppBar';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
-import { AppConfig } from '../../../constants/appConfig';
-import { clearUserProgress, setUserProgress, updateUserProgress } from '../../userProgress/userProgressSlice';
-import { createQuestionTable, deleteAllTables, updateTables } from '../../../storage/database/tables';
-import { createChatMessage, MessageStatus } from '../../../models/chatMessage';
-import { MyDatePicker } from '../../../components/datePicker/MyDatePicker';
-import { convertDateToDDMMYYYY, normalizeDate } from '../../../utils/utils';
-import { loadFromAsyncStorage } from '../../../storage/asyncStorage/asyncStorage';
-import { AsyncStorageConstants } from '../../../storage/asyncStorage/asyncStorateConstant';
-import { setTheme } from '../../theme/themeSlice';
-import { DrawerParamList } from '../../../app/DrawerNavigator';
-import { createTmpUserProgress } from '../../../models/userProgress';
+import React, { useEffect, useState } from "react";
+import { View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { AppBar } from "../../../components/AppBar";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useNavigation, RouteProp, useRoute } from "@react-navigation/native";
+import { DrawerNavigationProp } from "@react-navigation/drawer";
+import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
+import { AppConfig } from "../../../constants/appConfig";
+import { clearUserProgress, setUserProgress, updateUserProgress } from "../../userProgress/userProgressSlice";
+import { createQuestionTable, deleteAllTables, updateTables } from "../../../storage/database/tables";
+import { createChatMessage, MessageStatus } from "../../../models/chatMessage";
+import { MyDatePicker } from "../../../components/datePicker/MyDatePicker";
+import { convertDateToDDMMYYYY, normalizeDate } from "../../../utils/utils";
+import { loadFromAsyncStorage } from "../../../storage/asyncStorage/asyncStorage";
+import { AsyncStorageConstants } from "../../../storage/asyncStorage/asyncStorateConstant";
+import { setTheme } from "../../theme/themeSlice";
+import { DrawerParamList, RootStackParamList } from "../../../app/DrawerNavigator";
+import { createTmpUserProgress } from "../../../models/userProgress";
 import {
   getMessagesByCID,
   getDifyConversationIdByCID,
@@ -24,15 +24,20 @@ import {
   addLoading,
   addMessage,
   clearChat,
-} from '../slice/chatbotSlice';
-import { useDialog } from '../../../core/providers';
-import { ChatMessageList, ChatInput } from '../components';
-import { ChatbotService, UserProgressService } from '../../../core/service';
-import TTSService from '../../../core/service/ttsService';
+} from "../slice/chatbotSlice";
+import { useDialog } from "../../../core/providers";
+import { ChatMessageList, ChatInput } from "../components";
+import { ChatbotService, UserProgressService } from "../../../core/service";
+import TTSService from "../../../core/service/ttsService";
 
-type ChatbotScreenNavigationProp = DrawerNavigationProp<DrawerParamList, 'ChatbotScreen'>;
+type ChatbotScreenNavigationProp = DrawerNavigationProp<DrawerParamList, "ChatbotScreen">;
+type ChatbotScreenRouteProp = RouteProp<RootStackParamList, "ChatbotScreen">;
 
 export const ChatbotScreen = () => {
+  // Params
+  const route = useRoute<ChatbotScreenRouteProp>();
+  const { initialMessage } = route.params ? route.params : { initialMessage: "" };
+
   // Drawer
   const navigation = useNavigation<ChatbotScreenNavigationProp>();
   const dialog = useDialog();
@@ -50,6 +55,10 @@ export const ChatbotScreen = () => {
 
   // Load user progress and add initial message when first open or clear
   useEffect(() => {
+    if (initialMessage) {
+      console.log("initialMessage: ", initialMessage);
+    }
+
     if (!initialized) {
       createQuestionTable();
       updateTables();
@@ -86,6 +95,10 @@ export const ChatbotScreen = () => {
     }
   }, [initialized, messages.length]);
 
+  useEffect(() => {
+    if (initialMessage) handleSend(initialMessage);
+  }, [initialMessage]);
+
   const handleSend = (message: string) => {
     const data = message.trim();
     const userMessage = createChatMessage({ fullText: data });
@@ -108,10 +121,10 @@ export const ChatbotScreen = () => {
     let userTarget = userProgress.target;
 
     if (actionId) {
-      const setExamDateActionId = 'ed1';
-      const unknownExamDateActionId = 'ed2';
-      const setLevelActionId = 'l';
-      const setTargetActionId = 't';
+      const setExamDateActionId = "ed1";
+      const unknownExamDateActionId = "ed2";
+      const setLevelActionId = "l";
+      const setTargetActionId = "t";
 
       if (actionId.startsWith(setExamDateActionId)) {
         setDatePickerVisible(true);
@@ -133,7 +146,7 @@ export const ChatbotScreen = () => {
 
         return;
       } else if (actionId.startsWith(setLevelActionId)) {
-        userLevel = actionId[1] == '5' ? 'Beginner' : `N${actionId[1]}`;
+        userLevel = actionId[1] == "5" ? "Beginner" : `N${actionId[1]}`;
         dispatch(updateUserProgress({ level: userLevel }));
       } else if (actionId.startsWith(setTargetActionId)) {
         userTarget = `N${actionId[1]}`;
@@ -163,7 +176,7 @@ export const ChatbotScreen = () => {
   const handleSelectExamDate = (selectedDate: Date | undefined) => {
     if (!selectedDate) return;
 
-    const dateString = convertDateToDDMMYYYY(selectedDate, 'vi');
+    const dateString = convertDateToDDMMYYYY(selectedDate, "vi");
 
     dispatch(updateUserProgress({ examDate: selectedDate.getTime() }));
 
@@ -198,11 +211,11 @@ export const ChatbotScreen = () => {
       // Analyze overtime progress
       ChatbotService.sendMessage({
         message: summary,
-        type: 'analyze_progress',
+        type: "analyze_progress",
         data: {
           level: userProgress.level,
           target: userProgress.target,
-          exam_date: userProgress.examDate ? convertDateToDDMMYYYY(userProgress.examDate) : '',
+          exam_date: userProgress.examDate ? convertDateToDDMMYYYY(userProgress.examDate) : "",
           prev_analytic: userProgress.analytic[normalizeDate(new Date())],
           current_date: convertDateToDDMMYYYY(new Date()),
         },
@@ -213,7 +226,7 @@ export const ChatbotScreen = () => {
   };
 
   const handleClearChat = () => {
-    dialog.showConfirm('Xoá hội thoại?', () => dispatch(clearChat({})));
+    dialog.showConfirm("Xoá hội thoại?", () => dispatch(clearChat({})));
   };
 
   const handleDevClick = () => {
