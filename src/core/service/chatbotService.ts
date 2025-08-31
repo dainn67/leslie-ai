@@ -229,7 +229,7 @@ export class ChatbotService {
     const now = convertDateToDDMMYYYY(new Date());
     const userLevel = userProgress?.level ?? "";
     const userTarget = userProgress?.target ?? "";
-    const userExamDate = userProgress?.examDate ?? 0;
+    const userExamDate = userProgress?.examDate;
     const userProgressString = userProgress ? UserProgressService.createUserProgressString(userProgress.analytic) : "";
 
     let examDateString = "";
@@ -239,8 +239,6 @@ export class ChatbotService {
       const formattedExamDate = convertDateToDDMMYYYY(userExamDate);
       examDateString = `Now is ${now} and user JLPT exam date is ${formattedExamDate}`;
     }
-
-    console.log(`examDateString: ${examDateString}`);
 
     const conversationHistory = ChatbotService.createConversationHistory(messages);
 
