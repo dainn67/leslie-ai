@@ -23,6 +23,7 @@ export type DrawerParamList = {
 export type RootStackParamList = {
   ChatbotScreen: undefined;
   QuestionsScreen: undefined;
+  QuestionsMain: undefined;
   QuestionListScreen: { type: QuestionType };
   QuestionGameScreen: { questions: Question[] };
   ResultScreen: {
@@ -107,7 +108,7 @@ export const DrawerNavigator = () => {
 const QuestionStackScreen = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="QuestionsScreen" component={QuestionsScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="QuestionsMain" component={QuestionsScreen} options={{ headerShown: false }} />
       <Stack.Screen name="QuestionListScreen" component={QuestionListScreen} options={{ headerShown: false }} />
       <Stack.Screen name="QuestionGameScreen" component={QuestionGameScreen} options={{ headerShown: false }} />
       <Stack.Screen name="ResultScreen" component={ResultScreen} options={{ headerShown: false }} />
