@@ -7,7 +7,7 @@ import { QuestionView } from './QuestionView';
 import { ProgressBar } from '../../../../components/ProgressBar';
 import { deleteQuestion, insertQuestions } from '../../../../storage/database/tables/questionTable';
 import { createResultSummary } from '../../../../core/service';
-import { IconButton } from 'react-native-paper';
+import { IconButton } from '../../../../components/buttons';
 import { AppIcons } from '../../../../constants/appIcons';
 
 interface QuestionsMessageProps {

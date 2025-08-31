@@ -16,7 +16,12 @@ export const IconButton = ({ icon, iconWidth, iconHeight, style, onPress }: Icon
 
   return (
     <TouchableOpacity style={[styles.button, { backgroundColor: colors.backgroundSecondary }, style]} onPress={onPress}>
-      <Image source={icon} style={styles.icon} />
+      <Image 
+        source={icon} 
+        style={styles.icon} 
+        resizeMode="contain"
+        onError={(error) => console.log('Image error:', error)}
+      />
     </TouchableOpacity>
   );
 };
@@ -28,7 +33,7 @@ const getStyles = (iconWidth?: number, iconHeight?: number) =>
       padding: 8,
     },
     icon: {
-      width: iconWidth ?? 20,
-      height: iconHeight ?? 20,
+      width: iconWidth ?? 24,
+      height: iconHeight ?? 24,
     },
   });
