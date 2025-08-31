@@ -29,6 +29,7 @@ import { useDialog } from "../../../core/providers";
 import { ChatMessageList, ChatInput } from "../components";
 import { ChatbotService, UserProgressService } from "../../../core/service";
 import TTSService from "../../../core/service/ttsService";
+import { parseLevelActionId, parseTargetActionId } from "../../../utils";
 
 type ChatbotScreenNavigationProp = DrawerNavigationProp<DrawerParamList, "ChatbotScreen">;
 type ChatbotScreenRouteProp = RouteProp<RootStackParamList, "ChatbotScreen">;
@@ -146,10 +147,10 @@ export const ChatbotScreen = () => {
 
         return;
       } else if (actionId.startsWith(setLevelActionId)) {
-        userLevel = actionId[1] == "5" ? "Beginner" : `N${actionId[1]}`;
+        userLevel = parseLevelActionId(actionId);
         dispatch(updateUserProgress({ level: userLevel }));
       } else if (actionId.startsWith(setTargetActionId)) {
-        userTarget = `N${actionId[1]}`;
+        userTarget = parseTargetActionId(actionId);
         dispatch(updateUserProgress({ target: userTarget }));
       }
     }
