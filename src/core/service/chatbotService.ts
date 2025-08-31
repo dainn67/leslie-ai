@@ -1,18 +1,22 @@
-import { DiscordService, DiscordWebhookType } from './discordService';
-import Constants from 'expo-constants';
-import { UserProgressService } from './userProgressSerivice';
-import { ApiClient } from '../../api/apiClient';
-import { connectSSE } from '../../api/sseClient';
-import { AppDispatch } from '../../app/store';
-import { ApiConfig } from '../../constants/apiConfig';
-import { DifyConfig } from '../../constants/difyConfig';
-import { updateLastMessageData, updateConversationId, updateConversationSummary } from '../../features/chatbot/slice/chatbotSlice';
-import { MessageType, ChatMessage, MessageStatus, Sender } from '../../models/chatMessage';
-import { Question, createQuestionString, createQuestion } from '../../models/question';
-import { UserProgress } from '../../models/userProgress';
-import { convertDateToDDMMYYYY } from '../../utils';
+import { DiscordService, DiscordWebhookType } from "./discordService";
+import Constants from "expo-constants";
+import { UserProgressService } from "./userProgressSerivice";
+import { ApiClient } from "../../api/apiClient";
+import { connectSSE } from "../../api/sseClient";
+import { AppDispatch } from "../../app/store";
+import { ApiConfig } from "../../constants/apiConfig";
+import { DifyConfig } from "../../constants/difyConfig";
+import {
+  updateLastMessageData,
+  updateConversationId,
+  updateConversationSummary,
+} from "../../features/chatbot/slice/chatbotSlice";
+import { MessageType, ChatMessage, MessageStatus, Sender } from "../../models/chatMessage";
+import { Question, createQuestionString, createQuestion } from "../../models/question";
+import { UserProgress } from "../../models/userProgress";
+import { convertDateToDDMMYYYY } from "../../utils";
 
-export const Delimiter = '--//--';
+export const Delimiter = "--//--";
 
 const {
   DIFY_CHAT_API_KEY,
@@ -22,20 +26,20 @@ const {
   DIFY_ANALYZE_PROGRESS_API_KEY,
 } = Constants.expoConfig?.extra ?? {};
 
-const user = 'dainn';
+const user = "dainn";
 
 export class ChatbotService {
   static splitCustomWords = (input: string) => {
     let splittedText: string[] = [];
 
-    const largeChunk = input.split('\n');
+    const largeChunk = input.split("\n");
 
     for (const chunk of largeChunk) {
       if (chunk.length === 0) continue;
       let text = chunk;
 
       // Remove incomplete special characters while streaming
-      if (text[text.length - 1] == '\\') {
+      if (text[text.length - 1] == "\\") {
         text = text.substring(0, text.length - 1);
       }
 
@@ -45,7 +49,7 @@ export class ChatbotService {
 
       // Cut from incomplete special characters
       if (openBracketCount != closeBracketCount) {
-        const lastIndex = chunk.lastIndexOf('\\(');
+        const lastIndex = chunk.lastIndexOf("\\(");
         if (lastIndex != -1) {
           text = text.substring(0, lastIndex);
         }
@@ -56,7 +60,7 @@ export class ChatbotService {
       const rightActionBracketCount = (chunk.match(/⟧⟧/g) || []).length;
 
       if (leftActionBracketCount != rightActionBracketCount) {
-        const lastIndex = chunk.lastIndexOf('⟦⟦');
+        const lastIndex = chunk.lastIndexOf("⟦⟦");
         if (lastIndex != -1) {
           text = text.substring(0, lastIndex);
         }
@@ -64,27 +68,27 @@ export class ChatbotService {
 
       // Process text character by character
       const words: string[] = [];
-      let currentWord: string = '';
+      let currentWord: string = "";
       let isBold = false;
 
       // First split into words, treating expressions and action brackets as single words
       let i = 0;
       while (i < text.length) {
         // Check for action brackets start
-        if (i + 1 < text.length && text[i] == '⟦' && text[i + 1] == '⟦') {
+        if (i + 1 < text.length && text[i] == "⟦" && text[i + 1] == "⟦") {
           // If we had started a word, add it to words
           if (currentWord.length != 0) {
             words.push(currentWord);
-            currentWord = '';
+            currentWord = "";
           }
 
           // Collect the entire action text as one word
-          let actionText = '⟦⟦';
+          let actionText = "⟦⟦";
           i += 2; // Skip '⟦⟦'
 
           while (i < text.length) {
-            if (i + 1 < text.length && text[i] == '⟧' && text[i + 1] == '⟧') {
-              actionText += '⟧⟧';
+            if (i + 1 < text.length && text[i] == "⟧" && text[i + 1] == "⟧") {
+              actionText += "⟧⟧";
               i += 2; // Skip '⟧⟧'
               break;
             } else {
@@ -96,20 +100,20 @@ export class ChatbotService {
           words.push(actionText);
         }
         // Check for expression start
-        else if (i + 1 < text.length && text[i] == '\\' && text[i + 1] == '(') {
+        else if (i + 1 < text.length && text[i] == "\\" && text[i + 1] == "(") {
           // If we had started a word, add it to words
           if (currentWord.length != 0) {
             words.push(currentWord);
-            currentWord = '';
+            currentWord = "";
           }
 
           // Collect the entire expression as one word
-          let expression = '\\(';
+          let expression = "\\(";
           i += 2; // Skip '\('
 
           while (i < text.length) {
-            if (i + 1 < text.length && text[i] == '\\' && text[i + 1] == ')') {
-              expression += '\\)';
+            if (i + 1 < text.length && text[i] == "\\" && text[i + 1] == ")") {
+              expression += "\\)";
               i += 2; // Skip '\)'
               break;
             } else {
@@ -119,11 +123,11 @@ export class ChatbotService {
           }
 
           words.push(expression);
-        } else if (text[i] == ' ') {
+        } else if (text[i] == " ") {
           // Space character - finish current word if any
           if (currentWord.length != 0) {
             words.push(currentWord);
-            currentWord = '';
+            currentWord = "";
           }
           i++;
         } else {
@@ -141,12 +145,12 @@ export class ChatbotService {
       // Process bold formatting
       isBold = false;
       for (const word of words) {
-        if (word.includes('**')) {
+        if (word.includes("**")) {
           const numberOfBold = (word.match(/\*\*/g) || []).length;
           if (numberOfBold % 2 == 1) isBold = !isBold;
-          if (word == '**') continue;
+          if (word == "**") continue;
 
-          splittedText.push(`**${word.replaceAll('**', '')}**`);
+          splittedText.push(`**${word.replaceAll("**", "")}**`);
         } else {
           if (isBold) {
             splittedText.push(`**${word}**`);
@@ -156,14 +160,14 @@ export class ChatbotService {
         }
       }
 
-      splittedText.push('\n');
+      splittedText.push("\n");
     }
 
     // Trim text
-    while (splittedText[splittedText.length - 1] == '\n') splittedText.pop();
-    while (splittedText[0] == '\n') splittedText.shift();
+    while (splittedText[splittedText.length - 1] == "\n") splittedText.pop();
+    while (splittedText[0] == "\n") splittedText.shift();
 
-    splittedText = splittedText.filter((e) => e.length > 0 && e != '**');
+    splittedText = splittedText.filter((e) => e.length > 0 && e != "**");
 
     const suggestionIndex = splittedText.findIndex((element) => element.includes(Delimiter));
 
@@ -178,7 +182,7 @@ export class ChatbotService {
 
       // Check if the delimiter word chunk contains previous words of the response
       if (indexOfDelimiter > 0) {
-        const previousWords = delimiterWord.slice(0, indexOfDelimiter).split(' ');
+        const previousWords = delimiterWord.slice(0, indexOfDelimiter).split(" ");
 
         splittedText.push(...previousWords);
       }
@@ -215,7 +219,7 @@ export class ChatbotService {
 
     const token = question ? DIFY_ASSISTANT_API_KEY : DIFY_CHAT_API_KEY;
 
-    let fullText = '';
+    let fullText = "";
     let wordIndex = 0;
     let wordLength = 0;
     let isQuestionJson = false;
@@ -223,12 +227,12 @@ export class ChatbotService {
     let hasError = false;
 
     const now = convertDateToDDMMYYYY(new Date());
-    const userLevel = userProgress?.level ?? '';
-    const userTarget = userProgress?.target ?? '';
+    const userLevel = userProgress?.level ?? "";
+    const userTarget = userProgress?.target ?? "";
     const userExamDate = userProgress?.examDate ?? 0;
-    const userProgressString = userProgress ? UserProgressService.createUserProgressString(userProgress.analytic) : '';
+    const userProgressString = userProgress ? UserProgressService.createUserProgressString(userProgress.analytic) : "";
 
-    let examDateString = '';
+    let examDateString = "";
     if (userExamDate == 0) {
       examDateString = "User hasn't decided exam date yet";
     } else if (userExamDate) {
@@ -236,9 +240,11 @@ export class ChatbotService {
       examDateString = `Now is ${now} and user JLPT exam date is ${formattedExamDate}`;
     }
 
+    console.log(`examDateString: ${examDateString}`);
+
     const conversationHistory = ChatbotService.createConversationHistory(messages);
 
-    const questionString = question ? createQuestionString(question) : '';
+    const questionString = question ? createQuestionString(question) : "";
     const cid = question?.questionId.toString() ?? DifyConfig.mainChatbotConversationId;
 
     // Original stream
@@ -246,7 +252,7 @@ export class ChatbotService {
       url: ApiConfig.difyServerUrl,
       token: token,
       body: {
-        query: message ?? '<init>',
+        query: message ?? "<init>",
         inputs: {
           level: userLevel,
           target: userTarget,
@@ -260,32 +266,32 @@ export class ChatbotService {
           user_progress_string: userProgressString,
         },
         conversation_id: conversationId,
-        response_mode: 'streaming',
+        response_mode: "streaming",
         user: user,
         auto_generate_name: false,
       },
       onMessage: (data) => {
-        const type = data['event'];
-        const messageId = data['message_id'];
-        const text = data['answer'];
-        const conversationId = data['conversation_id'];
-        const nodeTitle = data['data']?.['title'];
+        const type = data["event"];
+        const messageId = data["message_id"];
+        const text = data["answer"];
+        const conversationId = data["conversation_id"];
+        const nodeTitle = data["data"]?.["title"];
 
         if (!isQuestionJson && nodeTitle && nodeTitle == DifyConfig.titleGenQuestions) {
           dispatch(updateLastMessageData({ messageType: MessageType.QUESTIONS, cid: cid }));
           isQuestionJson = true;
         }
 
-        if (type === 'message') {
+        if (type === "message") {
           fullText += text;
         } else if (type === DifyConfig.typeWorkflowStart) {
           startReceiveMessage = true;
           dispatch(updateLastMessageData({ messageId, cid: cid }));
           dispatch(updateConversationId({ conversationId, cid: cid }));
         } else if (type === DifyConfig.typeMessageEnd) {
-          const usage = data['metadata']['usage'];
+          const usage = data["metadata"]["usage"];
           console.log(
-            `Tokens: ${usage['total_tokens']} (${usage['prompt_tokens']} input, ${usage['completion_tokens']} completion) => ${usage['total_price']} ${usage['currency']}`
+            `Tokens: ${usage["total_tokens"]} (${usage["prompt_tokens"]} input, ${usage["completion_tokens"]} completion) => ${usage["total_price"]} ${usage["currency"]}`
           );
         }
       },
@@ -298,7 +304,7 @@ export class ChatbotService {
         }
       },
       onError: (error) => {
-        console.log('SSE error', error);
+        console.log("SSE error", error);
         if (!hasError) {
           hasError = true;
           dispatch(updateLastMessageData({ status: MessageStatus.ERROR, cid: cid }));
@@ -375,8 +381,8 @@ export class ChatbotService {
     // Extract the summary
     if (message) {
       ChatbotService.sendMessage({
-        message: message ?? '',
-        type: 'extract_context',
+        message: message ?? "",
+        type: "extract_context",
       }).then((result) => {
         dispatch(updateConversationSummary({ cid: cid, conversationSummary: result }));
       });
@@ -391,7 +397,7 @@ export class ChatbotService {
     data?: { [key: string]: any };
     onYieldWord: (word: string) => void;
   }) {
-    let fullText = '';
+    let fullText = "";
     let wordIndex = 0;
     let wordLength = 0;
     let startReceiveMessage = false;
@@ -404,28 +410,28 @@ export class ChatbotService {
       body: {
         query: message,
         inputs: {},
-        response_mode: 'streaming',
+        response_mode: "streaming",
         user: user,
         auto_generate_name: false,
       },
       onMessage: (data) => {
-        const type = data['event'];
-        const text = data['answer'];
+        const type = data["event"];
+        const text = data["answer"];
 
-        if (type === 'message') {
+        if (type === "message") {
           fullText += text;
         } else if (type === DifyConfig.typeWorkflowStart) {
           startReceiveMessage = true;
         } else if (type === DifyConfig.typeMessageEnd) {
-          const usage = data['metadata']['usage'];
+          const usage = data["metadata"]["usage"];
           console.log(
-            `Tokens: ${usage['total_tokens']} (${usage['prompt_tokens']} input, ${usage['completion_tokens']} completion) => ${usage['total_price']} ${usage['currency']}`
+            `Tokens: ${usage["total_tokens"]} (${usage["prompt_tokens"]} input, ${usage["completion_tokens"]} completion) => ${usage["total_price"]} ${usage["currency"]}`
           );
         }
       },
       onDone: () => (wordLength = ChatbotService.splitCustomWords(fullText).length),
       onError: (error) => {
-        console.log('SSE error', error);
+        console.log("SSE error", error);
         if (!hasError) hasError = true;
         DiscordService.sendDiscordMessage({
           message: `SSE error: ${error}`,
@@ -471,10 +477,10 @@ export class ChatbotService {
     data,
   }: {
     message: string;
-    type: 'extract_context' | 'analyze_progress';
+    type: "extract_context" | "analyze_progress";
     data?: { [key: string]: any };
   }) => {
-    const token = type === 'extract_context' ? DIFY_EXTRACT_CONTEXT_API_KEY : DIFY_ANALYZE_PROGRESS_API_KEY;
+    const token = type === "extract_context" ? DIFY_EXTRACT_CONTEXT_API_KEY : DIFY_ANALYZE_PROGRESS_API_KEY;
 
     const result = await ApiClient.postData({
       url: ApiConfig.difyServerUrl,
@@ -482,34 +488,34 @@ export class ChatbotService {
       body: {
         query: message,
         inputs: data ?? {},
-        response_mode: 'blocking',
+        response_mode: "blocking",
         user: user,
         auto_generate_name: false,
       },
     });
 
-    return result?.['answer']?.trim() || '';
+    return result?.["answer"]?.trim() || "";
   };
 
   static createConversationHistory = (messages: ChatMessage[]) => {
     return messages
       .slice(-10)
       .map((m) => {
-        const senderString = m.sender == Sender.BOT ? 'Bot' : 'User';
+        const senderString = m.sender == Sender.BOT ? "Bot" : "User";
         let text = `(${senderString}): ${m.sender == Sender.BOT ? m.summary : m.fullText}`;
-        if (text.endsWith('.')) text = text.slice(0, -1);
+        if (text.endsWith(".")) text = text.slice(0, -1);
         return text;
       })
-      .join('. ');
+      .join(". ");
   };
 
   static extractQuestionsFromJson = (json: string): { questions: Question[]; summary: string } => {
-    const dataString = json.replaceAll('```json', '').replaceAll('```', '').trim();
+    const dataString = json.replaceAll("```json", "").replaceAll("```", "").trim();
     const data = JSON.parse(dataString);
-    const questions: Question[] = data['questions'].map((question: any, index: number) =>
+    const questions: Question[] = data["questions"].map((question: any, index: number) =>
       createQuestion({ ...question, questionId: Date.now() + index })
     );
-    const summary = data['summary'];
+    const summary = data["summary"];
 
     return { questions, summary };
   };
@@ -521,8 +527,8 @@ export class ChatbotService {
         .slice(1, -1) // Remove the response and the summary
         .map((text) => {
           // Split by "-" or ":"
-          let data = text.split('-');
-          if (data.length < 2) data = text.split(':');
+          let data = text.split("-");
+          if (data.length < 2) data = text.split(":");
           if (data.length < 2) return { title: text };
 
           const [id, title] = data;
