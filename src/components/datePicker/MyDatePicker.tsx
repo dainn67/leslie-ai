@@ -35,10 +35,9 @@ export const MyDatePicker = ({ visible, date, setVisible, handleChange }: MyDate
       <DateTimePicker
         value={date}
         mode="date"
-        display="spinner"
+        display="calendar"
         onChange={handleDateChange}
         style={{ width: '100%', height: 200, backgroundColor: colors.background }}
-        textColor={colors.text}
       />
     </Modal>
   );
