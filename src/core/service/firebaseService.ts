@@ -1,7 +1,25 @@
-import analytics from "@react-native-firebase/analytics";
+import { getApp } from "@react-native-firebase/app";
+import { getAnalytics, logEvent, logScreenView } from "@react-native-firebase/analytics";
 
-export class FirebaseService {
-  static logEvent = async (event: string, data?: any) => {
-    await analytics().logEvent(event, data);
-  };
-}
+const analytics = getAnalytics(getApp());
+
+export const FirebaseService = {
+  logCustomEvent: async (name: string, params?: Record<string, any>) => {
+    try {
+      await logEvent(analytics, name, params);
+    } catch (e) {
+      console.error("Analytics event logging failed:", e);
+    }
+  },
+
+  logScreenView: async (screenName: string) => {
+    try {
+      await logScreenView(analytics, {
+        screen_name: screenName,
+        screen_class: screenName,
+      });
+    } catch (e) {
+      console.error("Screen view logging failed:", e);
+    }
+  },
+};

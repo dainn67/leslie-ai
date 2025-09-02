@@ -235,7 +235,7 @@ export const ChatbotScreen = () => {
     // deleteAllTables();
     // dispatch(clearUserProgress());
 
-    FirebaseService.logEvent(FirebaseConstants.test);
+    FirebaseService.logCustomEvent(FirebaseConstants.test);
   };
 
   return (
