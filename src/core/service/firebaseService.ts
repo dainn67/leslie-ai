@@ -4,7 +4,7 @@ import { getAnalytics, logEvent, logScreenView } from "@react-native-firebase/an
 const analytics = getAnalytics(getApp());
 
 export const FirebaseService = {
-  logCustomEvent: async (name: string, params?: Record<string, any>) => {
+  logEvent: async (name: string, params?: Record<string, any>) => {
     try {
       await logEvent(analytics, name, params);
     } catch (e) {
@@ -16,7 +16,6 @@ export const FirebaseService = {
     try {
       await logScreenView(analytics, {
         screen_name: screenName,
-        screen_class: screenName,
       });
     } catch (e) {
       console.error("Screen view logging failed:", e);
