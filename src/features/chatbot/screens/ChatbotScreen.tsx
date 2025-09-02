@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import TTSService from "../../../core/service/ttsService";
 import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { AppBar } from "../../../components/AppBar";
@@ -27,9 +28,9 @@ import {
 } from "../slice/chatbotSlice";
 import { useDialog } from "../../../core/providers";
 import { ChatMessageList, ChatInput } from "../components";
-import { ChatbotService, UserProgressService } from "../../../core/service";
-import TTSService from "../../../core/service/ttsService";
+import { ChatbotService, FirebaseService, UserProgressService } from "../../../core/service";
 import { parseLevelActionId, parseTargetActionId } from "../../../utils";
+import { FirebaseConstants } from "../../../constants";
 
 type ChatbotScreenNavigationProp = DrawerNavigationProp<DrawerParamList, "ChatbotScreen">;
 type ChatbotScreenRouteProp = RouteProp<RootStackParamList, "ChatbotScreen">;
@@ -231,8 +232,10 @@ export const ChatbotScreen = () => {
   };
 
   const handleDevClick = () => {
-    deleteAllTables();
-    dispatch(clearUserProgress());
+    // deleteAllTables();
+    // dispatch(clearUserProgress());
+
+    FirebaseService.logEvent(FirebaseConstants.test);
   };
 
   return (
