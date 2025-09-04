@@ -16,7 +16,7 @@ import { convertDateToDDMMYYYY, normalizeDate } from "../../../utils/utils";
 import { loadFromAsyncStorage } from "../../../storage/asyncStorage/asyncStorage";
 import { AsyncStorageConstants } from "../../../storage/asyncStorage/asyncStorateConstant";
 import { setTheme } from "../../theme/themeSlice";
-import { DrawerParamList, RootStackParamList } from "../../../app/DrawerNavigator";
+import { DrawerParamList, MainStackParamList } from "../../../app/DrawerNavigator";
 import { createTmpUserProgress } from "../../../models/userProgress";
 import {
   getMessagesByCID,
@@ -33,7 +33,7 @@ import { parseLevelActionId, parseTargetActionId } from "../../../utils";
 import { FirebaseConstants } from "../../../constants";
 
 type ChatbotScreenNavigationProp = DrawerNavigationProp<DrawerParamList, "ChatbotScreen">;
-type ChatbotScreenRouteProp = RouteProp<RootStackParamList, "ChatbotScreen">;
+type ChatbotScreenRouteProp = RouteProp<MainStackParamList, "ChatbotScreen">;
 
 export const ChatbotScreen = () => {
   // Params

@@ -20,7 +20,7 @@ export type DrawerParamList = {
   FeedbackScreen: undefined;
 };
 
-export type RootStackParamList = {
+export type MainStackParamList = {
   ChatbotScreen: { initialMessage: string };
   QuestionsMain: undefined;
   QuestionListScreen: { type: QuestionType };
@@ -32,7 +32,7 @@ export type RootStackParamList = {
 };
 
 const Drawer = createDrawerNavigator();
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<MainStackParamList>();
 
 export const DrawerNavigator = () => {
   const { colors } = useAppTheme();
