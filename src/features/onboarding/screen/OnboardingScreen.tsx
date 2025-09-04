@@ -16,7 +16,7 @@ import { RootStackParamList } from '../../../app/RootNavigator';
 
 type OnboardingScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Onboarding'>;
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get('window');
 
 interface OnboardingData {
     id: string;
