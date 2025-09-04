@@ -5,14 +5,14 @@ import { AppBar } from '../../../components/AppBar';
 import { Ionicons } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../../app/DrawerNavigator';
+import { MainStackParamList } from '../../../app/DrawerNavigator';
 import { useAppTheme } from '../../../theme';
 import { CustomText } from '../../../components/text/customText';
 import { WordComponent } from '../../../components/streamingText/WordComponent';
 import { createResultSummary, ChatbotService } from '../../../core/service';
 
-type ResultScreenRouteProp = RouteProp<RootStackParamList, 'ResultScreen'>;
-type ResultScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ResultScreen'>;
+type ResultScreenRouteProp = RouteProp<MainStackParamList, 'ResultScreen'>;
+type ResultScreenNavigationProp = NativeStackNavigationProp<MainStackParamList, 'ResultScreen'>;
 
 export const ResultScreen = () => {
   const route = useRoute<ResultScreenRouteProp>();

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { RootStackParamList } from '../../../app/DrawerNavigator';
+import { MainStackParamList } from '../../../app/DrawerNavigator';
 import { useAppTheme } from '../../../theme';
 import { AppBar } from '../../../components/AppBar';
 import { Ionicons } from '@expo/vector-icons';
@@ -16,8 +16,8 @@ import { CustomText } from '../../../components/text/customText';
 import { insertQuestions, deleteQuestion } from '../../../storage/database/tables';
 import { ChatbotBottomSheet } from '../../../components/bottomsheets/ChatbotBottomSheet';
 
-type QuestionGameScreenRouteProp = RouteProp<RootStackParamList, 'QuestionGameScreen'>;
-type QuestionGameScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'QuestionGameScreen'>;
+type QuestionGameScreenRouteProp = RouteProp<MainStackParamList, 'QuestionGameScreen'>;
+type QuestionGameScreenNavigationProp = NativeStackNavigationProp<MainStackParamList, 'QuestionGameScreen'>;
 
 export const QuestionGameScreen = () => {
   const route = useRoute<QuestionGameScreenRouteProp>();

@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { Question, QuestionType, QuestionTypeTitles } from '../../../models/question';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { DrawerParamList, RootStackParamList } from '../../../app/DrawerNavigator';
+import { DrawerParamList, MainStackParamList } from '../../../app/DrawerNavigator';
 import { getAllQuestions } from '../../../storage/database/tables';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
@@ -16,7 +16,7 @@ import MainButton from '../../../components/buttons/MainButton';
 import { ToastService } from '../../../core/service/toastService';
 import { QuestionNumberSelector } from '../components/QuestionNumberSelector';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'QuestionsScreen'>;
+type NavigationProp = NativeStackNavigationProp<MainStackParamList, 'QuestionsScreen'>;
 
 export const QuestionsScreen = () => {
   // Drawer & navigation
