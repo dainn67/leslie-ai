@@ -13,8 +13,6 @@ import { createQuestionTable, deleteAllTables, updateTables } from "../../../sto
 import { createChatMessage, MessageStatus } from "../../../models/chatMessage";
 import { MyDatePicker } from "../../../components/datePicker/MyDatePicker";
 import { convertDateToDDMMYYYY, normalizeDate } from "../../../utils/utils";
-import { loadFromAsyncStorage } from "../../../storage/asyncStorage/asyncStorage";
-import { AsyncStorageConstants } from "../../../storage/asyncStorage/asyncStorateConstant";
 import { setTheme } from "../../theme/themeSlice";
 import { DrawerParamList, MainStackParamList } from "../../../app/DrawerNavigator";
 import { createTmpUserProgress } from "../../../models/userProgress";
@@ -31,6 +29,7 @@ import { ChatMessageList, ChatInput } from "../components";
 import { ChatbotService, FirebaseService, UserProgressService } from "../../../core/service";
 import { parseLevelActionId, parseTargetActionId } from "../../../utils";
 import { FirebaseConstants } from "../../../constants";
+import { AsyncStorageService } from "../../../core/service/asyncStorageService";
 
 type ChatbotScreenNavigationProp = DrawerNavigationProp<DrawerParamList, "ChatbotScreen">;
 type ChatbotScreenRouteProp = RouteProp<MainStackParamList, "ChatbotScreen">;
@@ -81,7 +80,7 @@ export const ChatbotScreen = () => {
         });
       });
 
-      loadFromAsyncStorage(AsyncStorageConstants.THEME_MODE).then((scheme) => {
+      AsyncStorageService.getTheme().then((scheme) => {
         dispatch(setTheme(scheme));
       });
     } else if (messages.length === 0) {

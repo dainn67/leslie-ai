@@ -7,6 +7,7 @@ import { CustomText } from "../../../components/text/customText";
 import { useAppTheme } from "../../../theme";
 import { RootStackParamList } from "../../../app/RootNavigator";
 import { AppConfig } from "../../../constants";
+import { AsyncStorageService } from "../../../core/service/asyncStorageService";
 
 type OnboardingScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "Onboarding">;
 
@@ -49,7 +50,7 @@ const OnboardingScreen: React.FC = () => {
       setCurrentIndex(nextIndex);
       flatListRef.current?.scrollToIndex({ index: nextIndex, animated: true });
     } else {
-      // Điều hướng đến màn hình chính
+      AsyncStorageService.setOnboardingCompleted(true);
       navigation.navigate("Main");
     }
   };
