@@ -29,9 +29,14 @@ jobs:
               \"description\": \"**#${{ github.event.pull_request.number }}** - ${{ github.event.pull_request.title }}\",
               \"fields\": [
                 {
-                  \"name\": \"Branch Flow\",
-                  \"value\": \"`${{ github.head_ref }} ➝ ${{ github.base_ref }}`\",
-                  \"inline\": false
+                  \"name\": \"Base Branch\",
+                  \"value\": \"${{ github.base_ref }}\",
+                  \"inline\": true
+                },
+                {
+                  \"name\": \"Source Branch\",
+                  \"value\": \"${{ github.head_ref }}\",
+                  \"inline\": true
                 }
               ],
               \"footer\": {
