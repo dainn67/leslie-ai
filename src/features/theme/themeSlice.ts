@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AsyncStorageService } from "../../core/service/asyncStorageService";
 
-export type ThemeMode = "light" | "dark" | "system";
+export type ThemeMode = "light" | "dark";
 
 interface ThemeState {
   mode: ThemeMode;
@@ -19,10 +19,10 @@ export const themeSlice = createSlice({
       state.mode = action.payload;
     },
     toggleTheme: (state) => {
-      if (state.mode === "light") {
-        state.mode = "dark";
-      } else {
+      if (state.mode === "dark") {
         state.mode = "light";
+      } else {
+        state.mode = "dark";
       }
 
       AsyncStorageService.setTheme(state.mode);

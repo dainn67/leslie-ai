@@ -7,6 +7,7 @@ export const FirebaseService = {
   logEvent: async (name: string, params?: Record<string, any>) => {
     try {
       await logEvent(analytics, name, params);
+      console.log("Analytics event:", name, params);
     } catch (e) {
       console.error("Analytics event logging failed:", e);
     }

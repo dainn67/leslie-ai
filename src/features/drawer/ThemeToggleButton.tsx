@@ -6,6 +6,8 @@ import { RootState } from "../../app/store";
 import { toggleTheme } from "../theme/themeSlice";
 import { useAppTheme } from "../../theme";
 import { CustomText } from "../../components/text/customText";
+import { FirebaseConstants } from "../../constants";
+import { FirebaseService } from "../../core/service";
 
 export const ThemeToggleButton = () => {
   const dispatch = useDispatch();
@@ -14,19 +16,17 @@ export const ThemeToggleButton = () => {
 
   const handleToggle = () => {
     dispatch(toggleTheme());
+
+    FirebaseService.logEvent(FirebaseConstants.TOGGLE_THEME, {
+      theme: themeMode,
+    });
   };
 
   const getIconName = () => {
-    if (themeMode === "system") {
-      return isDarkMode ? "moon" : "sunny";
-    }
     return themeMode === "dark" ? "moon" : "sunny";
   };
 
   const getLabel = () => {
-    if (themeMode === "system") {
-      return isDarkMode ? "Dark Mode" : "Light Mode";
-    }
     return themeMode === "dark" ? "Dark Mode" : "Light Mode";
   };
 

@@ -56,10 +56,6 @@ export const ChatbotScreen = () => {
 
   // Load user progress and add initial message when first open or clear
   useEffect(() => {
-    if (initialMessage) {
-      console.log("initialMessage: ", initialMessage);
-    }
-
     if (!initialized) {
       createQuestionTable();
       updateTables();
@@ -100,6 +96,14 @@ export const ChatbotScreen = () => {
     if (initialMessage) handleSend(initialMessage);
   }, [initialMessage]);
 
+  const handleManuallySend = (message: string) => {
+    FirebaseService.logEvent(FirebaseConstants.MESSAGE_SENT, {
+      message: message,
+    });
+
+    handleSend(message);
+  };
+
   const handleSend = (message: string) => {
     const data = message.trim();
     const userMessage = createChatMessage({ fullText: data });
@@ -118,6 +122,11 @@ export const ChatbotScreen = () => {
   };
 
   const handleClickAction = async (title: string, actionId?: string) => {
+    FirebaseService.logEvent(FirebaseConstants.ACTION_CLICKED, {
+      actionId: actionId,
+      title: title,
+    });
+
     let userLevel = userProgress.level;
     let userTarget = userProgress.target;
 
@@ -128,9 +137,11 @@ export const ChatbotScreen = () => {
       const setTargetActionId = "t";
 
       if (actionId.startsWith(setExamDateActionId)) {
+        FirebaseService.logEvent(FirebaseConstants.OPEN_EXAM_DATE_PICKER);
         setDatePickerVisible(true);
         return;
       } else if (actionId.startsWith(unknownExamDateActionId)) {
+        FirebaseService.logEvent(FirebaseConstants.SKIP_EXAM_DATE);
         dispatch(updateUserProgress({ examDate: 0 }));
         const userMessage = createChatMessage({ fullText: title });
         dispatch(addMessage({ message: userMessage }));
@@ -176,6 +187,10 @@ export const ChatbotScreen = () => {
 
   const handleSelectExamDate = (selectedDate: Date | undefined) => {
     if (!selectedDate) return;
+
+    FirebaseService.logEvent(FirebaseConstants.EXAM_DATE_SELECTED, {
+      date: selectedDate.getTime(),
+    });
 
     const dateString = convertDateToDDMMYYYY(selectedDate, "vi");
 
@@ -227,14 +242,18 @@ export const ChatbotScreen = () => {
   };
 
   const handleClearChat = () => {
+    FirebaseService.logEvent(FirebaseConstants.CLEAR_CHAT);
     dialog.showConfirm("Xoá hội thoại?", () => dispatch(clearChat({})));
   };
 
-  const handleDevClick = () => {
-    // deleteAllTables();
-    // dispatch(clearUserProgress());
+  const handleOpenMenu = () => {
+    FirebaseService.logEvent(FirebaseConstants.OPEN_MENU);
+    navigation.openDrawer();
+  };
 
-    FirebaseService.logEvent(FirebaseConstants.test);
+  const handleDevClick = () => {
+    deleteAllTables();
+    dispatch(clearUserProgress());
   };
 
   return (
@@ -245,12 +264,12 @@ export const ChatbotScreen = () => {
           title={AppConfig.name}
           leftIcon={<Ionicons name="menu" size={24} color="white" />}
           rightIcon={<Ionicons name="trash" size={24} color="white" />}
-          onLeftPress={() => navigation.openDrawer()}
+          onLeftPress={handleOpenMenu}
           onRightPress={handleClearChat}
           onDevClick={handleDevClick}
         />
         <ChatMessageList messages={messages} onClickAction={handleClickAction} onAnalyze={handleAnalyze} />
-        <ChatInput disable={isGenerating} onSend={handleSend} />
+        <ChatInput disable={isGenerating} onSend={handleManuallySend} />
       </View>
 
       {/* Date picker to set exam date if not set */}

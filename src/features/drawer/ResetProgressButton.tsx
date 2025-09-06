@@ -9,6 +9,8 @@ import { useAppDispatch } from "../../hooks/hooks";
 import { clearUserProgress } from "../userProgress/userProgressSlice";
 import { clearAllTables } from "../../storage/database/tables";
 import { clearChat } from "../chatbot/slice/chatbotSlice";
+import { FirebaseConstants } from "../../constants";
+import { FirebaseService } from "../../core/service";
 
 interface ResetProgressButtonProps {
   navigation: DrawerContentComponentProps["navigation"];
@@ -24,7 +26,9 @@ export const ResetProgressButton = ({ navigation }: ResetProgressButtonProps) =>
       clearAllTables();
       dispatch(clearUserProgress());
       dispatch(clearChat({}));
-      // Đóng drawer sau khi xác nhận
+
+      FirebaseService.logEvent(FirebaseConstants.RESET_PROGRESS);
+
       navigation.closeDrawer();
       navigation.navigate("ChatbotScreen");
     });

@@ -6,8 +6,9 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { CustomText } from "../../../components/text/customText";
 import { useAppTheme } from "../../../theme";
 import { RootStackParamList } from "../../../app/RootNavigator";
-import { AppConfig } from "../../../constants";
+import { AppConfig, FirebaseConstants } from "../../../constants";
 import { AsyncStorageService } from "../../../core/service/asyncStorageService";
+import { FirebaseService } from "../../../core/service";
 
 type OnboardingScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "Onboarding">;
 
@@ -50,6 +51,7 @@ const OnboardingScreen: React.FC = () => {
       setCurrentIndex(nextIndex);
       flatListRef.current?.scrollToIndex({ index: nextIndex, animated: true });
     } else {
+      FirebaseService.logEvent(FirebaseConstants.ONBOARDING_COMPLETED);
       AsyncStorageService.setOnboardingCompleted(true);
       navigation.navigate("Main");
     }
