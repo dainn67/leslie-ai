@@ -46,52 +46,73 @@ export const FeedbackScreen = () => {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <AppBar title="Feedback" leftIcon={<Ionicons name="menu" size={24} color="white" />} onLeftPress={handleOpenDrawer} />
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        <Text style={[styles.title, { color: colors.text }]}>Chúng tôi rất muốn lắng nghe những đánh giá & góp ý của bạn!</Text>
+      <AppBar title="Phản hồi" leftIcon={<Ionicons name="menu" size={24} color="white" />} onLeftPress={handleOpenDrawer} />
+      
+      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={[styles.title, { color: colors.text }]}>Chia sẻ ý kiến của bạn</Text>
+          <Text style={[styles.subtitle, { color: colors.placeholder }]}>
+            Phản hồi của bạn giúp chúng tôi cải thiện ứng dụng
+          </Text>
+        </View>
 
-        {/* Category (multi-select) */}
-        <View style={styles.categoryContainer}>
-          <Text style={[styles.subtitle, { color: colors.text }]}>Phân loại</Text>
-          <View style={styles.categoryList}>
-            {categories.map((c) => {
-              const selected = selectedCategories.includes(c);
+        {/* Categories */}
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>Loại phản hồi</Text>
+          <View style={styles.categoryGrid}>
+            {categories.map((category) => {
+              const selected = selectedCategories.includes(category);
               return (
                 <Pressable
-                  key={c}
-                  onPress={() => toggleCategory(c)}
-                  style={[styles.categoryItem, { backgroundColor: selected ? colors.primary : colors.backgroundSecondary }]}
+                  key={category}
+                  onPress={() => toggleCategory(category)}
+                  style={[
+                    styles.categoryChip,
+                    {
+                      backgroundColor: selected ? colors.primary : colors.backgroundSecondary,
+                      borderColor: selected ? colors.primary : colors.placeholder,
+                    }
+                  ]}
                 >
-                  <Text style={[styles.categoryItemText, { color: colors.text }]}>{c}</Text>
+                  <Text style={[
+                    styles.categoryText,
+                    { color: selected ? colors.textOnPrimary : colors.text }
+                  ]}>
+                    {category}
+                  </Text>
                 </Pressable>
               );
             })}
           </View>
         </View>
 
-        {/* Message */}
-        <View style={{ gap: 8 }}>
-          <Text style={{ color: colors.text, fontSize: 16, fontWeight: "600" }}>Nội dung</Text>
-          <View style={[styles.messageContainer, { borderColor: colors.text }]}>
+        {/* Message Input */}
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>Nội dung</Text>
+          <View style={[styles.inputContainer, { backgroundColor: colors.backgroundSecondary, borderColor: colors.placeholder }]}>
             <TextInput
               value={message}
               onChangeText={setMessage}
-              placeholder="Nhập nội dung phản hồi của bạn..."
+              placeholder="Mô tả chi tiết về phản hồi của bạn..."
               placeholderTextColor={colors.placeholder}
               multiline
-              style={[styles.messageText, { color: colors.text }]}
+              textAlignVertical="top"
+              style={[styles.textInput, { color: colors.text }]}
             />
           </View>
         </View>
 
-        {/* Submit */}
-        <MainButton
-          title="Gửi phản hồi"
-          onPress={handleSubmit}
-          disabled={!canSubmit}
-          style={{ marginTop: 20 }}
-          textStyle={{ color: colors.textOnPrimary }}
-        />
+        {/* Submit Button */}
+        <View style={styles.submitContainer}>
+          <MainButton
+            title="Gửi phản hồi"
+            onPress={handleSubmit}
+            disabled={!canSubmit}
+            style={[styles.submitButton, { opacity: canSubmit ? 1 : 0.5 }]}
+            textStyle={{ color: colors.textOnPrimary, fontWeight: "600" }}
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -102,43 +123,63 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollView: {
-    padding: 20,
-    gap: 20,
+    flex: 1,
+    paddingHorizontal: 24,
+  },
+  header: {
+    paddingVertical: 32,
+    alignItems: "center",
   },
   title: {
-    fontSize: 22,
+    fontSize: 28,
     fontWeight: "700",
     textAlign: "center",
+    marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
+    textAlign: "center",
+    lineHeight: 22,
+  },
+  section: {
+    marginBottom: 32,
+  },
+  sectionTitle: {
+    fontSize: 18,
     fontWeight: "600",
+    marginBottom: 16,
   },
-  categoryContainer: {
-    gap: 8,
-  },
-  categoryList: {
+  categoryGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 8,
+    gap: 12,
   },
-  categoryItem: {
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    borderRadius: 100,
+  categoryChip: {
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 24,
+    borderWidth: 1,
   },
-  categoryItemText: {
+  categoryText: {
+    fontSize: 14,
     fontWeight: "500",
   },
-  messageContainer: {
-    borderWidth: 0.5,
-    borderRadius: 8,
-    paddingHorizontal: 8,
+  inputContainer: {
+    borderRadius: 16,
+    borderWidth: 1,
+    minHeight: 140,
   },
-  messageText: {
-    fontSize: 15,
+  textInput: {
+    fontSize: 16,
+    padding: 20,
+    minHeight: 140,
     textAlignVertical: "top",
-    minHeight: 120,
-    padding: 12,
+  },
+  submitContainer: {
+    paddingBottom: 40,
+  },
+  submitButton: {
+    borderRadius: 16,
+    paddingVertical: 16,
   },
 });

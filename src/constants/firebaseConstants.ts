@@ -17,4 +17,8 @@ export const FirebaseConstants = {
   SKIP_EXAM_DATE: "skip_exam_date",
   EXAM_DATE_SELECTED: "exam_date_selected",
   CLEAR_CHAT: "clear_chat",
+
+  // Questions screen
+  OPEN_QUESTION_TYPE_BOX: "open_question_type_box",
+  REVIEW_ALL_QUESTIONS: "review_all_questions",
 };
