@@ -10,6 +10,8 @@ import { useAppTheme } from "../../theme";
 import { DiscordService, DiscordWebhookType } from "../../core/service/discordService";
 import { ToastService } from "../../core/service/toastService";
 import { AppConfig } from "../../constants/appConfig";
+import { FirebaseConstants } from "../../constants";
+import { FirebaseService } from "../../core/service";
 
 export const FeedbackScreen = () => {
   const categories = ["Nội dung", "Trải nghiệm", "Giao diện", "Lỗi", "Tính năng", "Khác"];
@@ -37,13 +39,14 @@ export const FeedbackScreen = () => {
     setMessage("");
   };
 
+  const handleOpenDrawer = () => {
+    FirebaseService.logEvent(FirebaseConstants.OPEN_MENU);
+    drawerNavigation.openDrawer();
+  };
+
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <AppBar
-        title="Feedback"
-        leftIcon={<Ionicons name="menu" size={24} color="white" />}
-        onLeftPress={() => drawerNavigation.openDrawer()}
-      />
+      <AppBar title="Feedback" leftIcon={<Ionicons name="menu" size={24} color="white" />} onLeftPress={handleOpenDrawer} />
       <ScrollView contentContainerStyle={styles.scrollView}>
         <Text style={[styles.title, { color: colors.text }]}>Chúng tôi rất muốn lắng nghe những đánh giá & góp ý của bạn!</Text>
 

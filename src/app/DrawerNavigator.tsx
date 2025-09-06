@@ -13,6 +13,8 @@ import { ResultScreen } from "../features/game/screens/ResultScreen";
 import { QuestionListScreen } from "../features/questions/screens/QuestionListScreen";
 import { QuestionsScreen } from "../features/questions/screens/QuestionsScreen";
 import { VersionText, ResetProgressButton, ThemeToggleButton } from "../features/drawer";
+import { FirebaseConstants } from "../constants";
+import { FirebaseService } from "../core/service";
 
 export type DrawerParamList = {
   ChatbotScreen: undefined;
@@ -66,6 +68,11 @@ export const DrawerNavigator = () => {
       <Drawer.Screen
         name={"ChatbotScreen"}
         component={ChatbotScreen}
+        listeners={{
+          drawerItemPress: (e) => {
+            FirebaseService.logEvent(FirebaseConstants.OPEN_CHATBOT_SCREEN);
+          },
+        }}
         options={{
           drawerLabel: ({ color }) => (
             <CustomText weight="Regular" style={{ color }}>
@@ -78,6 +85,11 @@ export const DrawerNavigator = () => {
       <Drawer.Screen
         name={"QuestionsScreen"}
         component={QuestionStackScreen}
+        listeners={{
+          drawerItemPress: (e) => {
+            FirebaseService.logEvent(FirebaseConstants.OPEN_SAVED_QUESTIONS_SCREEN);
+          },
+        }}
         options={{
           drawerLabel: ({ color }) => (
             <CustomText weight="Regular" style={{ color }}>
@@ -90,6 +102,11 @@ export const DrawerNavigator = () => {
       <Drawer.Screen
         name="FeedbackScreen"
         component={FeedbackScreen}
+        listeners={{
+          drawerItemPress: (e) => {
+            FirebaseService.logEvent(FirebaseConstants.OPEN_FEEDBACK_SCREEN);
+          },
+        }}
         options={{
           drawerLabel: ({ color }) => (
             <CustomText weight="Regular" style={{ color }}>
