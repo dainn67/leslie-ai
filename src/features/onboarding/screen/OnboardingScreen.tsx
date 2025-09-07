@@ -53,7 +53,7 @@ const OnboardingScreen: React.FC = () => {
     } else {
       FirebaseService.logEvent(FirebaseConstants.ONBOARDING_COMPLETED);
       AsyncStorageService.setOnboardingCompleted(true);
-      navigation.navigate("Main");
+      navigation.replace("Main");
     }
   };
 
