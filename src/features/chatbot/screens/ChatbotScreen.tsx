@@ -252,8 +252,10 @@ export const ChatbotScreen = () => {
   };
 
   const handleDevClick = () => {
-    deleteAllTables();
-    dispatch(clearUserProgress());
+    // deleteAllTables();
+    // dispatch(clearUserProgress());
+
+    AsyncStorageService.resetOnboardingCompleted();
   };
 
   return (

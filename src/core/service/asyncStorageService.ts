@@ -11,6 +11,10 @@ export class AsyncStorageService {
     return await loadFromAsyncStorage(AsyncStorageConstants.ONBOARDING_COMPLETED);
   };
 
+  static resetOnboardingCompleted = async () => {
+    await saveToAsyncStorage(AsyncStorageConstants.ONBOARDING_COMPLETED, false);
+  };
+
   // User progress
   static setUserProgress = async (userProgress: any) => {
     await saveToAsyncStorage(AsyncStorageConstants.USER_PROGRESS, userProgress);

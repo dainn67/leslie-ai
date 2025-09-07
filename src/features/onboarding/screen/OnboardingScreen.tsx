@@ -24,17 +24,17 @@ const onboardingData: OnboardingData[] = [
   {
     id: "1",
     title: `Chào mừng đến với ${AppConfig.name}`,
-    subtitle: "Khám phá trí tuệ nhân tạo thông minh giúp bạn học tập và phát triển kỹ năng một cách hiệu quả",
+    subtitle: "Luyện thi JLPT dễ dàng từng bước cùng Chatbot AI",
   },
   {
     id: "2",
     title: "Học tập thông minh",
-    subtitle: "Tận dụng sức mạnh của AI để cá nhân hóa trải nghiệm học tập và đạt được mục tiêu nhanh chóng",
+    subtitle: "Bài học và bài tập được thiết kế phù hợp với tiến độ của bạn",
   },
   {
     id: "3",
-    title: "Bắt đầu hành trình",
-    subtitle: "Sẵn sàng để bắt đầu cuộc hành trình học tập tuyệt vời với Leslie AI ngay hôm nay",
+    title: "Cá nhân hoá lộ trình",
+    subtitle: "Xây dựng kế hoạch học tập riêng để đạt mục tiêu nhanh hơn",
   },
 ];
 
