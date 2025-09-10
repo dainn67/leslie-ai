@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import TTSService from "../../../core/service/ttsService";
+
 import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { AppBar } from "../../../components/AppBar";
@@ -8,27 +8,24 @@ import { useNavigation, RouteProp, useRoute } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 import { AppConfig } from "../../../constants/appConfig";
-import { clearUserProgress, setUserProgress, updateUserProgress } from "../../userProgress/userProgressSlice";
-import { createQuestionTable, deleteAllTables, updateTables } from "../../../storage/database/tables";
+import { updateUserProgress } from "../../userProgress/userProgressSlice";
 import { createChatMessage, MessageStatus } from "../../../models/chatMessage";
 import { MyDatePicker } from "../../../components/datePicker/MyDatePicker";
 import { convertDateToDDMMYYYY, normalizeDate } from "../../../utils/utils";
-import { setTheme } from "../../theme/themeSlice";
 import { DrawerParamList, MainStackParamList } from "../../../app/DrawerNavigator";
 import { createTmpUserProgress } from "../../../models/userProgress";
 import {
   getMessagesByCID,
   getDifyConversationIdByCID,
   getConversationSummaryByCID,
-  addLoading,
   addMessage,
   clearChat,
 } from "../slice/chatbotSlice";
 import { useDialog } from "../../../core/providers";
 import { ChatMessageList, ChatInput } from "../components";
-import { ChatbotService, FirebaseService, UserProgressService } from "../../../core/service";
+import { ChatbotService, FirebaseService } from "../../../core/service";
 import { parseLevelActionId, parseTargetActionId } from "../../../utils";
-import { FirebaseConstants } from "../../../constants";
+import { DifyConfig, FirebaseConstants } from "../../../constants";
 import { AsyncStorageService } from "../../../core/service/asyncStorageService";
 import { NameDialog } from "../../common/dialogs";
 
@@ -52,41 +49,16 @@ export const ChatbotScreen = () => {
   const userProgress = useAppSelector((state) => state.userProgress.userProgress);
   const isGenerating = ![MessageStatus.DONE, MessageStatus.ERROR].includes(messages[messages.length - 1]?.status);
 
-  const [initialized, setInitialized] = useState(false);
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const [nameDialogVisible, setNameDialogVisible] = useState(false);
 
   // Load user progress and add initial message when first open or clear
   useEffect(() => {
-    if (!initialized) {
-      createQuestionTable();
-      updateTables();
-      TTSService.init();
-      UserProgressService.getUserProgressFromStorage().then((userProgress) => {
-        // Set user progress
-        dispatch(setUserProgress(userProgress));
-
-        if (userProgress.userName.length === 0) {
-          // Get username
-          setNameDialogVisible(true);
-        } else {
-          setInitialized(true);
-
-          // Add initial message
-          ChatbotService.sendStreamMessage({
-            messages: messages,
-            userProgress: userProgress,
-            conversationSummary,
-            difyConversationId,
-            dispatch,
-          });
-        }
-      });
-
-      // Set theme
-      AsyncStorageService.getTheme().then((scheme) => dispatch(setTheme(scheme)));
-    } else if (messages.length === 0) {
-      // Add loading message when clear
+    if (userProgress.userName.length === 0) {
+      // Get username
+      setNameDialogVisible(true);
+    } else {
+      // Add initial message
       ChatbotService.sendStreamMessage({
         messages: messages,
         userProgress: userProgress,
@@ -95,7 +67,7 @@ export const ChatbotScreen = () => {
         dispatch,
       });
     }
-  }, [initialized, messages.length]);
+  }, []);
 
   // If open chatbot screen from another screen
   useEffect(() => {
@@ -136,16 +108,11 @@ export const ChatbotScreen = () => {
     let userTarget = userProgress.target;
 
     if (actionId) {
-      const setExamDateActionId = "ed1";
-      const unknownExamDateActionId = "ed2";
-      const setLevelActionId = "l";
-      const setTargetActionId = "t";
-
-      if (actionId.startsWith(setExamDateActionId)) {
+      if (actionId.startsWith(DifyConfig.setExamDateActionId)) {
         FirebaseService.logEvent(FirebaseConstants.OPEN_EXAM_DATE_PICKER);
         setDatePickerVisible(true);
         return;
-      } else if (actionId.startsWith(unknownExamDateActionId)) {
+      } else if (actionId.startsWith(DifyConfig.unknownExamDateActionId)) {
         FirebaseService.logEvent(FirebaseConstants.SKIP_EXAM_DATE);
         dispatch(updateUserProgress({ examDate: 0 }));
         const userMessage = createChatMessage({ fullText: title });
@@ -161,10 +128,10 @@ export const ChatbotScreen = () => {
         });
 
         return;
-      } else if (actionId.startsWith(setLevelActionId)) {
+      } else if (actionId.startsWith(DifyConfig.setLevelActionId)) {
         userLevel = parseLevelActionId(actionId);
         dispatch(updateUserProgress({ level: userLevel }));
-      } else if (actionId.startsWith(setTargetActionId)) {
+      } else if (actionId.startsWith(DifyConfig.setTargetActionId)) {
         userTarget = parseTargetActionId(actionId);
         dispatch(updateUserProgress({ target: userTarget }));
       }
@@ -254,7 +221,6 @@ export const ChatbotScreen = () => {
   const handleSetName = (name: string) => {
     dispatch(updateUserProgress({ userName: name }));
     setNameDialogVisible(false);
-    setInitialized(true);
   };
 
   const handleDevClick = () => {
