@@ -30,6 +30,7 @@ import { ChatbotService, FirebaseService, UserProgressService } from "../../../c
 import { parseLevelActionId, parseTargetActionId } from "../../../utils";
 import { FirebaseConstants } from "../../../constants";
 import { AsyncStorageService } from "../../../core/service/asyncStorageService";
+import { NameDialog } from "../../common/dialogs";
 
 type ChatbotScreenNavigationProp = DrawerNavigationProp<DrawerParamList, "ChatbotScreen">;
 type ChatbotScreenRouteProp = RouteProp<MainStackParamList, "ChatbotScreen">;
@@ -53,6 +54,7 @@ export const ChatbotScreen = () => {
 
   const [initialized, setInitialized] = useState(false);
   const [datePickerVisible, setDatePickerVisible] = useState(false);
+  const [nameDialogVisible, setNameDialogVisible] = useState(false);
 
   // Load user progress and add initial message when first open or clear
   useEffect(() => {
@@ -63,22 +65,27 @@ export const ChatbotScreen = () => {
       UserProgressService.getUserProgressFromStorage().then((userProgress) => {
         // Set user progress
         dispatch(setUserProgress(userProgress));
-        setInitialized(true);
 
-        // Add loading message
-        dispatch(addLoading({}));
-        ChatbotService.sendStreamMessage({
-          messages: messages,
-          userProgress: userProgress,
-          conversationSummary,
-          conversationId: difyConversationId,
-          dispatch,
-        });
+        if (userProgress.userName.length === 0) {
+          // Get username
+          setNameDialogVisible(true);
+        } else {
+          setInitialized(true);
+
+          // Add initial message
+          dispatch(addLoading({}));
+          ChatbotService.sendStreamMessage({
+            messages: messages,
+            userProgress: userProgress,
+            conversationSummary,
+            conversationId: difyConversationId,
+            dispatch,
+          });
+        }
       });
 
-      AsyncStorageService.getTheme().then((scheme) => {
-        dispatch(setTheme(scheme));
-      });
+      // Set theme
+      AsyncStorageService.getTheme().then((scheme) => dispatch(setTheme(scheme)));
     } else if (messages.length === 0) {
       // Add loading message when clear
       dispatch(addLoading({}));
@@ -92,6 +99,7 @@ export const ChatbotScreen = () => {
     }
   }, [initialized, messages.length]);
 
+  // If open chatbot screen from another screen
   useEffect(() => {
     if (initialMessage) handleSend(initialMessage);
   }, [initialMessage]);
@@ -251,6 +259,12 @@ export const ChatbotScreen = () => {
     navigation.openDrawer();
   };
 
+  const handleSetName = (name: string) => {
+    dispatch(updateUserProgress({ userName: name }));
+    setNameDialogVisible(false);
+    setInitialized(true);
+  };
+
   const handleDevClick = () => {
     // deleteAllTables();
     // dispatch(clearUserProgress());
@@ -281,6 +295,8 @@ export const ChatbotScreen = () => {
         date={userProgress.examDate ? new Date(userProgress.examDate) : new Date()}
         handleChange={handleSelectExamDate}
       />
+
+      <NameDialog visible={nameDialogVisible} onConfirm={handleSetName} />
     </GestureHandlerRootView>
   );
 };

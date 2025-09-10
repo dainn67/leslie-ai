@@ -1,5 +1,6 @@
 export type UserProgress = {
   id: string;
+  userName: string;
   level: string;
   target: string;
   startDate: number;
@@ -12,6 +13,7 @@ export const createUserProgress = (partial?: Partial<UserProgress>): UserProgres
   const now = Date.now();
   return {
     id: partial?.id ?? `user_progress_${Date.now()}`,
+    userName: partial?.userName ?? "",
     level: partial?.level ?? "",
     target: partial?.target ?? "",
     startDate: partial?.startDate ?? now,
