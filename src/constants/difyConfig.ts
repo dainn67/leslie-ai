@@ -4,5 +4,9 @@ export const DifyConfig = {
   typeMessageEnd: "message_end",
 
   delimiter: "--//--",
+  setExamDateActionId: "ed1",
+  unknownExamDateActionId: "ed2",
+  setLevelActionId: "l",
+  setTargetActionId: "t",
   mainChatbotConversationId: "leslie",
 };

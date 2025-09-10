@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { createUserProgress, UserProgress } from '../../models/userProgress';
-import { UserProgressService } from '../../core/service';
-import { normalizeDate } from '../../utils';
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createUserProgress, UserProgress } from "../../models/userProgress";
+import { UserProgressService } from "../../core/service";
+import { normalizeDate } from "../../utils";
 
 interface UserProgressState {
   userProgress: UserProgress;
@@ -11,14 +11,15 @@ const initialState: UserProgressState = {
   userProgress: createUserProgress(),
 };
 
+// Thunks
+export const loadUserProgress = createAsyncThunk("userProgress/load", async () => {
+  return await UserProgressService.getUserProgressFromStorage();
+});
+
 const userProgressSlice = createSlice({
-  name: 'userProgress',
+  name: "userProgress",
   initialState,
   reducers: {
-    setUserProgress: (state, action: PayloadAction<UserProgress>) => {
-      state.userProgress = { ...action.payload };
-      UserProgressService.setUserProgressToStorage(state.userProgress);
-    },
     updateUserProgress: (state, action: PayloadAction<Partial<UserProgress>>) => {
       const { analytic, ...rest } = action.payload;
 
@@ -33,14 +34,19 @@ const userProgressSlice = createSlice({
       }
 
       state.userProgress.lastUpdated = Date.now();
+
       UserProgressService.setUserProgressToStorage(state.userProgress);
     },
     clearUserProgress: (state) => {
-      state.userProgress = initialState.userProgress;
-      UserProgressService.setUserProgressToStorage(state.userProgress);
+      state.userProgress = createUserProgress();
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(loadUserProgress.fulfilled, (state, action: PayloadAction<UserProgress>) => {
+      state.userProgress = action.payload;
+    });
   },
 });
 
-export const { setUserProgress, updateUserProgress, clearUserProgress } = userProgressSlice.actions;
+export const { updateUserProgress, clearUserProgress } = userProgressSlice.actions;
 export default userProgressSlice.reducer;

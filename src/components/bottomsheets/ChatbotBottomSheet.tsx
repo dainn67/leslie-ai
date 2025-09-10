@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { View, StyleSheet, Modal, TouchableWithoutFeedback, Dimensions, TouchableOpacity } from "react-native";
 import { AppConfig } from "../../constants/appConfig";
 import { CustomText } from "../text/customText";
@@ -6,7 +6,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { createChatMessage, MessageStatus } from "../../models/chatMessage";
 import {
-  addLoading,
   addMessage,
   clearChat,
   getDifyConversationIdByCID,
@@ -55,7 +54,7 @@ export const ChatbotBottomSheet: React.FC<ChatbotBottomSheetProps> = ({ visible,
     }
   }, [visible, messages.length]);
 
-  const onClickAction = (title: string, actionId?: string) => {
+  const onClickAction = (title: string) => {
     const userMessage = createChatMessage({ fullText: title });
 
     dispatch(addMessage({ cid: questionId, message: userMessage }));
