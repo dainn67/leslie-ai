@@ -73,12 +73,11 @@ export const ChatbotScreen = () => {
           setInitialized(true);
 
           // Add initial message
-          dispatch(addLoading({}));
           ChatbotService.sendStreamMessage({
             messages: messages,
             userProgress: userProgress,
             conversationSummary,
-            conversationId: difyConversationId,
+            difyConversationId,
             dispatch,
           });
         }
@@ -88,12 +87,11 @@ export const ChatbotScreen = () => {
       AsyncStorageService.getTheme().then((scheme) => dispatch(setTheme(scheme)));
     } else if (messages.length === 0) {
       // Add loading message when clear
-      dispatch(addLoading({}));
       ChatbotService.sendStreamMessage({
         messages: messages,
         userProgress: userProgress,
         conversationSummary,
-        conversationId: difyConversationId,
+        difyConversationId,
         dispatch,
       });
     }
@@ -117,13 +115,12 @@ export const ChatbotScreen = () => {
     const userMessage = createChatMessage({ fullText: data });
 
     dispatch(addMessage({ message: userMessage }));
-    dispatch(addLoading({}));
 
     ChatbotService.sendStreamMessage({
       message: data,
       messages: messages,
       conversationSummary,
-      conversationId: difyConversationId,
+      difyConversationId,
       userProgress: userProgress,
       dispatch,
     });
@@ -153,14 +150,13 @@ export const ChatbotScreen = () => {
         dispatch(updateUserProgress({ examDate: 0 }));
         const userMessage = createChatMessage({ fullText: title });
         dispatch(addMessage({ message: userMessage }));
-        dispatch(addLoading({}));
 
         ChatbotService.sendStreamMessage({
           messages: messages,
           actionId: actionId,
           userProgress: createTmpUserProgress(userProgress, { level: userLevel, target: userTarget, examDate: 0 }),
           conversationSummary,
-          conversationId: difyConversationId,
+          difyConversationId,
           dispatch,
         });
 
@@ -177,7 +173,6 @@ export const ChatbotScreen = () => {
     const userMessage = createChatMessage({ fullText: title });
 
     dispatch(addMessage({ message: userMessage }));
-    dispatch(addLoading({}));
 
     ChatbotService.sendStreamMessage({
       message: title,
@@ -188,7 +183,7 @@ export const ChatbotScreen = () => {
         target: userTarget.length > 0 ? userTarget : userProgress.target,
       }),
       conversationSummary,
-      conversationId: difyConversationId,
+      difyConversationId,
       dispatch,
     });
   };
@@ -206,21 +201,18 @@ export const ChatbotScreen = () => {
 
     const userMessage = createChatMessage({ fullText: dateString });
     dispatch(addMessage({ message: userMessage }));
-    dispatch(addLoading({}));
 
     ChatbotService.sendStreamMessage({
       messages: messages,
       userProgress: createTmpUserProgress(userProgress, { examDate: selectedDate.getTime() }),
       conversationSummary,
-      conversationId: difyConversationId,
+      difyConversationId,
       dispatch,
     });
   };
 
   const handleAnalyze = (summary: string) => {
     setTimeout(() => {
-      dispatch(addLoading({}));
-
       // Analyze chat game
       ChatbotService.sendStreamMessage({
         message: summary,
@@ -228,7 +220,7 @@ export const ChatbotScreen = () => {
         userProgress: userProgress,
         analyzeChatGame: true,
         conversationSummary,
-        conversationId: difyConversationId,
+        difyConversationId,
         dispatch,
       });
 

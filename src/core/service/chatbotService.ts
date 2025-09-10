@@ -10,6 +10,7 @@ import {
   updateLastMessageData,
   updateConversationId,
   updateConversationSummary,
+  addLoading,
 } from "../../features/chatbot/slice/chatbotSlice";
 import { MessageType, ChatMessage, MessageStatus, Sender } from "../../models/chatMessage";
 import { Question, createQuestionString, createQuestion } from "../../models/question";
@@ -198,7 +199,8 @@ export class ChatbotService {
     userProgress,
     analyzeChatGame,
     conversationSummary,
-    conversationId,
+    questionId,
+    difyConversationId,
     question,
     dispatch,
   }: {
@@ -209,13 +211,16 @@ export class ChatbotService {
     conversationSummary?: string;
     actionId?: string;
     analyzeChatGame?: boolean;
-    conversationId?: string;
+    questionId?: string;
+    difyConversationId?: string;
     question?: Question;
     userProgress?: UserProgress;
     dispatch: AppDispatch;
   }) => {
     // Called at 2 places: Main chatbot and question chatbot assistant
     // Differentiate by passed in question
+
+    dispatch(addLoading({ cid: questionId }));
 
     const token = question ? DIFY_ASSISTANT_API_KEY : DIFY_CHAT_API_KEY;
 
@@ -263,7 +268,7 @@ export class ChatbotService {
           question_string: questionString,
           user_progress_string: userProgressString,
         },
-        conversation_id: conversationId,
+        conversation_id: difyConversationId,
         response_mode: "streaming",
         user: user,
         auto_generate_name: false,

@@ -9,7 +9,6 @@ import { DrawerParamList } from "../../app/DrawerNavigator";
 import { useAppTheme } from "../../theme";
 import { DiscordService, DiscordWebhookType } from "../../core/service/discordService";
 import { ToastService } from "../../core/service/toastService";
-import { AppConfig } from "../../constants/appConfig";
 import { FirebaseConstants } from "../../constants";
 import { FirebaseService } from "../../core/service";
 import { useAppSelector } from "../../hooks/hooks";
