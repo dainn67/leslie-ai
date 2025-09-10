@@ -16,37 +16,58 @@ export const loadUserProgress = createAsyncThunk("userProgress/load", async () =
   return await UserProgressService.getUserProgressFromStorage();
 });
 
+export const updateUserProgress = createAsyncThunk(
+  "userProgress/updateUserProgress",
+  async (payload: Partial<UserProgress>, { getState }) => {
+    const state = getState() as { userProgress: UserProgressState };
+    const current = state.userProgress.userProgress;
+
+    const { analytic, ...rest } = payload;
+
+    let updatedUserProgress = { ...current, ...rest };
+
+    if (analytic) {
+      const now = normalizeDate(new Date());
+      updatedUserProgress = {
+        ...updatedUserProgress,
+        analytic: {
+          ...updatedUserProgress.analytic,
+          [now]: analytic,
+        },
+      };
+    }
+
+    updatedUserProgress.lastUpdated = Date.now();
+
+    // Persist async
+    await UserProgressService.setUserProgressToStorage(updatedUserProgress);
+
+    return updatedUserProgress;
+  }
+);
+
+export const clearUserProgress = createAsyncThunk("userProgress/clearUserProgress", async (partial?: Partial<UserProgress>) => {
+  const newProgress = createUserProgress(partial);
+  await UserProgressService.setUserProgressToStorage(newProgress);
+  return newProgress;
+});
+
 const userProgressSlice = createSlice({
   name: "userProgress",
   initialState,
-  reducers: {
-    updateUserProgress: (state, action: PayloadAction<Partial<UserProgress>>) => {
-      const { analytic, ...rest } = action.payload;
-
-      state.userProgress = { ...state.userProgress, ...rest };
-
-      if (analytic) {
-        const now = normalizeDate(new Date());
-        state.userProgress.analytic = {
-          ...state.userProgress.analytic,
-          [now]: analytic,
-        };
-      }
-
-      state.userProgress.lastUpdated = Date.now();
-
-      UserProgressService.setUserProgressToStorage(state.userProgress);
-    },
-    clearUserProgress: (state) => {
-      state.userProgress = createUserProgress();
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(loadUserProgress.fulfilled, (state, action: PayloadAction<UserProgress>) => {
-      state.userProgress = action.payload;
-    });
+    builder
+      .addCase(loadUserProgress.fulfilled, (state, action: PayloadAction<UserProgress>) => {
+        state.userProgress = action.payload;
+      })
+      .addCase(updateUserProgress.fulfilled, (state, action: PayloadAction<UserProgress>) => {
+        state.userProgress = action.payload;
+      })
+      .addCase(clearUserProgress.fulfilled, (state, action: PayloadAction<UserProgress>) => {
+        state.userProgress = action.payload;
+      });
   },
 });
 
-export const { updateUserProgress, clearUserProgress } = userProgressSlice.actions;
 export default userProgressSlice.reducer;

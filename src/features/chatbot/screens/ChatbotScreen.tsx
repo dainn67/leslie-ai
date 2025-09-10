@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -52,15 +52,21 @@ export const ChatbotScreen = () => {
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const [nameDialogVisible, setNameDialogVisible] = useState(false);
 
+  const initilized = useRef(false);
+
   // Initial message when first open / clear chat
   useEffect(() => {
-    if (userProgress.userName.length === 0) {
-      // Get username
-      setNameDialogVisible(true);
-    } else {
+    if (!initilized.current) {
+      if (userProgress.userName.length === 0) {
+        setNameDialogVisible(true);
+      } else {
+        handleSend({ text: "", noUserMessage: true });
+        initilized.current = true;
+      }
+    } else if (messages.length === 0) {
       handleSend({ text: "", noUserMessage: true });
     }
-  }, []);
+  }, [messages.length]);
 
   // If open chatbot screen from another screen
   useEffect(() => {
@@ -81,12 +87,14 @@ export const ChatbotScreen = () => {
     analyzeChatGame = false,
     actionId,
     newUserProgress,
+    isSetupFinished = false,
   }: {
     text?: string;
     noUserMessage?: boolean;
     analyzeChatGame?: boolean;
     actionId?: string;
     newUserProgress?: UserProgress;
+    isSetupFinished?: boolean;
   }) => {
     const message = (text ?? "").trim();
     const userMessage = createChatMessage({ fullText: message });
@@ -95,7 +103,7 @@ export const ChatbotScreen = () => {
     if (!noUserMessage) dispatch(addMessage({ message: userMessage }));
 
     ChatbotService.sendStreamMessage({
-      message: !noUserMessage ? message : undefined,
+      message: noUserMessage || isSetupFinished ? undefined : message,
       messages,
       conversationSummary,
       difyConversationId,
@@ -112,9 +120,8 @@ export const ChatbotScreen = () => {
       title: title,
     });
 
-    let userLevel = userProgress.level;
-    let userTarget = userProgress.target;
-
+    let updatedData = {};
+    let skipExamDate = false;
     if (actionId) {
       if (actionId.startsWith(DifyConfig.setExamDateActionId)) {
         FirebaseService.logEvent(FirebaseConstants.OPEN_EXAM_DATE_PICKER);
@@ -122,27 +129,21 @@ export const ChatbotScreen = () => {
         return;
       } else if (actionId.startsWith(DifyConfig.unknownExamDateActionId)) {
         FirebaseService.logEvent(FirebaseConstants.SKIP_EXAM_DATE);
-        dispatch(updateUserProgress({ examDate: 0 }));
-
-        handleSend({ text: title, actionId, newUserProgress: createTmpUserProgress(userProgress, { examDate: 0 }) });
-
-        return;
+        updatedData = { examDate: 0 };
+        skipExamDate = true;
       } else if (actionId.startsWith(DifyConfig.setLevelActionId)) {
-        userLevel = parseLevelActionId(actionId);
-        dispatch(updateUserProgress({ level: userLevel }));
+        updatedData = { level: parseLevelActionId(actionId) };
       } else if (actionId.startsWith(DifyConfig.setTargetActionId)) {
-        userTarget = parseTargetActionId(actionId);
-        dispatch(updateUserProgress({ target: userTarget }));
+        updatedData = { target: parseTargetActionId(actionId) };
       }
     }
 
+    dispatch(updateUserProgress(updatedData));
     handleSend({
       text: title,
       actionId,
-      newUserProgress: createTmpUserProgress(userProgress, {
-        level: userLevel.length > 0 ? userLevel : userProgress.level,
-        target: userTarget.length > 0 ? userTarget : userProgress.target,
-      }),
+      newUserProgress: createTmpUserProgress(userProgress, updatedData),
+      isSetupFinished: skipExamDate,
     });
   };
 
@@ -157,7 +158,11 @@ export const ChatbotScreen = () => {
 
     dispatch(updateUserProgress({ examDate: selectedDate.getTime() }));
 
-    handleSend({ text: dateString, newUserProgress: createTmpUserProgress(userProgress, { examDate: selectedDate.getTime() }) });
+    handleSend({
+      text: dateString,
+      newUserProgress: createTmpUserProgress(userProgress, { examDate: selectedDate.getTime() }),
+      isSetupFinished: true,
+    });
   };
 
   const handleAnalyze = (summary: string) => {
@@ -195,6 +200,8 @@ export const ChatbotScreen = () => {
   const handleSetName = (name: string) => {
     dispatch(updateUserProgress({ userName: name }));
     setNameDialogVisible(false);
+    handleSend({ text: "", noUserMessage: true });
+    initilized.current = true;
   };
 
   const handleDevClick = () => {
