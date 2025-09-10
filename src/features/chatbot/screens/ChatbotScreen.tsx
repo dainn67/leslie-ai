@@ -13,7 +13,7 @@ import { createChatMessage, MessageStatus } from "../../../models/chatMessage";
 import { MyDatePicker } from "../../../components/datePicker/MyDatePicker";
 import { convertDateToDDMMYYYY, normalizeDate } from "../../../utils/utils";
 import { DrawerParamList, MainStackParamList } from "../../../app/DrawerNavigator";
-import { createTmpUserProgress } from "../../../models/userProgress";
+import { createTmpUserProgress, UserProgress } from "../../../models/userProgress";
 import {
   getMessagesByCID,
   getDifyConversationIdByCID,
@@ -52,48 +52,56 @@ export const ChatbotScreen = () => {
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const [nameDialogVisible, setNameDialogVisible] = useState(false);
 
-  // Load user progress and add initial message when first open or clear
+  // Initial message when first open / clear chat
   useEffect(() => {
     if (userProgress.userName.length === 0) {
       // Get username
       setNameDialogVisible(true);
     } else {
-      // Add initial message
-      ChatbotService.sendStreamMessage({
-        messages: messages,
-        userProgress: userProgress,
-        conversationSummary,
-        difyConversationId,
-        dispatch,
-      });
+      handleSend({ text: "", noUserMessage: true });
     }
   }, []);
 
   // If open chatbot screen from another screen
   useEffect(() => {
-    if (initialMessage) handleSend(initialMessage);
+    if (initialMessage) handleSend({ text: initialMessage });
   }, [initialMessage]);
 
-  const handleManuallySend = (message: string) => {
+  const handleManuallySend = (text: string) => {
     FirebaseService.logEvent(FirebaseConstants.MESSAGE_SENT, {
-      message: message,
+      message: text,
     });
 
-    handleSend(message);
+    handleSend({ text });
   };
 
-  const handleSend = (message: string) => {
-    const data = message.trim();
-    const userMessage = createChatMessage({ fullText: data });
+  const handleSend = ({
+    text,
+    noUserMessage = false,
+    analyzeChatGame = false,
+    actionId,
+    newUserProgress,
+  }: {
+    text?: string;
+    noUserMessage?: boolean;
+    analyzeChatGame?: boolean;
+    actionId?: string;
+    newUserProgress?: UserProgress;
+  }) => {
+    const message = (text ?? "").trim();
+    const userMessage = createChatMessage({ fullText: message });
 
-    dispatch(addMessage({ message: userMessage }));
+    // noUserMessage is for initial messages, analyze messages
+    if (!noUserMessage) dispatch(addMessage({ message: userMessage }));
 
     ChatbotService.sendStreamMessage({
-      message: data,
-      messages: messages,
+      message: !noUserMessage ? message : undefined,
+      messages,
       conversationSummary,
       difyConversationId,
-      userProgress: userProgress,
+      userProgress: newUserProgress ?? userProgress,
+      analyzeChatGame,
+      actionId,
       dispatch,
     });
   };
@@ -115,17 +123,8 @@ export const ChatbotScreen = () => {
       } else if (actionId.startsWith(DifyConfig.unknownExamDateActionId)) {
         FirebaseService.logEvent(FirebaseConstants.SKIP_EXAM_DATE);
         dispatch(updateUserProgress({ examDate: 0 }));
-        const userMessage = createChatMessage({ fullText: title });
-        dispatch(addMessage({ message: userMessage }));
 
-        ChatbotService.sendStreamMessage({
-          messages: messages,
-          actionId: actionId,
-          userProgress: createTmpUserProgress(userProgress, { level: userLevel, target: userTarget, examDate: 0 }),
-          conversationSummary,
-          difyConversationId,
-          dispatch,
-        });
+        handleSend({ text: title, actionId, newUserProgress: createTmpUserProgress(userProgress, { examDate: 0 }) });
 
         return;
       } else if (actionId.startsWith(DifyConfig.setLevelActionId)) {
@@ -137,21 +136,13 @@ export const ChatbotScreen = () => {
       }
     }
 
-    const userMessage = createChatMessage({ fullText: title });
-
-    dispatch(addMessage({ message: userMessage }));
-
-    ChatbotService.sendStreamMessage({
-      message: title,
-      messages: messages,
-      actionId: actionId,
-      userProgress: createTmpUserProgress(userProgress, {
+    handleSend({
+      text: title,
+      actionId,
+      newUserProgress: createTmpUserProgress(userProgress, {
         level: userLevel.length > 0 ? userLevel : userProgress.level,
         target: userTarget.length > 0 ? userTarget : userProgress.target,
       }),
-      conversationSummary,
-      difyConversationId,
-      dispatch,
     });
   };
 
@@ -166,30 +157,13 @@ export const ChatbotScreen = () => {
 
     dispatch(updateUserProgress({ examDate: selectedDate.getTime() }));
 
-    const userMessage = createChatMessage({ fullText: dateString });
-    dispatch(addMessage({ message: userMessage }));
-
-    ChatbotService.sendStreamMessage({
-      messages: messages,
-      userProgress: createTmpUserProgress(userProgress, { examDate: selectedDate.getTime() }),
-      conversationSummary,
-      difyConversationId,
-      dispatch,
-    });
+    handleSend({ text: dateString, newUserProgress: createTmpUserProgress(userProgress, { examDate: selectedDate.getTime() }) });
   };
 
   const handleAnalyze = (summary: string) => {
     setTimeout(() => {
       // Analyze chat game
-      ChatbotService.sendStreamMessage({
-        message: summary,
-        messages: messages,
-        userProgress: userProgress,
-        analyzeChatGame: true,
-        conversationSummary,
-        difyConversationId,
-        dispatch,
-      });
+      handleSend({ text: summary, noUserMessage: true, analyzeChatGame: true });
 
       // Analyze overtime progress
       ChatbotService.sendMessage({
@@ -224,9 +198,6 @@ export const ChatbotScreen = () => {
   };
 
   const handleDevClick = () => {
-    // deleteAllTables();
-    // dispatch(clearUserProgress());
-
     AsyncStorageService.resetOnboardingCompleted();
   };
 
