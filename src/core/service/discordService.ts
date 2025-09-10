@@ -27,7 +27,7 @@ export class DiscordService {
       allowed_mentions: { parse: [] },
       embeds: [
         {
-          title: title,
+          title: `Username: ${username || "Unknown"}`,
           color: color,
           fields: [
             {
@@ -37,10 +37,6 @@ export class DiscordService {
             {
               name: "Version",
               value: `${AppConfig.version} (${AppConfig.buildVersion})`,
-            },
-            {
-              name: "User",
-              value: username || "Unknown",
             },
           ],
           timestamp: new Date().toISOString(),
