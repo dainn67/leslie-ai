@@ -9,7 +9,7 @@ export enum DiscordWebhookType {
 }
 
 export class DiscordService {
-  static sendDiscordMessage({ message, type }: { message: string; type: DiscordWebhookType }) {
+  static sendDiscordMessage({ username, message, type }: { username?: string; message: string; type: DiscordWebhookType }) {
     const webhookUrl = type === DiscordWebhookType.ERROR ? DISCORD_ERROR_WEBHOOKS : DISCORD_FEEDBACK_WEBHOOKS;
 
     const title = type === DiscordWebhookType.ERROR ? "App Report" : "App Feedback";
@@ -22,7 +22,7 @@ export class DiscordService {
     }
 
     const payload = {
-      username: "Dainn",
+      username: username ?? "Unknown user",
       allowed_mentions: { parse: [] },
       embeds: [
         {

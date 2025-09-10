@@ -12,11 +12,13 @@ import { ToastService } from "../../core/service/toastService";
 import { AppConfig } from "../../constants/appConfig";
 import { FirebaseConstants } from "../../constants";
 import { FirebaseService } from "../../core/service";
+import { useAppSelector } from "../../hooks/hooks";
 
 export const FeedbackScreen = () => {
   const categories = ["Nội dung", "Trải nghiệm", "Giao diện", "Lỗi", "Tính năng", "Khác"];
 
   const { colors } = useAppTheme();
+  const userProgress = useAppSelector((state) => state.userProgress.userProgress);
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [message, setMessage] = useState("");
@@ -30,6 +32,7 @@ export const FeedbackScreen = () => {
 
   const handleSubmit = () => {
     DiscordService.sendDiscordMessage({
+      username: userProgress.userName,
       message: `Categories: ${selectedCategories.join(", ")}\nMessage: ${message.trim()}\nApp Version: ${AppConfig.version} (${AppConfig.buildVersion})`,
       type: DiscordWebhookType.FEEDBACK,
     });
@@ -47,14 +50,12 @@ export const FeedbackScreen = () => {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <AppBar title="Phản hồi" leftIcon={<Ionicons name="menu" size={24} color="white" />} onLeftPress={handleOpenDrawer} />
-      
+
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
           <Text style={[styles.title, { color: colors.text }]}>Chia sẻ ý kiến của bạn</Text>
-          <Text style={[styles.subtitle, { color: colors.placeholder }]}>
-            Phản hồi của bạn giúp chúng tôi cải thiện ứng dụng
-          </Text>
+          <Text style={[styles.subtitle, { color: colors.placeholder }]}>Phản hồi của bạn giúp chúng tôi cải thiện ứng dụng</Text>
         </View>
 
         {/* Categories */}
@@ -72,15 +73,10 @@ export const FeedbackScreen = () => {
                     {
                       backgroundColor: selected ? colors.primary : colors.backgroundSecondary,
                       borderColor: selected ? colors.primary : colors.placeholder,
-                    }
+                    },
                   ]}
                 >
-                  <Text style={[
-                    styles.categoryText,
-                    { color: selected ? colors.textOnPrimary : colors.text }
-                  ]}>
-                    {category}
-                  </Text>
+                  <Text style={[styles.categoryText, { color: selected ? colors.textOnPrimary : colors.text }]}>{category}</Text>
                 </Pressable>
               );
             })}
