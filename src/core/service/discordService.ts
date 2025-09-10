@@ -1,5 +1,6 @@
 import Constants from "expo-constants";
 import { ApiClient } from "../../api/apiClient";
+import { AppConfig } from "../../constants";
 
 const { DISCORD_ERROR_WEBHOOKS, DISCORD_FEEDBACK_WEBHOOKS } = Constants.expoConfig?.extra ?? {};
 
@@ -22,7 +23,7 @@ export class DiscordService {
     }
 
     const payload = {
-      username: username ?? "Unknown user",
+      username: title,
       allowed_mentions: { parse: [] },
       embeds: [
         {
@@ -33,8 +34,15 @@ export class DiscordService {
               name: subtitle,
               value: message,
             },
+            {
+              name: "Version",
+              value: `${AppConfig.version} (${AppConfig.buildVersion})`,
+            },
+            {
+              name: "User",
+              value: username || "Unknown",
+            },
           ],
-          //   footer: { text: `Review ID: ${r.reviewId}` },
           timestamp: new Date().toISOString(),
         },
       ],
