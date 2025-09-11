@@ -314,7 +314,7 @@ export class ChatbotService {
 
           // Log errors
           DiscordService.sendDiscordMessage({
-            message: `SSE error: ${error}`,
+            message: `SSE error: ${JSON.stringify(error)}`,
             type: DiscordWebhookType.ERROR,
           });
         }
@@ -437,7 +437,7 @@ export class ChatbotService {
         console.log("SSE error", error);
         if (!hasError) hasError = true;
         DiscordService.sendDiscordMessage({
-          message: `SSE error: ${error}`,
+          message: `SSE error: ${JSON.stringify(error)}`,
           type: DiscordWebhookType.ERROR,
         });
       },
