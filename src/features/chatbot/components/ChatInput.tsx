@@ -60,7 +60,7 @@ export const ChatInput = ({ disable, placeHolderText, onSend }: ChatInputProps) 
             onPress={handleSend}
             activeOpacity={0.8}
           >
-            <Ionicons name="send" size={18} color={message.length > 0 && !disable ? colors.text : colors.placeholder} />
+            <Ionicons name="send" size={18} color={'white'} />
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -123,7 +123,7 @@ const getStyles = (message: string, colors: any) =>
     },
     sendButton: {
       marginLeft: 12,
-      backgroundColor: message.length > 0 ? colors.secondary : colors.secondary,
+      backgroundColor: message.length > 0 ? colors.primary : colors.secondary,
       width: 48,
       height: 48,
       borderRadius: 24,
