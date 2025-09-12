@@ -17,11 +17,6 @@ export class DiscordService {
     const subtitle = type === DiscordWebhookType.ERROR ? "Error" : "Feedback";
     const color = type === DiscordWebhookType.ERROR ? 16711680 : 16711680;
 
-    if (!webhookUrl) {
-      console.error("DISCORD_WEBHOOK_URL is not set");
-      return;
-    }
-
     const payload = {
       username: title,
       allowed_mentions: { parse: [] },

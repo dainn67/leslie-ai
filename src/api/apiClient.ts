@@ -1,4 +1,5 @@
 import axios from "axios";
+import { DiscordService, DiscordWebhookType } from "../core/service";
 
 export class ApiClient {
   static postData = async ({ url, headers, token, body }: { url: string; token?: string; body: any; headers?: any }) => {
@@ -13,6 +14,10 @@ export class ApiClient {
       return response.data;
     } catch (error) {
       console.log("apiClient error:", error, (error as any).response?.data);
+      DiscordService.sendDiscordMessage({
+        message: `apiClient error: ${JSON.stringify(error)}`,
+        type: DiscordWebhookType.ERROR,
+      });
       return null;
     }
   };

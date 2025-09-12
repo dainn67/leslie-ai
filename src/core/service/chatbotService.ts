@@ -1,5 +1,5 @@
-import { DiscordService, DiscordWebhookType } from "./discordService";
 import Constants from "expo-constants";
+import { DiscordService, DiscordWebhookType } from "./discordService";
 import { UserProgressService } from "./userProgressSerivice";
 import { ApiClient } from "../../api/apiClient";
 import { connectSSE } from "../../api/sseClient";
@@ -385,7 +385,7 @@ export class ChatbotService {
     if (message) {
       ChatbotService.sendMessage({
         message: message ?? "",
-        type: "extract_context",
+        type: "context",
       }).then((result) => {
         dispatch(updateConversationSummary({ cid: cid, conversationSummary: result }));
       });
@@ -480,10 +480,10 @@ export class ChatbotService {
     data,
   }: {
     message: string;
-    type: "extract_context" | "analyze_progress";
+    type: "context" | "progress";
     data?: { [key: string]: any };
   }) => {
-    const token = type === "extract_context" ? DIFY_EXTRACT_CONTEXT_API_KEY : DIFY_ANALYZE_PROGRESS_API_KEY;
+    const token = type === "context" ? DIFY_EXTRACT_CONTEXT_API_KEY : DIFY_ANALYZE_PROGRESS_API_KEY;
 
     const result = await ApiClient.postData({
       url: ApiConfig.difyServerUrl,
@@ -496,6 +496,8 @@ export class ChatbotService {
         auto_generate_name: false,
       },
     });
+
+    console.log("result", result?.["answer"]?.trim());
 
     return result?.["answer"]?.trim() || "";
   };

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Modal, TouchableOpacity, View, StyleSheet, Dimensions, TextInput } from "react-native";
+import { Modal, View, StyleSheet, Dimensions, TextInput } from "react-native";
 import { useAppTheme } from "../../../theme";
 import { Ionicons } from "@expo/vector-icons";
 import { CustomText } from "../../../components/text/customText";

@@ -173,12 +173,12 @@ export const ChatbotScreen = () => {
       // Analyze overtime progress
       ChatbotService.sendMessage({
         message: summary,
-        type: "analyze_progress",
+        type: "progress",
         data: {
           level: userProgress.level,
           target: userProgress.target,
           exam_date: userProgress.examDate ? convertDateToDDMMYYYY(userProgress.examDate) : "",
-          prev_analytic: userProgress.analytic[normalizeDate(new Date())],
+          prev_analytic: userProgress.analytic[normalizeDate(new Date())].toString(),
           current_date: convertDateToDDMMYYYY(new Date()),
         },
       }).then((result) => {
@@ -198,6 +198,8 @@ export const ChatbotScreen = () => {
   };
 
   const handleSetName = (name: string) => {
+    FirebaseService.logEvent(FirebaseConstants.ENTER_NAME, { name: name });
+
     dispatch(updateUserProgress({ userName: name }));
     setNameDialogVisible(false);
     handleSend({ text: "", noUserMessage: true });
