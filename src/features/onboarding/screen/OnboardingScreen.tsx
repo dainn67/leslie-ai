@@ -119,7 +119,7 @@ const OnboardingScreen: React.FC = () => {
       {/* Next Button */}
       <View style={styles.buttonContainer}>
         <MainButton
-          title={currentIndex === onboardingData.length - 1 ? "Bắt đầu" : "Tiếp theo"}
+          title={currentIndex === onboardingData.length - 1 ? "Bắt đầu ngay" : "Tiếp theo"}
           onPress={handleNext}
           style={styles.nextButton}
         />

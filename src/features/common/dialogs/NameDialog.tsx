@@ -14,9 +14,9 @@ interface NameDialogProps {
 }
 
 export const NameDialog = ({
-  title = "Nhập tên của bạn",
+  title = "こんにちは! Tên bạn là gì nhỉ ?",
   placeholder = "Tên của bạn...",
-  confirmText = "Xác nhận",
+  confirmText = "Tiếp tục",
   visible,
   onConfirm,
 }: NameDialogProps) => {
