@@ -23,18 +23,18 @@ interface OnboardingData {
 const onboardingData: OnboardingData[] = [
   {
     id: "1",
-    title: `Chào mừng đến với ${AppConfig.name}`,
-    subtitle: "Luyện thi JLPT dễ dàng từng bước cùng Chatbot AI",
+    title: `${AppConfig.name}`,
+    subtitle: "Ôn thi JLPT cùng gia sư AI",
   },
   {
     id: "2",
-    title: "Học tập thông minh",
-    subtitle: "Bài học và bài tập được thiết kế phù hợp với tiến độ của bạn",
+    title: "Câu hỏi đa dạng",
+    subtitle: "Phù hợp với mọi trình độ",
   },
   {
     id: "3",
-    title: "Cá nhân hoá lộ trình",
-    subtitle: "Xây dựng kế hoạch học tập riêng để đạt mục tiêu nhanh hơn",
+    title: "Học tập cá nhân hoá",
+    subtitle: "Xây dựng kế hoạch học tập riêng",
   },
 ];
 
@@ -66,12 +66,12 @@ const OnboardingScreen: React.FC = () => {
         </View>
 
         {/* Title */}
-        <CustomText weight="Bold" size={28} style={[styles.title, { color: colors.text }]}>
+        <CustomText weight="Bold" size={32} style={[styles.title, { color: colors.text }]}>
           {item.title}
         </CustomText>
 
         {/* Subtitle */}
-        <CustomText weight="Regular" size={16} style={[styles.subtitle, { color: colors.placeholder }]}>
+        <CustomText weight="SemiBold" size={18} style={[styles.subtitle, { color: colors.text }]}>
           {item.subtitle}
         </CustomText>
       </View>
@@ -160,13 +160,14 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: "center",
-    marginBottom: 20,
-    lineHeight: 36,
+    marginBottom: 16,
+    lineHeight: 40,
   },
   subtitle: {
     textAlign: "center",
-    lineHeight: 24,
+    lineHeight: 26,
     paddingHorizontal: 20,
+    opacity: 0.8,
   },
   pagination: {
     flexDirection: "row",
