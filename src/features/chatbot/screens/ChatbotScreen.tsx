@@ -60,11 +60,12 @@ export const ChatbotScreen = () => {
       if (userProgress.userName.length === 0) {
         setNameDialogVisible(true);
       } else {
-        handleSend({ text: "", noUserMessage: true });
+        const actionId = userProgress.level ? DifyConfig.initChatActionId : DifyConfig.askLevelActionId;
+        handleSend({ noUserMessage: true, actionId });
         initilized.current = true;
       }
     } else if (messages.length === 0) {
-      handleSend({ text: "", noUserMessage: true });
+      handleSend({ noUserMessage: true, actionId: DifyConfig.initChatActionId });
     }
   }, [messages.length]);
 
@@ -87,7 +88,6 @@ export const ChatbotScreen = () => {
     analyzeChatGame = false,
     actionId,
     newUserProgress,
-    isSetupFinished = false,
   }: {
     text?: string;
     noUserMessage?: boolean;
@@ -96,14 +96,14 @@ export const ChatbotScreen = () => {
     newUserProgress?: UserProgress;
     isSetupFinished?: boolean;
   }) => {
-    const message = (text ?? "").trim();
+    const message = text;
     const userMessage = createChatMessage({ fullText: message });
 
     // noUserMessage is for initial messages, analyze messages
     if (!noUserMessage) dispatch(addMessage({ message: userMessage }));
 
     ChatbotService.sendStreamMessage({
-      message: noUserMessage || isSetupFinished ? undefined : message,
+      message,
       messages,
       conversationSummary,
       difyConversationId,
