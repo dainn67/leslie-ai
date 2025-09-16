@@ -528,20 +528,28 @@ export class ChatbotService {
   static extractSuggestedActions = (fullText: string) => {
     const splittedText = fullText.split(Delimiter);
     if (splittedText.length > 2) {
-      const suggestedActions = splittedText
-        .slice(1, -1) // Remove the response and the summary
-        .map((text) => {
-          // Split by "-" or ":"
-          let data = text.split("-");
-          if (data.length < 2) data = text.split(":");
-          if (data.length < 2) return { title: text };
+      const suggestedActions = splittedText.slice(1, -1) // Remove the response and the summary
 
-          const [id, title] = data;
-          return { id: id.trim(), title: title.trim() };
-        })
+      // In case all suggested actions are in ones
+      if (suggestedActions.length === 1) {
+        suggestedActions.length = 0;
+        suggestedActions.push(...splittedText[1].split("\n").map((t) => {
+          let text = t.trim();
+          if (text.startsWith("-") || text.startsWith("*")) text = text.slice(1).trim();
+          return text;
+        }));
+      }
+
+      return suggestedActions.map((text) => {
+        // Split by "-" or ":"
+        let data = text.split("-");
+        if (data.length < 2) data = text.split(":");
+        if (data.length < 2) return { title: text };
+
+        const [id, title] = data;
+        return { id: id.trim(), title: title.trim() };
+      })
         .filter((action) => action.title !== undefined && action.title !== null);
-
-      return suggestedActions;
     }
 
     return [];
