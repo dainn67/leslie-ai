@@ -124,13 +124,14 @@ export const ChatbotScreen = () => {
       // TODO: Implement suggest diagnostic test
       console.log("do diagnostic test");
       return;
-    } else if (result?.sendMessage) {
-      const updatedData = result.sendMessage;
-      dispatch(updateUserProgress(updatedData));
+    } else {
+      const updatedData = result?.sendMessage;
+      if (updatedData) dispatch(updateUserProgress(updatedData));
+
       handleSend({
         text: title,
         actionId,
-        newUserProgress: createTmpUserProgress(userProgress, updatedData),
+        newUserProgress: updatedData ? createTmpUserProgress(userProgress, updatedData) : undefined,
       });
     }
   };
