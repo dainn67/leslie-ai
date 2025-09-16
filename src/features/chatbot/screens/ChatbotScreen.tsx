@@ -114,27 +114,35 @@ export const ChatbotScreen = () => {
   };
 
   const handleClickAction = async (title: string, actionId?: string) => {
-    FirebaseService.logEvent(FirebaseConstants.ACTION_CLICKED, { actionId: actionId, title: title });
+    FirebaseService.logEvent(FirebaseConstants.ACTION_CLICKED, { actionId, title });
 
     let updatedData = {};
     let skipExamDate = false;
+
+
     if (actionId) {
-      if (actionId.startsWith(DifyConfig.setExamDateActionId)) {
+      let id = actionId.toLowerCase().trim();
+      if (id == DifyConfig.setExamDateActionId) {
         // Set exam date
         FirebaseService.logEvent(FirebaseConstants.OPEN_EXAM_DATE_PICKER);
         setDatePickerVisible(true);
         return;
-      } else if (actionId.startsWith(DifyConfig.unknownExamDateActionId)) {
+      } else if (id == DifyConfig.unknownExamDateActionId) {
         // Skip exam date
         FirebaseService.logEvent(FirebaseConstants.SKIP_EXAM_DATE);
         updatedData = { examDate: 0 };
         skipExamDate = true;
-      } else if (actionId.startsWith(DifyConfig.setBeginnerActionId)) {
+      } else if (id == DifyConfig.setBeginnerId) {
         // Set beginner level
         updatedData = { level: DifyConfig.levelBeginner };
-      } else if (actionId.startsWith(DifyConfig.setDiagnosticActionId)) {
+      } else if (id == DifyConfig.setSuggestDiagnostic) {
         // Suggest diagnostic test
         updatedData = { target: DifyConfig.levelUnknown };
+      } else if (id == DifyConfig.setDoDiagnostic) {
+        // Do diagnostic test
+        // TODO: Implement start diagnostic test
+        console.log("do diagnostic test");
+        return;
       }
     }
 

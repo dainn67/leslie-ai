@@ -10,8 +10,9 @@ export const DifyConfig = {
   setTargetActionId: "t",
   mainChatbotConversationId: "leslie",
 
-  setBeginnerActionId: "l0",
-  setDiagnosticActionId: "l1",
+  setBeginnerId: "l0",
+  setSuggestDiagnostic: "l1",
+  setDoDiagnostic: "d0",
 
   levelBeginner: "beginner",
   levelUnknown: "unknown",
