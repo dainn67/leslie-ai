@@ -24,7 +24,6 @@ import {
 import { useDialog } from "../../../core/providers";
 import { ChatMessageList, ChatInput } from "../components";
 import { ChatbotService, FirebaseService } from "../../../core/service";
-import { parseLevelActionId, parseTargetActionId } from "../../../utils";
 import { DifyConfig, FirebaseConstants } from "../../../constants";
 import { AsyncStorageService } from "../../../core/service/asyncStorageService";
 import { NameDialog } from "../../common/dialogs";
@@ -75,11 +74,11 @@ export const ChatbotScreen = () => {
   }, [initialMessage]);
 
   const handleManuallySend = (text: string) => {
-    FirebaseService.logEvent(FirebaseConstants.MESSAGE_SENT, {
-      message: text,
-    });
+    FirebaseService.logEvent(FirebaseConstants.MESSAGE_SENT, { message: text });
 
-    handleSend({ text });
+    // Use actionId if user haven't set level yet
+    const actionId = userProgress.level ? undefined : DifyConfig.askLevelActionId;
+    handleSend({ text, actionId });
   };
 
   const handleSend = ({
@@ -115,26 +114,27 @@ export const ChatbotScreen = () => {
   };
 
   const handleClickAction = async (title: string, actionId?: string) => {
-    FirebaseService.logEvent(FirebaseConstants.ACTION_CLICKED, {
-      actionId: actionId,
-      title: title,
-    });
+    FirebaseService.logEvent(FirebaseConstants.ACTION_CLICKED, { actionId: actionId, title: title });
 
     let updatedData = {};
     let skipExamDate = false;
     if (actionId) {
       if (actionId.startsWith(DifyConfig.setExamDateActionId)) {
+        // Set exam date
         FirebaseService.logEvent(FirebaseConstants.OPEN_EXAM_DATE_PICKER);
         setDatePickerVisible(true);
         return;
       } else if (actionId.startsWith(DifyConfig.unknownExamDateActionId)) {
+        // Skip exam date
         FirebaseService.logEvent(FirebaseConstants.SKIP_EXAM_DATE);
         updatedData = { examDate: 0 };
         skipExamDate = true;
-      } else if (actionId.startsWith(DifyConfig.setLevelActionId)) {
-        updatedData = { level: parseLevelActionId(actionId) };
-      } else if (actionId.startsWith(DifyConfig.setTargetActionId)) {
-        updatedData = { target: parseTargetActionId(actionId) };
+      } else if (actionId.startsWith(DifyConfig.setBeginnerActionId)) {
+        // Set beginner level
+        updatedData = { level: DifyConfig.levelBeginner };
+      } else if (actionId.startsWith(DifyConfig.setDiagnosticActionId)) {
+        // Suggest diagnostic test
+        updatedData = { target: DifyConfig.levelUnknown };
       }
     }
 
@@ -202,7 +202,7 @@ export const ChatbotScreen = () => {
 
     dispatch(updateUserProgress({ userName: name }));
     setNameDialogVisible(false);
-    handleSend({ text: "", noUserMessage: true });
+    handleSend({ noUserMessage: true, actionId: DifyConfig.askLevelActionId });
     initilized.current = true;
   };
 

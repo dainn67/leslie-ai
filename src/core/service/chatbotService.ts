@@ -497,8 +497,6 @@ export class ChatbotService {
       },
     });
 
-    console.log("result", result?.["answer"]?.trim());
-
     return result?.["answer"]?.trim() || "";
   };
 
