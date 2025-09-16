@@ -93,7 +93,6 @@ export const ChatbotScreen = () => {
     analyzeChatGame?: boolean;
     actionId?: string;
     newUserProgress?: UserProgress;
-    isSetupFinished?: boolean;
   }) => {
     const message = text;
     const userMessage = createChatMessage({ fullText: message });
@@ -116,43 +115,24 @@ export const ChatbotScreen = () => {
   const handleClickAction = async (title: string, actionId?: string) => {
     FirebaseService.logEvent(FirebaseConstants.ACTION_CLICKED, { actionId, title });
 
-    let updatedData = {};
-    let skipExamDate = false;
+    const result = ChatbotService.handleClickAction({ actionId });
 
-
-    if (actionId) {
-      let id = actionId.toLowerCase().trim();
-      if (id == DifyConfig.setExamDateActionId) {
-        // Set exam date
-        FirebaseService.logEvent(FirebaseConstants.OPEN_EXAM_DATE_PICKER);
-        setDatePickerVisible(true);
-        return;
-      } else if (id == DifyConfig.unknownExamDateActionId) {
-        // Skip exam date
-        FirebaseService.logEvent(FirebaseConstants.SKIP_EXAM_DATE);
-        updatedData = { examDate: 0 };
-        skipExamDate = true;
-      } else if (id == DifyConfig.setBeginnerId) {
-        // Set beginner level
-        updatedData = { level: DifyConfig.levelBeginner };
-      } else if (id == DifyConfig.setSuggestDiagnostic) {
-        // Suggest diagnostic test
-        updatedData = { target: DifyConfig.levelUnknown };
-      } else if (id == DifyConfig.setDoDiagnostic) {
-        // Do diagnostic test
-        // TODO: Implement start diagnostic test
-        console.log("do diagnostic test");
-        return;
-      }
+    if (result?.ui === "openDatePicker") {
+      setDatePickerVisible(true);
+    } else if (result?.ui === "doDiagnostic") {
+      // Suggest diagnostic test
+      // TODO: Implement suggest diagnostic test
+      console.log("do diagnostic test");
+      return;
+    } else if (result?.sendMessage) {
+      const updatedData = result.sendMessage;
+      dispatch(updateUserProgress(updatedData));
+      handleSend({
+        text: title,
+        actionId,
+        newUserProgress: createTmpUserProgress(userProgress, updatedData),
+      });
     }
-
-    dispatch(updateUserProgress(updatedData));
-    handleSend({
-      text: title,
-      actionId,
-      newUserProgress: createTmpUserProgress(userProgress, updatedData),
-      isSetupFinished: skipExamDate,
-    });
   };
 
   const handleSelectExamDate = (selectedDate: Date | undefined) => {
@@ -169,7 +149,6 @@ export const ChatbotScreen = () => {
     handleSend({
       text: dateString,
       newUserProgress: createTmpUserProgress(userProgress, { examDate: selectedDate.getTime() }),
-      isSetupFinished: true,
     });
   };
 

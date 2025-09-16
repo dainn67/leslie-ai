@@ -16,6 +16,8 @@ import { MessageType, ChatMessage, MessageStatus, Sender } from "../../models/ch
 import { Question, createQuestionString, createQuestion } from "../../models/question";
 import { UserProgress } from "../../models/userProgress";
 import { convertDateToDDMMYYYY } from "../../utils";
+import { FirebaseService } from ".";
+import { FirebaseConstants } from "../../constants";
 
 export const Delimiter = "--//--";
 
@@ -544,4 +546,32 @@ export class ChatbotService {
 
     return [];
   };
+
+  static handleClickAction = ({ actionId }: { actionId?: string }) => {
+    if (!actionId) return;
+
+    let id = actionId.toLowerCase().trim();
+    if (id === DifyConfig.setExamDateActionId) {
+      // Set exam date
+      FirebaseService.logEvent(FirebaseConstants.OPEN_EXAM_DATE_PICKER);
+      return { ui: "openDatePicker" }; // signal UI
+    }
+    if (id === DifyConfig.unknownExamDateActionId) {
+      // Skip exam date
+      FirebaseService.logEvent(FirebaseConstants.SKIP_EXAM_DATE);
+      return { sendMessage: { examDate: 0 } };
+    }
+    if (id === DifyConfig.setBeginnerId) {
+      // Set beginner level
+      return { sendMessage: { level: DifyConfig.levelBeginner } };
+    }
+    if (id === DifyConfig.setSuggestDiagnostic) {
+      // Suggest diagnostic test
+      return { sendMessage: { target: DifyConfig.levelUnknown } };
+    }
+    if (id === DifyConfig.setDoDiagnostic) {
+      // Do diagnostic test
+      return { ui: "doDiagnostic" };
+    }
+  }
 }
