@@ -9,4 +9,8 @@ export const DifyConfig = {
   setLevelActionId: "l",
   setTargetActionId: "t",
   mainChatbotConversationId: "leslie",
+
+  askLevelActionId: "ask_level",
+  askExamDateActionId: "ask_exam_date",
+  initChatbotActionId: "init",
 };

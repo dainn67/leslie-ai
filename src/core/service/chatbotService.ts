@@ -255,7 +255,7 @@ export class ChatbotService {
       url: ApiConfig.difyServerUrl,
       token: token,
       body: {
-        query: message ?? "<init>",
+        query: message ?? "none",
         inputs: {
           level: userLevel,
           target: userTarget,
