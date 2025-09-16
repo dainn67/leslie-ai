@@ -530,14 +530,18 @@ export class ChatbotService {
     if (splittedText.length > 2) {
       const suggestedActions = splittedText.slice(1, -1) // Remove the response and the summary
 
+      // Functions to trim spaces, new lines
+      const cleanText = (text: string) => text.replace(/^[\n\s]+|[\n\s]+$/g, "");
+
       // In case all suggested actions are in ones
       if (suggestedActions.length === 1) {
         suggestedActions.length = 0;
-        suggestedActions.push(...splittedText[1].split("\n").map((t) => {
-          let text = t.trim();
-          if (text.startsWith("-") || text.startsWith("*")) text = text.slice(1).trim();
+        const texts = cleanText(splittedText[1]).split("\n").map((t) => {
+          let text = cleanText(t);
+          if (text.startsWith("-") || text.startsWith("*")) text = cleanText(text.slice(1));
           return text;
-        }));
+        });
+        suggestedActions.push(...texts.filter((text) => text.length > 0));
       }
 
       return suggestedActions.map((text) => {
@@ -547,7 +551,7 @@ export class ChatbotService {
         if (data.length < 2) return { title: text };
 
         const [id, title] = data;
-        return { id: id.trim(), title: title.trim() };
+        return { id: cleanText(id), title: cleanText(title) };
       })
         .filter((action) => action.title !== undefined && action.title !== null);
     }
