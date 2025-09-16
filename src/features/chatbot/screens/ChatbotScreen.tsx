@@ -60,11 +60,12 @@ export const ChatbotScreen = () => {
       if (userProgress.userName.length === 0) {
         setNameDialogVisible(true);
       } else {
-        handleSend({ noUserMessage: true, actionId: DifyConfig.askLevelActionId });
+        const actionId = userProgress.level ? DifyConfig.initChatActionId : DifyConfig.askLevelActionId;
+        handleSend({ noUserMessage: true, actionId });
         initilized.current = true;
       }
     } else if (messages.length === 0) {
-      handleSend({ noUserMessage: true, actionId: DifyConfig.initChatbotActionId });
+      handleSend({ noUserMessage: true, actionId: DifyConfig.initChatActionId });
     }
   }, [messages.length]);
 

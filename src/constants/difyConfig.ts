@@ -12,5 +12,5 @@ export const DifyConfig = {
 
   askLevelActionId: "ask_level",
   askExamDateActionId: "ask_exam_date",
-  initChatbotActionId: "init",
+  initChatActionId: "init",
 };
