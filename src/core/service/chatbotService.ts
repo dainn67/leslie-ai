@@ -530,20 +530,16 @@ export class ChatbotService {
     if (splittedText.length > 2) {
       const suggestedActions = splittedText.slice(1, -1); // Remove the response and the summary
 
-      // Functions to trim spaces, new lines
-      const cleanText = (text: string) => text.replace(/^[\n\s]+|[\n\s]+$/g, "");
+      // Functions to trim spaces, new lines, -, *
+      const cleanText = (text: string) => text.replace(/^[\n\s\-\*]+|[\n\s\-\*]+$/g, "");
 
       // In case all suggested actions are in ones
       if (suggestedActions.length === 1) {
         suggestedActions.length = 0;
         const texts = cleanText(splittedText[1])
           .split("\n")
-          .map((t) => {
-            let text = cleanText(t);
-            if (text.startsWith("-") || text.startsWith("*")) text = cleanText(text.slice(1));
-            return text;
-          });
-        suggestedActions.push(...texts.filter((text) => text.length > 0));
+          .map((t) => cleanText(t));
+        suggestedActions.push(...texts.filter((text) => (text?.length ?? 0) > 0));
       }
 
       const res = suggestedActions
@@ -551,16 +547,12 @@ export class ChatbotService {
           // Split by "-" or ":"
           let data = text.split("-");
           if (data.length < 2) data = text.split(":");
-          if (data.length < 2) {
-            let cleanedText = cleanText(text);
-            if (cleanedText.startsWith("-") || cleanedText.startsWith("*")) cleanedText = cleanText(cleanedText.slice(1));
-            return { title: cleanedText };
-          }
+          if (data.length < 2) return { title: cleanText(text) };
 
           const [id, title] = data;
           return { id: cleanText(id), title: cleanText(title) };
         })
-        .filter((action) => action.title !== undefined && action.title !== null && action.title.length > 0);
+        .filter((action) => (action.title?.length ?? 0) > 0);
       return res;
     }
 
