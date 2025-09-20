@@ -12,7 +12,7 @@ import { updateUserProgress } from "../../userProgress/userProgressSlice";
 import { createChatMessage, MessageStatus } from "../../../models/chatMessage";
 import { MyDatePicker } from "../../../components/datePicker/MyDatePicker";
 import { convertDateToDDMMYYYY, normalizeDate } from "../../../utils/utils";
-import { DrawerParamList, MainStackParamList } from "../../../app/DrawerNavigator";
+import { MainStackParamList } from "../../../app/DrawerNavigator";
 import { createTmpUserProgress, UserProgress } from "../../../models/userProgress";
 import {
   getMessagesByCID,
@@ -23,12 +23,11 @@ import {
 } from "../slice/chatbotSlice";
 import { useDialog } from "../../../core/providers";
 import { ChatMessageList, ChatInput } from "../components";
-import { ChatbotService, FirebaseService } from "../../../core/service";
+import { ChatbotService, FirebaseService, getQuestionsByTestId } from "../../../core/service";
 import { DifyConfig, FirebaseConstants } from "../../../constants";
-import { AsyncStorageService } from "../../../core/service/asyncStorageService";
 import { NameDialog } from "../../common/dialogs";
 
-type ChatbotScreenNavigationProp = DrawerNavigationProp<DrawerParamList, "ChatbotScreen">;
+type ChatbotScreenNavigationProp = DrawerNavigationProp<MainStackParamList, "ChatbotScreen">;
 type ChatbotScreenRouteProp = RouteProp<MainStackParamList, "ChatbotScreen">;
 
 export const ChatbotScreen = () => {
@@ -121,8 +120,8 @@ export const ChatbotScreen = () => {
       setDatePickerVisible(true);
     } else if (result?.ui === "doDiagnostic") {
       // Suggest diagnostic test
-      // TODO: Implement suggest diagnostic test
-      console.log("do diagnostic test");
+      const questions = getQuestionsByTestId(1);
+      navigation.navigate("GameScreen", { questions });
       return;
     } else {
       const updatedData = result?.sendMessage;
@@ -196,7 +195,9 @@ export const ChatbotScreen = () => {
 
   const handleDevClick = () => {
     // AsyncStorageService.resetOnboardingCompleted();
-    const res = ChatbotService.extractSuggestedActions("Bạn muốn luyện tập từ vựng cơ bản về chủ đề cụ thể nào không? Ví dụ:\n\n1.  **Chủ đề về gia đình:** (ví dụ: 家族 - kazoku, 兄弟 - kyoudai)\n2.  **Chủ đề về công việc:** (ví dụ: 会社 - kaisha, 会議 - kaigi)\n3.  **Chủ đề về thời tiết:** (ví dụ: 天気 - tenki, 暑い - atsui)\n\nHãy cho tôi biết bạn muốn tập trung vào chủ đề nào nhé!\n\n--//--\n\n*   Chọn chủ đề gia đình --//--\n*   Chọn chủ đề công việc --//--\n*   Chọn chủ đề thời tiết --//--\n\n--//--\n\nTôi đã hỏi bạn muốn luyện tập từ vựng cơ bản về chủ đề cụ thể nào.\n")
+    const res = ChatbotService.extractSuggestedActions(
+      "Bạn muốn luyện tập từ vựng cơ bản về chủ đề cụ thể nào không? Ví dụ:\n\n1.  **Chủ đề về gia đình:** (ví dụ: 家族 - kazoku, 兄弟 - kyoudai)\n2.  **Chủ đề về công việc:** (ví dụ: 会社 - kaisha, 会議 - kaigi)\n3.  **Chủ đề về thời tiết:** (ví dụ: 天気 - tenki, 暑い - atsui)\n\nHãy cho tôi biết bạn muốn tập trung vào chủ đề nào nhé!\n\n--//--\n\n*   Chọn chủ đề gia đình --//--\n*   Chọn chủ đề công việc --//--\n*   Chọn chủ đề thời tiết --//--\n\n--//--\n\nTôi đã hỏi bạn muốn luyện tập từ vựng cơ bản về chủ đề cụ thể nào.\n"
+    );
     console.log(res);
   };
 

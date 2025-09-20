@@ -6,8 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { Question, QuestionType, QuestionTypeTitles } from "../../../models/question";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { DrawerParamList, MainStackParamList } from "../../../app/DrawerNavigator";
+import { MainStackParamList } from "../../../app/DrawerNavigator";
 import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useAppTheme } from "../../../theme";
 import { CustomText } from "../../../components/text/customText";
@@ -16,13 +15,9 @@ import { QuestionNumberSelector } from "../components/QuestionNumberSelector";
 import { FirebaseService, getAllQuestions } from "../../../core/service";
 import { FirebaseConstants } from "../../../constants";
 
-type NavigationProp = NativeStackNavigationProp<MainStackParamList, "QuestionsMain">;
-
 export const QuestionsScreen = () => {
   // Drawer & navigation
-  const drawerNavigation = useNavigation<DrawerNavigationProp<DrawerParamList, "QuestionsScreen">>();
-  const navigation = useNavigation<NavigationProp>();
-  const openDrawer = () => drawerNavigation.openDrawer();
+  const navigation = useNavigation<DrawerNavigationProp<MainStackParamList, "QuestionsMain">>();
 
   // UI
   const [amountSelectorVisible, setAmountSelectorVisible] = useState(false);
@@ -40,7 +35,7 @@ export const QuestionsScreen = () => {
 
   const handleOpenDrawer = () => {
     FirebaseService.logEvent(FirebaseConstants.OPEN_MENU);
-    drawerNavigation.openDrawer();
+    navigation.openDrawer();
   };
 
   const handleNavigateToQuestionType = (type: QuestionType) => {

@@ -5,13 +5,13 @@ import { AppBar } from "../../components/AppBar";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
-import { DrawerParamList } from "../../app/DrawerNavigator";
 import { useAppTheme } from "../../theme";
 import { DiscordService, DiscordWebhookType } from "../../core/service/discordService";
 import { ToastService } from "../../core/service/toastService";
 import { FirebaseConstants } from "../../constants";
 import { FirebaseService } from "../../core/service";
 import { useAppSelector } from "../../hooks/hooks";
+import { MainStackParamList } from "../../app/DrawerNavigator";
 
 export const FeedbackScreen = () => {
   const categories = ["Nội dung", "Trải nghiệm", "Giao diện", "Lỗi", "Tính năng", "Khác"];
@@ -24,7 +24,7 @@ export const FeedbackScreen = () => {
 
   const canSubmit = selectedCategories.length > 0 && message.trim().length > 0;
 
-  const drawerNavigation = useNavigation<DrawerNavigationProp<DrawerParamList, "FeedbackScreen">>();
+  const navigation = useNavigation<DrawerNavigationProp<MainStackParamList, "FeedbackScreen">>();
 
   const toggleCategory = (c: string) =>
     setSelectedCategories((prev) => (prev.includes(c) ? prev.filter((x) => x !== c) : [...prev, c]));
@@ -43,7 +43,7 @@ export const FeedbackScreen = () => {
 
   const handleOpenDrawer = () => {
     FirebaseService.logEvent(FirebaseConstants.OPEN_MENU);
-    drawerNavigation.openDrawer();
+    navigation.openDrawer();
   };
 
   return (

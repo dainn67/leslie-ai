@@ -5,3 +5,4 @@ export * from "./discordService";
 export * from "./toastService";
 export * from "./firebaseService";
 export * from "./asyncStorageService";
+export * from "./databaseService";

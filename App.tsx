@@ -8,9 +8,8 @@ import { useFonts } from "expo-font";
 import { ActivityIndicator, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { DialogProvider } from "./src/core/providers";
-import { createQuestionTable, updateTables } from "./src/storage/database/tables";
-import { AsyncStorageService, UserProgressService } from "./src/core/service";
-import { useAppDispatch, useAppSelector } from "./src/hooks/hooks";
+import { AsyncStorageService, createTables, updateTables, UserProgressService } from "./src/core/service";
+import { useAppDispatch } from "./src/hooks/hooks";
 import { updateUserProgress } from "./src/features/userProgress/userProgressSlice";
 import { setTheme } from "./src/features/theme/themeSlice";
 
@@ -38,7 +37,7 @@ const AppContent = () => {
   // Init data
   useEffect(() => {
     async function init() {
-      createQuestionTable();
+      createTables();
       updateTables();
       TTSInstance.init();
       AsyncStorageService.getTheme().then((scheme) => dispatch(setTheme(scheme)));

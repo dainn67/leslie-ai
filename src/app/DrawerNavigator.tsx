@@ -16,16 +16,11 @@ import { VersionText, ResetProgressButton, ThemeToggleButton } from "../features
 import { FirebaseConstants } from "../constants";
 import { FirebaseService } from "../core/service";
 
-export type DrawerParamList = {
-  ChatbotScreen: undefined;
-  QuestionsScreen: undefined;
-  FeedbackScreen: undefined;
-};
-
 export type MainStackParamList = {
   ChatbotScreen: { initialMessage: string };
   QuestionsMain: undefined;
   QuestionListScreen: { type: QuestionType };
+  FeedbackScreen: undefined;
   GameScreen: { questions: Question[] };
   ResultScreen: {
     questions: Question[];

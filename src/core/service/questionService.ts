@@ -33,14 +33,15 @@ export const createResultSummary = (questions: Question[], mapAnswers: { [key: n
   return summary;
 };
 
-export const shuffleQuestionAnswers = (questions: Question[]) =>
-  questions.map((q) => {
+export const shuffleQuestionAnswers = (questions: Question[]) => {
+  return questions.map((q) => {
     const shuffledAnswers = [...q.answers].sort(() => Math.random() - 0.5);
     return {
       ...q,
       answers: shuffledAnswers,
     };
   });
+};
 
 export const getAllQuestions = (): Question[] => {
   const query = `SELECT * FROM ${QuestionTable.tableName}`;
