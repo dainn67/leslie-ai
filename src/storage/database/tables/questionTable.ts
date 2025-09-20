@@ -11,6 +11,7 @@ export const QuestionTable = {
   columnAudio: "audio",
   columnType: "type",
   columnIsGenerated: "isGenerated",
+  columnLastUpdate: "lastUpdate",
 };
 
 export const AnswerTable = {
@@ -20,6 +21,7 @@ export const AnswerTable = {
   columnQuestionId: "questionId",
   columnAnswer: "answer",
   columnIsCorrect: "isCorrect",
+  columnLastUpdate: "lastUpdate",
 };
 
 export const createQuestionTable = () => {
@@ -32,7 +34,8 @@ export const createQuestionTable = () => {
           ${QuestionTable.columnExplanation} TEXT,
           ${QuestionTable.columnAudio} TEXT,
           ${QuestionTable.columnType} TEXT,
-          ${QuestionTable.columnIsGenerated} INTEGER)`
+          ${QuestionTable.columnIsGenerated} INTEGER,
+          ${QuestionTable.columnLastUpdate} INTEGER)`
     );
 
     db.execSync(
@@ -42,6 +45,7 @@ export const createQuestionTable = () => {
           ${AnswerTable.columnQuestionId} INTEGER,
           ${AnswerTable.columnAnswer} TEXT,
           ${AnswerTable.columnIsCorrect} INTEGER,
+          ${AnswerTable.columnLastUpdate} INTEGER,
           FOREIGN KEY (${AnswerTable.columnQuestionId}) REFERENCES ${QuestionTable.tableName}(${QuestionTable.columnQuestionId}))`
     );
   });
@@ -51,17 +55,18 @@ export const updateTables = () => {
   const questionColumns = db.getAllSync(`PRAGMA table_info(${QuestionTable.tableName})`).map((row: any) => row.name);
   db.withTransactionSync(() => {
     Object.values(QuestionTable).forEach((column) => {
-      if (column !== QuestionTable.tableName) {
-        if (!questionColumns.includes(column)) {
-          // Add the column
-          let columnType =
-            column === QuestionTable.columnId ||
-            column === QuestionTable.columnQuestionId ||
-            column === QuestionTable.columnIsGenerated
-              ? "INTEGER"
-              : "TEXT";
-          db.execSync(`ALTER TABLE ${QuestionTable.tableName} ADD COLUMN ${column} ${columnType}`);
+      if (column !== QuestionTable.tableName && !questionColumns.includes(column)) {
+        // Add the column
+        let columnType = "TEXT";
+        if (
+          column === QuestionTable.columnId ||
+          column === QuestionTable.columnQuestionId ||
+          column === QuestionTable.columnIsGenerated ||
+          column === QuestionTable.columnLastUpdate
+        ) {
+          columnType = "INTEGER";
         }
+        db.execSync(`ALTER TABLE ${QuestionTable.tableName} ADD COLUMN ${column} ${columnType}`);
       }
     });
   });
@@ -69,21 +74,20 @@ export const updateTables = () => {
   const answerColumns = db.getAllSync(`PRAGMA table_info(${AnswerTable.tableName})`).map((row: any) => row.name);
   db.withTransactionSync(() => {
     Object.values(AnswerTable).forEach((column) => {
-      if (column !== AnswerTable.tableName) {
-        if (!answerColumns.includes(column)) {
-          // If missing, find the type
-          let columnType = "TEXT";
-          if (
-            column === AnswerTable.columnId ||
-            column === AnswerTable.columnQuestionId ||
-            column === AnswerTable.columnIsCorrect
-          ) {
-            columnType = "INTEGER";
-          }
-
-          // Add the column
-          db.execSync(`ALTER TABLE ${AnswerTable.tableName} ADD COLUMN ${column} ${columnType}`);
+      if (column !== AnswerTable.tableName && !answerColumns.includes(column)) {
+        // If missing, find the type
+        let columnType = "TEXT";
+        if (
+          column === AnswerTable.columnId ||
+          column === AnswerTable.columnQuestionId ||
+          column === AnswerTable.columnIsCorrect ||
+          column === AnswerTable.columnLastUpdate
+        ) {
+          columnType = "INTEGER";
         }
+
+        // Add the column
+        db.execSync(`ALTER TABLE ${AnswerTable.tableName} ADD COLUMN ${column} ${columnType}`);
       }
     });
   });
@@ -125,6 +129,7 @@ export const getAllQuestions = (): Question[] => {
 
 export const insertQuestions = (questions: Question[]) => {
   db.withTransactionSync(() => {
+    const questionColumns = `(${QuestionTable.columnQuestionId}, ${QuestionTable.columnQuestion}, ${QuestionTable.columnExplanation}, ${QuestionTable.columnType}, ${QuestionTable.columnAudio})`;
     const questionValues = questions
       .map((question) => {
         const questionString = question.question.replaceAll('"', "'");
@@ -132,10 +137,9 @@ export const insertQuestions = (questions: Question[]) => {
         return `(${question.questionId}, "${questionString}", "${explanationString}", "${question.type}", "${question.audio}")`;
       })
       .join(", ");
-    db.execSync(
-      `INSERT INTO ${QuestionTable.tableName} (${QuestionTable.columnQuestionId}, ${QuestionTable.columnQuestion}, ${QuestionTable.columnExplanation}, ${QuestionTable.columnType}, ${QuestionTable.columnAudio}) VALUES ${questionValues}`
-    );
+    db.execSync(`INSERT INTO ${QuestionTable.tableName} ${questionColumns} VALUES ${questionValues}`);
 
+    const answerColumns = `(${AnswerTable.columnQuestionId}, ${AnswerTable.columnAnswerId}, ${AnswerTable.columnAnswer}, ${AnswerTable.columnIsCorrect})`;
     const answerValues = questions
       .flatMap((question) =>
         question.answers.map((answer) => {
@@ -144,9 +148,7 @@ export const insertQuestions = (questions: Question[]) => {
         })
       )
       .join(", ");
-    db.execSync(
-      `INSERT INTO ${AnswerTable.tableName} (${AnswerTable.columnQuestionId}, ${AnswerTable.columnAnswerId}, ${AnswerTable.columnAnswer}, ${AnswerTable.columnIsCorrect}) VALUES ${answerValues}`
-    );
+    db.execSync(`INSERT INTO ${AnswerTable.tableName} ${answerColumns} VALUES ${answerValues}`);
   });
 };
 
