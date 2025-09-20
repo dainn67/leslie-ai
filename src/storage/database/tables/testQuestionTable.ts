@@ -19,7 +19,7 @@ export const createTestQuestionTable = () => {
   );
 };
 
-export const updateTables = () => {
+export const updateTestQuestionTables = () => {
   const testQuestionColumns = db.getAllSync(`PRAGMA table_info(${TestQuestionTable.tableName})`).map((row: any) => row.name);
   db.withTransactionSync(() => {
     Object.values(TestQuestionTable).forEach((column) => {

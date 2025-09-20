@@ -8,13 +8,12 @@ import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { Question, QuestionType, QuestionTypeTitles } from "../../../models/question";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { DrawerParamList, MainStackParamList } from "../../../app/DrawerNavigator";
-import { getAllQuestions } from "../../../storage/database/tables";
 import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useAppTheme } from "../../../theme";
 import { CustomText } from "../../../components/text/customText";
 import { ToastService } from "../../../core/service/toastService";
 import { QuestionNumberSelector } from "../components/QuestionNumberSelector";
-import { FirebaseService } from "../../../core/service";
+import { FirebaseService, getAllQuestions } from "../../../core/service";
 import { FirebaseConstants } from "../../../constants";
 
 type NavigationProp = NativeStackNavigationProp<MainStackParamList, "QuestionsMain">;
@@ -60,7 +59,7 @@ export const QuestionsScreen = () => {
   const handleSelectQuestion = (amount: number) => {
     const questions = allQuestions.slice(0, amount);
     FirebaseService.logEvent(FirebaseConstants.REVIEW_ALL_QUESTIONS, { amount });
-    navigation.navigate("QuestionGameScreen", { questions });
+    navigation.navigate("GameScreen", { questions });
   };
 
   return (

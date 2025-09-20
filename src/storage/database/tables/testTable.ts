@@ -17,7 +17,7 @@ export const createTestTable = () => {
   );
 };
 
-export const updateTables = () => {
+export const updateTestTables = () => {
   const testColumns = db.getAllSync(`PRAGMA table_info(${TestTable.tableName})`).map((row: any) => row.name);
   db.withTransactionSync(() => {
     Object.values(TestTable).forEach((column) => {

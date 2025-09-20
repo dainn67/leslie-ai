@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { MainStackParamList } from '../../../app/DrawerNavigator';
-import { useAppTheme } from '../../../theme';
-import { AppBar } from '../../../components/AppBar';
-import { Ionicons } from '@expo/vector-icons';
-import { QuestionView } from '../../chatbot/components/chatBubble/QuestionView';
-import { ProgressBar } from '../../../components/ProgressBar';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ScrollView } from 'react-native-gesture-handler';
-import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
-import { RootState } from '../../../app/store';
-import { setIndex, initGame, setSelectedAnswer, updateBookmark } from '../slice/gameSlice';
-import { CustomText } from '../../../components/text/customText';
-import { insertQuestions, deleteQuestion } from '../../../storage/database/tables';
-import { ChatbotBottomSheet } from '../../../components/bottomsheets/ChatbotBottomSheet';
+import React, { useEffect, useState } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { MainStackParamList } from "../../../app/DrawerNavigator";
+import { useAppTheme } from "../../../theme";
+import { AppBar } from "../../../components/AppBar";
+import { Ionicons } from "@expo/vector-icons";
+import { QuestionView } from "../../chatbot/components/chatBubble/QuestionView";
+import { ProgressBar } from "../../../components/ProgressBar";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ScrollView } from "react-native-gesture-handler";
+import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
+import { RootState } from "../../../app/store";
+import { setIndex, initGame, setSelectedAnswer, updateBookmark } from "../slice/gameSlice";
+import { CustomText } from "../../../components/text/customText";
+import { insertQuestions, deleteQuestion } from "../../../storage/database/tables";
+import { ChatbotBottomSheet } from "../../../components/bottomsheets/ChatbotBottomSheet";
 
-type QuestionGameScreenRouteProp = RouteProp<MainStackParamList, 'QuestionGameScreen'>;
-type QuestionGameScreenNavigationProp = NativeStackNavigationProp<MainStackParamList, 'QuestionGameScreen'>;
+type GameScreenRouteProp = RouteProp<MainStackParamList, "GameScreen">;
+type GameScreenNavigationProp = NativeStackNavigationProp<MainStackParamList, "GameScreen">;
 
-export const QuestionGameScreen = () => {
-  const route = useRoute<QuestionGameScreenRouteProp>();
+export const GameScreen = () => {
+  const route = useRoute<GameScreenRouteProp>();
   const { questions } = route.params;
 
   const { colors } = useAppTheme();
@@ -34,7 +34,7 @@ export const QuestionGameScreen = () => {
   const question = questionList[currentQuestionIndex];
   const progress = ((currentQuestionIndex + 1) / questionList.length) * 100;
 
-  const navigation = useNavigation<QuestionGameScreenNavigationProp>();
+  const navigation = useNavigation<GameScreenNavigationProp>();
 
   const [autoMode, setAutoMode] = useState(false);
   const [isChatbotVisible, setIsChatbotVisible] = useState(false);
@@ -59,10 +59,10 @@ export const QuestionGameScreen = () => {
 
       if (currentQuestionIndex < questionList.length - 1) {
         setTimeout(() => {
-          handleChangeQuestion('next');
+          handleChangeQuestion("next");
         }, 100);
       } else {
-        navigation.replace('ResultScreen', {
+        navigation.replace("ResultScreen", {
           questions,
           mapAnswerIds,
         });
@@ -81,10 +81,10 @@ export const QuestionGameScreen = () => {
     }
   };
 
-  const handleChangeQuestion = (direction: 'next' | 'prev') => {
+  const handleChangeQuestion = (direction: "next" | "prev") => {
     // Check submit
-    if (direction == 'next' && currentQuestionIndex === questionList.length - 1) {
-      navigation.replace('ResultScreen', {
+    if (direction == "next" && currentQuestionIndex === questionList.length - 1) {
+      navigation.replace("ResultScreen", {
         questions,
         mapAnswerIds,
       });
@@ -92,7 +92,7 @@ export const QuestionGameScreen = () => {
     }
 
     // Change question
-    if (direction === 'next') {
+    if (direction === "next") {
       dispatch(setIndex(currentQuestionIndex + 1));
     } else {
       dispatch(setIndex(currentQuestionIndex - 1));
@@ -111,7 +111,7 @@ export const QuestionGameScreen = () => {
   return (
     <View style={[style.container, { backgroundColor: colors.background }]}>
       <AppBar
-        title={'Câu hỏi'}
+        title={"Câu hỏi"}
         leftIcon={<Ionicons name="arrow-back" size={24} color="white" />}
         onLeftPress={() => navigation.pop()}
         onDevClick={handleDevClick}
@@ -138,7 +138,7 @@ export const QuestionGameScreen = () => {
       <View style={style.buttonContainer}>
         <TouchableOpacity
           style={[style.navButton, style.prevButton, currentQuestionIndex === 0 && style.disabledButton]}
-          onPress={() => handleChangeQuestion('prev')}
+          onPress={() => handleChangeQuestion("prev")}
           disabled={currentQuestionIndex === 0}
         >
           <CustomText
@@ -148,7 +148,7 @@ export const QuestionGameScreen = () => {
           </CustomText>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[style.navButton, style.nextButton]} onPress={() => handleChangeQuestion('next')}>
+        <TouchableOpacity style={[style.navButton, style.nextButton]} onPress={() => handleChangeQuestion("next")}>
           <CustomText style={[style.navButtonText, style.navButtonTextNext]}>Tiếp</CustomText>
         </TouchableOpacity>
       </View>
@@ -173,8 +173,8 @@ const style = StyleSheet.create({
     marginTop: 16,
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     paddingHorizontal: 16,
     marginBottom: 32,
   },
@@ -186,45 +186,45 @@ const style = StyleSheet.create({
     marginHorizontal: 4,
   },
   prevButton: {
-    backgroundColor: '#F8F9FA',
+    backgroundColor: "#F8F9FA",
     borderWidth: 1,
-    borderColor: '#E8E8E8',
+    borderColor: "#E8E8E8",
     marginRight: 8,
   },
   nextButton: {
-    backgroundColor: '#4A90E2',
+    backgroundColor: "#4A90E2",
     marginLeft: 8,
   },
   disabledButton: {
-    backgroundColor: '#F5F5F5',
-    borderColor: '#E0E0E0',
+    backgroundColor: "#F5F5F5",
+    borderColor: "#E0E0E0",
   },
   navButtonText: {
     fontSize: 14,
-    fontWeight: '600',
-    textAlign: 'center',
+    fontWeight: "600",
+    textAlign: "center",
   },
   navButtonTextPrev: {
-    color: 'black',
+    color: "black",
   },
   navButtonTextNext: {
-    color: 'white',
+    color: "white",
   },
   disabledButtonText: {
-    color: '#BDBDBD',
+    color: "#BDBDBD",
   },
   floatingButton: {
-    position: 'absolute',
+    position: "absolute",
     right: 16,
     bottom: 100,
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: '#4A90E2',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#4A90E2",
+    justifyContent: "center",
+    alignItems: "center",
     elevation: 5,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,

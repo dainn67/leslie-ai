@@ -9,11 +9,11 @@ import { RouteProp, useNavigation, useRoute, useFocusEffect } from "@react-navig
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { QuestionView } from "../../chatbot/components/chatBubble/QuestionView";
 import { QuestionNumberSelector } from "../components/QuestionNumberSelector";
-import { deleteQuestion, getQuestionsByType, insertQuestions } from "../../../storage/database/tables";
+import { deleteQuestion, insertQuestions } from "../../../storage/database/tables";
 import { SimpleTextInput } from "../../../components/input/SimpleTextInput";
 import { useAppTheme } from "../../../theme";
 import { CustomText } from "../../../components/text/customText";
-import { createReviseQuestionSet } from "../../../core/service";
+import { createReviseQuestionSet, getQuestionsByType } from "../../../core/service";
 
 type QuestionListScreenRouteProp = RouteProp<MainStackParamList, "QuestionListScreen">;
 type QuestionListScreenNavigationProp = NativeStackNavigationProp<MainStackParamList, "QuestionListScreen">;
@@ -49,7 +49,7 @@ export const QuestionListScreen = () => {
 
   const handleSelectQuestion = (amount: number) => {
     const selectedQuestions = createReviseQuestionSet(questions, amount);
-    navigation.navigate("QuestionGameScreen", { questions: selectedQuestions });
+    navigation.navigate("GameScreen", { questions: selectedQuestions });
   };
 
   const handleBookmarkPress = (isBookmarked: boolean, question: Question) => {

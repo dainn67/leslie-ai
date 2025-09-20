@@ -8,7 +8,7 @@ import { CustomText } from "../components/text/customText";
 import { Question, QuestionType } from "../models/question";
 import { ChatbotScreen } from "../features/chatbot/screens/ChatbotScreen";
 import { FeedbackScreen } from "../features/feedback/FeedbackScreen";
-import { QuestionGameScreen } from "../features/game/screens/GameScreen";
+import { GameScreen } from "../features/game/screens/GameScreen";
 import { ResultScreen } from "../features/game/screens/ResultScreen";
 import { QuestionListScreen } from "../features/questions/screens/QuestionListScreen";
 import { QuestionsScreen } from "../features/questions/screens/QuestionsScreen";
@@ -26,7 +26,7 @@ export type MainStackParamList = {
   ChatbotScreen: { initialMessage: string };
   QuestionsMain: undefined;
   QuestionListScreen: { type: QuestionType };
-  QuestionGameScreen: { questions: Question[] };
+  GameScreen: { questions: Question[] };
   ResultScreen: {
     questions: Question[];
     mapAnswerIds: { [key: number]: number };
@@ -125,7 +125,7 @@ const QuestionStackScreen = () => {
     <Stack.Navigator>
       <Stack.Screen name="QuestionsMain" component={QuestionsScreen} options={{ headerShown: false }} />
       <Stack.Screen name="QuestionListScreen" component={QuestionListScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="QuestionGameScreen" component={QuestionGameScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="GameScreen" component={GameScreen} options={{ headerShown: false }} />
       <Stack.Screen name="ResultScreen" component={ResultScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
