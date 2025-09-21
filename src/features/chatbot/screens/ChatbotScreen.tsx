@@ -55,6 +55,7 @@ export const ChatbotScreen = () => {
   // Initial message when first open / clear chat
   useEffect(() => {
     if (initialMessage) return;
+
     if (!initilized.current) {
       if (userProgress.userName.length === 0) {
         setNameDialogVisible(true);
@@ -64,7 +65,8 @@ export const ChatbotScreen = () => {
         initilized.current = true;
       }
     } else if (messages.length === 0) {
-      handleSend({ noUserMessage: true, actionId: DifyConfig.initChatActionId });
+      const actionId = userProgress.level ? DifyConfig.initChatActionId : DifyConfig.askLevelActionId;
+      handleSend({ noUserMessage: true, actionId });
     }
   }, [messages.length]);
 

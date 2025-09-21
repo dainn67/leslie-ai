@@ -16,6 +16,17 @@ export const WordComponent = ({ word, fontSize, color }: WordComponentProps) => 
     return htmlPattern.test(text);
   };
 
+  const handleOpenLink = (link: string) => {
+    try {
+      // Sử dụng Linking để mở link
+      import("react-native").then(({ Linking }) => {
+        Linking.openURL(link);
+      });
+    } catch (e) {
+      // Có thể log lỗi hoặc thông báo cho người dùng
+    }
+  };
+
   const renderContent = () => {
     if (word == "\n") return <View style={{ width: 1000, height: 5 }} />;
 
@@ -74,6 +85,16 @@ export const WordComponent = ({ word, fontSize, color }: WordComponentProps) => 
           }}
         >
           {word.slice(2, -2)}
+        </CustomText>
+      );
+    } else if (word.includes("http://") || word.includes("https://")) {
+      return (
+        <CustomText
+          weight="Regular"
+          style={{ fontSize: fontSize, color: "blue", textDecorationLine: "underline" }}
+          onPress={() => handleOpenLink(word)}
+        >
+          {word}
         </CustomText>
       );
     } else {
