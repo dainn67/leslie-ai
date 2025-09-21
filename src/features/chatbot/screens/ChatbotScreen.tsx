@@ -33,7 +33,7 @@ type ChatbotScreenRouteProp = RouteProp<RootStackParamList, "Main">;
 export const ChatbotScreen = () => {
   // Params
   const route = useRoute<ChatbotScreenRouteProp>();
-  const { initialMessage } = route.params ? route.params : { initialMessage: "" };
+  const initialMessage = route.params?.initialMessage || "";
 
   // Drawer
   const navigation = useNavigation<ChatbotScreenNavigationProp>();

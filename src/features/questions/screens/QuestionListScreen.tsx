@@ -109,8 +109,7 @@ export const QuestionListScreen = () => {
   const handleNavigateToChatbotScreen = () => {
     // First navigate to Main screen (which contains the drawer)
     navigation.navigate("Main", {
-      screen: "ChatbotScreen",
-      params: { initialMessage: `Tạo câu hỏi mới về ${QuestionTypeTitles[type]}` },
+      initialMessage: `Tạo câu hỏi mới về ${QuestionTypeTitles[type]}`,
     });
   };
 

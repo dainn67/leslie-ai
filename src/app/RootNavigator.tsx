@@ -8,17 +8,10 @@ import { QuestionType, Question } from "../models/question";
 import { GameScreen } from "../features/game/screens/GameScreen";
 import { ResultScreen } from "../features/game/screens/ResultScreen";
 import { QuestionListScreen } from "../features/questions/screens/QuestionListScreen";
-import { ChatbotScreen } from "../features/chatbot/screens/ChatbotScreen";
 
 export type RootStackParamList = {
   Onboarding: undefined;
-  Main: {
-    screen: string;
-    params: {
-      initialMessage: string;
-    };
-  };
-  ChatbotScreen: { initialMessage: string };
+  Main: { initialMessage?: string };
   GameScreen: { questions: Question[] };
   ResultScreen: {
     questions: Question[];
@@ -48,7 +41,6 @@ export const RootNavigator = () => {
       <Stack.Navigator initialRouteName={initialRoute} screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="Main" component={DrawerNavigator} />
-        <Stack.Screen name="ChatbotScreen" component={ChatbotScreen} options={{ headerShown: false }} />
         <Stack.Screen name="QuestionListScreen" component={QuestionListScreen} options={{ headerShown: false }} />
         <Stack.Screen name="GameScreen" component={GameScreen} options={{ headerShown: false }} />
         <Stack.Screen name="ResultScreen" component={ResultScreen} options={{ headerShown: false }} />

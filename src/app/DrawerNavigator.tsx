@@ -10,11 +10,18 @@ import { QuestionsScreen } from "../features/questions/screens/QuestionsScreen";
 import { VersionText, ResetProgressButton, ThemeToggleButton } from "../features/drawer";
 import { FirebaseConstants } from "../constants";
 import { FirebaseService } from "../core/service";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { RootStackParamList } from "./RootNavigator";
 
 const Drawer = createDrawerNavigator();
+type ChatbotScreenRouteProp = RouteProp<RootStackParamList, "Main">;
 
 export const DrawerNavigator = () => {
   const { colors } = useAppTheme();
+
+  // Params
+  const route = useRoute<ChatbotScreenRouteProp>();
+  const initialMessage = route.params?.initialMessage || "";
 
   return (
     <Drawer.Navigator
@@ -45,6 +52,7 @@ export const DrawerNavigator = () => {
       <Drawer.Screen
         name={"ChatbotScreen"}
         component={ChatbotScreen}
+        initialParams={{ initialMessage }}
         listeners={{
           drawerItemPress: (e) => {
             FirebaseService.logEvent(FirebaseConstants.OPEN_CHATBOT_SCREEN);
