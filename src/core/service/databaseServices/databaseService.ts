@@ -41,17 +41,13 @@ export const loadDatabase = async () => {
     try {
       // If database file exists, delete it first
       const dbFileInfo = dbFile.info();
-      if (dbFileInfo.exists) {
-        dbFile.delete();
-        console.log("Deleted existing database file");
-      }
+      if (dbFileInfo.exists) dbFile.delete();
 
       // Create new database file from asset
       const assetFile = new File(asset.localUri!);
       assetFile.copy(dbFile);
 
       await AsyncStorageService.setFirstTimeLoadDatabase(true);
-      console.log("Load database successfully");
     } catch (error) {
       console.error("Error loading database:", error);
     }
