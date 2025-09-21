@@ -1,4 +1,4 @@
-import { db } from "../../../storage/database/database";
+import { db } from "..";
 import { Question, QuestionType } from "../../../models/question";
 import { QuestionTable, TestQuestionTable } from "../../../storage/database/tables";
 import { getQuestionsFromQuery } from "../../../utils";
@@ -57,6 +57,7 @@ export const getQuestionsByTestId = (testId: number) => {
   const questionIdSql = `SELECT ${TestQuestionTable.columnQuestionId} FROM ${TestQuestionTable.tableName} WHERE ${TestQuestionTable.columnTestId} = ${testId}`;
 
   const idRows = db.getAllSync(questionIdSql);
+
   const questionIds = idRows.map((row: any) => row.questionId);
 
   const questionSql = `SELECT * FROM ${QuestionTable.tableName} WHERE ${QuestionTable.columnQuestionId} IN (${questionIds.join(", ")})`;

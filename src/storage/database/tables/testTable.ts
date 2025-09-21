@@ -1,4 +1,4 @@
-import { db } from "../database";
+import { db } from "../../../core/service";
 
 export const TestTable = {
   tableName: "Test",

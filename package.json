@@ -27,6 +27,7 @@
     "axios": "^1.11.0",
     "expo": "~53.0.9",
     "expo-application": "~6.1.5",
+    "expo-file-system": "^19.0.14",
     "expo-font": "~13.3.2",
     "expo-linear-gradient": "^14.1.5",
     "expo-module-scripts": "^4.1.9",

@@ -9,7 +9,7 @@ import { ActivityIndicator, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { DialogProvider } from "./src/core/providers";
-import { AsyncStorageService, createTables, updateTables, UserProgressService } from "./src/core/service";
+import { AsyncStorageService, initializeDatabase, UserProgressService } from "./src/core/service";
 import { useAppDispatch } from "./src/hooks/hooks";
 import { updateUserProgress } from "./src/features/userProgress/userProgressSlice";
 import { setTheme } from "./src/features/theme/themeSlice";
@@ -40,8 +40,7 @@ const AppContent = () => {
   // Init data
   useEffect(() => {
     async function init() {
-      createTables();
-      updateTables();
+      initializeDatabase();
       TTSInstance.init();
       AsyncStorageService.getTheme().then((scheme) => dispatch(setTheme(scheme)));
 

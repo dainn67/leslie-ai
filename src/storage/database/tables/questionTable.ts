@@ -1,5 +1,5 @@
 import { Question } from "../../../models/question";
-import { db } from "../database";
+import { db } from "../../../core/service";
 
 export const QuestionTable = {
   tableName: "Question",

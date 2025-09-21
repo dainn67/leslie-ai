@@ -1,6 +1,6 @@
 import { createQuestion, createTest, Question, Test } from "../models";
 import { createAnswer } from "../models/answer";
-import { db } from "../storage/database/database";
+import { db } from "../core/service";
 import { AnswerTable } from "../storage/database/tables";
 
 export const getQuestionsFromQuery = (query: string): Question[] => {

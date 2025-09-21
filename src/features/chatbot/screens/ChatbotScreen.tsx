@@ -22,7 +22,7 @@ import {
 } from "../slice/chatbotSlice";
 import { useDialog } from "../../../core/providers";
 import { ChatMessageList, ChatInput } from "../components";
-import { ChatbotService, FirebaseService } from "../../../core/service";
+import { ChatbotService, FirebaseService, logDatabasePath, ToastService } from "../../../core/service";
 import { DifyConfig, FirebaseConstants } from "../../../constants";
 import { NameDialog } from "../../common/dialogs";
 import { RootStackParamList } from "../../../app/RootNavigator";
@@ -106,7 +106,7 @@ export const ChatbotScreen = () => {
       message,
       messages,
       conversationSummary,
-    difyConversationId,
+      difyConversationId,
       userProgress: newUserProgress ?? userProgress,
       analyzeChatGame,
       actionId,
@@ -123,9 +123,11 @@ export const ChatbotScreen = () => {
       setDatePickerVisible(true);
     } else if (result?.ui === "doDiagnostic") {
       const questions = result?.questions;
-      if (!questions) return;
-      navigation.navigate("GameScreen", { questions: questions });
-      return;
+      if (!questions) {
+        ToastService.show({ message: "Không thể tải câu hỏi", type: "error" });
+      } else {
+        navigation.navigate("GameScreen", { questions: questions });
+      }
     } else {
       const updatedData = result?.sendMessage;
       if (updatedData) dispatch(updateUserProgress(updatedData));
@@ -196,7 +198,10 @@ export const ChatbotScreen = () => {
     initilized.current = true;
   };
 
-  const handleDevClick = () => {};
+  const handleDevClick = () => {
+    handleClickAction("Điều chỉnh", DifyConfig.setDoDiagnostic);
+    // logDatabasePath();
+  };
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

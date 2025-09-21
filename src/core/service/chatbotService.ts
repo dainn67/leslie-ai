@@ -583,7 +583,9 @@ export class ChatbotService {
     }
     if (id === DifyConfig.setDoDiagnostic) {
       const diagnosticTest = getDiagnosticTest();
-      const questions = getQuestionsByTestId(diagnosticTest?.id ?? 0);
+      if (!diagnosticTest) return;
+
+      const questions = getQuestionsByTestId(diagnosticTest.id);
       return { ui: "doDiagnostic", questions };
     }
   };
