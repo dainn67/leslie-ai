@@ -106,7 +106,7 @@ export const ChatbotScreen = () => {
       message,
       messages,
       conversationSummary,
-      difyConversationId,
+    difyConversationId,
       userProgress: newUserProgress ?? userProgress,
       analyzeChatGame,
       actionId,
