@@ -27,7 +27,7 @@ export const loadDatabase = async () => {
   if (!exists) {
     // Tạo thư mục nếu chưa tồn tại
     try {
-      await sqliteDir.create({ intermediates: true });
+      sqliteDir.create({ intermediates: true });
     } catch (error) {
       console.log("Error creating directory:", error);
     }
@@ -40,15 +40,15 @@ export const loadDatabase = async () => {
 
     try {
       // If database file exists, delete it first
-      const dbFileInfo = await dbFile.info();
+      const dbFileInfo = dbFile.info();
       if (dbFileInfo.exists) {
-        await dbFile.delete();
+        dbFile.delete();
         console.log("Deleted existing database file");
       }
 
       // Create new database file from asset
       const assetFile = new File(asset.localUri!);
-      await assetFile.copy(dbFile);
+      assetFile.copy(dbFile);
 
       await AsyncStorageService.setFirstTimeLoadDatabase(true);
       console.log("Load database successfully");
