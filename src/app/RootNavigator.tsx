@@ -12,7 +12,12 @@ import { ChatbotScreen } from "../features/chatbot/screens/ChatbotScreen";
 
 export type RootStackParamList = {
   Onboarding: undefined;
-  Main: undefined;
+  Main: {
+    screen: string;
+    params: {
+      initialMessage: string;
+    };
+  };
   ChatbotScreen: { initialMessage: string };
   GameScreen: { questions: Question[] };
   ResultScreen: {

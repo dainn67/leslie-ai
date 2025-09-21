@@ -1,16 +1,11 @@
 import React from "react";
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { View } from "react-native";
 import { useAppTheme } from "../theme";
 import { Ionicons } from "@expo/vector-icons";
 import { CustomText } from "../components/text/customText";
-import { Question, QuestionType } from "../models/question";
 import { ChatbotScreen } from "../features/chatbot/screens/ChatbotScreen";
 import { FeedbackScreen } from "../features/feedback/FeedbackScreen";
-import { GameScreen } from "../features/game/screens/GameScreen";
-import { ResultScreen } from "../features/game/screens/ResultScreen";
-import { QuestionListScreen } from "../features/questions/screens/QuestionListScreen";
 import { QuestionsScreen } from "../features/questions/screens/QuestionsScreen";
 import { VersionText, ResetProgressButton, ThemeToggleButton } from "../features/drawer";
 import { FirebaseConstants } from "../constants";
