@@ -7,59 +7,58 @@ import {
   updateTestQuestionTables,
   updateTestTables,
 } from "../../../storage/database/tables";
+import { AsyncStorageService } from "../asyncStorageService";
 
 export const DB_NAME = "leslieai.db";
 const ASSETS_DB_PATH = require("../../../../assets/databases/leslieai.db");
 
-export const sqliteDir = new Directory(Paths.document, "SQLite");
+export const sqliteDir = new Directory(Paths.document, "databases");
 export const dbFile = new File(sqliteDir, DB_NAME);
 
-export const db = SQLite.openDatabaseSync(DB_NAME, undefined, sqliteDir.uri);
-
-export const isDatabaseLoaded = async (): Promise<{ exists: boolean }> => {
-  const info = dbFile.info();
-  return { exists: info.exists };
-};
+export let db: SQLite.SQLiteDatabase;
 
 export const logDatabasePath = () => {
-  // Hàm này dùng để log đường dẫn tới file database
   console.log("Đường dẫn database:", dbFile.uri || dbFile.name);
 };
 
 export const loadDatabase = async () => {
-  try {
-    const { exists } = await isDatabaseLoaded();
+  const exists = await AsyncStorageService.getFirstTimeLoadDatabase();
 
-    if (!exists) {
-      try {
-        sqliteDir.create({ intermediates: true });
-      } catch (error) {}
-
-      const asset = Asset.fromModule(ASSETS_DB_PATH);
-      await asset.downloadAsync();
-
-      if (asset.localUri) {
-        // Nếu file database đã tồn tại, xóa nó trước khi ghi lại
-        if (dbFile.exists) {
-          try {
-            dbFile.delete();
-          } catch (error) {
-            console.warn("Cannot delete old database:", error);
-          }
-        }
-        const assetFile = new File(asset.localUri);
-        assetFile.copy(dbFile);
-        console.log("Database copied successfully");
-      } else {
-        console.warn("asset.localUri is undefined");
-      }
-    } else {
-      console.log("Database already exists");
+  if (!exists) {
+    // Tạo thư mục nếu chưa tồn tại
+    try {
+      await sqliteDir.create({ intermediates: true });
+    } catch (error) {
+      console.log("Error creating directory:", error);
     }
-  } catch (error) {
-    console.error("Error loading database:", error);
-    throw error;
+
+    // Tải database từ assets
+    const asset = Asset.fromModule(ASSETS_DB_PATH);
+    await asset.downloadAsync();
+
+    if (!asset.localUri) console.error("Failed to download database asset");
+
+    try {
+      // If database file exists, delete it first
+      const dbFileInfo = await dbFile.info();
+      if (dbFileInfo.exists) {
+        await dbFile.delete();
+        console.log("Deleted existing database file");
+      }
+
+      // Create new database file from asset
+      const assetFile = new File(asset.localUri!);
+      await assetFile.copy(dbFile);
+
+      await AsyncStorageService.setFirstTimeLoadDatabase(true);
+      console.log("Load database successfully");
+    } catch (error) {
+      console.error("Error loading database:", error);
+    }
+  } else {
+    console.log("Database already exists");
   }
+  db = SQLite.openDatabaseSync(DB_NAME, undefined, sqliteDir.uri);
 };
 
 export const initializeDatabase = async () => {

@@ -22,7 +22,7 @@ import {
 } from "../slice/chatbotSlice";
 import { useDialog } from "../../../core/providers";
 import { ChatMessageList, ChatInput } from "../components";
-import { ChatbotService, FirebaseService, logDatabasePath, ToastService } from "../../../core/service";
+import { AsyncStorageService, ChatbotService, FirebaseService, logDatabasePath, ToastService } from "../../../core/service";
 import { DifyConfig, FirebaseConstants } from "../../../constants";
 import { NameDialog } from "../../common/dialogs";
 import { RootStackParamList } from "../../../app/RootNavigator";
@@ -199,8 +199,9 @@ export const ChatbotScreen = () => {
   };
 
   const handleDevClick = () => {
-    handleClickAction("Điều chỉnh", DifyConfig.setDoDiagnostic);
+    // handleClickAction("Điều chỉnh", DifyConfig.setDoDiagnostic);
     // logDatabasePath();
+    AsyncStorageService.resetFirstTimeLoadDatabase();
   };
 
   return (
