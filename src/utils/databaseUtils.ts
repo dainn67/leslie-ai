@@ -1,10 +1,12 @@
+import { createQuestion, createTest, Question, Test } from "../models";
 import { createAnswer } from "../models/answer";
-import { createQuestion, Question } from "../models/question";
 import { db } from "../storage/database/database";
 import { AnswerTable } from "../storage/database/tables";
 
 export const getQuestionsFromQuery = (query: string): Question[] => {
   const questionRows = db.getAllSync(query);
+  if (questionRows.length === 0) return [];
+
   const questions: Question[] = questionRows.map((row: any) =>
     createQuestion({
       questionId: row.questionId,
@@ -35,4 +37,11 @@ export const getQuestionsFromQuery = (query: string): Question[] => {
   });
 
   return questions;
+};
+
+export const getTestsFromQuery = (query: string): Test[] => {
+  const testRows = db.getAllSync(query);
+  if (testRows.length === 0) return [];
+
+  return testRows.map((row: any) => createTest(row));
 };

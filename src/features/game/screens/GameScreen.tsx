@@ -101,13 +101,6 @@ export const GameScreen = () => {
 
   const handleDevClick = () => setAutoMode(true);
 
-  if (!question)
-    return (
-      <View style={[style.container, { backgroundColor: colors.background }]}>
-        <CustomText>Lỗi khi tải câu hỏi. Vui lòng thử lại sau</CustomText>
-      </View>
-    );
-
   return (
     <View style={[style.container, { backgroundColor: colors.background }]}>
       <AppBar
@@ -116,44 +109,52 @@ export const GameScreen = () => {
         onLeftPress={() => navigation.pop()}
         onDevClick={handleDevClick}
       />
-      <View style={style.progressBar}>
-        <ProgressBar progress={progress} />
-      </View>
-      <ScrollView style={style.questionContainer}>
-        <QuestionView
-          questionIndex={currentQuestionIndex}
-          question={question}
-          totalQuestions={questionList.length}
-          selectedAnswer={mapAnswerIds[question.questionId]}
-          bookmarked={bookmarkIds.includes(question.questionId)}
-          onAnswerSelect={handleAnswerSelect}
-          onBookmarkPress={handleBookmarkPress}
-        />
-      </ScrollView>
+      {question ? (
+        <>
+          <View style={style.progressBar}>
+            <ProgressBar progress={progress} />
+          </View>
+          <ScrollView style={style.questionContainer}>
+            <QuestionView
+              questionIndex={currentQuestionIndex}
+              question={question}
+              totalQuestions={questionList.length}
+              selectedAnswer={mapAnswerIds[question.questionId]}
+              bookmarked={bookmarkIds.includes(question.questionId)}
+              onAnswerSelect={handleAnswerSelect}
+              onBookmarkPress={handleBookmarkPress}
+            />
+          </ScrollView>
 
-      <TouchableOpacity style={style.floatingButton} onPress={() => setIsChatbotVisible(true)}>
-        <Ionicons name="chatbubble-ellipses" size={24} color="white" />
-      </TouchableOpacity>
+          <TouchableOpacity style={style.floatingButton} onPress={() => setIsChatbotVisible(true)}>
+            <Ionicons name="chatbubble-ellipses" size={24} color="white" />
+          </TouchableOpacity>
 
-      <View style={style.buttonContainer}>
-        <TouchableOpacity
-          style={[style.navButton, style.prevButton, currentQuestionIndex === 0 && style.disabledButton]}
-          onPress={() => handleChangeQuestion("prev")}
-          disabled={currentQuestionIndex === 0}
-        >
-          <CustomText
-            style={[style.navButtonText, style.navButtonTextPrev, currentQuestionIndex === 0 && style.disabledButtonText]}
-          >
-            Trước
-          </CustomText>
-        </TouchableOpacity>
+          <View style={style.buttonContainer}>
+            <TouchableOpacity
+              style={[style.navButton, style.prevButton, currentQuestionIndex === 0 && style.disabledButton]}
+              onPress={() => handleChangeQuestion("prev")}
+              disabled={currentQuestionIndex === 0}
+            >
+              <CustomText
+                style={[style.navButtonText, style.navButtonTextPrev, currentQuestionIndex === 0 && style.disabledButtonText]}
+              >
+                Trước
+              </CustomText>
+            </TouchableOpacity>
 
-        <TouchableOpacity style={[style.navButton, style.nextButton]} onPress={() => handleChangeQuestion("next")}>
-          <CustomText style={[style.navButtonText, style.navButtonTextNext]}>Tiếp</CustomText>
-        </TouchableOpacity>
-      </View>
+            <TouchableOpacity style={[style.navButton, style.nextButton]} onPress={() => handleChangeQuestion("next")}>
+              <CustomText style={[style.navButtonText, style.navButtonTextNext]}>Tiếp</CustomText>
+            </TouchableOpacity>
+          </View>
 
-      <ChatbotBottomSheet visible={isChatbotVisible} question={question} onClose={() => setIsChatbotVisible(false)} />
+          <ChatbotBottomSheet visible={isChatbotVisible} question={question} onClose={() => setIsChatbotVisible(false)} />
+        </>
+      ) : (
+        <View style={[style.container, { backgroundColor: colors.background, justifyContent: "center", alignItems: "center" }]}>
+          <CustomText>Lỗi khi tải câu hỏi. Vui lòng thử lại sau</CustomText>
+        </View>
+      )}
     </View>
   );
 };

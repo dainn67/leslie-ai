@@ -16,7 +16,7 @@ import { MessageType, ChatMessage, MessageStatus, Sender } from "../../models/ch
 import { Question, createQuestionString, createQuestion } from "../../models/question";
 import { UserProgress } from "../../models/userProgress";
 import { convertDateToDDMMYYYY } from "../../utils";
-import { FirebaseService } from ".";
+import { FirebaseService, getDiagnosticTest, getQuestionsByTestId } from ".";
 import { FirebaseConstants } from "../../constants";
 
 export const Delimiter = "--//--";
@@ -582,8 +582,9 @@ export class ChatbotService {
       return { sendMessage: { target: DifyConfig.levelUnknown } };
     }
     if (id === DifyConfig.setDoDiagnostic) {
-      // Do diagnostic test
-      return { ui: "doDiagnostic" };
+      const diagnosticTest = getDiagnosticTest();
+      const questions = getQuestionsByTestId(diagnosticTest?.id ?? 0);
+      return { ui: "doDiagnostic", questions };
     }
   };
 }

@@ -1,7 +1,7 @@
-import { db } from "../../storage/database/database";
-import { Question, QuestionType } from "../../models/question";
-import { QuestionTable, TestQuestionTable } from "../../storage/database/tables";
-import { getQuestionsFromQuery } from "../../utils";
+import { db } from "../../../storage/database/database";
+import { Question, QuestionType } from "../../../models/question";
+import { QuestionTable, TestQuestionTable } from "../../../storage/database/tables";
+import { getQuestionsFromQuery } from "../../../utils";
 
 export const createReviseQuestionSet = (questions: Question[], amount: number): Question[] => {
   return questions.sort(() => Math.random() - 0.5).slice(0, amount);

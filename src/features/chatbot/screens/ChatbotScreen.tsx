@@ -22,7 +22,7 @@ import {
 } from "../slice/chatbotSlice";
 import { useDialog } from "../../../core/providers";
 import { ChatMessageList, ChatInput } from "../components";
-import { ChatbotService, FirebaseService, getQuestionsByTestId } from "../../../core/service";
+import { ChatbotService, FirebaseService } from "../../../core/service";
 import { DifyConfig, FirebaseConstants } from "../../../constants";
 import { NameDialog } from "../../common/dialogs";
 import { RootStackParamList } from "../../../app/RootNavigator";
@@ -122,9 +122,9 @@ export const ChatbotScreen = () => {
     if (result?.ui === "openDatePicker") {
       setDatePickerVisible(true);
     } else if (result?.ui === "doDiagnostic") {
-      // Suggest diagnostic test
-      const questions = getQuestionsByTestId(1);
-      navigation.navigate("GameScreen", { questions });
+      const questions = result?.questions;
+      if (!questions) return;
+      navigation.navigate("GameScreen", { questions: questions });
       return;
     } else {
       const updatedData = result?.sendMessage;

@@ -4,6 +4,7 @@ export const TestTable = {
   tableName: "Test",
   columnId: "id",
   columnTitle: "name",
+  columnType: "type",
   columnLastUpdate: "lastUpdate",
 };
 
@@ -12,6 +13,7 @@ export const createTestTable = () => {
     `CREATE TABLE IF NOT EXISTS ${TestTable.tableName} (
         ${TestTable.columnId} INTEGER PRIMARY KEY AUTOINCREMENT,
         ${TestTable.columnTitle} TEXT,
+        ${TestTable.columnType} TEXT,
         ${TestTable.columnLastUpdate} INTEGER
     )`
   );

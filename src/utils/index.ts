@@ -1,2 +1,2 @@
 export * from "./utils";
-export * from "./questionUtils";
+export * from "./databaseUtils";

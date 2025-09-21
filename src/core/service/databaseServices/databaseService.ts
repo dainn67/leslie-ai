@@ -5,7 +5,7 @@ import {
   updateQuestionTables,
   updateTestQuestionTables,
   updateTestTables,
-} from "../../storage/database/tables";
+} from "../../../storage/database/tables";
 
 export const createTables = () => {
   createQuestionTable();
