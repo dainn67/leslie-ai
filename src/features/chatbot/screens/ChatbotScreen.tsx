@@ -12,7 +12,6 @@ import { updateUserProgress } from "../../userProgress/userProgressSlice";
 import { createChatMessage, MessageStatus } from "../../../models/chatMessage";
 import { MyDatePicker } from "../../../components/datePicker/MyDatePicker";
 import { convertDateToDDMMYYYY, normalizeDate } from "../../../utils/utils";
-import { MainStackParamList } from "../../../app/DrawerNavigator";
 import { createTmpUserProgress, UserProgress } from "../../../models/userProgress";
 import {
   getMessagesByCID,
@@ -26,9 +25,10 @@ import { ChatMessageList, ChatInput } from "../components";
 import { ChatbotService, FirebaseService, getQuestionsByTestId } from "../../../core/service";
 import { DifyConfig, FirebaseConstants } from "../../../constants";
 import { NameDialog } from "../../common/dialogs";
+import { RootStackParamList } from "../../../app/RootNavigator";
 
-type ChatbotScreenNavigationProp = DrawerNavigationProp<MainStackParamList, "ChatbotScreen">;
-type ChatbotScreenRouteProp = RouteProp<MainStackParamList, "ChatbotScreen">;
+type ChatbotScreenNavigationProp = DrawerNavigationProp<RootStackParamList, "Main">;
+type ChatbotScreenRouteProp = RouteProp<RootStackParamList, "Main">;
 
 export const ChatbotScreen = () => {
   // Params

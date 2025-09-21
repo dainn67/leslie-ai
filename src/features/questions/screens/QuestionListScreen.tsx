@@ -4,7 +4,6 @@ import { View, StyleSheet, ScrollView, Animated, TextInput } from "react-native"
 import { Question, QuestionType, QuestionTypeTitles } from "../../../models/question";
 import { AppBar } from "../../../components/AppBar";
 import { Ionicons } from "@expo/vector-icons";
-import { MainStackParamList } from "../../../app/DrawerNavigator";
 import { RouteProp, useNavigation, useRoute, useFocusEffect } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { QuestionView } from "../../chatbot/components/chatBubble/QuestionView";
@@ -14,9 +13,10 @@ import { SimpleTextInput } from "../../../components/input/SimpleTextInput";
 import { useAppTheme } from "../../../theme";
 import { CustomText } from "../../../components/text/customText";
 import { createReviseQuestionSet, getQuestionsByType } from "../../../core/service";
+import { RootStackParamList } from "../../../app/RootNavigator";
 
-type QuestionListScreenRouteProp = RouteProp<MainStackParamList, "QuestionListScreen">;
-type QuestionListScreenNavigationProp = NativeStackNavigationProp<MainStackParamList, "QuestionListScreen">;
+type QuestionListScreenRouteProp = RouteProp<RootStackParamList, "QuestionListScreen">;
+type QuestionListScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "QuestionListScreen">;
 
 export const QuestionListScreen = () => {
   const navigation = useNavigation<QuestionListScreenNavigationProp>();

@@ -6,7 +6,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { Question, QuestionType, QuestionTypeTitles } from "../../../models/question";
-import { MainStackParamList } from "../../../app/DrawerNavigator";
 import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useAppTheme } from "../../../theme";
 import { CustomText } from "../../../components/text/customText";
@@ -14,10 +13,11 @@ import { ToastService } from "../../../core/service/toastService";
 import { QuestionNumberSelector } from "../components/QuestionNumberSelector";
 import { FirebaseService, getAllQuestions } from "../../../core/service";
 import { FirebaseConstants } from "../../../constants";
+import { RootStackParamList } from "../../../app/RootNavigator";
 
 export const QuestionsScreen = () => {
   // Drawer & navigation
-  const navigation = useNavigation<DrawerNavigationProp<MainStackParamList, "QuestionsMain">>();
+  const navigation = useNavigation<DrawerNavigationProp<RootStackParamList, "Main">>();
 
   // UI
   const [amountSelectorVisible, setAmountSelectorVisible] = useState(false);

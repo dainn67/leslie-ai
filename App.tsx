@@ -7,6 +7,7 @@ import { RootNavigator } from "./src/app/RootNavigator";
 import { useFonts } from "expo-font";
 import { ActivityIndicator, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { DialogProvider } from "./src/core/providers";
 import { AsyncStorageService, createTables, updateTables, UserProgressService } from "./src/core/service";
 import { useAppDispatch } from "./src/hooks/hooks";
@@ -15,11 +16,13 @@ import { setTheme } from "./src/features/theme/themeSlice";
 
 export default function App() {
   return (
-    <SafeAreaProvider>
-      <Provider store={store}>
-        <AppContent />
-      </Provider>
-    </SafeAreaProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <Provider store={store}>
+          <AppContent />
+        </Provider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }
 

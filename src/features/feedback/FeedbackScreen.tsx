@@ -11,7 +11,7 @@ import { ToastService } from "../../core/service/toastService";
 import { FirebaseConstants } from "../../constants";
 import { FirebaseService } from "../../core/service";
 import { useAppSelector } from "../../hooks/hooks";
-import { MainStackParamList } from "../../app/DrawerNavigator";
+import { RootStackParamList } from "../../app/RootNavigator";
 
 export const FeedbackScreen = () => {
   const categories = ["Nội dung", "Trải nghiệm", "Giao diện", "Lỗi", "Tính năng", "Khác"];
@@ -24,7 +24,7 @@ export const FeedbackScreen = () => {
 
   const canSubmit = selectedCategories.length > 0 && message.trim().length > 0;
 
-  const navigation = useNavigation<DrawerNavigationProp<MainStackParamList, "FeedbackScreen">>();
+  const navigation = useNavigation<DrawerNavigationProp<RootStackParamList, "Main">>();
 
   const toggleCategory = (c: string) =>
     setSelectedCategories((prev) => (prev.includes(c) ? prev.filter((x) => x !== c) : [...prev, c]));

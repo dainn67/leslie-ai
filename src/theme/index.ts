@@ -9,7 +9,7 @@ export const useAppTheme = () => {
   const themeMode = useAppSelector((state: RootState) => state.theme.mode);
 
   const getEffectiveScheme = () => {
-    if (themeMode === "system") {
+    if (themeMode === "light") {
       return systemScheme;
     }
     return themeMode;

@@ -16,20 +16,7 @@ import { VersionText, ResetProgressButton, ThemeToggleButton } from "../features
 import { FirebaseConstants } from "../constants";
 import { FirebaseService } from "../core/service";
 
-export type MainStackParamList = {
-  ChatbotScreen: { initialMessage: string };
-  QuestionsMain: undefined;
-  QuestionListScreen: { type: QuestionType };
-  FeedbackScreen: undefined;
-  GameScreen: { questions: Question[] };
-  ResultScreen: {
-    questions: Question[];
-    mapAnswerIds: { [key: number]: number };
-  };
-};
-
 const Drawer = createDrawerNavigator();
-const Stack = createNativeStackNavigator<MainStackParamList>();
 
 export const DrawerNavigator = () => {
   const { colors } = useAppTheme();
@@ -79,7 +66,7 @@ export const DrawerNavigator = () => {
       />
       <Drawer.Screen
         name={"QuestionsScreen"}
-        component={QuestionStackScreen}
+        component={QuestionsScreen}
         listeners={{
           drawerItemPress: (e) => {
             FirebaseService.logEvent(FirebaseConstants.OPEN_SAVED_QUESTIONS_SCREEN);
@@ -112,16 +99,5 @@ export const DrawerNavigator = () => {
         }}
       />
     </Drawer.Navigator>
-  );
-};
-
-const QuestionStackScreen = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="QuestionsMain" component={QuestionsScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="QuestionListScreen" component={QuestionListScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="GameScreen" component={GameScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="ResultScreen" component={ResultScreen} options={{ headerShown: false }} />
-    </Stack.Navigator>
   );
 };
