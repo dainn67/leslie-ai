@@ -3,6 +3,7 @@ import { Animated, View } from "react-native";
 import { RenderHTML } from "react-native-render-html";
 import { AppConfig } from "../../constants/appConfig";
 import { CustomText } from "../text/customText";
+import { DiscordService, DiscordWebhookType, ToastService } from "../../core/service";
 
 interface WordComponentProps {
   word: string;
@@ -23,7 +24,11 @@ export const WordComponent = ({ word, fontSize, color }: WordComponentProps) => 
         Linking.openURL(link);
       });
     } catch (e) {
-      // Có thể log lỗi hoặc thông báo cho người dùng
+      ToastService.show({ message: "Lỗi khi mở link", type: "error" });
+      DiscordService.sendDiscordMessage({
+        message: `Lỗi khi mở link: ${link}\n${JSON.stringify(e)}`,
+        type: DiscordWebhookType.ERROR,
+      });
     }
   };
 
