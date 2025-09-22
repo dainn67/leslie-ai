@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AsyncStorageService } from "../../core/service/asyncStorageService";
+import { AsyncStorageService } from "../../core/service/storageServices/asyncStorageService";
 
 export type ThemeMode = "light" | "dark";
 

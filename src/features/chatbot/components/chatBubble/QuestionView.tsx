@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import Tts from 'react-native-tts';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { CustomText } from '../../../../components/text/customText';
-import { Question } from '../../../../models/question';
-import { IconButton } from '../../../../components/buttons';
-import { AppIcons } from '../../../../constants/appIcons';
-import { Answer } from '../../../../models/answer';
-import { useAppTheme } from '../../../../theme';
-import { ToastService } from '../../../../core/service';
+import React, { useState } from "react";
+import Tts from "react-native-tts";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
+import { CustomText } from "../../../../components/text/customText";
+import { Question } from "../../../../models/question";
+import { IconButton } from "../../../../components/buttons";
+import { AppIcons } from "../../../../constants/appIcons";
+import { Answer } from "../../../../models/answer";
+import { useAppTheme } from "../../../../theme";
+import { ToastService } from "../../../../core/service";
+import { GameType } from "../../../game/screens/GameScreen";
 
 interface QuestionViewProps {
   question: Question;
@@ -15,6 +16,7 @@ interface QuestionViewProps {
   totalQuestions: number;
   selectedAnswer?: number;
   bookmarked: boolean;
+  gameType?: GameType;
   showCorrectAnswer?: boolean;
   onAnswerSelect?: (index: number) => void;
   onBookmarkPress?: (isBookmarked: boolean) => void;
@@ -27,6 +29,7 @@ export const QuestionView = ({
   totalQuestions,
   selectedAnswer,
   bookmarked,
+  gameType,
   showCorrectAnswer,
   onAnswerSelect,
   onBookmarkPress,
@@ -35,8 +38,8 @@ export const QuestionView = ({
   const { colors } = useAppTheme();
 
   const getAnswerLabel = (index: number) => {
-    const labels = ['A', 'B', 'C', 'D'];
-    return (labels[index] || 'A') + '.';
+    const labels = ["A", "B", "C", "D"];
+    return (labels[index] || "A") + ".";
   };
 
   const [playAudio, setPlayAudio] = useState(false);
@@ -48,13 +51,13 @@ export const QuestionView = ({
 
     Tts.stop();
     if (newState) {
-      Tts.addEventListener('tts-finish', () => setPlayAudio(false));
+      Tts.addEventListener("tts-finish", () => setPlayAudio(false));
       Tts.speak(question.audio);
     }
   };
 
   const handleBookmarkPress = (bookmarked: boolean) => {
-    if (bookmarked) ToastService.show({ message: 'Đã lưu', type: 'success' });
+    if (bookmarked) ToastService.show({ message: "Đã lưu", type: "success" });
     onBookmarkPress?.(bookmarked);
   };
 
@@ -73,11 +76,13 @@ export const QuestionView = ({
 
         {/* Save icon button */}
         <View>
-          <IconButton
-            icon={bookmarked ? AppIcons.bookmarked : AppIcons.bookmark}
-            style={styles.saveButton}
-            onPress={() => handleBookmarkPress(!bookmarked)}
-          />
+          {gameType !== GameType.Diagnostic && (
+            <IconButton
+              icon={bookmarked ? AppIcons.bookmarked : AppIcons.bookmark}
+              style={styles.saveButton}
+              onPress={() => handleBookmarkPress(!bookmarked)}
+            />
+          )}
           {question.audio && <IconButton icon={playAudio ? AppIcons.audioOn : AppIcons.audioOff} onPress={handleToggleAudio} />}
         </View>
       </View>
@@ -147,7 +152,7 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingBottom: 0,
     marginBottom: 16,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -157,8 +162,8 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   questionHeader: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
+    flexDirection: "row",
+    alignItems: "flex-start",
     marginBottom: 20,
   },
   questionHeaderContent: {
@@ -173,11 +178,11 @@ const styles = StyleSheet.create({
   },
   questionNumberText: {
     fontSize: 14,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   questionText: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
     flex: 1,
     lineHeight: 24,
   },
@@ -188,26 +193,26 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginBottom: 12,
     borderWidth: 1.5,
-    borderColor: 'transparent',
-    overflow: 'hidden',
+    borderColor: "transparent",
+    overflow: "hidden",
   },
   answerContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     padding: 8,
   },
   answerLabelText: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginLeft: 8,
     marginRight: 12,
     marginVertical: 4,
   },
   correctLabel: {
-    color: '#4CAF50',
+    color: "#4CAF50",
   },
   wrongLabel: {
-    color: '#F44336',
+    color: "#F44336",
   },
   answerText: {
     fontSize: 16,
@@ -215,29 +220,29 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
   selectedAnswerText: {
-    color: 'black',
-    fontWeight: '600',
+    color: "black",
+    fontWeight: "600",
   },
   correctAnswer: {
-    backgroundColor: '#E8F5E8',
-    borderColor: '#4CAF50',
+    backgroundColor: "#E8F5E8",
+    borderColor: "#4CAF50",
   },
   wrongAnswer: {
-    backgroundColor: '#FFEBEE',
-    borderColor: '#F44336',
+    backgroundColor: "#FFEBEE",
+    borderColor: "#F44336",
   },
   explanationContainer: {
-    backgroundColor: '#F0F8FF',
+    backgroundColor: "#F0F8FF",
     borderRadius: 4,
     padding: 12,
     paddingVertical: 8,
     marginBottom: 16,
     borderLeftWidth: 4,
-    borderLeftColor: '#4A90E2',
+    borderLeftColor: "#4A90E2",
   },
   explanationHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 8,
   },
   explanationIcon: {
@@ -246,12 +251,12 @@ const styles = StyleSheet.create({
   },
   explanationTitle: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#2C3E50',
+    fontWeight: "bold",
+    color: "#2C3E50",
   },
   explanationText: {
     fontSize: 14,
-    color: '#34495E',
+    color: "#34495E",
     lineHeight: 20,
   },
 });

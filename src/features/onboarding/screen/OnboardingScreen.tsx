@@ -7,7 +7,7 @@ import { CustomText } from "../../../components/text/customText";
 import { useAppTheme } from "../../../theme";
 import { RootStackParamList } from "../../../app/RootNavigator";
 import { AppConfig, FirebaseConstants } from "../../../constants";
-import { AsyncStorageService } from "../../../core/service/asyncStorageService";
+import { AsyncStorageService } from "../../../core/service/storageServices/asyncStorageService";
 import { FirebaseService } from "../../../core/service";
 
 type OnboardingScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "Onboarding">;

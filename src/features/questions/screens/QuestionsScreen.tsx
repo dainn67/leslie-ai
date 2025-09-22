@@ -14,6 +14,7 @@ import { QuestionNumberSelector } from "../components/QuestionNumberSelector";
 import { FirebaseService, getAllQuestions } from "../../../core/service";
 import { FirebaseConstants } from "../../../constants";
 import { RootStackParamList } from "../../../app/RootNavigator";
+import { GameType } from "../../game/screens/GameScreen";
 
 export const QuestionsScreen = () => {
   // Drawer & navigation
@@ -54,7 +55,7 @@ export const QuestionsScreen = () => {
   const handleSelectQuestion = (amount: number) => {
     const questions = allQuestions.slice(0, amount);
     FirebaseService.logEvent(FirebaseConstants.REVIEW_ALL_QUESTIONS, { amount });
-    navigation.navigate("GameScreen", { questions });
+    navigation.navigate("GameScreen", { props: { questions, gameType: GameType.Practice } });
   };
 
   return (

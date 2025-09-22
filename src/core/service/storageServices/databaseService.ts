@@ -7,7 +7,7 @@ import {
   updateTestQuestionTables,
   updateTestTables,
 } from "../../../storage/database/tables";
-import { AsyncStorageService } from "../asyncStorageService";
+import { AsyncStorageService } from "./asyncStorageService";
 
 export const DB_NAME = "leslieai.db";
 const ASSETS_DB_PATH = require("../../../../assets/databases/leslieai.db");

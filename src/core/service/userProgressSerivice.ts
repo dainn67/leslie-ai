@@ -1,6 +1,6 @@
 import { UserProgress, createUserProgress } from "../../models/userProgress";
 import { convertDateToDDMMYYYY } from "../../utils";
-import { AsyncStorageService } from "./asyncStorageService";
+import { AsyncStorageService } from "./storageServices/asyncStorageService";
 
 export class UserProgressService {
   static getUserProgressFromStorage = async (): Promise<UserProgress> => {

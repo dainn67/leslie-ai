@@ -15,13 +15,24 @@ import { CustomText } from "../../../components/text/customText";
 import { insertQuestions, deleteQuestion } from "../../../storage/database/tables";
 import { ChatbotBottomSheet } from "../../../components/bottomsheets/ChatbotBottomSheet";
 import { RootStackParamList } from "../../../app/RootNavigator";
+import { Question } from "../../../models";
 
 type GameScreenRouteProp = RouteProp<RootStackParamList, "GameScreen">;
 type GameScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "GameScreen">;
 
+export enum GameType {
+  Diagnostic = "diagnostic",
+  Practice = "practice",
+}
+
+export type GameProps = {
+  gameType: GameType;
+  questions: Question[];
+};
+
 export const GameScreen = () => {
   const route = useRoute<GameScreenRouteProp>();
-  const { questions } = route.params;
+  const { questions, gameType } = route.params.props;
 
   const { colors } = useAppTheme();
 
@@ -118,6 +129,7 @@ export const GameScreen = () => {
             <QuestionView
               questionIndex={currentQuestionIndex}
               question={question}
+              gameType={gameType}
               totalQuestions={questionList.length}
               selectedAnswer={mapAnswerIds[question.questionId]}
               bookmarked={bookmarkIds.includes(question.questionId)}
@@ -181,7 +193,7 @@ const style = StyleSheet.create({
   },
   navButton: {
     flex: 1,
-    paddingVertical: 12 ,
+    paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 8,
     marginHorizontal: 4,

@@ -26,6 +26,7 @@ import { AsyncStorageService, ChatbotService, FirebaseService, logDatabasePath, 
 import { DifyConfig, FirebaseConstants } from "../../../constants";
 import { NameDialog } from "../../common/dialogs";
 import { RootStackParamList } from "../../../app/RootNavigator";
+import { GameType } from "../../game/screens/GameScreen";
 
 type ChatbotScreenNavigationProp = DrawerNavigationProp<RootStackParamList, "Main">;
 type ChatbotScreenRouteProp = RouteProp<RootStackParamList, "Main">;
@@ -126,7 +127,7 @@ export const ChatbotScreen = () => {
       if (!questions) {
         ToastService.show({ message: "Không thể tải câu hỏi", type: "error" });
       } else {
-        navigation.navigate("GameScreen", { questions: questions });
+        navigation.navigate("GameScreen", { props: { questions, gameType: GameType.Diagnostic } });
       }
     } else {
       const updatedData = result?.sendMessage;

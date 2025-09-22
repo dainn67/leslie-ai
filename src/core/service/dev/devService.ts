@@ -1,4 +1,4 @@
-import { db } from "../../../storage/database/database";
+import { db } from "../storageServices/databaseService";
 
 export const DB_NAME = "quiz.db";
 

@@ -14,6 +14,7 @@ import { useAppTheme } from "../../../theme";
 import { CustomText } from "../../../components/text/customText";
 import { createReviseQuestionSet, getQuestionsByType } from "../../../core/service";
 import { RootStackParamList } from "../../../app/RootNavigator";
+import { GameType } from "../../game/screens/GameScreen";
 
 type QuestionListScreenRouteProp = RouteProp<RootStackParamList, "QuestionListScreen">;
 type QuestionListScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "QuestionListScreen">;
@@ -49,7 +50,7 @@ export const QuestionListScreen = () => {
 
   const handleSelectQuestion = (amount: number) => {
     const selectedQuestions = createReviseQuestionSet(questions, amount);
-    navigation.navigate("GameScreen", { questions: selectedQuestions });
+    navigation.navigate("GameScreen", { props: { questions: selectedQuestions, gameType: GameType.Practice } });
   };
 
   const handleBookmarkPress = (isBookmarked: boolean, question: Question) => {
