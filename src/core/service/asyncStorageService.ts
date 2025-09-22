@@ -1,3 +1,4 @@
+import { ThemeMode } from "../../features/theme/themeSlice";
 import { loadFromAsyncStorage, saveToAsyncStorage } from "../../storage/asyncStorage/asyncStorage";
 import { AsyncStorageConstants } from "../../storage/asyncStorage/asyncStorateConstant";
 
@@ -25,11 +26,11 @@ export class AsyncStorageService {
   };
 
   // Theme
-  static setTheme = async (theme: string): Promise<void> => {
+  static setTheme = async (theme: ThemeMode): Promise<void> => {
     await saveToAsyncStorage(AsyncStorageConstants.THEME_MODE, theme);
   };
 
-  static getTheme = async (): Promise<string> => {
+  static getTheme = async (): Promise<ThemeMode> => {
     return await loadFromAsyncStorage(AsyncStorageConstants.THEME_MODE);
   };
 
