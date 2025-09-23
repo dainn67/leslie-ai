@@ -449,7 +449,6 @@ export class ChatbotService {
         }
       },
       onError: (error) => {
-        console.log("SSE error", error);
         if (!hasError) hasError = true;
         DiscordService.sendDiscordMessage({
           message: `SSE error: ${JSON.stringify(error)}`,

@@ -1,4 +1,5 @@
 import Tts from "react-native-tts";
+import { DiscordService, DiscordWebhookType } from "./discordService";
 
 class TTSService {
   private static instance: TTSService;
@@ -31,7 +32,10 @@ class TTSService {
 
       this.isInitialized = true;
     } catch (e) {
-      console.warn("❗ Failed to initialize TTS:", e);
+      DiscordService.sendDiscordMessage({
+        message: `Failed to initialize TTS: ${JSON.stringify(e)}`,
+        type: DiscordWebhookType.ERROR,
+      });
       await Tts.setDefaultLanguage("en-US");
     }
   }

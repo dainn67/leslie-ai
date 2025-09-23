@@ -13,7 +13,6 @@ export class ApiClient {
       });
       return response.data;
     } catch (error) {
-      console.log("apiClient error:", error, (error as any).response?.data);
       DiscordService.sendDiscordMessage({
         message: `apiClient error: ${JSON.stringify(error)}`,
         type: DiscordWebhookType.ERROR,

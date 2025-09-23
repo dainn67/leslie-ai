@@ -11,6 +11,8 @@ export enum DiscordWebhookType {
 
 export class DiscordService {
   static sendDiscordMessage({ username, message, type }: { username?: string; message: string; type: DiscordWebhookType }) {
+    console.log(message);
+
     const webhookUrl = type === DiscordWebhookType.ERROR ? DISCORD_ERROR_WEBHOOKS : DISCORD_FEEDBACK_WEBHOOKS;
 
     const title = type === DiscordWebhookType.ERROR ? "App Report" : "App Feedback";
