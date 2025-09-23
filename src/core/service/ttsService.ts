@@ -4,14 +4,14 @@ import { DiscordService, DiscordWebhookType } from "./discordService";
 class TTSService {
   private static instance: TTSService;
   private isInitialized = false;
+  private _containJapaneseVoice = false;
 
   // Default voices
   static japaneseFemaleVoice = "ja-JP-language";
   static japaneseMaleVoice = "ja-jp-x-jad-network";
 
-  private constructor() {
-    // Prevent external instantiation
-  }
+  // Prevent external instantiation
+  private constructor() {}
 
   static getInstance(): TTSService {
     if (!TTSService.instance) {
@@ -20,15 +20,25 @@ class TTSService {
     return TTSService.instance;
   }
 
+  get containJapaneseVoice() {
+    return this._containJapaneseVoice;
+  }
+
   async init() {
     if (this.isInitialized) return;
 
     try {
+      const voices = await Tts.voices();
+      this._containJapaneseVoice = voices.some((v) => v.language.includes("ja"));
+
       // Base config
       await Tts.setDefaultRate(0.5);
       await Tts.setDefaultPitch(1.0);
-      await Tts.setDefaultLanguage("ja-JP");
-      await Tts.setDefaultVoice(TTSService.japaneseFemaleVoice);
+
+      if (this._containJapaneseVoice) {
+        await Tts.setDefaultLanguage("ja-JP");
+        await Tts.setDefaultVoice(TTSService.japaneseFemaleVoice);
+      }
 
       this.isInitialized = true;
     } catch (e) {

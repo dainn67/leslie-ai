@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Tts from "react-native-tts";
+import TTSInstance from "../../../../core/service/ttsService";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { CustomText } from "../../../../components/text/customText";
 import { Question } from "../../../../models/question";
@@ -9,6 +10,7 @@ import { Answer } from "../../../../models/answer";
 import { useAppTheme } from "../../../../theme";
 import { ToastService } from "../../../../core/service";
 import { GameType } from "../../../game/screens/GameScreen";
+import { useDialog } from "../../../../core/providers";
 
 interface QuestionViewProps {
   question: Question;
@@ -20,7 +22,6 @@ interface QuestionViewProps {
   showCorrectAnswer?: boolean;
   onAnswerSelect?: (index: number) => void;
   onBookmarkPress?: (isBookmarked: boolean) => void;
-  onAudioPlay?: (played: boolean) => void;
 }
 
 export const QuestionView = ({
@@ -33,9 +34,9 @@ export const QuestionView = ({
   showCorrectAnswer,
   onAnswerSelect,
   onBookmarkPress,
-  onAudioPlay,
 }: QuestionViewProps) => {
   const { colors } = useAppTheme();
+  const dialog = useDialog();
 
   const getAnswerLabel = (index: number) => {
     const labels = ["A", "B", "C", "D"];
@@ -44,12 +45,16 @@ export const QuestionView = ({
 
   const [playAudio, setPlayAudio] = useState(false);
 
-  const handleToggleAudio = () => {
+  const handleToggleAudio = async () => {
+    if (!TTSInstance.containJapaneseVoice) {
+      dialog.showAlert("Hiện TTS hỗ trợ ngôn ngữ Nhật\nHãy vào Cài đặt > Văn bản sang giọng nói > Tải về ngôn ngữ Nhật");
+      return;
+    }
+
     const newState = !playAudio;
-    onAudioPlay?.(newState);
     setPlayAudio(newState);
 
-    Tts.stop();
+    await Tts.stop();
     if (newState) {
       Tts.addEventListener("tts-finish", () => setPlayAudio(false));
       Tts.speak(question.audio);

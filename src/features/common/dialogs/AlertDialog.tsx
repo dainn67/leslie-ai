@@ -6,6 +6,7 @@ import { CustomText } from "../../../components/text/customText";
 
 interface AlertDialogProps {
   message: string;
+  subMessage?: string;
   buttonText?: string;
   visible: boolean;
   onClose: () => void;
@@ -13,6 +14,7 @@ interface AlertDialogProps {
 
 export const AlertDialog = ({ 
   message, 
+  subMessage,
   buttonText = "Đóng", 
   visible, 
   onClose 

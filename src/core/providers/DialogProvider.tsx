@@ -1,10 +1,10 @@
-import React, { ReactNode, useContext, useState, createContext } from 'react';
-import { ConfirmDialog, AlertDialog } from '../../features/common/dialogs';
-import { MyDatePicker } from '../../components/datePicker/MyDatePicker';
+import React, { ReactNode, useContext, useState, createContext } from "react";
+import { ConfirmDialog, AlertDialog } from "../../features/common/dialogs";
+import { MyDatePicker } from "../../components/datePicker/MyDatePicker";
 
 export enum DialogType {
-  CONFIRM = 'confirm',
-  ALERT = 'alert',
+  CONFIRM = "confirm",
+  ALERT = "alert",
 }
 
 type DialogContextType = {
@@ -18,16 +18,16 @@ const DialogContext = createContext<DialogContextType | null>(null);
 
 export const useDialog = () => {
   const ctx = useContext(DialogContext);
-  if (!ctx) throw new Error('useDialog must be used inside DialogProvider');
+  if (!ctx) throw new Error("useDialog must be used inside DialogProvider");
   return ctx;
 };
 
 export const DialogProvider = ({ children }: { children: ReactNode }) => {
   const [confirmVisible, setConfirmVisible] = useState(false);
-  const [confirmMessage, setConfirmMessage] = useState('');
+  const [confirmMessage, setConfirmMessage] = useState("");
 
   const [alertVisible, setAlertVisible] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
+  const [alertMessage, setAlertMessage] = useState("");
 
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const [date, setDate] = useState<Date | undefined>(undefined);
@@ -37,9 +37,9 @@ export const DialogProvider = ({ children }: { children: ReactNode }) => {
   const [closeCallback, setCloseCallback] = useState<(() => void) | null>(null);
   const [dateCallback, setDateCallback] = useState<(date: Date | undefined) => void>(() => {});
 
-  const [confirmText, setConfirmText] = useState('Xác nhận');
-  const [cancelText, setCancelText] = useState('Hủy');
-  const [buttonText, setButtonText] = useState('Đóng');
+  const [confirmText, setConfirmText] = useState("Xác nhận");
+  const [cancelText, setCancelText] = useState("Hủy");
+  const [buttonText, setButtonText] = useState("Đóng");
 
   const showConfirm = (
     message: string,
@@ -51,15 +51,15 @@ export const DialogProvider = ({ children }: { children: ReactNode }) => {
     setConfirmMessage(message);
     setConfirmCallback(() => onConfirm);
     setCancelCallback(() => onCancel || (() => {}));
-    setConfirmText(confirmTextParam || 'Xác nhận');
-    setCancelText(cancelTextParam || 'Hủy');
+    setConfirmText(confirmTextParam || "Xác nhận");
+    setCancelText(cancelTextParam || "Hủy");
     setConfirmVisible(true);
   };
 
   const showAlert = (message: string, onClose?: () => void, buttonTextParam?: string) => {
     setAlertMessage(message);
     setCloseCallback(() => onClose || (() => {}));
-    setButtonText(buttonTextParam || 'Đóng');
+    setButtonText(buttonTextParam || "Đóng");
     setAlertVisible(true);
   };
 
