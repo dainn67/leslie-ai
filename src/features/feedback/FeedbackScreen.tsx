@@ -21,8 +21,9 @@ export const FeedbackScreen = () => {
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [message, setMessage] = useState("");
+  const [email, setEmail] = useState("");
 
-  const canSubmit = selectedCategories.length > 0 && message.trim().length > 0;
+  const canSubmit = selectedCategories.length > 0 && message.trim().length > 0 && email.trim().length > 0;
 
   const navigation = useNavigation<DrawerNavigationProp<RootStackParamList, "Main">>();
 
@@ -32,7 +33,7 @@ export const FeedbackScreen = () => {
   const handleSubmit = () => {
     DiscordService.sendDiscordMessage({
       username: userProgress.userName,
-      message: `Categories: ${selectedCategories.join(", ")}\nMessage: ${message.trim()}`,
+      message: `Categories: ${selectedCategories.join(", ")}\nMessage: ${message.trim()}\nEmail: ${email.trim()}`,
       type: DiscordWebhookType.FEEDBACK,
     });
 
@@ -82,10 +83,32 @@ export const FeedbackScreen = () => {
           </View>
         </View>
 
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>Email</Text>
+          <View
+            style={[styles.emailInputContainer, { backgroundColor: colors.backgroundSecondary, borderColor: colors.placeholder }]}
+          >
+            <TextInput
+              value={email}
+              onChangeText={setEmail}
+              placeholder="Email để nhận phản hồi về vấn đề sớm nhất"
+              placeholderTextColor={colors.placeholder}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              style={[styles.textInput, { color: colors.text, minHeight: 50 }]}
+            />
+          </View>
+        </View>
+
         {/* Message Input */}
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, { color: colors.text }]}>Nội dung</Text>
-          <View style={[styles.inputContainer, { backgroundColor: colors.backgroundSecondary, borderColor: colors.placeholder }]}>
+          <View
+            style={[
+              styles.messageInputContainer,
+              { backgroundColor: colors.backgroundSecondary, borderColor: colors.placeholder },
+            ]}
+          >
             <TextInput
               value={message}
               onChangeText={setMessage}
@@ -137,7 +160,7 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
   section: {
-    marginBottom: 32,
+    marginBottom: 16,
   },
   sectionTitle: {
     fontSize: 18,
@@ -159,7 +182,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "500",
   },
-  inputContainer: {
+  emailInputContainer: {
+    borderRadius: 16,
+    borderWidth: 1,
+    minHeight: 50,
+  },
+  messageInputContainer: {
     borderRadius: 16,
     borderWidth: 1,
     minHeight: 140,

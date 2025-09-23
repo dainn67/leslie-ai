@@ -8,7 +8,14 @@ export const VersionText = () => {
 
   return (
     <CustomText
-      style={{ marginLeft: 16, marginVertical: 8, fontSize: 14, textDecorationLine: "underline", fontStyle: "italic", color: colors.text }}
-    >{`Phiên bản: ${AppConfig.version} (${AppConfig.buildVersion})`}</CustomText>
+      style={{
+        marginLeft: 16,
+        marginVertical: 8,
+        fontSize: 14,
+        textDecorationLine: "underline",
+        fontStyle: "italic",
+        color: colors.text,
+      }}
+    >{`Phiên bản: ${AppConfig.version} ${AppConfig.devMode ? `(${AppConfig.buildVersion})` : ""}`}</CustomText>
   );
 };
