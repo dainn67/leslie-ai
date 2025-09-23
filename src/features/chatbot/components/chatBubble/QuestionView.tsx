@@ -20,8 +20,10 @@ interface QuestionViewProps {
   bookmarked: boolean;
   gameType?: GameType;
   showCorrectAnswer?: boolean;
+  playAudio: boolean;
   onAnswerSelect?: (index: number) => void;
   onBookmarkPress?: (isBookmarked: boolean) => void;
+  setPlayAudio: (playAudio: boolean) => void;
 }
 
 export const QuestionView = ({
@@ -32,8 +34,10 @@ export const QuestionView = ({
   bookmarked,
   gameType,
   showCorrectAnswer,
+  playAudio,
   onAnswerSelect,
   onBookmarkPress,
+  setPlayAudio,
 }: QuestionViewProps) => {
   const { colors } = useAppTheme();
   const dialog = useDialog();
@@ -42,8 +46,6 @@ export const QuestionView = ({
     const labels = ["A", "B", "C", "D"];
     return (labels[index] || "A") + ".";
   };
-
-  const [playAudio, setPlayAudio] = useState(false);
 
   const handleToggleAudio = async () => {
     if (!TTSInstance.containJapaneseVoice) {
@@ -55,10 +57,7 @@ export const QuestionView = ({
     setPlayAudio(newState);
 
     await Tts.stop();
-    if (newState) {
-      Tts.addEventListener("tts-finish", () => setPlayAudio(false));
-      Tts.speak(question.audio);
-    }
+    if (newState) TTSInstance.speak(question.audio, () => setPlayAudio(false));
   };
 
   const handleBookmarkPress = (bookmarked: boolean) => {

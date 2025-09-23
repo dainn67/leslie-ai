@@ -36,6 +36,7 @@ export const QuestionListScreen = () => {
 
   // Local state to update the question after leave this screen
   const [listBookmarked, setListBookmarked] = useState<number[]>([]);
+  const [listPlayAudio, setListPlayAudio] = useState<number[]>([]);
 
   const inputRef = useRef<TextInput>(null);
 
@@ -107,6 +108,15 @@ export const QuestionListScreen = () => {
     }
   };
 
+  const handleSetPlayAudio = (playAudio: boolean, question: Question) => {
+    setListPlayAudio((prevState) => {
+      if (playAudio) {
+        return [...prevState, question.questionId];
+      }
+      return prevState.filter((id) => id !== question.questionId);
+    });
+  };
+
   const handleNavigateToChatbotScreen = () => {
     // First navigate to Main screen (which contains the drawer)
     navigation.navigate("Main", {
@@ -135,6 +145,8 @@ export const QuestionListScreen = () => {
                   totalQuestions={questions.length}
                   bookmarked={listBookmarked.includes(question.questionId)}
                   showCorrectAnswer={true}
+                  playAudio={listPlayAudio.includes(question.questionId)}
+                  setPlayAudio={(playAudio) => handleSetPlayAudio(playAudio, question)}
                   onBookmarkPress={(isBookmarked) => handleBookmarkPress(isBookmarked, question)}
                 />
               </View>

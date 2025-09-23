@@ -50,20 +50,33 @@ class TTSService {
     }
   }
 
-  speak(text: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-      const onDone = () => {
-        Tts.removeEventListener("tts-finish", onDone);
-        resolve();
-      };
+  async speak(text: string, onFinish: () => void) {
+    const onDone = () => {
+      this.removeAllListeners();
+      onFinish();
+    };
 
-      Tts.addEventListener("tts-finish", onDone);
-      Tts.speak(text);
-    });
+    await Tts.stop();
+    Tts.addEventListener("tts-finish", onDone);
+    Tts.addEventListener("tts-cancel", onDone);
+    Tts.speak(text);
   }
 
-  stop() {
-    Tts.stop();
+  async stop() {
+    await Tts.stop();
+    this.removeAllListeners();
+  }
+
+  removeAllListeners() {
+    try {
+      Tts.removeAllListeners("tts-finish");
+      Tts.removeAllListeners("tts-cancel");
+    } catch (e) {
+      DiscordService.sendDiscordMessage({
+        message: `Failed to remove event listener: ${JSON.stringify(e)}`,
+        type: DiscordWebhookType.ERROR,
+      });
+    }
   }
 
   setVoice(voiceId: string) {
@@ -72,7 +85,7 @@ class TTSService {
 
   async speakWithVoice(text: string, voiceId: string): Promise<void> {
     await Tts.setDefaultVoice(voiceId);
-    return this.speak(text);
+    return this.speak(text, () => {});
   }
 }
 

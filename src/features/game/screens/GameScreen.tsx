@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import TTSInstance from "../../../core/service/ttsService";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { useAppTheme } from "../../../theme";
@@ -48,6 +49,7 @@ export const GameScreen = () => {
   const navigation = useNavigation<GameScreenNavigationProp>();
 
   const [autoMode, setAutoMode] = useState(false);
+  const [playAudio, setPlayAudio] = useState(false);
   const [isChatbotVisible, setIsChatbotVisible] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -93,6 +95,9 @@ export const GameScreen = () => {
   };
 
   const handleChangeQuestion = (direction: "next" | "prev") => {
+    TTSInstance.stop();
+    setPlayAudio(false);
+
     // Check submit
     if (direction == "next" && currentQuestionIndex === questionList.length - 1) {
       navigation.replace("ResultScreen", {
@@ -133,8 +138,10 @@ export const GameScreen = () => {
               totalQuestions={questionList.length}
               selectedAnswer={mapAnswerIds[question.questionId]}
               bookmarked={bookmarkIds.includes(question.questionId)}
+              playAudio={playAudio}
               onAnswerSelect={handleAnswerSelect}
               onBookmarkPress={handleBookmarkPress}
+              setPlayAudio={setPlayAudio}
             />
           </ScrollView>
 

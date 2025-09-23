@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import Tts from 'react-native-tts';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { CustomText } from '../../../../components/text/customText';
-import { Question } from '../../../../models/question';
-import { QuestionView } from './QuestionView';
-import { ProgressBar } from '../../../../components/ProgressBar';
-import { deleteQuestion, insertQuestions } from '../../../../storage/database/tables/questionTable';
-import { createResultSummary } from '../../../../core/service';
-import { IconButton } from '../../../../components/buttons';
-import { AppIcons } from '../../../../constants/appIcons';
+import React, { useEffect, useState } from "react";
+import TTSInstance from "../../../../core/service/ttsService";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
+import { CustomText } from "../../../../components/text/customText";
+import { Question } from "../../../../models/question";
+import { QuestionView } from "./QuestionView";
+import { ProgressBar } from "../../../../components/ProgressBar";
+import { deleteQuestion, insertQuestions } from "../../../../storage/database/tables/questionTable";
+import { createResultSummary } from "../../../../core/service";
+import { IconButton } from "../../../../components/buttons";
+import { AppIcons } from "../../../../constants/appIcons";
 
 interface QuestionsMessageProps {
   questions: Question[];
@@ -21,17 +21,7 @@ export const QuestionsMessage = ({ questions, onAnalyze }: QuestionsMessageProps
   const [analyzed, setAnalyzed] = useState(false);
   const [mapAnswer, setMapAnswer] = useState<{ [key: number]: number }>({});
   const [mapBookmark, setMapBookmark] = useState<{ [key: number]: boolean }>({});
-
-  useEffect(() => {
-    // Setup audio
-    Tts.voices().then((voices) => {
-      const jpVoices = voices.filter((voice) => voice.language.includes('ja')).map((voice) => voice.name);
-
-      // 0: female, 3: male
-      const selectedVoice = jpVoices[0];
-      Tts.setDefaultVoice(selectedVoice);
-    });
-  }, []);
+  const [playAudio, setPlayAudio] = useState(false);
 
   useEffect(() => {
     // Analyze when all questions are answered
@@ -63,8 +53,11 @@ export const QuestionsMessage = ({ questions, onAnalyze }: QuestionsMessageProps
     }
   };
 
-  const handleChangeQuestion = (direction: 'next' | 'prev') => {
-    const newIndex = direction === 'next' ? currentQuestionIndex + 1 : currentQuestionIndex - 1;
+  const handleChangeQuestion = (direction: "next" | "prev") => {
+    TTSInstance.stop();
+    setPlayAudio(false);
+
+    const newIndex = direction === "next" ? currentQuestionIndex + 1 : currentQuestionIndex - 1;
     setCurrentQuestionIndex(newIndex);
   };
 
@@ -89,15 +82,17 @@ export const QuestionsMessage = ({ questions, onAnalyze }: QuestionsMessageProps
         totalQuestions={questions.length}
         bookmarked={mapBookmark[question.questionId]}
         selectedAnswer={mapAnswer[question.questionId]}
+        playAudio={playAudio}
         onAnswerSelect={handleAnswerSelect}
         onBookmarkPress={handleBookmarkPress}
+        setPlayAudio={setPlayAudio}
       />
 
       {/* Navigation */}
       <View style={styles.navigationContainer}>
         <TouchableOpacity
           style={[styles.navButton, styles.prevButton, currentQuestionIndex === 0 && styles.disabledButton]}
-          onPress={() => handleChangeQuestion('prev')}
+          onPress={() => handleChangeQuestion("prev")}
           disabled={currentQuestionIndex === 0}
         >
           <CustomText
@@ -109,7 +104,7 @@ export const QuestionsMessage = ({ questions, onAnalyze }: QuestionsMessageProps
 
         <TouchableOpacity
           style={[styles.navButton, styles.nextButton, currentQuestionIndex === questions.length - 1 && styles.disabledButton]}
-          onPress={() => handleChangeQuestion('next')}
+          onPress={() => handleChangeQuestion("next")}
           disabled={currentQuestionIndex === questions.length - 1}
         >
           <CustomText
@@ -133,9 +128,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   progressContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    alignContent: "center",
     marginBottom: 8,
   },
   progressBarContainer: {
@@ -144,19 +139,19 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   resetButton: {
-    backgroundColor: '#F8F9FA',
+    backgroundColor: "#F8F9FA",
     padding: 4,
     borderRadius: 100,
     borderWidth: 1,
-    borderColor: '#E8E8E8',
+    borderColor: "#E8E8E8",
     marginRight: 4,
   },
   progressTextContainer: {
     minWidth: 50,
   },
   navigationContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   navButton: {
     flex: 1,
@@ -166,29 +161,29 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   prevButton: {
-    backgroundColor: '#F8F9FA',
+    backgroundColor: "#F8F9FA",
     borderWidth: 1,
-    borderColor: '#E8E8E8',
+    borderColor: "#E8E8E8",
   },
   nextButton: {
-    backgroundColor: '#4A90E2',
+    backgroundColor: "#4A90E2",
   },
   disabledButton: {
-    backgroundColor: '#F5F5F5',
-    borderColor: '#E0E0E0',
+    backgroundColor: "#F5F5F5",
+    borderColor: "#E0E0E0",
   },
   navButtonText: {
     fontSize: 14,
-    fontWeight: '600',
-    textAlign: 'center',
+    fontWeight: "600",
+    textAlign: "center",
   },
   navButtonTextPrev: {
-    color: 'black',
+    color: "black",
   },
   navButtonTextNext: {
-    color: 'white',
+    color: "white",
   },
   disabledButtonText: {
-    color: '#BDBDBD',
+    color: "#BDBDBD",
   },
 });
