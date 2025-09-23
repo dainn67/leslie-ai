@@ -10,6 +10,8 @@ import { CustomText } from '../../../components/text/customText';
 import { WordComponent } from '../../../components/streamingText/WordComponent';
 import { createResultSummary, ChatbotService } from '../../../core/service';
 import { RootStackParamList } from '../../../app/RootNavigator';
+import { useAppDispatch } from '../../../hooks/hooks';
+import { updateUserProgress } from '../../userProgress/userProgressSlice';
 
 type ResultScreenRouteProp = RouteProp<RootStackParamList, 'ResultScreen'>;
 type ResultScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ResultScreen'>;
@@ -27,6 +29,8 @@ export const ResultScreen = () => {
   const [totalQuestions, setTotalQuestions] = useState(0);
 
   const [aiInsightWords, setAiInsightWords] = useState<string[]>([]);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     let correctQuestions = 0;
@@ -52,8 +56,12 @@ export const ResultScreen = () => {
 
     ChatbotService.sendResultAnalytic({
       message: summary,
+      gameType: props.gameType,
       onYieldWord: (word) => {
         setAiInsightWords((prev) => [...prev, word]);
+      },
+      onEvaluateLevel: (level) => {
+        dispatch(updateUserProgress({ level }));
       },
     });
   }, []);

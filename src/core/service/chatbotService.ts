@@ -18,6 +18,7 @@ import { UserProgress } from "../../models/userProgress";
 import { convertDateToDDMMYYYY } from "../../utils";
 import { FirebaseService, getDiagnosticTest, getQuestionsByTestId } from ".";
 import { FirebaseConstants } from "../../constants";
+import { GameType } from "../../features/game/screens/GameScreen";
 
 export const Delimiter = "--//--";
 
@@ -396,11 +397,14 @@ export class ChatbotService {
 
   static sendResultAnalytic({
     message,
+    gameType,
     onYieldWord,
+    onEvaluateLevel,
   }: {
     message: string;
-    data?: { [key: string]: any };
+    gameType: GameType;
     onYieldWord: (word: string) => void;
+    onEvaluateLevel: (level: string) => void;
   }) {
     let fullText = "";
     let wordIndex = 0;
@@ -414,7 +418,9 @@ export class ChatbotService {
       token: DIFY_ANALYZE_GAME_RESULT_API_KEY,
       body: {
         query: message,
-        inputs: {},
+        inputs: {
+          game_type: gameType,
+        },
         response_mode: "streaming",
         user: user,
         auto_generate_name: false,
@@ -434,7 +440,14 @@ export class ChatbotService {
           );
         }
       },
-      onDone: () => (wordLength = ChatbotService.splitCustomWords(fullText).length),
+      onDone: () => {
+        wordLength = ChatbotService.splitCustomWords(fullText).length;
+        const splittedText = fullText.split(Delimiter);
+        if (splittedText.length > 1) {
+          const level = splittedText[splittedText.length - 1].trim();
+          onEvaluateLevel(level);
+        }
+      },
       onError: (error) => {
         console.log("SSE error", error);
         if (!hasError) hasError = true;
