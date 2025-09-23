@@ -5,21 +5,23 @@ import { AppBar } from '../../../components/AppBar';
 import { Ionicons } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { MainStackParamList } from '../../../app/DrawerNavigator';
 import { useAppTheme } from '../../../theme';
 import { CustomText } from '../../../components/text/customText';
 import { WordComponent } from '../../../components/streamingText/WordComponent';
 import { createResultSummary, ChatbotService } from '../../../core/service';
+import { RootStackParamList } from '../../../app/RootNavigator';
 
-type ResultScreenRouteProp = RouteProp<MainStackParamList, 'ResultScreen'>;
-type ResultScreenNavigationProp = NativeStackNavigationProp<MainStackParamList, 'ResultScreen'>;
+type ResultScreenRouteProp = RouteProp<RootStackParamList, 'ResultScreen'>;
+type ResultScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ResultScreen'>;
 
 export const ResultScreen = () => {
   const route = useRoute<ResultScreenRouteProp>();
   const navigation = useNavigation<ResultScreenNavigationProp>();
   const { colors } = useAppTheme();
 
-  const { questions, mapAnswerIds } = route.params;
+  const { props } = route.params;
+  const { questions } = props;
+  const { mapAnswerIds } = route.params;
   const [correctQuestions, setCorrectQuestions] = useState(0);
   const [incorrectQuestions, setIncorrectQuestions] = useState(0);
   const [totalQuestions, setTotalQuestions] = useState(0);
@@ -57,7 +59,7 @@ export const ResultScreen = () => {
   }, []);
 
   const handleTryAgain = () => {
-    navigation.replace('QuestionGameScreen', { questions: questions });
+    navigation.replace('GameScreen', { props: { questions, gameType: props.gameType } });
   };
 
   return (

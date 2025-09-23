@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { DrawerNavigator } from "./DrawerNavigator";
 import { AsyncStorageService } from "../core/service";
-import { QuestionType, Question } from "../models/question";
+import { QuestionType } from "../models/question";
 import { GameScreen, GameProps } from "../features/game/screens/GameScreen";
 import { ResultScreen } from "../features/game/screens/ResultScreen";
 import { QuestionListScreen } from "../features/questions/screens/QuestionListScreen";
@@ -14,7 +14,7 @@ export type RootStackParamList = {
   Main: { initialMessage?: string };
   GameScreen: { props: GameProps };
   ResultScreen: {
-    questions: Question[];
+    props: GameProps;
     mapAnswerIds: { [key: number]: number };
   };
   QuestionListScreen: { type: QuestionType };

@@ -74,7 +74,7 @@ export const GameScreen = () => {
         }, 100);
       } else {
         navigation.replace("ResultScreen", {
-          questions,
+          props: { questions, gameType },
           mapAnswerIds,
         });
       }
@@ -96,7 +96,7 @@ export const GameScreen = () => {
     // Check submit
     if (direction == "next" && currentQuestionIndex === questionList.length - 1) {
       navigation.replace("ResultScreen", {
-        questions,
+        props: { questions, gameType },
         mapAnswerIds,
       });
       return;
