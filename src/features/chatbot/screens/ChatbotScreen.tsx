@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-
+import TTSInstance from "../../../core/service/ttsService";
 import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { AppBar } from "../../../components/AppBar";
@@ -58,6 +58,7 @@ export const ChatbotScreen = () => {
     if (initialMessage) return;
 
     if (!initilized.current) {
+      TTSInstance.init();
       if (userProgress.userName.length === 0) {
         setNameDialogVisible(true);
       } else {

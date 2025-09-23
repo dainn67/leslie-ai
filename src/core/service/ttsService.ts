@@ -25,8 +25,8 @@ class TTSService {
 
     try {
       // Base config
-      Tts.setDefaultRate(0.5);
-      Tts.setDefaultPitch(1.0);
+      await Tts.setDefaultRate(0.5);
+      await Tts.setDefaultPitch(1.0);
       await Tts.setDefaultLanguage("ja-JP");
       await Tts.setDefaultVoice(TTSService.japaneseFemaleVoice);
 

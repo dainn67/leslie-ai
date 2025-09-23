@@ -41,7 +41,6 @@ const AppContent = () => {
   useEffect(() => {
     async function init() {
       initializeDatabase();
-      TTSInstance.init();
       AsyncStorageService.getTheme().then((scheme) => dispatch(setTheme(scheme)));
 
       const userProgress = await UserProgressService.getUserProgressFromStorage();
