@@ -1,6 +1,7 @@
 import Constants from "expo-constants";
 import { ApiClient } from "../../api/apiClient";
 import { AppConfig } from "../../constants";
+import { AsyncStorageService } from "./storageServices/asyncStorageService";
 
 const { DISCORD_ERROR_WEBHOOKS, DISCORD_FEEDBACK_WEBHOOKS } = Constants.expoConfig?.extra ?? {};
 
@@ -10,8 +11,10 @@ export enum DiscordWebhookType {
 }
 
 export class DiscordService {
-  static sendDiscordMessage({ username, message, type }: { username?: string; message: string; type: DiscordWebhookType }) {
+  static async sendDiscordMessage({ name, message, type }: { name?: string; message: string; type: DiscordWebhookType }) {
     console.log(message);
+
+    const username = name ?? (await AsyncStorageService.getUserProgress())?.userName;
 
     const webhookUrl = type === DiscordWebhookType.ERROR ? DISCORD_ERROR_WEBHOOKS : DISCORD_FEEDBACK_WEBHOOKS;
 

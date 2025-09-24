@@ -11,7 +11,7 @@ class TTSService {
   static japaneseMaleVoice = "ja-jp-x-jad-network";
 
   // Prevent external instantiation
-  private constructor() {}
+  private constructor() { }
 
   static getInstance(): TTSService {
     if (!TTSService.instance) {
@@ -24,7 +24,7 @@ class TTSService {
     return this._containJapaneseVoice;
   }
 
-  async init() {
+  async init(name?: string) {
     if (this.isInitialized) return;
 
     try {
@@ -43,6 +43,7 @@ class TTSService {
       this.isInitialized = true;
     } catch (e) {
       DiscordService.sendDiscordMessage({
+        name,
         message: `Failed to initialize TTS: ${JSON.stringify(e)}`,
         type: DiscordWebhookType.ERROR,
       });
@@ -85,7 +86,7 @@ class TTSService {
 
   async speakWithVoice(text: string, voiceId: string): Promise<void> {
     await Tts.setDefaultVoice(voiceId);
-    return this.speak(text, () => {});
+    return this.speak(text, () => { });
   }
 }
 

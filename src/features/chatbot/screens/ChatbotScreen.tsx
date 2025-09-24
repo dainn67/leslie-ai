@@ -58,7 +58,6 @@ export const ChatbotScreen = () => {
     if (initialMessage) return;
 
     if (!initilized.current) {
-      TTSInstance.init();
       if (userProgress.userName.length === 0) {
         setNameDialogVisible(true);
       } else {
@@ -196,6 +195,8 @@ export const ChatbotScreen = () => {
 
     dispatch(updateUserProgress({ userName: name }));
     setNameDialogVisible(false);
+
+    TTSInstance.init(name);
     handleSend({ noUserMessage: true, actionId: DifyConfig.askLevelActionId });
     initilized.current = true;
   };
