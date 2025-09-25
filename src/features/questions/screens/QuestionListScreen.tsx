@@ -8,13 +8,14 @@ import { RouteProp, useNavigation, useRoute, useFocusEffect } from "@react-navig
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { QuestionView } from "../../chatbot/components/chatBubble/QuestionView";
 import { QuestionNumberSelector } from "../components/QuestionNumberSelector";
-import { deleteQuestion, insertQuestions } from "../../../storage/database/tables";
+import { deleteQuestions, insertQuestions } from "../../../storage/database/tables";
 import { SimpleTextInput } from "../../../components/input/SimpleTextInput";
 import { useAppTheme } from "../../../theme";
 import { CustomText } from "../../../components/text/customText";
-import { createReviseQuestionSet, getQuestionsByType } from "../../../core/service";
+import { createReviseQuestionSet, FirebaseService, getQuestionsByType } from "../../../core/service";
 import { RootStackParamList } from "../../../app/RootNavigator";
 import { GameType } from "../../game/screens/GameScreen";
+import { FirebaseConstants } from "../../../constants";
 
 type QuestionListScreenRouteProp = RouteProp<RootStackParamList, "QuestionListScreen">;
 type QuestionListScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "QuestionListScreen">;
@@ -66,7 +67,7 @@ export const QuestionListScreen = () => {
       insertQuestions([question]);
     } else {
       setListBookmarked((prevState) => prevState.filter((id) => id !== question.questionId));
-      deleteQuestion(question.questionId);
+      deleteQuestions([question.questionId]);
     }
   };
 
@@ -80,6 +81,8 @@ export const QuestionListScreen = () => {
         setIsSearchVisible(false);
       });
     } else {
+      FirebaseService.logEvent(FirebaseConstants.OPEN_SEARCH);
+
       setIsSearchVisible(true);
       Animated.timing(searchAnimation, {
         toValue: 1,
@@ -118,6 +121,8 @@ export const QuestionListScreen = () => {
   };
 
   const handleNavigateToChatbotScreen = () => {
+    FirebaseService.logEvent(FirebaseConstants.START_CREATING_QUESTIONS);
+
     // First navigate to Main screen (which contains the drawer)
     navigation.navigate("Main", {
       initialMessage: `Tạo câu hỏi mới về ${QuestionTypeTitles[type]}`,

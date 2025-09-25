@@ -1,4 +1,6 @@
 import { db } from "../../../core/service";
+import { TestType } from "../../../models";
+import { getTestsFromQuery } from "../../../utils";
 
 export const TestTable = {
   tableName: "Test",
@@ -31,5 +33,16 @@ export const updateTestTables = () => {
         db.execSync(`ALTER TABLE ${TestTable.tableName} ADD COLUMN ${column} ${columnType}`);
       }
     });
+  });
+};
+
+export const getTestsByType = (type: TestType) => {
+  const sql = `SELECT * FROM ${TestTable.tableName} WHERE ${TestTable.columnType} = "${type}"`;
+  return getTestsFromQuery(sql);
+};
+
+export const deleteTests = (testIds: number[]) => {
+  db.withTransactionSync(() => {
+    db.execSync(`DELETE FROM ${TestTable.tableName} WHERE ${TestTable.columnId} IN (${testIds.join(", ")})`);
   });
 };

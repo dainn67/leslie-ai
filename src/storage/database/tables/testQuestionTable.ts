@@ -1,4 +1,6 @@
+import { TestTable } from ".";
 import { db } from "../../../core/service";
+import { TestType } from "../../../models";
 
 export const TestQuestionTable = {
   tableName: "TestQuestion",

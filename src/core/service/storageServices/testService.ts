@@ -1,5 +1,5 @@
 import { TestType } from "../../../models";
-import { TestTable } from "../../../storage/database/tables";
+import { deleteTests, getTestsByType, TestTable } from "../../../storage/database/tables";
 import { getTestsFromQuery } from "../../../utils";
 
 export const getDiagnosticTest = () => {

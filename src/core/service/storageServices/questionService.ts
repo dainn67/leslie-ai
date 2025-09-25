@@ -1,7 +1,7 @@
-import { db } from "..";
 import { Question, QuestionType } from "../../../models/question";
-import { QuestionTable, TestQuestionTable } from "../../../storage/database/tables";
+import { deleteQuestions, QuestionTable, TestQuestionTable } from "../../../storage/database/tables";
 import { getQuestionsFromQuery } from "../../../utils";
+import { db } from "../storageServices/databaseService";
 
 export const createReviseQuestionSet = (questions: Question[], amount: number): Question[] => {
   return questions.sort(() => Math.random() - 0.5).slice(0, amount);
@@ -53,6 +53,11 @@ export const getQuestionsByType = (type: QuestionType) => {
   return getQuestionsFromQuery(sql);
 };
 
+export const getQuestionsByAIType = (isGenerated: boolean) => {
+  const sql = `SELECT * FROM ${QuestionTable.tableName} WHERE ${QuestionTable.columnIsGenerated} = ${isGenerated ? 1 : 0}`;
+  return getQuestionsFromQuery(sql);
+};
+
 export const getQuestionsByTestId = (testId: number) => {
   const questionIdSql = `SELECT ${TestQuestionTable.columnQuestionId} FROM ${TestQuestionTable.tableName} WHERE ${TestQuestionTable.columnTestId} = ${testId}`;
 
@@ -62,4 +67,9 @@ export const getQuestionsByTestId = (testId: number) => {
 
   const questionSql = `SELECT * FROM ${QuestionTable.tableName} WHERE ${QuestionTable.columnQuestionId} IN (${questionIds.join(", ")})`;
   return getQuestionsFromQuery(questionSql);
+};
+
+export const clearQuestionTables = () => {
+  const originalQuestionIds = getQuestionsByAIType(true).map((q) => q.questionId);
+  deleteQuestions(originalQuestionIds);
 };

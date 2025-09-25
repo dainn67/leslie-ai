@@ -7,10 +7,9 @@ import { CustomText } from "../../components/text/customText";
 import { useDialog } from "../../core/providers";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { clearUserProgress } from "../userProgress/userProgressSlice";
-import { clearAllTables } from "../../storage/database/tables";
 import { clearChat } from "../chatbot/slice/chatbotSlice";
 import { FirebaseConstants } from "../../constants";
-import { FirebaseService } from "../../core/service";
+import { clearDatabase, FirebaseService } from "../../core/service";
 
 interface ResetProgressButtonProps {
   navigation: DrawerContentComponentProps["navigation"];
@@ -24,18 +23,15 @@ export const ResetProgressButton = ({ navigation }: ResetProgressButtonProps) =>
 
   const handleToggle = () => {
     dialog.showConfirm("Xoá hết tiến trình của bạn ?", () => {
-      clearAllTables();
-      dispatch(clearUserProgress({ userName: userProgress.userName }))
-        .unwrap()
-        .then(() => {
-          setTimeout(() => {
-            dispatch(clearChat({}));
-            FirebaseService.logEvent(FirebaseConstants.RESET_PROGRESS);
+      clearDatabase();
+      dispatch(clearUserProgress({ userName: userProgress.userName }));
+      setTimeout(() => {
+        dispatch(clearChat({}));
+        FirebaseService.logEvent(FirebaseConstants.RESET_PROGRESS);
 
-            navigation.closeDrawer();
-            navigation.navigate("ChatbotScreen");
-          }, 200);
-        });
+        navigation.closeDrawer();
+        navigation.navigate("ChatbotScreen");
+      }, 200);
     });
   };
 

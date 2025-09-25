@@ -21,6 +21,8 @@ export const FirebaseConstants = {
   // Questions screen
   OPEN_QUESTION_TYPE_BOX: "open_question_type_box",
   REVIEW_ALL_QUESTIONS: "review_all_questions",
+  OPEN_SEARCH: "open_search",
+  START_CREATING_QUESTIONS: "start_creating_questions",
 
   // Others
   ENTER_NAME: "enter_name",

@@ -117,23 +117,9 @@ export const insertQuestions = (questions: Question[]) => {
   });
 };
 
-export const deleteQuestion = (questionId: number) => {
+export const deleteQuestions = (questionIds: number[]) => {
   db.withTransactionSync(() => {
-    db.execSync(`DELETE FROM ${AnswerTable.tableName} WHERE ${AnswerTable.columnQuestionId} = ${questionId}`);
-    db.execSync(`DELETE FROM ${QuestionTable.tableName} WHERE ${QuestionTable.columnQuestionId} = ${questionId}`);
-  });
-};
-
-export const clearAllTables = () => {
-  db.withTransactionSync(() => {
-    db.execSync(`DELETE FROM ${QuestionTable.tableName}`);
-    db.execSync(`DELETE FROM ${AnswerTable.tableName}`);
-  });
-};
-
-export const deleteAllTables = () => {
-  db.withTransactionSync(() => {
-    db.execSync(`DROP TABLE IF EXISTS ${QuestionTable.tableName}`);
-    db.execSync(`DROP TABLE IF EXISTS ${AnswerTable.tableName}`);
+    db.execSync(`DELETE FROM ${AnswerTable.tableName} WHERE ${AnswerTable.columnQuestionId} IN (${questionIds.join(", ")})`);
+    db.execSync(`DELETE FROM ${QuestionTable.tableName} WHERE ${QuestionTable.columnQuestionId} IN (${questionIds.join(", ")})`);
   });
 };

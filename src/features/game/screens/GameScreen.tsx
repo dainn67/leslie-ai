@@ -13,7 +13,7 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 import { RootState } from "../../../app/store";
 import { setIndex, initGame, setSelectedAnswer, updateBookmark } from "../slice/gameSlice";
 import { CustomText } from "../../../components/text/customText";
-import { insertQuestions, deleteQuestion } from "../../../storage/database/tables";
+import { insertQuestions, deleteQuestions } from "../../../storage/database/tables";
 import { ChatbotBottomSheet } from "../../../components/bottomsheets/ChatbotBottomSheet";
 import { RootStackParamList } from "../../../app/RootNavigator";
 import { Question } from "../../../models";
@@ -90,7 +90,7 @@ export const GameScreen = () => {
     if (isBookmarked) {
       insertQuestions([question]);
     } else {
-      deleteQuestion(question.questionId);
+      deleteQuestions([question.questionId]);
     }
   };
 

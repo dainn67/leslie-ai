@@ -8,6 +8,7 @@ import {
   updateTestTables,
 } from "../../../storage/database/tables";
 import { AsyncStorageService } from "./asyncStorageService";
+import { clearQuestionTables } from "..";
 
 export const DB_NAME = "leslieai.db";
 const ASSETS_DB_PATH = require("../../../../assets/databases/leslieai.db");
@@ -55,6 +56,11 @@ export const loadDatabase = async () => {
     console.log("Database already exists");
   }
   db = SQLite.openDatabaseSync(DB_NAME, undefined, sqliteDir.uri);
+};
+
+export const clearDatabase = () => {
+  // TODO: Currently only delete generated questions
+  clearQuestionTables();
 };
 
 export const initializeDatabase = async () => {

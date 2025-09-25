@@ -5,7 +5,7 @@ import { CustomText } from "../../../../components/text/customText";
 import { Question } from "../../../../models/question";
 import { QuestionView } from "./QuestionView";
 import { ProgressBar } from "../../../../components/ProgressBar";
-import { deleteQuestion, insertQuestions } from "../../../../storage/database/tables/questionTable";
+import { deleteQuestions, insertQuestions } from "../../../../storage/database/tables/questionTable";
 import { createResultSummary } from "../../../../core/service";
 import { IconButton } from "../../../../components/buttons";
 import { AppIcons } from "../../../../constants/appIcons";
@@ -49,7 +49,7 @@ export const QuestionsMessage = ({ questions, onAnalyze }: QuestionsMessageProps
       const newMap = { ...mapBookmark };
       delete newMap[question.questionId];
       setMapBookmark(newMap);
-      deleteQuestion(question.questionId);
+      deleteQuestions([question.questionId]);
     }
   };
 
