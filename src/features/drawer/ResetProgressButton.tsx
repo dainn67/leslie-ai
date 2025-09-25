@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { clearUserProgress } from "../userProgress/userProgressSlice";
 import { clearChat } from "../chatbot/slice/chatbotSlice";
 import { FirebaseConstants } from "../../constants";
-import { clearDatabase, FirebaseService } from "../../core/service";
+import { AsyncStorageService, clearDatabase, FirebaseService } from "../../core/service";
 
 interface ResetProgressButtonProps {
   navigation: DrawerContentComponentProps["navigation"];
@@ -26,6 +26,7 @@ export const ResetProgressButton = ({ navigation }: ResetProgressButtonProps) =>
       clearDatabase();
       dispatch(clearUserProgress({ userName: userProgress.userName }));
       setTimeout(() => {
+        AsyncStorageService.clearData();
         dispatch(clearChat({}));
         FirebaseService.logEvent(FirebaseConstants.RESET_PROGRESS);
 

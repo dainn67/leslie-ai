@@ -42,7 +42,7 @@ const AppContent = () => {
     async function init() {
       initializeDatabase();
       AsyncStorageService.getTheme().then((scheme) => dispatch(setTheme(scheme)));
-
+      AsyncStorageService.updateOpenAppCount();
       const userProgress = await UserProgressService.getUserProgressFromStorage();
       dispatch(updateUserProgress(userProgress));
       setUserProgressLoaded(true);

@@ -10,7 +10,7 @@ export enum DialogType {
 type DialogContextType = {
   showConfirm: (message: string, onConfirm: () => void, onCancel?: () => void, confirmText?: string, cancelText?: string) => void;
   showAlert: (message: string, onClose?: () => void, buttonText?: string) => void;
-  showDatePicker: (date: Date, onSelect: (date: Date) => void) => void;
+  showDatePicker: (date: Date, onSelect: (date: Date | undefined) => void) => void;
   hide: () => void;
 };
 
@@ -63,8 +63,9 @@ export const DialogProvider = ({ children }: { children: ReactNode }) => {
     setAlertVisible(true);
   };
 
-  const showDatePicker = (date: Date, onSelect: (date: Date) => void) => {
+  const showDatePicker = (date: Date, onSelect: (date: Date | undefined) => void) => {
     setDatePickerVisible(true);
+    setDateCallback(onSelect);
     setDate(date);
   };
 

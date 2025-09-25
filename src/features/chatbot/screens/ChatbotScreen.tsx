@@ -53,22 +53,30 @@ export const ChatbotScreen = () => {
 
   const initilized = useRef(false);
 
-  // Initial message when first open / clear chat
   useEffect(() => {
-    if (initialMessage) return;
+    const init = async () => {
+      if (initialMessage) return;
 
-    if (!initilized.current) {
-      if (userProgress.userName.length === 0) {
-        setNameDialogVisible(true);
-      } else {
+      if (!initilized.current) {
+        if (userProgress.userName.length === 0) {
+          setNameDialogVisible(true);
+        } else {
+          const shouldAskExamDate = (await AsyncStorageService.getOpenAppCount()) >= 3;
+          const actionId = shouldAskExamDate
+            ? DifyConfig.askExamDateActionId
+            : userProgress.level
+              ? DifyConfig.initChatActionId
+              : DifyConfig.askLevelActionId;
+          handleSend({ noUserMessage: true, actionId });
+          initilized.current = true;
+        }
+      } else if (messages.length === 0) {
         const actionId = userProgress.level ? DifyConfig.initChatActionId : DifyConfig.askLevelActionId;
         handleSend({ noUserMessage: true, actionId });
-        initilized.current = true;
       }
-    } else if (messages.length === 0) {
-      const actionId = userProgress.level ? DifyConfig.initChatActionId : DifyConfig.askLevelActionId;
-      handleSend({ noUserMessage: true, actionId });
-    }
+    };
+
+    init();
   }, [messages.length]);
 
   // If open chatbot screen from another screen
@@ -129,6 +137,8 @@ export const ChatbotScreen = () => {
       } else {
         navigation.navigate("GameScreen", { props: { questions, gameType: GameType.Diagnostic } });
       }
+    } else if (result?.ui === "openDatePicker") {
+      dialog.showDatePicker(new Date(), handleSelectExamDate);
     } else {
       const updatedData = result?.sendMessage;
       if (updatedData) dispatch(updateUserProgress(updatedData));

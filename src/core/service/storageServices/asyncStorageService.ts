@@ -16,6 +16,19 @@ export class AsyncStorageService {
     await saveToAsyncStorage(AsyncStorageConstants.ONBOARDING_COMPLETED, false);
   };
 
+  static updateOpenAppCount = async (): Promise<void> => {
+    const openAppCount = await AsyncStorageService.getOpenAppCount();
+    await saveToAsyncStorage(AsyncStorageConstants.OPEN_APP_COUNT, openAppCount + 1);
+  };
+
+  static getOpenAppCount = async (): Promise<number> => {
+    return (await loadFromAsyncStorage(AsyncStorageConstants.OPEN_APP_COUNT)) ?? 0;
+  };
+
+  static resetOpenAppCount = async (): Promise<void> => {
+    await saveToAsyncStorage(AsyncStorageConstants.OPEN_APP_COUNT, 0);
+  };
+
   // User progress
   static setUserProgress = async (userProgress: any): Promise<void> => {
     await saveToAsyncStorage(AsyncStorageConstants.USER_PROGRESS, userProgress);
@@ -45,5 +58,9 @@ export class AsyncStorageService {
 
   static resetFirstTimeLoadDatabase = async (): Promise<void> => {
     await saveToAsyncStorage(AsyncStorageConstants.FIRST_TIME_LOAD_DATABASE, false);
+  };
+
+  static clearData = async (): Promise<void> => {
+    this.resetOpenAppCount();
   };
 }
