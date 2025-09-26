@@ -18,21 +18,21 @@ export const loadUserProgress = createAsyncThunk("userProgress/load", async () =
 
 export const updateUserProgress = createAsyncThunk(
   "userProgress/updateUserProgress",
-  async (payload: Partial<UserProgress>, { getState }) => {
+  async (payload: Partial<UserProgress> & { newAnalytic?: string }, { getState }) => {
     const state = getState() as { userProgress: UserProgressState };
     const current = state.userProgress.userProgress;
 
-    const { analytic, ...rest } = payload;
+    const { newAnalytic, ...rest } = payload;
 
     let updatedUserProgress = { ...current, ...rest };
 
-    if (analytic) {
-      const now = normalizeDate(new Date());
+    if (newAnalytic) {
+      const now = normalizeDate(new Date()).toString();
       updatedUserProgress = {
         ...updatedUserProgress,
         analytic: {
-          ...updatedUserProgress.analytic,
-          [now]: analytic,
+          ...(updatedUserProgress.analytic || {}),
+          [now]: newAnalytic,
         },
       };
     }

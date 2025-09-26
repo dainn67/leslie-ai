@@ -181,11 +181,12 @@ export const ChatbotScreen = () => {
           level: userProgress.level,
           target: userProgress.target,
           exam_date: userProgress.examDate ? convertDateToDDMMYYYY(userProgress.examDate) : "",
-          prev_analytic: userProgress.analytic[normalizeDate(new Date())].toString(),
+          prev_analytic: userProgress.analytic[normalizeDate(new Date())]?.toString() ?? "",
           current_date: convertDateToDDMMYYYY(new Date()),
         },
       }).then((result) => {
-        dispatch(updateUserProgress({ analytic: result }));
+        console.log("result", result);
+        dispatch(updateUserProgress({ newAnalytic: result }));
       });
     }, 1000);
   };

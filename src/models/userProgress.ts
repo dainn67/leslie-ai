@@ -6,7 +6,7 @@ export type UserProgress = {
   startDate: number;
   examDate?: number;
   lastUpdated: number;
-  analytic: { [key: string]: string };
+  analytic: Record<string, string>;
 };
 
 export const createUserProgress = (partial?: Partial<UserProgress>): UserProgress => {
