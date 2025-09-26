@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Tts from "react-native-tts";
 import TTSInstance from "../../../../core/service/ttsService";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
