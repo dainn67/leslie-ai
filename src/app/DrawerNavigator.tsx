@@ -12,6 +12,7 @@ import { FirebaseConstants } from "../constants";
 import { FirebaseService } from "../core/service";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { RootStackParamList } from "./RootNavigator";
+import { Divider } from "../features/common/dividers/Divider";
 
 const Drawer = createDrawerNavigator();
 type ChatbotScreenRouteProp = RouteProp<RootStackParamList, "Main">;
@@ -44,8 +45,9 @@ export const DrawerNavigator = () => {
 
           {/* Actions */}
           <SetExamDateButton />
-          <ResetProgressButton navigation={props.navigation} />
           <ThemeToggleButton />
+          <Divider />
+          <ResetProgressButton navigation={props.navigation} />
           <VersionText />
         </View>
       )}
