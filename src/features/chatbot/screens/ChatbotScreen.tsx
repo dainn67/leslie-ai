@@ -170,6 +170,8 @@ export const ChatbotScreen = () => {
 
   const handleAnalyze = (summary: string) => {
     setTimeout(() => {
+      FirebaseService.logEvent(FirebaseConstants.FINISH_ALL_GENERATED_QUESTION);
+
       // Analyze chat game
       handleSend({ text: summary, noUserMessage: true, analyzeChatGame: true });
 
