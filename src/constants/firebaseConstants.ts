@@ -9,6 +9,7 @@ export const FirebaseConstants = {
   OPEN_FEEDBACK_SCREEN: "open_feedback_screen",
   RESET_PROGRESS: "clear_progress",
   TOGGLE_THEME: "toggle_theme",
+  UPDATE_EXAM_DATE: "update_exam_date",
 
   // Chatbot screen
   MESSAGE_SENT: "message_sent",

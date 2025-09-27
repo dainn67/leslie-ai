@@ -6,6 +6,8 @@ import { useAppTheme } from "../../theme";
 import { useDialog } from "../../core/providers";
 import { useAppDispatch } from "../../hooks/hooks";
 import { updateUserProgress } from "../userProgress/userProgressSlice";
+import { FirebaseService } from "../../core/service";
+import { FirebaseConstants } from "../../constants";
 
 export const SetExamDateButton = () => {
   const { colors } = useAppTheme();
@@ -14,7 +16,10 @@ export const SetExamDateButton = () => {
 
   const handleClick = () => {
     dialog.showDatePicker((date) => {
-      if (date) dispatch(updateUserProgress({ examDate: date.getTime() }));
+      if (date) {
+        FirebaseService.logEvent(FirebaseConstants.UPDATE_EXAM_DATE, { date: date.getTime() });
+        dispatch(updateUserProgress({ examDate: date.getTime() }));
+      }
     });
   };
 

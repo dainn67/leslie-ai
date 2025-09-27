@@ -22,7 +22,7 @@ import {
 } from "../slice/chatbotSlice";
 import { useDialog } from "../../../core/providers";
 import { ChatMessageList, ChatInput } from "../components";
-import { AsyncStorageService, ChatbotService, FirebaseService, logDatabasePath, ToastService } from "../../../core/service";
+import { AsyncStorageService, ChatbotService, FirebaseService, ToastService } from "../../../core/service";
 import { DifyConfig, FirebaseConstants } from "../../../constants";
 import { NameDialog } from "../../common/dialogs";
 import { RootStackParamList } from "../../../app/RootNavigator";
@@ -154,9 +154,7 @@ export const ChatbotScreen = () => {
   const handleSelectExamDate = (selectedDate: Date | undefined) => {
     if (!selectedDate) return;
 
-    FirebaseService.logEvent(FirebaseConstants.EXAM_DATE_SELECTED, {
-      date: selectedDate.getTime(),
-    });
+    FirebaseService.logEvent(FirebaseConstants.EXAM_DATE_SELECTED, { date: selectedDate.getTime() });
 
     const dateString = convertDateToDDMMYYYY(selectedDate, "vi");
 
