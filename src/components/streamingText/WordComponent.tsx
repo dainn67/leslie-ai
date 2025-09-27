@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Animated, View } from "react-native";
+import { Animated, View, Linking } from "react-native";
 import { RenderHTML } from "react-native-render-html";
 import { AppConfig } from "../../constants/appConfig";
 import { CustomText } from "../text/customText";
@@ -19,10 +19,7 @@ export const WordComponent = ({ word, fontSize, color }: WordComponentProps) => 
 
   const handleOpenLink = (link: string) => {
     try {
-      // Sử dụng Linking để mở link
-      import("react-native").then(({ Linking }) => {
-        Linking.openURL(link);
-      });
+      Linking.openURL(link);
     } catch (e) {
       ToastService.show({ message: "Lỗi khi mở link", type: "error" });
       DiscordService.sendDiscordMessage({
