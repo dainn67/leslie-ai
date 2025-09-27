@@ -6,9 +6,10 @@ import { Question } from "../../../../models/question";
 import { QuestionView } from "./QuestionView";
 import { ProgressBar } from "../../../../components/ProgressBar";
 import { deleteQuestions, insertQuestions } from "../../../../storage/database/tables/questionTable";
-import { createResultSummary } from "../../../../core/service";
+import { createResultSummary, FirebaseService } from "../../../../core/service";
 import { IconButton } from "../../../../components/buttons";
 import { AppIcons } from "../../../../constants/appIcons";
+import { FirebaseConstants } from "../../../../constants";
 
 interface QuestionsMessageProps {
   questions: Question[];
@@ -43,6 +44,8 @@ export const QuestionsMessage = ({ questions, onAnalyze }: QuestionsMessageProps
 
   const handleBookmarkPress = (isBookmarked: boolean) => {
     if (isBookmarked) {
+      FirebaseService.logEvent(FirebaseConstants.SAVE_GENERATED_QUESTION);
+
       setMapBookmark({ ...mapBookmark, [question.questionId]: isBookmarked });
       insertQuestions([question]);
     } else {
