@@ -1,4 +1,4 @@
-import React, { ReactNode, useContext, useState, createContext } from "react";
+import React, { ReactNode, useContext, useState, createContext, useRef } from "react";
 import { ConfirmDialog, AlertDialog } from "../../features/common/dialogs";
 import { MyDatePicker } from "../../components/datePicker/MyDatePicker";
 
@@ -10,7 +10,7 @@ export enum DialogType {
 type DialogContextType = {
   showConfirm: (message: string, onConfirm: () => void, onCancel?: () => void, confirmText?: string, cancelText?: string) => void;
   showAlert: (message: string, onClose?: () => void, buttonText?: string) => void;
-  showDatePicker: (date: Date, onSelect: (date: Date | undefined) => void) => void;
+  showDatePicker: (onSelect: (date: Date | undefined) => void) => void;
   hide: () => void;
 };
 
@@ -18,7 +18,7 @@ const DialogContext = createContext<DialogContextType | null>(null);
 
 export const useDialog = () => {
   const ctx = useContext(DialogContext);
-  if (!ctx) throw new Error("useDialog must be used inside DialogProvider");
+  if (!ctx) throw new Error("useDialog phải được dùng bên trong DialogProvider");
   return ctx;
 };
 
@@ -30,12 +30,12 @@ export const DialogProvider = ({ children }: { children: ReactNode }) => {
   const [alertMessage, setAlertMessage] = useState("");
 
   const [datePickerVisible, setDatePickerVisible] = useState(false);
-  const [date, setDate] = useState<Date | undefined>(undefined);
 
-  const [confirmCallback, setConfirmCallback] = useState<(() => void) | null>(null);
-  const [cancelCallback, setCancelCallback] = useState<(() => void) | null>(null);
-  const [closeCallback, setCloseCallback] = useState<(() => void) | null>(null);
-  const [dateCallback, setDateCallback] = useState<(date: Date | undefined) => void>(() => {});
+  // Use useRef for callbacks
+  const confirmCallback = useRef<(() => void) | null>(null);
+  const cancelCallback = useRef<(() => void) | null>(null);
+  const closeCallback = useRef<(() => void) | null>(null);
+  const dateCallback = useRef<((date: Date | undefined) => void) | null>(null);
 
   const [confirmText, setConfirmText] = useState("Xác nhận");
   const [cancelText, setCancelText] = useState("Hủy");
@@ -49,8 +49,8 @@ export const DialogProvider = ({ children }: { children: ReactNode }) => {
     cancelTextParam?: string
   ) => {
     setConfirmMessage(message);
-    setConfirmCallback(() => onConfirm);
-    setCancelCallback(() => onCancel || (() => {}));
+    confirmCallback.current = onConfirm;
+    cancelCallback.current = onCancel || (() => {});
     setConfirmText(confirmTextParam || "Xác nhận");
     setCancelText(cancelTextParam || "Hủy");
     setConfirmVisible(true);
@@ -58,41 +58,49 @@ export const DialogProvider = ({ children }: { children: ReactNode }) => {
 
   const showAlert = (message: string, onClose?: () => void, buttonTextParam?: string) => {
     setAlertMessage(message);
-    setCloseCallback(() => onClose || (() => {}));
+    closeCallback.current = onClose || (() => {});
     setButtonText(buttonTextParam || "Đóng");
     setAlertVisible(true);
   };
 
-  const showDatePicker = (date: Date, onSelect: (date: Date | undefined) => void) => {
+  const showDatePicker = (onSelect: (date: Date | undefined) => void) => {
     setDatePickerVisible(true);
-    setDateCallback(onSelect);
-    setDate(date);
+    dateCallback.current = onSelect;
   };
 
   const hide = () => {
     setConfirmVisible(false);
     setAlertVisible(false);
+    setDatePickerVisible(false);
   };
 
   const handleConfirm = () => {
-    if (confirmCallback) {
-      confirmCallback();
+    if (confirmCallback.current) {
+      confirmCallback.current();
     }
     hide();
   };
 
   const handleCancel = () => {
-    if (cancelCallback) {
-      cancelCallback();
+    if (cancelCallback.current) {
+      cancelCallback.current();
     }
     hide();
   };
 
   const handleAlertClose = () => {
-    if (closeCallback) {
-      closeCallback();
+    if (closeCallback.current) {
+      closeCallback.current();
     }
     hide();
+  };
+
+  // Xử lý chọn ngày thi
+  const handleDateChange = (date: Date | undefined) => {
+    if (dateCallback.current) {
+      dateCallback.current(date);
+    }
+    setDatePickerVisible(false);
   };
 
   return (
@@ -116,8 +124,8 @@ export const DialogProvider = ({ children }: { children: ReactNode }) => {
       <MyDatePicker
         visible={datePickerVisible}
         setVisible={setDatePickerVisible}
-        date={date ?? new Date()}
-        handleChange={dateCallback}
+        date={new Date()}
+        handleChange={handleDateChange}
       />
     </DialogContext.Provider>
   );

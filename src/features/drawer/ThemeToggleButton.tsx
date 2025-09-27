@@ -12,7 +12,7 @@ import { FirebaseService } from "../../core/service";
 export const ThemeToggleButton = () => {
   const dispatch = useDispatch();
   const themeMode = useSelector((state: RootState) => state.theme.mode);
-  const { colors, isDarkMode } = useAppTheme();
+  const { colors } = useAppTheme();
 
   const handleToggle = () => {
     dispatch(toggleTheme());

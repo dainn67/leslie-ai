@@ -7,7 +7,7 @@ import { CustomText } from "../components/text/customText";
 import { ChatbotScreen } from "../features/chatbot/screens/ChatbotScreen";
 import { FeedbackScreen } from "../features/feedback/FeedbackScreen";
 import { QuestionsScreen } from "../features/questions/screens/QuestionsScreen";
-import { VersionText, ResetProgressButton, ThemeToggleButton } from "../features/drawer";
+import { VersionText, ResetProgressButton, ThemeToggleButton, SetExamDateButton } from "../features/drawer";
 import { FirebaseConstants } from "../constants";
 import { FirebaseService } from "../core/service";
 import { RouteProp, useRoute } from "@react-navigation/native";
@@ -43,6 +43,7 @@ export const DrawerNavigator = () => {
           </DrawerContentScrollView>
 
           {/* Actions */}
+          <SetExamDateButton />
           <ResetProgressButton navigation={props.navigation} />
           <ThemeToggleButton />
           <VersionText />

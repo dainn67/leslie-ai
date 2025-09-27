@@ -251,7 +251,7 @@ export class ChatbotService {
     const conversationHistory = ChatbotService.createConversationHistory(messages);
 
     const questionString = question ? createQuestionString(question) : "";
-    const cid = question?.questionId?.toString() ?? DifyConfig.mainChatbotConversationId;
+    const cid = question?.questionId.toString() ?? DifyConfig.mainChatbotConversationId;
 
     // Original stream
     connectSSE({
@@ -516,7 +516,7 @@ export class ChatbotService {
 
   static createConversationHistory = (messages: ChatMessage[]) => {
     return messages
-      .slice(-10)
+      .slice(-5)
       .map((m) => {
         const senderString = m.sender == Sender.BOT ? "Bot" : "User";
         let text = `(${senderString}): ${m.sender == Sender.BOT ? m.summary : m.fullText}`;

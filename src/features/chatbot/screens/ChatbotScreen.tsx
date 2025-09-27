@@ -138,7 +138,7 @@ export const ChatbotScreen = () => {
         navigation.navigate("GameScreen", { props: { questions, gameType: GameType.Diagnostic } });
       }
     } else if (result?.ui === "openDatePicker") {
-      dialog.showDatePicker(new Date(), handleSelectExamDate);
+      dialog.showDatePicker(handleSelectExamDate);
     } else {
       const updatedData = result?.sendMessage;
       if (updatedData) dispatch(updateUserProgress(updatedData));
