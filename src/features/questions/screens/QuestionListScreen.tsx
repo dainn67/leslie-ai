@@ -51,6 +51,8 @@ export const QuestionListScreen = () => {
   );
 
   const handleSelectQuestion = (amount: number) => {
+    FirebaseService.logEvent(FirebaseConstants.REVIEW_QUESTION_SET, { amount });
+
     const selectedQuestions = createReviseQuestionSet(questions, amount);
     navigation.navigate("GameScreen", { props: { questions: selectedQuestions, gameType: GameType.Practice } });
   };

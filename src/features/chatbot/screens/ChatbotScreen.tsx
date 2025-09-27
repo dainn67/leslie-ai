@@ -192,8 +192,10 @@ export const ChatbotScreen = () => {
   };
 
   const handleClearChat = () => {
-    FirebaseService.logEvent(FirebaseConstants.CLEAR_CHAT);
-    dialog.showConfirm("Xoá hội thoại?", () => dispatch(clearChat({})));
+    dialog.showConfirm("Xoá hội thoại?", () => {
+      FirebaseService.logEvent(FirebaseConstants.CLEAR_CHAT);
+      dispatch(clearChat({}));
+    });
   };
 
   const handleOpenMenu = () => {
