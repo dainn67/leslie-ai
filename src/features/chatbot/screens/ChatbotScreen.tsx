@@ -61,7 +61,7 @@ export const ChatbotScreen = () => {
         if (userProgress.userName.length === 0) {
           setNameDialogVisible(true);
         } else {
-          const shouldAskExamDate = (await AsyncStorageService.getOpenAppCount()) >= 3;
+          const shouldAskExamDate = (await AsyncStorageService.getOpenAppCount()) == 3;
           const actionId = shouldAskExamDate
             ? DifyConfig.askExamDateActionId
             : userProgress.level
