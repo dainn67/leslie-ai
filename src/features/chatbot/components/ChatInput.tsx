@@ -76,7 +76,7 @@ const getStyles = (message: string, colors: any) =>
       paddingHorizontal: 20,
       paddingVertical: 16,
       borderTopWidth: 0.5,
-      borderColor: colors.placeholder,
+      borderColor: colors.grey,
     },
     inputBox: {
       flex: 1,
