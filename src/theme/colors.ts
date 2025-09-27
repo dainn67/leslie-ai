@@ -19,7 +19,7 @@ export const darkColors = {
   text: "#FFFFFF",
   textOnPrimary: "#FFFFFF",
   placeholder: "#999999",
-  grey: "#e0e0e0",
+  grey: "#444444",
   success: "#00FF00",
   alert: "#FF0000",
 };
