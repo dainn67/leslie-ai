@@ -1,4 +1,5 @@
 import Constants from "expo-constants";
+import ApiServiceInstance from "./api/apiService";
 import { DiscordService, DiscordWebhookType } from "./discordService";
 import { UserProgressService } from "./userProgressSerivice";
 import { ApiClient } from "../../api/apiClient";
@@ -255,7 +256,7 @@ export class ChatbotService {
 
     // Original stream
     connectSSE({
-      url: ApiConfig.difyServerUrl,
+      url: ApiServiceInstance.apiBaseUrl,
       token: token,
       body: {
         query: message ?? "none",
@@ -414,7 +415,7 @@ export class ChatbotService {
 
     // Original stream
     connectSSE({
-      url: ApiConfig.difyServerUrl,
+      url: ApiServiceInstance.apiBaseUrl,
       token: DIFY_ANALYZE_GAME_RESULT_API_KEY,
       body: {
         query: message,
@@ -500,7 +501,7 @@ export class ChatbotService {
     const token = type === "context" ? DIFY_EXTRACT_CONTEXT_API_KEY : DIFY_ANALYZE_PROGRESS_API_KEY;
 
     const result = await ApiClient.postData({
-      url: ApiConfig.difyServerUrl,
+      url: ApiServiceInstance.apiBaseUrl,
       token: token,
       body: {
         query: message,

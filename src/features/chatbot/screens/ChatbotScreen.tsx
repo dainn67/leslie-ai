@@ -217,7 +217,6 @@ export const ChatbotScreen = () => {
 
   const handleDevClick = () => {
     console.log(ApiServiceInstance.apiBaseUrl);
-    console.log(ApiServiceInstance.apiBaseBakUrl);
   };
 
   return (

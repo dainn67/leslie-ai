@@ -4,7 +4,6 @@ export class ApiService {
   private static _instance: ApiService;
 
   private _apiBaseUrl: string = ApiConfig.difyServerUrl;
-  private _apiBaseBakUrl: string = ApiConfig.difyServerUrl;
 
   private constructor() {}
 
@@ -15,17 +14,12 @@ export class ApiService {
     return ApiService._instance;
   }
 
-  public setApiBaseUrls(url: string, bakUrl: string) {
+  public setApiBaseUrl(url: string) {
     this._apiBaseUrl = url;
-    this._apiBaseBakUrl = bakUrl;
   }
 
   public get apiBaseUrl(): string {
     return this._apiBaseUrl;
-  }
-
-  public get apiBaseBakUrl(): string {
-    return this._apiBaseBakUrl;
   }
 }
 

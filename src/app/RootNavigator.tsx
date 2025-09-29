@@ -9,6 +9,7 @@ import { QuestionType } from "../models/question";
 import { GameScreen, GameProps } from "../features/game/screens/GameScreen";
 import { ResultScreen } from "../features/game/screens/ResultScreen";
 import { QuestionListScreen } from "../features/questions/screens/QuestionListScreen";
+import { ApiClient } from "../api/apiClient";
 
 export type RootStackParamList = {
   Onboarding: undefined;
@@ -35,8 +36,24 @@ export const RootNavigator = () => {
 
     const loadRemoteConfigs = async () => {
       const cfg = await FirebaseService.initializeRemoteConfig();
-      ApiServiceInstance.setApiBaseUrls(cfg.dify_domain, cfg.dify_domain_bak);
+      ApiServiceInstance.setApiBaseUrl(cfg.dify_domain);
+
+      const isDomainAvaiable = await checkDomainAvailable(cfg.dify_domain);
+      if (isDomainAvaiable) {
+        ApiServiceInstance.setApiBaseUrl(cfg.dify_domain);
+      } else {
+        const isBakDomainAvailable = await checkDomainAvailable(cfg.dify_domain_bak);
+        if (isBakDomainAvailable) {
+          ApiServiceInstance.setApiBaseUrl(cfg.dify_domain_bak);
+        }
+      }
+
       setRemoteConfig(cfg);
+    };
+
+    const checkDomainAvailable = async (domain: string) => {
+      const result = await ApiClient.getData({ url: `${domain}/v1` });
+      return result && result.welcome !== undefined && result.api_version !== undefined && result.server_version !== undefined;
     };
 
     checkOnboarding();
