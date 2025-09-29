@@ -5,7 +5,6 @@ import { UserProgressService } from "./userProgressSerivice";
 import { ApiClient } from "../../api/apiClient";
 import { connectSSE } from "../../api/sseClient";
 import { AppDispatch } from "../../app/store";
-import { ApiConfig } from "../../constants/apiConfig";
 import { DifyConfig } from "../../constants/difyConfig";
 import {
   updateLastMessageData,
