@@ -61,6 +61,9 @@ export const ChatbotScreen = () => {
         if (userProgress.userName.length === 0) {
           setNameDialogVisible(true);
         } else {
+          const cfg = await FirebaseService.initializeRemoteConfig();
+          console.log("✅ Remote Config loaded:", cfg);
+
           const shouldAskExamDate = (await AsyncStorageService.getOpenAppCount()) == 3;
           const actionId = shouldAskExamDate
             ? DifyConfig.askExamDateActionId
