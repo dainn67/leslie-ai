@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import TTSInstance from "../../../core/service/ttsService";
+import ApiServiceInstance from "../../../core/service/api/apiService";
 import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { AppBar } from "../../../components/AppBar";
@@ -61,9 +62,6 @@ export const ChatbotScreen = () => {
         if (userProgress.userName.length === 0) {
           setNameDialogVisible(true);
         } else {
-          const cfg = await FirebaseService.initializeRemoteConfig();
-          console.log("✅ Remote Config loaded:", cfg);
-
           const shouldAskExamDate = (await AsyncStorageService.getOpenAppCount()) == 3;
           const actionId = shouldAskExamDate
             ? DifyConfig.askExamDateActionId
@@ -218,9 +216,8 @@ export const ChatbotScreen = () => {
   };
 
   const handleDevClick = () => {
-    // handleClickAction("Điều chỉnh", DifyConfig.setDoDiagnostic);
-    // logDatabasePath();
-    AsyncStorageService.resetFirstTimeLoadDatabase();
+    console.log(ApiServiceInstance.apiBaseUrl);
+    console.log(ApiServiceInstance.apiBaseBakUrl);
   };
 
   return (

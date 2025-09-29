@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import OnboardingScreen from "../features/onboarding/screen/OnboardingScreen";
+import ApiServiceInstance from "../core/service/api/apiService";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { DrawerNavigator } from "./DrawerNavigator";
-import { AsyncStorageService } from "../core/service";
+import { AsyncStorageService, FirebaseService } from "../core/service";
 import { QuestionType } from "../models/question";
 import { GameScreen, GameProps } from "../features/game/screens/GameScreen";
 import { ResultScreen } from "../features/game/screens/ResultScreen";
@@ -24,17 +25,26 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const RootNavigator = () => {
   const [initialRoute, setInitialRoute] = useState<keyof RootStackParamList | null>(null);
+  const [remoteConfig, setRemoteConfig] = useState<any>(null);
 
   useEffect(() => {
     const checkOnboarding = async () => {
       const completed = await AsyncStorageService.getOnboardingCompleted();
       setInitialRoute(completed ? "Main" : "Onboarding");
     };
+
+    const loadRemoteConfigs = async () => {
+      const cfg = await FirebaseService.initializeRemoteConfig();
+      ApiServiceInstance.setApiBaseUrls(cfg.dify_domain, cfg.dify_domain_bak);
+      setRemoteConfig(cfg);
+    };
+
     checkOnboarding();
+    loadRemoteConfigs();
   }, []);
 
   // Prevent rendering until we know the route
-  if (!initialRoute) return null; // or splash screen
+  if (!initialRoute || !remoteConfig) return null;
 
   return (
     <NavigationContainer>
