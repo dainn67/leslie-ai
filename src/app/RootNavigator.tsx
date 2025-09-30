@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import OnboardingScreen from "../features/onboarding/screen/OnboardingScreen";
 import ApiServiceInstance from "../core/service/api/apiService";
+import Constants from "expo-constants";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { DrawerNavigator } from "./DrawerNavigator";
@@ -10,6 +11,8 @@ import { GameScreen, GameProps } from "../features/game/screens/GameScreen";
 import { ResultScreen } from "../features/game/screens/ResultScreen";
 import { QuestionListScreen } from "../features/questions/screens/QuestionListScreen";
 import { ApiClient } from "../api/apiClient";
+
+const { DIFY_CHAT_API_KEY, DIFY_CHAT_NGINROK_API_KEY } = Constants.expoConfig?.extra ?? {};
 
 export type RootStackParamList = {
   Onboarding: undefined;
@@ -37,14 +40,12 @@ export const RootNavigator = () => {
     const loadRemoteConfigs = async () => {
       const cfg = await FirebaseService.initializeRemoteConfig();
 
-      const isDomainAvaiable = await checkDomainAvailable(cfg.dify_domain);
+      const isDomainAvaiable = await checkDomainAvailable(cfg.dify_domain, true);
       if (isDomainAvaiable) {
-        console.log("main domain ok");
         ApiServiceInstance.setApiBaseUrl(cfg.dify_domain);
         AsyncStorageService.setIsUsingNginrok(true);
       } else {
-        console.log("main domain not ok");
-        const isBakDomainAvailable = await checkDomainAvailable(cfg.dify_domain_bak);
+        const isBakDomainAvailable = await checkDomainAvailable(cfg.dify_domain_bak, false);
         if (isBakDomainAvailable) {
           ApiServiceInstance.setApiBaseUrl(cfg.dify_domain_bak);
           AsyncStorageService.setIsUsingNginrok(false);
@@ -54,10 +55,10 @@ export const RootNavigator = () => {
       setRemoteConfig(cfg);
     };
 
-    const checkDomainAvailable = async (domain: string) => {
-      const result = await ApiClient.getData({ url: `${domain}/v1/info` });
-      // console.log("result for:", domain + "/v1/info", result);
-      return result && result.code !== undefined && result.message !== undefined && result.status !== undefined;
+    const checkDomainAvailable = async (domain: string, isFromNginrok: boolean) => {
+      const token = isFromNginrok ? DIFY_CHAT_NGINROK_API_KEY : DIFY_CHAT_API_KEY;
+      const result = await ApiClient.getData({ url: `${domain}/v1/info`, token });
+      return result && result.author_name !== undefined && result.name !== undefined;
     };
 
     checkOnboarding();

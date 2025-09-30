@@ -186,7 +186,6 @@ export const ChatbotScreen = () => {
           current_date: convertDateToDDMMYYYY(new Date()),
         },
       }).then((result) => {
-        console.log("result", result);
         dispatch(updateUserProgress({ newAnalytic: result }));
       });
     }, 1000);
@@ -216,7 +215,7 @@ export const ChatbotScreen = () => {
   };
 
   const handleDevClick = async () => {
-    console.log(ApiServiceInstance.apiBaseUrl);
+    console.log(ApiServiceInstance.chatApi);
     console.log("a:", await AsyncStorageService.getIsUsingNginrok());
   };
 

@@ -264,7 +264,7 @@ export class ChatbotService {
 
     // Original stream
     connectSSE({
-      url: ApiServiceInstance.apiBaseUrl,
+      url: ApiServiceInstance.chatApi,
       token: token,
       body: {
         query: message ?? "none",
@@ -425,7 +425,7 @@ export class ChatbotService {
 
     // Original stream
     connectSSE({
-      url: ApiServiceInstance.apiBaseUrl,
+      url: ApiServiceInstance.chatApi,
       token: analyzeGameResultApiKey,
       body: {
         query: message,
@@ -514,7 +514,7 @@ export class ChatbotService {
     const token = type === "context" ? extractContextApiKey : analyzeProgressApiKey;
 
     const result = await ApiClient.postData({
-      url: ApiServiceInstance.apiBaseUrl,
+      url: ApiServiceInstance.chatApi,
       token: token,
       body: {
         query: message,

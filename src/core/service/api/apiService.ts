@@ -3,7 +3,7 @@ import { ApiConfig } from "../../../constants";
 export class ApiService {
   private static _instance: ApiService;
 
-  private _apiBaseUrl: string = ApiConfig.difyServerUrl;
+  private _apiBaseUrl: string = ApiConfig.dafaultDifyServerUrl;
 
   private constructor() {}
 
@@ -15,11 +15,17 @@ export class ApiService {
   }
 
   public setApiBaseUrl(url: string) {
-    this._apiBaseUrl = url;
+    let baseUrl = url.endsWith("/") ? url.slice(0, -1) : url;
+    baseUrl = baseUrl.replaceAll("v1/chat-messages/", "");
+    this._apiBaseUrl = baseUrl;
   }
 
   public get apiBaseUrl(): string {
     return this._apiBaseUrl;
+  }
+
+  public get chatApi(): string {
+    return `${this._apiBaseUrl}/v1/chat-messages`;
   }
 }
 
