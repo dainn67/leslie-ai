@@ -63,4 +63,13 @@ export class AsyncStorageService {
   static clearData = async (): Promise<void> => {
     this.resetOpenAppCount();
   };
+
+  // Api remote config
+  static setIsUsingNginrok = async (isUsingNginrok: boolean): Promise<void> => {
+    await saveToAsyncStorage(AsyncStorageConstants.IS_USING_NGINROK, isUsingNginrok);
+  };
+
+  static getIsUsingNginrok = async (): Promise<boolean> => {
+    return (await loadFromAsyncStorage(AsyncStorageConstants.IS_USING_NGINROK)) ?? false;
+  };
 }

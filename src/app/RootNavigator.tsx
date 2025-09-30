@@ -41,10 +41,12 @@ export const RootNavigator = () => {
       const isDomainAvaiable = await checkDomainAvailable(cfg.dify_domain);
       if (isDomainAvaiable) {
         ApiServiceInstance.setApiBaseUrl(cfg.dify_domain);
+        AsyncStorageService.setIsUsingNginrok(true);
       } else {
         const isBakDomainAvailable = await checkDomainAvailable(cfg.dify_domain_bak);
         if (isBakDomainAvailable) {
           ApiServiceInstance.setApiBaseUrl(cfg.dify_domain_bak);
+          AsyncStorageService.setIsUsingNginrok(false);
         }
       }
 

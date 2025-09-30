@@ -16,7 +16,7 @@ import { MessageType, ChatMessage, MessageStatus, Sender } from "../../models/ch
 import { Question, createQuestionString, createQuestion } from "../../models/question";
 import { UserProgress } from "../../models/userProgress";
 import { convertDateToDDMMYYYY } from "../../utils";
-import { FirebaseService, getDiagnosticTest, getQuestionsByTestId } from ".";
+import { AsyncStorageService, FirebaseService, getDiagnosticTest, getQuestionsByTestId } from ".";
 import { FirebaseConstants } from "../../constants";
 import { GameType } from "../../features/game/screens/GameScreen";
 
@@ -200,7 +200,7 @@ export class ChatbotService {
     return splittedText;
   };
 
-  static sendStreamMessage = ({
+  static sendStreamMessage = async ({
     message,
     messages,
     actionId,
@@ -230,7 +230,11 @@ export class ChatbotService {
 
     dispatch(addLoading({ cid: questionId }));
 
-    const token = question ? DIFY_ASSISTANT_API_KEY : DIFY_CHAT_API_KEY;
+    const isUsingNginrok = await AsyncStorageService.getIsUsingNginrok();
+    const chatApiKey = isUsingNginrok ? DIFY_CHAT_NGINROK_API_KEY : DIFY_CHAT_API_KEY;
+    const assistantApiKey = isUsingNginrok ? DIFY_ASSISTANT_NGINROK_API_KEY : DIFY_ASSISTANT_API_KEY;
+
+    const token = question ? assistantApiKey : chatApiKey;
 
     let fullText = "";
     let wordIndex = 0;
@@ -400,7 +404,7 @@ export class ChatbotService {
     }
   };
 
-  static sendResultAnalytic({
+  static sendResultAnalytic = async ({
     message,
     gameType,
     onYieldWord,
@@ -410,17 +414,20 @@ export class ChatbotService {
     gameType: GameType;
     onYieldWord: (word: string) => void;
     onEvaluateLevel: (level: string) => void;
-  }) {
+  }) => {
     let fullText = "";
     let wordIndex = 0;
     let wordLength = 0;
     let startReceiveMessage = false;
     let hasError = false;
 
+    const isUsingNginrok = await AsyncStorageService.getIsUsingNginrok();
+    const analyzeGameResultApiKey = isUsingNginrok ? DIFY_ANALYZE_GAME_RESULT_NGINROK_API_KEY : DIFY_ANALYZE_GAME_RESULT_API_KEY;
+
     // Original stream
     connectSSE({
       url: ApiServiceInstance.apiBaseUrl,
-      token: DIFY_ANALYZE_GAME_RESULT_API_KEY,
+      token: analyzeGameResultApiKey,
       body: {
         query: message,
         inputs: {
@@ -491,7 +498,7 @@ export class ChatbotService {
         }, 20);
       }
     }, 200);
-  }
+  };
 
   static sendMessage = async ({
     message,
@@ -502,7 +509,10 @@ export class ChatbotService {
     type: "context" | "progress";
     data?: { [key: string]: any };
   }) => {
-    const token = type === "context" ? DIFY_EXTRACT_CONTEXT_API_KEY : DIFY_ANALYZE_PROGRESS_API_KEY;
+    const isUsingNginrok = await AsyncStorageService.getIsUsingNginrok();
+    const extractContextApiKey = isUsingNginrok ? DIFY_EXTRACT_CONTEXT_NGINROK_API_KEY : DIFY_EXTRACT_CONTEXT_API_KEY;
+    const analyzeProgressApiKey = isUsingNginrok ? DIFY_ANALYZE_PROGRESS_NGINROK_API_KEY : DIFY_ANALYZE_PROGRESS_API_KEY;
+    const token = type === "context" ? extractContextApiKey : analyzeProgressApiKey;
 
     const result = await ApiClient.postData({
       url: ApiServiceInstance.apiBaseUrl,
