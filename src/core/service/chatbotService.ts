@@ -35,8 +35,6 @@ const {
   DIFY_ANALYZE_PROGRESS_NGINROK_API_KEY,
 } = Constants.expoConfig?.extra ?? {};
 
-const user = "dainn";
-
 export class ChatbotService {
   static splitCustomWords = (input: string) => {
     let splittedText: string[] = [];
@@ -282,7 +280,7 @@ export class ChatbotService {
         },
         conversation_id: difyConversationId,
         response_mode: "streaming",
-        user: user,
+        user: userProgress?.userName,
         auto_generate_name: false,
       },
       onMessage: (data) => {
@@ -397,6 +395,7 @@ export class ChatbotService {
       ChatbotService.sendMessage({
         message: message ?? "",
         type: "context",
+        userName: userProgress?.userName,
       }).then((result) => {
         dispatch(updateConversationSummary({ cid: cid, conversationSummary: result }));
       });
@@ -406,11 +405,13 @@ export class ChatbotService {
   static sendResultAnalytic = async ({
     message,
     gameType,
+    userName,
     onYieldWord,
     onEvaluateLevel,
   }: {
     message: string;
     gameType: GameType;
+    userName: string;
     onYieldWord: (word: string) => void;
     onEvaluateLevel: (level: string) => void;
   }) => {
@@ -433,7 +434,7 @@ export class ChatbotService {
           game_type: gameType,
         },
         response_mode: "streaming",
-        user: user,
+        user: userName,
         auto_generate_name: false,
       },
       onMessage: (data) => {
@@ -503,10 +504,12 @@ export class ChatbotService {
     message,
     type,
     data,
+    userName,
   }: {
     message: string;
     type: "context" | "progress";
     data?: { [key: string]: any };
+    userName?: string;
   }) => {
     const isUsingNginrok = await AsyncStorageService.getIsUsingNginrok();
     const extractContextApiKey = isUsingNginrok ? DIFY_EXTRACT_CONTEXT_NGINROK_API_KEY : DIFY_EXTRACT_CONTEXT_API_KEY;
@@ -520,7 +523,7 @@ export class ChatbotService {
         query: message,
         inputs: data ?? {},
         response_mode: "blocking",
-        user: user,
+        user: userName ?? "",
         auto_generate_name: false,
       },
     });
