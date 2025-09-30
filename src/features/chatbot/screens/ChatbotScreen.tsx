@@ -215,8 +215,9 @@ export const ChatbotScreen = () => {
     initilized.current = true;
   };
 
-  const handleDevClick = () => {
+  const handleDevClick = async () => {
     console.log(ApiServiceInstance.apiBaseUrl);
+    console.log("a:", await AsyncStorageService.getIsUsingNginrok());
   };
 
   return (

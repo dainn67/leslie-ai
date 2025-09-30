@@ -16,21 +16,3 @@ export const removeFromAsyncStorage = async (key: string) => {
 export const clearAllAsyncStorage = async () => {
   await AsyncStorage.clear();
 };
-
-export const logAllAsyncStorage = async () => {
-  try {
-    const keys = await AsyncStorage.getAllKeys();
-    const stores = await AsyncStorage.multiGet(keys);
-
-    console.log("=== Tất cả dữ liệu trong AsyncStorage ===");
-    stores.forEach(([key, value]) => {
-      console.log(`${key}:`, value);
-    });
-    console.log("=== Kết thúc log AsyncStorage ===");
-
-    return stores;
-  } catch (error) {
-    console.error("Lỗi khi log AsyncStorage:", error);
-    return [];
-  }
-};

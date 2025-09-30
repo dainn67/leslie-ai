@@ -42,7 +42,8 @@ export const FirebaseService = {
     });
 
     await remoteConfig().setConfigSettings({
-      minimumFetchIntervalMillis: 7200000, // 2 hour
+      // minimumFetchIntervalMillis: 7200000, // 2 hour
+      minimumFetchIntervalMillis: 10000, // 2 hour
     });
 
     await remoteConfig().fetchAndActivate();

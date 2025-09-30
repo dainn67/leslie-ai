@@ -319,7 +319,6 @@ export class ChatbotService {
         }
       },
       onError: (error) => {
-        console.log("SSE error", error);
         if (!hasError) {
           hasError = true;
           dispatch(updateLastMessageData({ status: MessageStatus.ERROR, cid: cid }));

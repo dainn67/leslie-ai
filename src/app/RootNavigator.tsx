@@ -36,13 +36,14 @@ export const RootNavigator = () => {
 
     const loadRemoteConfigs = async () => {
       const cfg = await FirebaseService.initializeRemoteConfig();
-      ApiServiceInstance.setApiBaseUrl(cfg.dify_domain);
 
       const isDomainAvaiable = await checkDomainAvailable(cfg.dify_domain);
       if (isDomainAvaiable) {
+        console.log("main domain ok");
         ApiServiceInstance.setApiBaseUrl(cfg.dify_domain);
         AsyncStorageService.setIsUsingNginrok(true);
       } else {
+        console.log("main domain not ok");
         const isBakDomainAvailable = await checkDomainAvailable(cfg.dify_domain_bak);
         if (isBakDomainAvailable) {
           ApiServiceInstance.setApiBaseUrl(cfg.dify_domain_bak);
@@ -54,8 +55,9 @@ export const RootNavigator = () => {
     };
 
     const checkDomainAvailable = async (domain: string) => {
-      const result = await ApiClient.getData({ url: `${domain}/v1` });
-      return result && result.welcome !== undefined && result.api_version !== undefined && result.server_version !== undefined;
+      const result = await ApiClient.getData({ url: `${domain}/v1/info` });
+      // console.log("result for:", domain + "/v1/info", result);
+      return result && result.code !== undefined && result.message !== undefined && result.status !== undefined;
     };
 
     checkOnboarding();
