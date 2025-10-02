@@ -76,9 +76,3 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
-
-# @end expo-cli
-
-# Firebase
-android/app/google-services.json
-ios/Runner/GoogleService-Info.plist
