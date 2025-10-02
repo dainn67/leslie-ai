@@ -434,7 +434,7 @@ export class ChatbotService {
           game_type: gameType,
         },
         response_mode: "streaming",
-        user: userName,
+        user: userName ?? "",
         auto_generate_name: false,
       },
       onMessage: (data) => {
