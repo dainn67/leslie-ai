@@ -52,8 +52,6 @@ export const loadDatabase = async () => {
     } catch (error) {
       console.error("Error loading database:", error);
     }
-  } else {
-    console.log("Database already exists");
   }
   db = SQLite.openDatabaseSync(DB_NAME, undefined, sqliteDir.uri);
 };

@@ -40,6 +40,9 @@ export const RootNavigator = () => {
     const loadRemoteConfigs = async () => {
       const cfg = await FirebaseService.initializeRemoteConfig();
 
+      console.log("Firebase initialized:", FirebaseService.isInitialized());
+
+      if (!cfg) return;
       const isDomainAvaiable = await checkDomainAvailable(cfg.dify_domain, true);
       if (isDomainAvaiable) {
         ApiServiceInstance.setApiBaseUrl(cfg.dify_domain);

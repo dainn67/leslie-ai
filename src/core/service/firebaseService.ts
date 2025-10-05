@@ -28,6 +28,8 @@ const app =
 const analytics = getAnalytics(app);
 const remoteConfigInstance = getRemoteConfig(app);
 
+let _initialized = false;
+
 export const FirebaseService = {
   logEvent: async (name: string, params?: Record<string, any>) => {
     try {
@@ -45,7 +47,11 @@ export const FirebaseService = {
     }
   },
 
+  isInitialized: () => _initialized,
+
   initializeRemoteConfig: async () => {
+    if (_initialized) return;
+
     try {
       await setDefaults(remoteConfigInstance, {
         api_base_url: "https://default.example.com",
@@ -53,10 +59,12 @@ export const FirebaseService = {
       });
 
       await setConfigSettings(remoteConfigInstance, {
-        // minimumFetchIntervalMillis: 7200000,
+        minimumFetchIntervalMillis: 7200000,
       });
 
       await fetchAndActivate(remoteConfigInstance);
+
+      _initialized = true;
 
       return {
         dify_domain: getValue(remoteConfigInstance, "dify_domain").asString(),
