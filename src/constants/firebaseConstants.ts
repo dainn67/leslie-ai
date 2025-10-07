@@ -30,4 +30,5 @@ export const FirebaseConstants = {
 
   // Others
   ENTER_NAME: "enter_name",
+  SHARE_APP: "share_app",
 };

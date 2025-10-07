@@ -13,6 +13,7 @@ import { FirebaseService } from "../core/service";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { RootStackParamList } from "./RootNavigator";
 import { Divider } from "../features/common/dividers/Divider";
+import { ShareAppButton } from "../features/drawer/ShareAppButton";
 
 const Drawer = createDrawerNavigator();
 type ChatbotScreenRouteProp = RouteProp<RootStackParamList, "Main">;
@@ -44,6 +45,7 @@ export const DrawerNavigator = () => {
           </DrawerContentScrollView>
 
           {/* Actions */}
+          <ShareAppButton navigation={props.navigation} />
           <SetExamDateButton />
           <ThemeToggleButton />
           <Divider />

@@ -12,6 +12,7 @@ import {
   fetchAndActivate,
   getValue,
 } from "@react-native-firebase/remote-config";
+import { withTimeout } from "../../utils";
 
 const app =
   getApps().length === 0
@@ -62,7 +63,8 @@ export const FirebaseService = {
         minimumFetchIntervalMillis: 7200000,
       });
 
-      await fetchAndActivate(remoteConfigInstance);
+      // ⏱ Limit fetchAndActivate to 5s
+      await withTimeout(fetchAndActivate(remoteConfigInstance), 3000);
 
       _initialized = true;
 
