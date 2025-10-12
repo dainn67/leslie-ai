@@ -14,6 +14,7 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { RootStackParamList } from "./RootNavigator";
 import { Divider } from "../features/common/dividers/Divider";
 import { ShareAppButton } from "../features/drawer/ShareAppButton";
+import { FlashCardScreen } from "../features/flashcard/FlashCardScreen";
 
 const Drawer = createDrawerNavigator();
 type ChatbotScreenRouteProp = RouteProp<RootStackParamList, "Main">;
@@ -87,6 +88,23 @@ export const DrawerNavigator = () => {
             </CustomText>
           ),
           drawerIcon: ({ color, size }) => <Ionicons name="list-outline" size={size} color={color} />,
+        }}
+      />
+      <Drawer.Screen
+        name="FlashCardScreen"
+        component={FlashCardScreen}
+        listeners={{
+          drawerItemPress: (e) => {
+            FirebaseService.logEvent(FirebaseConstants.OPEN_FLASH_CARD_SCREEN);
+          },
+        }}
+        options={{
+          drawerLabel: ({ color }) => (
+            <CustomText weight="Regular" style={{ color }}>
+              Flash Card
+            </CustomText>
+          ),
+          drawerIcon: ({ color, size }) => <Ionicons name="flash-outline" size={size} color={color} />,
         }}
       />
       <Drawer.Screen
