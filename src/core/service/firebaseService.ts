@@ -59,8 +59,10 @@ export const FirebaseService = {
         feature_enabled: "false",
       });
 
+      // This sets the minimum interval between Remote Config fetches to 1 hour (in milliseconds).
+      // It means Remote Config will not fetch new values from the server more than once every 1 hour.
       await setConfigSettings(remoteConfigInstance, {
-        minimumFetchIntervalMillis: 7200000,
+        minimumFetchIntervalMillis: 3600000,
       });
 
       // ⏱ Limit fetchAndActivate to 5s
