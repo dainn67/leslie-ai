@@ -3,12 +3,15 @@ import { File, Directory, Paths } from "expo-file-system";
 import { Asset } from "expo-asset";
 import {
   createQuestionTable,
+  createTestQuestionTable,
+  createTestTable,
   updateQuestionTables,
   updateTestQuestionTables,
   updateTestTables,
 } from "../../../storage/database/tables";
 import { AsyncStorageService } from "./asyncStorageService";
 import { clearQuestionTables } from "..";
+import { createFlashCardTable, updateFlashCardTables } from "../../../storage/database/tables/flashCardTable";
 
 export const DB_NAME = "leslieai.db";
 const ASSETS_DB_PATH = require("../../../../assets/databases/leslieai.db");
@@ -65,6 +68,13 @@ export const initializeDatabase = async () => {
   await loadDatabase();
   createQuestionTable();
   updateQuestionTables();
+
+  createTestTable();
   updateTestTables();
+
+  createTestQuestionTable();
   updateTestQuestionTables();
+
+  createFlashCardTable();
+  updateFlashCardTables();
 };
