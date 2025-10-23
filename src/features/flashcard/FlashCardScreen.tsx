@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
+import MainButton from "../../components/buttons/MainButton";
 import { Ionicons } from "@expo/vector-icons";
 import { AppBar } from "../../components/AppBar";
-import { FirebaseService } from "../../core/service";
+import { FirebaseService, ToastService } from "../../core/service";
 import { FirebaseConstants } from "../../constants";
 import { useNavigation } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { RootStackParamList } from "../../app/RootNavigator";
 import { FlipCard } from "./component/FlipCard";
 import { ScrollView, View, StyleSheet, Dimensions } from "react-native";
-import { useAppTheme } from "../../theme";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { QuestionNumberSelector } from "../questions/components/QuestionNumberSelector";
 
 // Sample flashcard data - replace with your actual data
 const flashcards = [
@@ -24,8 +26,8 @@ const flashcards = [
 
 export const FlashCardScreen = () => {
   const navigation = useNavigation<DrawerNavigationProp<RootStackParamList, "Main">>();
-  const { colors } = useAppTheme();
   const { width } = Dimensions.get("window");
+  const [amountSelectorVisible, setAmountSelectorVisible] = useState(false);
 
   // Calculate card dimensions for 2 columns
   const cardWidth = (width - 60) / 2; // 60 = total horizontal padding and spacing
@@ -36,24 +38,52 @@ export const FlashCardScreen = () => {
     navigation.openDrawer();
   };
 
-  return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <AppBar title={"Flash Card"} leftIcon={<Ionicons name="menu" size={24} color="white" />} onLeftPress={handleOpenDrawer} />
+  const handlePractice = () => {
+    if (flashcards.length > 0) {
+      setAmountSelectorVisible(true);
+    } else {
+      ToastService.show({ message: "Bạn chưa tạo flashcard nào", type: "error" });
+    }
+  };
 
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={styles.gridContainer}>
-          {flashcards.map((card) => (
-            <View key={card.id} style={styles.cardWrapper}>
-              <FlipCard front={card.front} back={card.back} width={cardWidth} height={cardHeight} />
-            </View>
-          ))}
-        </View>
-      </ScrollView>
-    </View>
+  const handleSelectFlashcard = (amount: number) => {
+    const selectedFlashcards = flashcards.slice(0, amount);
+    FirebaseService.logEvent(FirebaseConstants.REVIEW_ALL_FLASHCARDS, { amount });
+  };
+
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <View style={[styles.container]}>
+        <AppBar title={"Flash Card"} leftIcon={<Ionicons name="menu" size={24} color="white" />} onLeftPress={handleOpenDrawer} />
+
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          <View style={styles.gridContainer}>
+            {flashcards.map((card) => (
+              <View key={card.id} style={styles.cardWrapper}>
+                <FlipCard front={card.front} back={card.back} width={cardWidth} height={cardHeight} />
+              </View>
+            ))}
+          </View>
+        </ScrollView>
+
+        <MainButton title={"Ôn tập"} style={styles.buttonContainer} onPress={handlePractice} />
+
+        {/* Question number selector */}
+        <QuestionNumberSelector
+          totalQuestions={flashcards.length}
+          visible={amountSelectorVisible}
+          setVisible={setAmountSelectorVisible}
+          onSelectQuestion={(amount) => handleSelectFlashcard(amount)}
+        />
+      </View>
+    </GestureHandlerRootView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
   container: {
     flex: 1,
   },
@@ -68,5 +98,11 @@ const styles = StyleSheet.create({
   },
   cardWrapper: {
     margin: 10,
+  },
+  buttonContainer: {
+    marginHorizontal: 16,
+    marginBottom: 16,
+    marginTop: 8,
+    alignItems: "center",
   },
 });

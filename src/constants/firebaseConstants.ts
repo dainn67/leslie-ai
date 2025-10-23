@@ -29,6 +29,9 @@ export const FirebaseConstants = {
   OPEN_SEARCH: "open_search",
   START_CREATING_QUESTIONS: "start_creating_questions",
 
+  // Flashcard screen
+  REVIEW_ALL_FLASHCARDS: "review_all_flashcards",
+
   // Others
   ENTER_NAME: "enter_name",
   SHARE_APP: "share_app",

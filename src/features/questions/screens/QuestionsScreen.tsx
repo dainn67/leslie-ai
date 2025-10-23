@@ -84,6 +84,7 @@ export const QuestionsScreen = () => {
           ))}
         </View>
         <MainButton title={"Ôn tập tổng hợp"} style={styles.buttonContainer} onPress={handleReviewAll} />
+
         {/* Question number selector */}
         <QuestionNumberSelector
           totalQuestions={allQuestions.length}
