@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginHorizontal: 16,
-    marginBottom: 16,
+    marginVertical: 8,
     alignItems: "center",
   },
   gridItem: {

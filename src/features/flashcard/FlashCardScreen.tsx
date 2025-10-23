@@ -101,8 +101,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginHorizontal: 16,
-    marginBottom: 16,
-    marginTop: 8,
+    marginVertical: 8,
     alignItems: "center",
   },
 });
