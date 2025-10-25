@@ -5,6 +5,7 @@ import { WordComponent } from "../../../../components/streamingText/WordComponen
 import { ChatMessage, Sender, MessageType, MessageStatus } from "../../../../models/chatMessage";
 import { CustomText } from "../../../../components/text/customText";
 import { LoadingMessage, QuestionsMessage, ChatActionButtons } from "../../components";
+import { FlashcardsMessage } from "./FlashcardsMessage";
 
 interface ChatMessageBubbleProps {
   message: ChatMessage;
