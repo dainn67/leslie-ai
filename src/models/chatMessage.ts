@@ -1,4 +1,4 @@
-import { FlashCard } from ".";
+import { Flashcard } from ".";
 import { ChatbotService } from "../core/service";
 import { Question } from "./question";
 
@@ -31,7 +31,7 @@ export type ChatMessage = {
 
   // Data
   questions: Question[];
-  flashcards: FlashCard[];
+  flashcards: Flashcard[];
   suggestedActions: SuggestedAction[];
 
   // Type and sender

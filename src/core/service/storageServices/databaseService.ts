@@ -11,7 +11,7 @@ import {
 } from "../../../storage/database/tables";
 import { AsyncStorageService } from "./asyncStorageService";
 import { clearQuestionTables } from "..";
-import { createFlashCardTable, updateFlashCardTables } from "../../../storage/database/tables/flashCardTable";
+import { createFlashcardTable, updateFlashcardTables } from "../../../storage/database/tables/flashcardTable";
 
 export const DB_NAME = "leslieai.db";
 const ASSETS_DB_PATH = require("../../../../assets/databases/leslieai.db");
@@ -75,6 +75,6 @@ export const initializeDatabase = async () => {
   createTestQuestionTable();
   updateTestQuestionTables();
 
-  createFlashCardTable();
-  updateFlashCardTables();
+  createFlashcardTable();
+  updateFlashcardTables();
 };

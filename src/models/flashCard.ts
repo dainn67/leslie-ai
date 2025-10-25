@@ -1,4 +1,4 @@
-export type FlashCard = {
+export type Flashcard = {
   flashCardId: number;
   front: string;
   back: string;
@@ -7,7 +7,7 @@ export type FlashCard = {
   lastUpdate: number;
 };
 
-export const createFlashCard = (partial?: Partial<FlashCard>): FlashCard => {
+export const createFlashcard = (partial?: Partial<Flashcard>): Flashcard => {
   return {
     flashCardId: partial?.flashCardId ?? Date.now(),
     front: partial?.front ?? "",

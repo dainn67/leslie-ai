@@ -1,10 +1,10 @@
 import { db } from "../../../core/service";
-import { FlashCard } from "../../../models";
+import { Flashcard } from "../../../models";
 
-export const FlashCardTable = {
-  tableName: "FlashCard",
+export const FlashcardTable = {
+  tableName: "Flashcard",
   columnId: "id",
-  columnFlashCardId: "flashCardId",
+  columnFlashcardId: "flashcardId",
   columnFront: "front",
   columnBack: "back",
   columnExplanation: "explanation",
@@ -12,56 +12,56 @@ export const FlashCardTable = {
   columnLastUpdate: "lastUpdate",
 };
 
-export const createFlashCardTable = () => {
+export const createFlashcardTable = () => {
   db.execSync(
-    `CREATE TABLE IF NOT EXISTS ${FlashCardTable.tableName} (
-        ${FlashCardTable.columnId} INTEGER PRIMARY KEY AUTOINCREMENT,
-        ${FlashCardTable.columnFlashCardId} INTEGER,
-        ${FlashCardTable.columnFront} TEXT,
-        ${FlashCardTable.columnBack} TEXT,
-        ${FlashCardTable.columnExplanation} TEXT,
-        ${FlashCardTable.columnLevel} TEXT,
-        ${FlashCardTable.columnLastUpdate} INTEGER
+    `CREATE TABLE IF NOT EXISTS ${FlashcardTable.tableName} (
+        ${FlashcardTable.columnId} INTEGER PRIMARY KEY AUTOINCREMENT,
+        ${FlashcardTable.columnFlashcardId} INTEGER,
+        ${FlashcardTable.columnFront} TEXT,
+        ${FlashcardTable.columnBack} TEXT,
+        ${FlashcardTable.columnExplanation} TEXT,
+        ${FlashcardTable.columnLevel} TEXT,
+        ${FlashcardTable.columnLastUpdate} INTEGER
     )`
   );
 };
 
-export const updateFlashCardTables = () => {
-  const flashCardColumns = db.getAllSync(`PRAGMA table_info(${FlashCardTable.tableName})`).map((row: any) => row.name);
+export const updateFlashcardTables = () => {
+  const flashcardColumns = db.getAllSync(`PRAGMA table_info(${FlashcardTable.tableName})`).map((row: any) => row.name);
   db.withTransactionSync(() => {
-    Object.values(FlashCardTable).forEach((column) => {
-      if (column !== FlashCardTable.tableName && !flashCardColumns.includes(column)) {
+    Object.values(FlashcardTable).forEach((column) => {
+      if (column !== FlashcardTable.tableName && !flashcardColumns.includes(column)) {
         let columnType = "TEXT";
         if (
-          column === FlashCardTable.columnId ||
-          column === FlashCardTable.columnFlashCardId ||
-          column === FlashCardTable.columnLastUpdate
+          column === FlashcardTable.columnId ||
+          column === FlashcardTable.columnFlashcardId ||
+          column === FlashcardTable.columnLastUpdate
         ) {
           columnType = "INTEGER";
         }
-        db.execSync(`ALTER TABLE ${FlashCardTable.tableName} ADD COLUMN ${column} TEXT`);
+        db.execSync(`ALTER TABLE ${FlashcardTable.tableName} ADD COLUMN ${column} TEXT`);
       }
     });
   });
 };
 
-export const insertFlashCards = (flashCards: FlashCard[]) => {
+export const insertFlashCards = (flashCards: Flashcard[]) => {
   db.withTransactionSync(() => {
-    const flashCardColumns = `(${FlashCardTable.columnFlashCardId}, ${FlashCardTable.columnFront}, ${FlashCardTable.columnBack}, ${FlashCardTable.columnExplanation}, ${FlashCardTable.columnLevel}, ${FlashCardTable.columnLastUpdate})`;
-    const flashCardValues = flashCards
+    const flashcardColumns = `(${FlashcardTable.columnFlashcardId}, ${FlashcardTable.columnFront}, ${FlashcardTable.columnBack}, ${FlashcardTable.columnExplanation}, ${FlashcardTable.columnLevel}, ${FlashcardTable.columnLastUpdate})`;
+    const flashcardValues = flashCards
       .map(
         (flashCard) =>
           `(${flashCard.flashCardId}, "${flashCard.front}", "${flashCard.back}", "${flashCard.explanation}", "${flashCard.level}", ${flashCard.lastUpdate})`
       )
       .join(", ");
-    db.execSync(`INSERT INTO ${FlashCardTable.tableName} ${flashCardColumns} VALUES ${flashCardValues}`);
+    db.execSync(`INSERT INTO ${FlashcardTable.tableName} ${flashcardColumns} VALUES ${flashcardValues}`);
   });
 };
 
 export const deleteFlashCards = (flashCardIds: number[]) => {
   db.withTransactionSync(() => {
     db.execSync(
-      `DELETE FROM ${FlashCardTable.tableName} WHERE ${FlashCardTable.columnFlashCardId} IN (${flashCardIds.join(", ")})`
+      `DELETE FROM ${FlashcardTable.tableName} WHERE ${FlashcardTable.columnFlashcardId} IN (${flashCardIds.join(", ")})`
     );
   });
 };

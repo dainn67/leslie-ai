@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit";
 import { ChatMessage, createChatMessage, MessageStatus, MessageType, Sender, SuggestedAction } from "../../../models/chatMessage";
 import { DifyConfig } from "../../../constants/difyConfig";
-import { Question, FlashCard } from "../../../models/";
+import { Question, Flashcard } from "../../../models/";
 
 const mainCID = DifyConfig.mainChatbotConversationId;
 
@@ -80,7 +80,7 @@ const chatbotSlice = createSlice({
         messageType?: MessageType;
         fullText?: string;
         questions?: Question[];
-        flashcards?: FlashCard[];
+        flashcards?: Flashcard[];
         suggestedActions?: SuggestedAction[];
         summary?: string;
       }>

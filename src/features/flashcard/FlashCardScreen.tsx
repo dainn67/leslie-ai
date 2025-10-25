@@ -24,7 +24,7 @@ const flashcards = [
   { id: 8, front: "Food", back: "Thức ăn" },
 ];
 
-export const FlashCardScreen = () => {
+export const FlashcardScreen = () => {
   const navigation = useNavigation<DrawerNavigationProp<RootStackParamList, "Main">>();
   const { width } = Dimensions.get("window");
   const [amountSelectorVisible, setAmountSelectorVisible] = useState(false);

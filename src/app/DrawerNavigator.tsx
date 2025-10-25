@@ -14,7 +14,7 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { RootStackParamList } from "./RootNavigator";
 import { Divider } from "../features/common/dividers/Divider";
 import { ShareAppButton } from "../features/drawer/ShareAppButton";
-import { FlashCardScreen } from "../features/flashcard/FlashCardScreen";
+import { FlashcardScreen } from "../features/flashcard/FlashcardScreen";
 
 const Drawer = createDrawerNavigator();
 type ChatbotScreenRouteProp = RouteProp<RootStackParamList, "Main">;
@@ -92,7 +92,7 @@ export const DrawerNavigator = () => {
       />
       <Drawer.Screen
         name="FlashCardScreen"
-        component={FlashCardScreen}
+        component={FlashcardScreen}
         listeners={{
           drawerItemPress: (e) => {
             FirebaseService.logEvent(FirebaseConstants.OPEN_FLASH_CARD_SCREEN);

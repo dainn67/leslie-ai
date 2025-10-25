@@ -19,7 +19,7 @@ import { convertDateToDDMMYYYY } from "../../utils";
 import { AsyncStorageService, FirebaseService, getDiagnosticTest, getQuestionsByTestId } from ".";
 import { FirebaseConstants } from "../../constants";
 import { GameType } from "../../features/game/screens/GameScreen";
-import { createFlashCard, FlashCard } from "../../models";
+import { createFlashcard, Flashcard } from "../../models";
 
 export const Delimiter = "--//--";
 
@@ -566,11 +566,11 @@ export class ChatbotService {
     return { questions, summary };
   };
 
-  static extractFlashcardsFromJson = (json: string): { flashcards: FlashCard[]; summary: string } => {
+  static extractFlashcardsFromJson = (json: string): { flashcards: Flashcard[]; summary: string } => {
     const dataString = json.replaceAll("```json", "").replaceAll("```", "").trim();
     const data = JSON.parse(dataString);
-    const flashcards: FlashCard[] = data["flashcards"].map((flashcard: any, index: number) =>
-      createFlashCard({ ...flashcard, flashcardId: Date.now() + index })
+    const flashcards: Flashcard[] = data["flashcards"].map((flashcard: any, index: number) =>
+      createFlashcard({ ...flashcard, flashcardId: Date.now() + index })
     );
     const summary = data["summary"];
     return { flashcards, summary };

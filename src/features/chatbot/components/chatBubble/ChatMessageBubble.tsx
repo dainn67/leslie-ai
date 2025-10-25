@@ -1,10 +1,10 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { useAppTheme } from '../../../../theme';
-import { WordComponent } from '../../../../components/streamingText/WordComponent';
-import { ChatMessage, Sender, MessageType, MessageStatus } from '../../../../models/chatMessage';
-import { CustomText } from '../../../../components/text/customText';
-import { LoadingMessage, QuestionsMessage, ChatActionButtons } from '../../components';
+import React from "react";
+import { View, StyleSheet } from "react-native";
+import { useAppTheme } from "../../../../theme";
+import { WordComponent } from "../../../../components/streamingText/WordComponent";
+import { ChatMessage, Sender, MessageType, MessageStatus } from "../../../../models/chatMessage";
+import { CustomText } from "../../../../components/text/customText";
+import { LoadingMessage, QuestionsMessage, ChatActionButtons } from "../../components";
 
 interface ChatMessageBubbleProps {
   message: ChatMessage;
@@ -30,16 +30,16 @@ export const ChatMessageBubble = ({
   const isLoading = message.status == MessageStatus.LOADING;
   const hasError = message.status == MessageStatus.ERROR;
   const isStreamText = !isLoading && !hasError && message.messageType === MessageType.STREAM_TEXT;
-  const isLoadingQuestion = isLoading && !hasError && message.messageType === MessageType.QUESTIONS;
   const isQuestions = !isLoading && !hasError && message.messageType === MessageType.QUESTIONS && message.fullText.length > 0;
+  const isFlashCards = !isLoading && !hasError && message.messageType === MessageType.FLASHCARDS && message.fullText.length > 0;
   const showButtons = isStreamText && message.suggestedActions.length > 0;
 
   return (
     <View id={message.id} style={styles.container}>
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+      <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
         {hasError && <CustomText>Vui lòng thử lại sau...</CustomText>}
 
-        {!hasError && isLoading && <LoadingMessage isQuestion={isLoadingQuestion} />}
+        {!hasError && isLoading && <LoadingMessage type={message.messageType} />}
 
         {/* Streaming text */}
         {isStreamText &&
@@ -49,8 +49,15 @@ export const ChatMessageBubble = ({
 
         {/* Generated questions */}
         {isQuestions && (
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap', flex: 1 }}>
+          <View style={{ flexDirection: "row", flexWrap: "wrap", flex: 1 }}>
             <QuestionsMessage questions={message.questions} onAnalyze={onAnalyze} />
+          </View>
+        )}
+
+        {/* Generated flashcards */}
+        {isFlashCards && (
+          <View style={{ flexDirection: "row", flexWrap: "wrap", flex: 1 }}>
+            <FlashcardsMessage flashcards={message.flashcards} />
           </View>
         )}
       </View>
@@ -71,13 +78,13 @@ const getStyle = (colors: any, isUser: boolean, componentHeight: number, isLastM
         ? {
             backgroundColor: colors.primary,
             paddingVertical: 12,
-            alignItems: 'flex-end',
-            alignSelf: 'flex-end',
+            alignItems: "flex-end",
+            alignSelf: "flex-end",
             marginLeft: 32,
             borderTopRightRadius: 6,
           }
         : {
-            alignItems: 'flex-start',
+            alignItems: "flex-start",
             paddingVertical: 12,
             borderTopLeftRadius: 6,
             marginRight: 0,

@@ -2,13 +2,14 @@ import React, { useEffect, useRef } from "react";
 import { Animated, View, StyleSheet, ViewStyle } from "react-native";
 import { CustomText } from "../../../../components/text/customText";
 import { useAppTheme } from "../../../../theme";
+import { MessageType } from "../../../../models";
 
 interface LoadingMessageProps {
-  isQuestion?: boolean;
+  type: MessageType;
   style?: ViewStyle;
 }
 
-export const LoadingMessage = ({ isQuestion, style }: LoadingMessageProps) => {
+export const LoadingMessage = ({ type, style }: LoadingMessageProps) => {
   const dots = Array.from({ length: 3 }, () => useRef(new Animated.Value(0)).current);
   const pulseAnim = useRef(new Animated.Value(1)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -94,10 +95,12 @@ export const LoadingMessage = ({ isQuestion, style }: LoadingMessageProps) => {
     >
       <View style={[styles.loadingContainer, { backgroundColor: isDarkMode ? "#222222" : "#f0f0f0" }]}>
         <View style={styles.contentContainer}>
-          {isQuestion && (
-            <CustomText style={[styles.loadingText, { color: isDarkMode ? "white" : "#65676B" }]}>Đang tạo câu hỏi</CustomText>
+          {type !== MessageType.STREAM_TEXT && (
+            <CustomText style={[styles.loadingText, { color: isDarkMode ? "white" : "#65676B" }]}>
+              {type === MessageType.QUESTIONS ? "Đang tạo câu hỏi" : "Đang tạo Flashcards"}
+            </CustomText>
           )}
-          <View style={[styles.dotsContainer, { marginLeft: isQuestion ? 8 : 0 }]}>
+          <View style={[styles.dotsContainer, { marginLeft: type !== MessageType.STREAM_TEXT ? 8 : 0 }]}>
             {Array.from({ length: 3 }).map((_, index) => (
               <Animated.View
                 key={index}
