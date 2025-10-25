@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { Flashcard } from "../../../../models";
+import { FlipCard } from "../../../flashcard/component/FlipCard";
 
 interface FlashcardsMessageProps {
   flashcards: Flashcard[];
@@ -9,7 +10,9 @@ interface FlashcardsMessageProps {
 export const FlashcardsMessage = ({ flashcards }: FlashcardsMessageProps) => {
   return (
     <View>
-      <Text>Flashcards</Text>
+      {flashcards.map((f) => (
+        <FlipCard front={f.front} back={f.back} />
+      ))}
     </View>
   );
 };

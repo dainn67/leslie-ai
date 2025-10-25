@@ -30,9 +30,9 @@ export const ChatMessageBubble = ({
 
   const isLoading = message.status == MessageStatus.LOADING;
   const hasError = message.status == MessageStatus.ERROR;
-  const isStreamText = !isLoading && !hasError && message.messageType === MessageType.STREAM_TEXT;
-  const isQuestions = !isLoading && !hasError && message.messageType === MessageType.QUESTIONS && message.fullText.length > 0;
-  const isFlashCards = !isLoading && !hasError && message.messageType === MessageType.FLASHCARDS && message.fullText.length > 0;
+  const isStreamText = message.messageType === MessageType.STREAM_TEXT;
+  const isQuestions = message.messageType === MessageType.QUESTIONS && message.fullText.length > 0;
+  const isFlashCards = message.messageType === MessageType.FLASHCARDS && message.fullText.length > 0;
   const showButtons = isStreamText && message.suggestedActions.length > 0;
 
   return (
