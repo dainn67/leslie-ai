@@ -1,14 +1,16 @@
-import { ChatbotService } from '../core/service';
-import { Question } from './question';
+import { FlashCard } from ".";
+import { ChatbotService } from "../core/service";
+import { Question } from "./question";
 
 export enum Sender {
-  USER = 'user',
-  BOT = 'bot',
+  USER = "user",
+  BOT = "bot",
 }
 
 export enum MessageType {
-  STREAM_TEXT = 'stream_text',
-  QUESTIONS = 'questions',
+  STREAM_TEXT = "stream_text",
+  QUESTIONS = "questions",
+  FLASHCARDS = "flashcards",
 }
 
 export enum MessageStatus {
@@ -29,6 +31,7 @@ export type ChatMessage = {
 
   // Data
   questions: Question[];
+  flashcards: FlashCard[];
   suggestedActions: SuggestedAction[];
 
   // Type and sender
@@ -44,7 +47,7 @@ export type ChatMessage = {
 };
 
 export const createChatMessage = (partial?: Partial<ChatMessage>): ChatMessage => {
-  const fullText = partial?.fullText ?? '';
+  const fullText = partial?.fullText ?? "";
   const words = partial?.words ?? ChatbotService.splitCustomWords(fullText);
   const timestamp = new Date().toISOString();
   return {
@@ -53,10 +56,11 @@ export const createChatMessage = (partial?: Partial<ChatMessage>): ChatMessage =
     words,
     wordsLength: partial?.wordsLength ?? words.length,
     questions: partial?.questions ?? [],
+    flashcards: partial?.flashcards ?? [],
     suggestedActions: partial?.suggestedActions ?? [],
     sender: partial?.sender ?? Sender.USER,
     actionId: partial?.actionId ?? 0,
-    summary: partial?.summary ?? '',
+    summary: partial?.summary ?? "",
     messageType: partial?.messageType ?? MessageType.STREAM_TEXT,
     status: partial?.status ?? MessageStatus.USER,
     createdAt: partial?.createdAt ?? timestamp,

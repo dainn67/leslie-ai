@@ -19,6 +19,7 @@ import { convertDateToDDMMYYYY } from "../../utils";
 import { AsyncStorageService, FirebaseService, getDiagnosticTest, getQuestionsByTestId } from ".";
 import { FirebaseConstants } from "../../constants";
 import { GameType } from "../../features/game/screens/GameScreen";
+import { createFlashCard, FlashCard } from "../../models";
 
 export const Delimiter = "--//--";
 
@@ -238,6 +239,7 @@ export class ChatbotService {
     let wordIndex = 0;
     let wordLength = 0;
     let isQuestionJson = false;
+    let isFlashcardJson = false;
     let startReceiveMessage = false;
     let hasError = false;
 
@@ -290,9 +292,16 @@ export class ChatbotService {
         const conversationId = data["conversation_id"];
         const nodeTitle = data["data"]?.["title"];
 
-        if (!isQuestionJson && nodeTitle && nodeTitle == DifyConfig.titleGenQuestions) {
-          dispatch(updateLastMessageData({ messageType: MessageType.QUESTIONS, cid: cid }));
-          isQuestionJson = true;
+        if (nodeTitle) {
+          const isGeneratedQuestions = nodeTitle == DifyConfig.titleGenQuestions;
+          const isGeneratedFlashcards = nodeTitle == DifyConfig.titleGenFlashcards;
+          if (!isQuestionJson && isGeneratedQuestions) {
+            dispatch(updateLastMessageData({ messageType: MessageType.QUESTIONS, cid: cid }));
+            isQuestionJson = true;
+          } else if (!isFlashcardJson && isGeneratedFlashcards) {
+            dispatch(updateLastMessageData({ messageType: MessageType.FLASHCARDS, cid: cid }));
+            isFlashcardJson = true;
+          }
         }
 
         if (type === "message") {
@@ -314,6 +323,9 @@ export class ChatbotService {
         if (isQuestionJson) {
           const { questions, summary } = ChatbotService.extractQuestionsFromJson(fullText);
           dispatch(updateLastMessageData({ questions, summary, status: MessageStatus.DONE, cid: cid }));
+        } else if (isFlashcardJson) {
+          const { flashcards, summary } = ChatbotService.extractFlashcardsFromJson(fullText);
+          dispatch(updateLastMessageData({ flashcards, summary, status: MessageStatus.DONE, cid: cid }));
         }
       },
       onError: (error) => {
@@ -552,6 +564,16 @@ export class ChatbotService {
     const summary = data["summary"];
 
     return { questions, summary };
+  };
+
+  static extractFlashcardsFromJson = (json: string): { flashcards: FlashCard[]; summary: string } => {
+    const dataString = json.replaceAll("```json", "").replaceAll("```", "").trim();
+    const data = JSON.parse(dataString);
+    const flashcards: FlashCard[] = data["flashcards"].map((flashcard: any, index: number) =>
+      createFlashCard({ ...flashcard, flashcardId: Date.now() + index })
+    );
+    const summary = data["summary"];
+    return { flashcards, summary };
   };
 
   static extractSuggestedActions = (fullText: string) => {

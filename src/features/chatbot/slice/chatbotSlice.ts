@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction, createSelector, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit";
 import { ChatMessage, createChatMessage, MessageStatus, MessageType, Sender, SuggestedAction } from "../../../models/chatMessage";
-import { Question } from "../../../models/question";
 import { DifyConfig } from "../../../constants/difyConfig";
+import { Question, FlashCard } from "../../../models/";
 
 const mainCID = DifyConfig.mainChatbotConversationId;
 
@@ -21,7 +21,7 @@ const initialState: ChatbotState = {
 
 export const getMessagesByCID = createSelector(
   [(state: ChatbotState) => state, (state: ChatbotState, cid?: string) => cid],
-  (state, cid) => state.messages[cid ?? mainCID] || [],
+  (state, cid) => state.messages[cid ?? mainCID] || []
 );
 
 export const getLatestMessageByCID = createSelector(
@@ -29,17 +29,17 @@ export const getLatestMessageByCID = createSelector(
   (state, cid) => {
     const messages = state.messages[cid ?? mainCID] || [];
     return messages.length > 0 ? messages[messages.length - 1] : null;
-  },
+  }
 );
 
 export const getDifyConversationIdByCID = createSelector(
   [(state: ChatbotState) => state, (state: ChatbotState, cid?: string) => cid],
-  (state, cid) => state.difyConversationId[cid ?? mainCID] || "",
+  (state, cid) => state.difyConversationId[cid ?? mainCID] || ""
 );
 
 export const getConversationSummaryByCID = createSelector(
   [(state: ChatbotState) => state, (state: ChatbotState, cid?: string) => cid],
-  (state, cid) => state.conversationSummary[cid ?? mainCID] || "",
+  (state, cid) => state.conversationSummary[cid ?? mainCID] || ""
 );
 
 const chatbotSlice = createSlice({
@@ -80,9 +80,10 @@ const chatbotSlice = createSlice({
         messageType?: MessageType;
         fullText?: string;
         questions?: Question[];
+        flashcards?: FlashCard[];
         suggestedActions?: SuggestedAction[];
         summary?: string;
-      }>,
+      }>
     ) => {
       const cid = action.payload.cid ?? mainCID;
       const message = state.messages[cid]?.at(-1);
