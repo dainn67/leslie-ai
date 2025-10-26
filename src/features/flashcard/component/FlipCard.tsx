@@ -2,43 +2,22 @@ import React, { useState } from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, interpolate } from "react-native-reanimated";
 
-/**
- * Props interface for the FlipCard component
- * @property {string} front - Text to display on the front of the card
- * @property {string} back - Text to display on the back of the card
- * @property {number} [duration=600] - Animation duration in milliseconds
- * @property {number} [aspectRatio=1.5] - Width to height ratio (default 3:2 = 1.5)
- */
 interface FlipCardProps {
   front: string;
   back: string;
   duration?: number;
   width?: number;
   height?: number;
+  flipped?: boolean;
 }
 
-/**
- * FlipCard Component
- *
- * A reusable card component that flips with a 3D animation when tapped.
- * The card takes up maximum available space while maintaining the specified aspect ratio.
- *
- * @param {FlipCardProps} props - Component props
- */
-export const FlipCard = ({ front, back, duration = 600, width = 200, height = 300 }: FlipCardProps) => {
-  // State to track whether the card is currently showing the back side
-  const [isFlipped, setIsFlipped] = useState(false);
+export const FlipCard = ({ front, back, duration = 600, width = 200, height = 300, flipped = false }: FlipCardProps) => {
+  const [isFlipped, setIsFlipped] = useState(flipped);
 
-  // Shared value for animation - represents rotation angle (0 to 180 degrees)
-  // useSharedValue creates a value that can be animated on the native thread
   const rotateValue = useSharedValue(0);
 
   const handleFlip = () => {
-    // Toggle the flipped state
     setIsFlipped((prev) => !prev);
-
-    // Animate the rotation value smoothly
-    // If currently flipped, rotate back to 0°, otherwise rotate to 180°
     rotateValue.value = withTiming(isFlipped ? 0 : 180, { duration });
   };
 
@@ -90,15 +69,11 @@ export const FlipCard = ({ front, back, duration = 600, width = 200, height = 30
 
   return (
     <View style={styles.container}>
-      {/* Pressable wrapper to detect tap events */}
-      {/* Takes maximum width and maintains aspect ratio for height */}
       <Pressable onPress={handleFlip} style={[styles.cardContainer, { width, height }]}>
-        {/* Front side of the card */}
         <Animated.View style={[styles.card, styles.cardFront, frontAnimatedStyle]}>
           <Text style={styles.text}>{front}</Text>
         </Animated.View>
 
-        {/* Back side of the card - positioned absolutely to overlay the front */}
         <Animated.View style={[styles.card, styles.cardBack, backAnimatedStyle]}>
           <Text style={styles.text}>{back}</Text>
         </Animated.View>
@@ -108,19 +83,16 @@ export const FlipCard = ({ front, back, duration = 600, width = 200, height = 30
 };
 
 const styles = StyleSheet.create({
-  // Main container - takes up full available space
   container: {
     alignItems: "center",
     justifyContent: "center",
   },
 
-  // Container for the flip card - takes maximum width while maintaining aspect ratio
   cardContainer: {
     width: 200,
     height: 300,
   },
 
-  // Base card styles shared by both front and back
   card: {
     width: "100%",
     height: "100%",
@@ -133,19 +105,16 @@ const styles = StyleSheet.create({
     backfaceVisibility: "hidden",
   },
 
-  // Front card specific styling
   cardFront: {
     position: "absolute",
-    backgroundColor: "#4A90E2", // Blue background for front
+    backgroundColor: "#4A90E2",
   },
 
-  // Back card specific styling
   cardBack: {
     position: "absolute",
-    backgroundColor: "#50C878", // Green background for back
+    backgroundColor: "#50C878",
   },
 
-  // Text styling for card content
   text: {
     fontSize: 22,
     fontWeight: "600",

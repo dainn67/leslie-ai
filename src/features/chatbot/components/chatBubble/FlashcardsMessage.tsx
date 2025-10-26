@@ -34,7 +34,7 @@ export const FlashcardsMessage = ({ flashcards }: FlashcardsMessageProps) => {
 
       {/* Flashcard */}
       <View style={styles.flashcardContainer}>
-        <FlipCard front={currentFlashcard.front} back={currentFlashcard.back} />
+        <FlipCard key={currentFlashcardIndex} front={currentFlashcard.front} back={currentFlashcard.back} />
         <CustomText style={styles.counterText}>
           {currentFlashcardIndex + 1} / {flashcards.length}
         </CustomText>
