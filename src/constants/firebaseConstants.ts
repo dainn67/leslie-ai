@@ -31,6 +31,7 @@ export const FirebaseConstants = {
 
   // Flashcard screen
   REVIEW_ALL_FLASHCARDS: "review_all_flashcards",
+  SAVE_GENERATED_FLASHCARD: "save_generated_flashcard",
 
   // Others
   ENTER_NAME: "enter_name",

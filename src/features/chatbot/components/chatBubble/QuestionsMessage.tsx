@@ -21,7 +21,7 @@ export const QuestionsMessage = ({ questions, onAnalyze }: QuestionsMessageProps
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [analyzed, setAnalyzed] = useState(false);
   const [mapAnswer, setMapAnswer] = useState<{ [key: number]: number }>({});
-  const [mapBookmark, setMapBookmark] = useState<{ [key: number]: boolean }>({});
+  const [mapBookmark, setMapBookmark] = useState<boolean[]>(questions.map(() => false));
   const [playAudio, setPlayAudio] = useState(false);
 
   useEffect(() => {
@@ -43,15 +43,16 @@ export const QuestionsMessage = ({ questions, onAnalyze }: QuestionsMessageProps
   };
 
   const handleBookmarkPress = (isBookmarked: boolean) => {
+    setMapBookmark((prev) => {
+      const newMap = [...prev];
+      newMap[currentQuestionIndex] = isBookmarked;
+      return newMap;
+    });
+
     if (isBookmarked) {
       FirebaseService.logEvent(FirebaseConstants.SAVE_GENERATED_QUESTION);
-
-      setMapBookmark({ ...mapBookmark, [question.questionId]: isBookmarked });
       insertQuestions([question]);
     } else {
-      const newMap = { ...mapBookmark };
-      delete newMap[question.questionId];
-      setMapBookmark(newMap);
       deleteQuestions([question.questionId]);
     }
   };

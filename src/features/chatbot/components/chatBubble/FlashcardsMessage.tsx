@@ -4,6 +4,9 @@ import { Flashcard } from "../../../../models";
 import { FlipCard } from "../../../flashcard/component/FlipCard";
 import { CustomText } from "../../../../components/text/customText";
 import { Ionicons } from "@expo/vector-icons"; // 👈 modern icons
+import { FirebaseService } from "../../../../core/service";
+import { FirebaseConstants } from "../../../../constants";
+import { deleteFlashcards, insertFlashcards } from "../../../../storage/database/tables/flashCardTable";
 
 interface FlashcardsMessageProps {
   flashcards: Flashcard[];
@@ -12,6 +15,7 @@ interface FlashcardsMessageProps {
 export const FlashcardsMessage = ({ flashcards }: FlashcardsMessageProps) => {
   const [currentFlashcardIndex, setCurrentFlashcardIndex] = useState(0);
   const [flippedStatus, setFlippedStatus] = useState<boolean[]>(flashcards.map(() => false));
+  const [mapBookmark, setMapBookmark] = useState<boolean[]>(flashcards.map(() => false));
   const currentFlashcard = flashcards[currentFlashcardIndex];
 
   const handleFlip = () => {
@@ -20,6 +24,21 @@ export const FlashcardsMessage = ({ flashcards }: FlashcardsMessageProps) => {
       newStatus[currentFlashcardIndex] = !newStatus[currentFlashcardIndex];
       return newStatus;
     });
+  };
+
+  const handleBookmark = (isBookmarked: boolean) => {
+    setMapBookmark((prev) => {
+      const newMap = [...prev];
+      newMap[currentFlashcardIndex] = isBookmarked;
+      return newMap;
+    });
+
+    if (isBookmarked) {
+      FirebaseService.logEvent(FirebaseConstants.SAVE_GENERATED_FLASHCARD);
+      insertFlashcards([currentFlashcard]);
+    } else {
+      deleteFlashcards([currentFlashcard.flashcardId]);
+    }
   };
 
   const goToPrevious = () => {
@@ -48,7 +67,9 @@ export const FlashcardsMessage = ({ flashcards }: FlashcardsMessageProps) => {
           front={currentFlashcard.front}
           back={currentFlashcard.back}
           flipped={flippedStatus[currentFlashcardIndex]}
+          bookmarked={mapBookmark[currentFlashcardIndex]}
           onFlip={handleFlip}
+          onBookmark={handleBookmark}
         />
         <CustomText style={styles.counterText}>
           {currentFlashcardIndex + 1} / {flashcards.length}

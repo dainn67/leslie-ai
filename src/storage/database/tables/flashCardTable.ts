@@ -45,20 +45,20 @@ export const updateFlashcardTables = () => {
   });
 };
 
-export const insertFlashCards = (flashCards: Flashcard[]) => {
+export const insertFlashcards = (flashCards: Flashcard[]) => {
   db.withTransactionSync(() => {
     const flashcardColumns = `(${FlashcardTable.columnFlashcardId}, ${FlashcardTable.columnFront}, ${FlashcardTable.columnBack}, ${FlashcardTable.columnExplanation}, ${FlashcardTable.columnLevel}, ${FlashcardTable.columnLastUpdate})`;
     const flashcardValues = flashCards
       .map(
         (flashCard) =>
-          `(${flashCard.flashCardId}, "${flashCard.front}", "${flashCard.back}", "${flashCard.explanation}", "${flashCard.level}", ${flashCard.lastUpdate})`
+          `(${flashCard.flashcardId}, "${flashCard.front}", "${flashCard.back}", "${flashCard.explanation}", "${flashCard.level}", ${flashCard.lastUpdate})`
       )
       .join(", ");
     db.execSync(`INSERT INTO ${FlashcardTable.tableName} ${flashcardColumns} VALUES ${flashcardValues}`);
   });
 };
 
-export const deleteFlashCards = (flashCardIds: number[]) => {
+export const deleteFlashcards = (flashCardIds: number[]) => {
   db.withTransactionSync(() => {
     db.execSync(
       `DELETE FROM ${FlashcardTable.tableName} WHERE ${FlashcardTable.columnFlashcardId} IN (${flashCardIds.join(", ")})`

@@ -11,6 +11,7 @@ interface FlipCardProps {
   width?: number;
   height?: number;
   flipped?: boolean;
+  bookmarked?: boolean;
   onFlip?: () => void;
   onBookmark?: (isBookmarked: boolean) => void;
 }
@@ -22,11 +23,12 @@ export const FlipCard = ({
   width = 200,
   height = 300,
   flipped = false,
+  bookmarked = false,
   onFlip,
   onBookmark,
 }: FlipCardProps) => {
   const [isFlipped, setIsFlipped] = useState(flipped);
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(bookmarked);
 
   const rotateValue = useSharedValue(flipped ? 180 : 0);
 
