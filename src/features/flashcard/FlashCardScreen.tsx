@@ -109,7 +109,7 @@ export const FlashcardScreen = () => {
         )}
 
         {/* Review button */}
-        {flashcards.length > 0 && <MainButton title={"Ôn tập"} style={styles.buttonContainer} onPress={handlePractice} />}
+        {/* {flashcards.length > 0 && <MainButton title={"Ôn tập"} style={styles.buttonContainer} onPress={handlePractice} />} */}
 
         {/* Question number selector */}
         <QuestionNumberSelector
