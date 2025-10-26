@@ -16,7 +16,15 @@ import { Divider } from "../features/common/dividers/Divider";
 import { ShareAppButton } from "../features/drawer/ShareAppButton";
 import { FlashcardScreen } from "../features/flashcard/FlashcardScreen";
 
-const Drawer = createDrawerNavigator();
+// Define DrawerParamList for type safety
+export type DrawerParamList = {
+  ChatbotScreen: { initialMessage?: string };
+  QuestionsScreen: undefined;
+  FlashCardScreen: undefined;
+  FeedbackScreen: undefined;
+};
+
+const Drawer = createDrawerNavigator<DrawerParamList>();
 type ChatbotScreenRouteProp = RouteProp<RootStackParamList, "Main">;
 
 export const DrawerNavigator = () => {

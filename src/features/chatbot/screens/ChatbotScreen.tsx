@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import TTSInstance from "../../../core/service/ttsService";
-import ApiServiceInstance from "../../../core/service/api/apiService";
 import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { AppBar } from "../../../components/AppBar";
@@ -23,15 +22,22 @@ import {
 } from "../slice/chatbotSlice";
 import { useDialog } from "../../../core/providers";
 import { ChatMessageList, ChatInput } from "../components";
-import { AsyncStorageService, ChatbotService, FirebaseService, logDatabasePath, ToastService } from "../../../core/service";
+import { AsyncStorageService, ChatbotService, FirebaseService, ToastService } from "../../../core/service";
 import { DifyConfig, FirebaseConstants } from "../../../constants";
 import { NameDialog } from "../../common/dialogs";
 import { RootStackParamList } from "../../../app/RootNavigator";
+import { DrawerParamList } from "../../../app/DrawerNavigator";
 import { GameType } from "../../game/screens/GameScreen";
 import { getAllFlashcards } from "../../../storage/database/tables/flashCardTable";
+import { CompositeNavigationProp } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-type ChatbotScreenNavigationProp = DrawerNavigationProp<RootStackParamList, "Main">;
-type ChatbotScreenRouteProp = RouteProp<RootStackParamList, "Main">;
+// Composite navigation type to handle both drawer and stack navigation
+type ChatbotScreenNavigationProp = CompositeNavigationProp<
+  DrawerNavigationProp<DrawerParamList, "ChatbotScreen">,
+  NativeStackNavigationProp<RootStackParamList>
+>;
+type ChatbotScreenRouteProp = RouteProp<DrawerParamList, "ChatbotScreen">;
 
 export const ChatbotScreen = () => {
   // Params

@@ -3,8 +3,9 @@ import MainButton from "../../../components/buttons/MainButton";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { AppBar } from "../../../components/AppBar";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, CompositeNavigationProp } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Question, QuestionType, QuestionTypeTitles } from "../../../models/question";
 import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useAppTheme } from "../../../theme";
@@ -14,12 +15,18 @@ import { QuestionNumberSelector } from "../components/QuestionNumberSelector";
 import { FirebaseService } from "../../../core/service";
 import { FirebaseConstants } from "../../../constants";
 import { RootStackParamList } from "../../../app/RootNavigator";
+import { DrawerParamList } from "../../../app/DrawerNavigator";
 import { GameType } from "../../game/screens/GameScreen";
 import { getAllQuestions } from "../../../storage/database/tables";
 
+type QuestionsScreenNavigationProp = CompositeNavigationProp<
+  DrawerNavigationProp<DrawerParamList, "QuestionsScreen">,
+  NativeStackNavigationProp<RootStackParamList>
+>;
+
 export const QuestionsScreen = () => {
   // Drawer & navigation
-  const navigation = useNavigation<DrawerNavigationProp<RootStackParamList, "Main">>();
+  const navigation = useNavigation<QuestionsScreenNavigationProp>();
 
   // UI
   const [amountSelectorVisible, setAmountSelectorVisible] = useState(false);

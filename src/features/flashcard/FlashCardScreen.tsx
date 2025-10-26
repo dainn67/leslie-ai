@@ -6,16 +6,17 @@ import { FirebaseService, ToastService } from "../../core/service";
 import { FirebaseConstants } from "../../constants";
 import { useNavigation } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
-import { RootStackParamList } from "../../app/RootNavigator";
+import { DrawerParamList } from "../../app/DrawerNavigator";
 import { FlipCard } from "./component/FlipCard";
 import { ScrollView, View, StyleSheet, Dimensions } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { QuestionNumberSelector } from "../questions/components/QuestionNumberSelector";
 import { Flashcard } from "../../models";
 import { deleteFlashcards, getAllFlashcards, insertFlashcards } from "../../storage/database/tables/flashCardTable";
+import { CustomText } from "../../components/text/customText";
 
 export const FlashcardScreen = () => {
-  const navigation = useNavigation<DrawerNavigationProp<RootStackParamList, "Main">>();
+  const navigation = useNavigation<DrawerNavigationProp<DrawerParamList, "FlashCardScreen">>();
   const { width } = Dimensions.get("window");
   const [amountSelectorVisible, setAmountSelectorVisible] = useState(false);
 
@@ -67,29 +68,48 @@ export const FlashcardScreen = () => {
     FirebaseService.logEvent(FirebaseConstants.REVIEW_ALL_FLASHCARDS, { amount });
   };
 
+  const handleNavigateToChatbotScreen = () => {
+    FirebaseService.logEvent(FirebaseConstants.START_CREATING_FLASHCARDS);
+    navigation.navigate("ChatbotScreen", { initialMessage: `Tạo các Flashcard mới` });
+  };
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={[styles.container]}>
         <AppBar title={"Flash Card"} leftIcon={<Ionicons name="menu" size={24} color="white" />} onLeftPress={handleOpenDrawer} />
 
-        <ScrollView contentContainerStyle={styles.scrollContent}>
-          <View style={styles.gridContainer}>
-            {flashcards.map((card, index) => (
-              <View key={index} style={styles.cardWrapper}>
-                <FlipCard
-                  front={card.front}
-                  back={card.back}
-                  width={cardWidth}
-                  height={cardHeight}
-                  bookmarked={listBookmarked[index]}
-                  onBookmark={(isBookmarked) => handleBookmark(isBookmarked, index)}
-                />
-              </View>
-            ))}
+        {flashcards.length > 0 ? (
+          <ScrollView contentContainerStyle={styles.scrollContent}>
+            <View style={styles.gridContainer}>
+              {flashcards.map((card, index) => (
+                <View key={index} style={styles.cardWrapper}>
+                  <FlipCard
+                    front={card.front}
+                    back={card.back}
+                    width={cardWidth}
+                    height={cardHeight}
+                    bookmarked={listBookmarked[index]}
+                    onBookmark={(isBookmarked) => handleBookmark(isBookmarked, index)}
+                  />
+                </View>
+              ))}
+            </View>
+          </ScrollView>
+        ) : (
+          <View style={styles.emptyContainer}>
+            <CustomText style={styles.emptyText}>
+              {"Các Flashcard đã lưu sẽ hiển thị ở đây.\nHiện bạn chưa lưu Flashcard nào"}
+            </CustomText>
+            <MainButton
+              title={"Tạo Flashcard mới"}
+              style={{ borderRadius: 100, marginTop: 16 }}
+              onPress={handleNavigateToChatbotScreen}
+            />
           </View>
-        </ScrollView>
+        )}
 
-        <MainButton title={"Ôn tập"} style={styles.buttonContainer} onPress={handlePractice} />
+        {/* Review button */}
+        {flashcards.length > 0 && <MainButton title={"Ôn tập"} style={styles.buttonContainer} onPress={handlePractice} />}
 
         {/* Question number selector */}
         <QuestionNumberSelector
@@ -126,5 +146,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginVertical: 8,
     alignItems: "center",
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
+  },
+  emptyText: {
+    marginHorizontal: 16,
+    textAlign: "center",
   },
 });

@@ -124,11 +124,7 @@ export const QuestionListScreen = () => {
 
   const handleNavigateToChatbotScreen = () => {
     FirebaseService.logEvent(FirebaseConstants.START_CREATING_QUESTIONS);
-
-    // First navigate to Main screen (which contains the drawer)
-    navigation.navigate("Main", {
-      initialMessage: `Tạo câu hỏi mới về ${QuestionTypeTitles[type]}`,
-    });
+    navigation.navigate("Main", { initialMessage: `Tạo câu hỏi mới về ${QuestionTypeTitles[type]}` });
   };
 
   return (
