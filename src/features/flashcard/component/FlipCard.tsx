@@ -13,7 +13,7 @@ interface FlipCardProps {
   flipped?: boolean;
   bookmarked?: boolean;
   onFlip?: () => void;
-  onBookmark?: (isBookmarked: boolean) => void;
+  onBookmark?: () => void;
 }
 
 export const FlipCard = ({
@@ -28,7 +28,6 @@ export const FlipCard = ({
   onBookmark,
 }: FlipCardProps) => {
   const [isFlipped, setIsFlipped] = useState(flipped);
-  const [isBookmarked, setIsBookmarked] = useState(bookmarked);
 
   const rotateValue = useSharedValue(flipped ? 180 : 0);
 
@@ -36,12 +35,6 @@ export const FlipCard = ({
     setIsFlipped((prev) => !prev);
     rotateValue.value = withTiming(isFlipped ? 0 : 180, { duration });
     onFlip?.();
-  };
-
-  const handleBookmarkPress = () => {
-    const newValue = !isBookmarked;
-    setIsBookmarked(newValue);
-    onBookmark?.(newValue);
   };
 
   /**
@@ -95,9 +88,9 @@ export const FlipCard = ({
       <Pressable pointerEvents="box-none" onPress={handleFlip} style={[styles.cardContainer, { width, height }]}>
         <Animated.View style={[styles.card, styles.cardFront, frontAnimatedStyle]}>
           <IconButton
-            icon={isBookmarked ? AppIcons.bookmarked : AppIcons.bookmark}
+            icon={bookmarked ? AppIcons.bookmarked : AppIcons.bookmark}
             style={styles.saveButton}
-            onPress={handleBookmarkPress}
+            onPress={onBookmark}
           />
 
           <Text style={styles.text}>{front}</Text>
@@ -105,9 +98,9 @@ export const FlipCard = ({
 
         <Animated.View pointerEvents="box-none" style={[styles.card, styles.cardBack, backAnimatedStyle]}>
           <IconButton
-            icon={isBookmarked ? AppIcons.bookmarked : AppIcons.bookmark}
+            icon={bookmarked ? AppIcons.bookmarked : AppIcons.bookmark}
             style={styles.saveButton}
-            onPress={handleBookmarkPress}
+            onPress={onBookmark}
           />
           <Text style={styles.text}>{back}</Text>
         </Animated.View>
