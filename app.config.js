@@ -4,7 +4,7 @@ export default {
     name: "AIkaze",
     slug: "leslieai",
     icon: "./assets/images/app-logo.png",
-    version: "1.0.1",
+    version: "1.1.0",
     android: {
       package: "com.leslie.app",
       googleServicesFile: "./android/app/google-services.json",
