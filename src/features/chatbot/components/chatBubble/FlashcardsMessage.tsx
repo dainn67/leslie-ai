@@ -3,7 +3,7 @@ import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { Flashcard } from "../../../../models";
 import { FlipCard } from "../../../flashcard/component/FlipCard";
 import { CustomText } from "../../../../components/text/customText";
-import { Ionicons } from "@expo/vector-icons"; // 👈 modern icons
+import { Ionicons } from "@expo/vector-icons";
 import { FirebaseService, ToastService } from "../../../../core/service";
 import { FirebaseConstants } from "../../../../constants";
 import { deleteFlashcards, insertFlashcards } from "../../../../storage/database/tables/flashCardTable";
