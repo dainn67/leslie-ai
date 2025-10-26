@@ -23,7 +23,7 @@ import {
 } from "../slice/chatbotSlice";
 import { useDialog } from "../../../core/providers";
 import { ChatMessageList, ChatInput } from "../components";
-import { AsyncStorageService, ChatbotService, FirebaseService, ToastService } from "../../../core/service";
+import { AsyncStorageService, ChatbotService, FirebaseService, logDatabasePath, ToastService } from "../../../core/service";
 import { DifyConfig, FirebaseConstants } from "../../../constants";
 import { NameDialog } from "../../common/dialogs";
 import { RootStackParamList } from "../../../app/RootNavigator";
@@ -215,8 +215,9 @@ export const ChatbotScreen = () => {
   };
 
   const handleDevClick = async () => {
-    console.log(ApiServiceInstance.chatApi);
-    console.log("a:", await AsyncStorageService.getIsUsingNginrok());
+    // console.log(ApiServiceInstance.chatApi);
+    // console.log("a:", await AsyncStorageService.getIsUsingNginrok());
+    logDatabasePath();
   };
 
   return (
