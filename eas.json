@@ -17,7 +17,9 @@
         "simulator": true
       }
     },
-    "production": {}
+    "production": {
+      "autoIncrement": false
+    }
   },
   "submit": {
     "production": {}
