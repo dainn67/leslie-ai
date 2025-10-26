@@ -3,6 +3,7 @@ import { View, Text, Pressable, StyleSheet } from "react-native";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, interpolate } from "react-native-reanimated";
 import { IconButton } from "../../../components/buttons";
 import { AppIcons } from "../../../constants";
+import { useAppTheme } from "../../../theme";
 
 interface FlipCardProps {
   front: string;
@@ -28,6 +29,7 @@ export const FlipCard = ({
   onBookmark,
 }: FlipCardProps) => {
   const [isFlipped, setIsFlipped] = useState(flipped);
+  const { colors } = useAppTheme();
 
   const rotateValue = useSharedValue(flipped ? 180 : 0);
 
@@ -85,7 +87,11 @@ export const FlipCard = ({
 
   return (
     <View style={styles.container}>
-      <Pressable pointerEvents="box-none" onPress={handleFlip} style={[styles.cardContainer, { width, height }]}>
+      <Pressable
+        pointerEvents="box-none"
+        onPress={handleFlip}
+        style={[styles.cardContainer, { width, height, backgroundColor: "red" }]}
+      >
         <Animated.View style={[styles.card, styles.cardFront, frontAnimatedStyle]}>
           <IconButton
             icon={bookmarked ? AppIcons.bookmarked : AppIcons.bookmark}

@@ -22,8 +22,6 @@
     }
   },
   "submit": {
-    "production": {
-      "autoIncrement": false
-    }
+    "production": {}
   }
 }
