@@ -4,6 +4,7 @@
     "jsx": "react",
     "module": "esnext",
     "target": "esnext",
-    "strict": true
+    "strict": true,
+    "allowSyntheticDefaultImports": true
   }
 }

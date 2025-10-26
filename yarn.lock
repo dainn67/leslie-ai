@@ -1426,10 +1426,10 @@
     find-up "^5.0.0"
     js-yaml "^4.1.0"
 
-"@firebase/ai@2.2.1":
-  version "2.2.1"
-  resolved "https://registry.npmjs.org/@firebase/ai/-/ai-2.2.1.tgz"
-  integrity sha512-0VWlkGB18oDhwMqsgxpt/usMsyjnH3a7hTvQPcAbk7VhFg0QZMDX60mQKfLTFKrB5VwmlaIdVsSZznsTY2S0wA==
+"@firebase/ai@2.4.0":
+  version "2.4.0"
+  resolved "https://registry.npmjs.org/@firebase/ai/-/ai-2.4.0.tgz"
+  integrity sha512-YilG6AJ/nYpCKtxZyvEzBRAQv5bU+2tBOKX4Ps0rNNSdxN39aT37kGhjATbk1kq1z5Lq7mkWglw/ajAF3lOWUg==
   dependencies:
     "@firebase/app-check-interop-types" "0.3.3"
     "@firebase/component" "0.7.0"
@@ -1437,23 +1437,12 @@
     "@firebase/util" "1.13.0"
     tslib "^2.1.0"
 
-"@firebase/ai@2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@firebase/ai/-/ai-2.3.0.tgz#96c77dbd13adea9c2f7691ddaa91960201954684"
-  integrity sha512-rVZgf4FszXPSFVIeWLE8ruLU2JDmPXw4XgghcC0x/lK9veGJIyu+DvyumjreVhW/RwD3E5cNPWxQunzylhf/6w==
+"@firebase/analytics-compat@0.2.25":
+  version "0.2.25"
+  resolved "https://registry.npmjs.org/@firebase/analytics-compat/-/analytics-compat-0.2.25.tgz"
+  integrity sha512-fdzoaG0BEKbqksRDhmf4JoyZf16Wosrl0Y7tbZtJyVDOOwziE0vrFjmZuTdviL0yhak+Nco6rMsUUbkbD+qb6Q==
   dependencies:
-    "@firebase/app-check-interop-types" "0.3.3"
-    "@firebase/component" "0.7.0"
-    "@firebase/logger" "0.5.0"
-    "@firebase/util" "1.13.0"
-    tslib "^2.1.0"
-
-"@firebase/analytics-compat@0.2.24":
-  version "0.2.24"
-  resolved "https://registry.npmjs.org/@firebase/analytics-compat/-/analytics-compat-0.2.24.tgz"
-  integrity sha512-jE+kJnPG86XSqGQGhXXYt1tpTbCTED8OQJ/PQ90SEw14CuxRxx/H+lFbWA1rlFtFSsTCptAJtgyRBwr/f00vsw==
-  dependencies:
-    "@firebase/analytics" "0.10.18"
+    "@firebase/analytics" "0.10.19"
     "@firebase/analytics-types" "0.8.3"
     "@firebase/component" "0.7.0"
     "@firebase/util" "1.13.0"
@@ -1464,10 +1453,10 @@
   resolved "https://registry.npmjs.org/@firebase/analytics-types/-/analytics-types-0.8.3.tgz"
   integrity sha512-VrIp/d8iq2g501qO46uGz3hjbDb8xzYMrbu8Tp0ovzIzrvJZ2fvmj649gTjge/b7cCCcjT0H37g1gVtlNhnkbg==
 
-"@firebase/analytics@0.10.18":
-  version "0.10.18"
-  resolved "https://registry.npmjs.org/@firebase/analytics/-/analytics-0.10.18.tgz"
-  integrity sha512-iN7IgLvM06iFk8BeFoWqvVpRFW3Z70f+Qe2PfCJ7vPIgLPjHXDE774DhCT5Y2/ZU/ZbXPDPD60x/XPWEoZLNdg==
+"@firebase/analytics@0.10.19":
+  version "0.10.19"
+  resolved "https://registry.npmjs.org/@firebase/analytics/-/analytics-0.10.19.tgz"
+  integrity sha512-3wU676fh60gaiVYQEEXsbGS4HbF2XsiBphyvvqDbtC1U4/dO4coshbYktcCHq+HFaGIK07iHOh4pME0hEq1fcg==
   dependencies:
     "@firebase/component" "0.7.0"
     "@firebase/installations" "0.6.19"
@@ -1507,23 +1496,12 @@
     "@firebase/util" "1.13.0"
     tslib "^2.1.0"
 
-"@firebase/app-compat@0.5.2":
-  version "0.5.2"
-  resolved "https://registry.npmjs.org/@firebase/app-compat/-/app-compat-0.5.2.tgz"
-  integrity sha512-cn+U27GDaBS/irsbvrfnPZdcCzeZPRGKieSlyb7vV6LSOL6mdECnB86PgYjYGxSNg8+U48L/NeevTV1odU+mOQ==
+"@firebase/app-compat@0.5.4":
+  version "0.5.4"
+  resolved "https://registry.npmjs.org/@firebase/app-compat/-/app-compat-0.5.4.tgz"
+  integrity sha512-T7ifGmb+awJEcp542Ek4HtNfBxcBrnuk1ggUdqyFEdsXHdq7+wVlhvE6YukTL7NS8hIkEfL7TMAPx/uCNqt30g==
   dependencies:
-    "@firebase/app" "0.14.2"
-    "@firebase/component" "0.7.0"
-    "@firebase/logger" "0.5.0"
-    "@firebase/util" "1.13.0"
-    tslib "^2.1.0"
-
-"@firebase/app-compat@0.5.3":
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/@firebase/app-compat/-/app-compat-0.5.3.tgz#efc5d6dac111af6670ece288f9ef17af48281566"
-  integrity sha512-rRK9YOvgsAU/+edjgubL1q1FyCMjBZZs+fAWtD36tklawkh6WZV07sNLVSceuni+a21oby6xoad+3R8dfztOrA==
-  dependencies:
-    "@firebase/app" "0.14.3"
+    "@firebase/app" "0.14.4"
     "@firebase/component" "0.7.0"
     "@firebase/logger" "0.5.0"
     "@firebase/util" "1.13.0"
@@ -1534,21 +1512,10 @@
   resolved "https://registry.npmjs.org/@firebase/app-types/-/app-types-0.9.3.tgz"
   integrity sha512-kRVpIl4vVGJ4baogMDINbyrIOtOxqhkZQg4jTq3l8Lw6WSk0xfpEYzezFu+Kl4ve4fbPl79dvwRtaFqAC/ucCw==
 
-"@firebase/app@0.14.2":
-  version "0.14.2"
-  resolved "https://registry.npmjs.org/@firebase/app/-/app-0.14.2.tgz"
-  integrity sha512-Ecx2ig/JLC9ayIQwZHqm41Tzlf4c1WUuFhFUZB1y+JIJqDRE579x7Uil7tKT8MwDpOPwrK5ZtpxdSsrfy/LF8Q==
-  dependencies:
-    "@firebase/component" "0.7.0"
-    "@firebase/logger" "0.5.0"
-    "@firebase/util" "1.13.0"
-    idb "7.1.1"
-    tslib "^2.1.0"
-
-"@firebase/app@0.14.3":
-  version "0.14.3"
-  resolved "https://registry.yarnpkg.com/@firebase/app/-/app-0.14.3.tgz#45fd8dade5a7566e53966c5a19ca98005ebae4ed"
-  integrity sha512-by1leTfZkwGycPKRWpc+p5/IhpnOj8zaScVi4RRm9fMoFYS3IE87Wzx1Yf/ruVYowXOEuLqYY3VmJw5tU3+0Bg==
+"@firebase/app@0.14.4":
+  version "0.14.4"
+  resolved "https://registry.npmjs.org/@firebase/app/-/app-0.14.4.tgz"
+  integrity sha512-pUxEGmR+uu21OG/icAovjlu1fcYJzyVhhT0rsCrn+zi+nHtrS43Bp9KPn9KGa4NMspCUE++nkyiqziuIvJdwzw==
   dependencies:
     "@firebase/component" "0.7.0"
     "@firebase/logger" "0.5.0"
@@ -1639,20 +1606,9 @@
     faye-websocket "0.11.4"
     tslib "^2.1.0"
 
-"@firebase/firestore-compat@0.4.1":
-  version "0.4.1"
-  resolved "https://registry.npmjs.org/@firebase/firestore-compat/-/firestore-compat-0.4.1.tgz"
-  integrity sha512-BjalPTDh/K0vmR/M/DE148dpIqbcfvtFVTietbUDWDWYIl9YH0TTVp/EwXRbZwswPxyjx4GdHW61GB2AYVz1SQ==
-  dependencies:
-    "@firebase/component" "0.7.0"
-    "@firebase/firestore" "4.9.1"
-    "@firebase/firestore-types" "3.0.3"
-    "@firebase/util" "1.13.0"
-    tslib "^2.1.0"
-
 "@firebase/firestore-compat@0.4.2":
   version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@firebase/firestore-compat/-/firestore-compat-0.4.2.tgz#2c9f5bef1dff004ae2db5759608f17d7973da78c"
+  resolved "https://registry.npmjs.org/@firebase/firestore-compat/-/firestore-compat-0.4.2.tgz"
   integrity sha512-cy7ov6SpFBx+PHwFdOOjbI7kH00uNKmIFurAn560WiPCZXy9EMnil1SOG7VF4hHZKdenC+AHtL4r3fNpirpm0w==
   dependencies:
     "@firebase/component" "0.7.0"
@@ -1666,22 +1622,9 @@
   resolved "https://registry.npmjs.org/@firebase/firestore-types/-/firestore-types-3.0.3.tgz"
   integrity sha512-hD2jGdiWRxB/eZWF89xcK9gF8wvENDJkzpVFb4aGkzfEaKxVRD1kjz1t1Wj8VZEp2LCB53Yx1zD8mrhQu87R6Q==
 
-"@firebase/firestore@4.9.1":
-  version "4.9.1"
-  resolved "https://registry.npmjs.org/@firebase/firestore/-/firestore-4.9.1.tgz"
-  integrity sha512-PYVUTkhC9y8pydrqC3O1Oc4AMfkGSWdmuH9xgPJjiEbpUIUPQ4J8wJhyuash+o2u+axmyNRFP8ULNUKb+WzBzQ==
-  dependencies:
-    "@firebase/component" "0.7.0"
-    "@firebase/logger" "0.5.0"
-    "@firebase/util" "1.13.0"
-    "@firebase/webchannel-wrapper" "1.0.4"
-    "@grpc/grpc-js" "~1.9.0"
-    "@grpc/proto-loader" "^0.7.8"
-    tslib "^2.1.0"
-
 "@firebase/firestore@4.9.2":
   version "4.9.2"
-  resolved "https://registry.yarnpkg.com/@firebase/firestore/-/firestore-4.9.2.tgz#0c65203f9754d5aa801ec31c6f885445cfb346f4"
+  resolved "https://registry.npmjs.org/@firebase/firestore/-/firestore-4.9.2.tgz"
   integrity sha512-iuA5+nVr/IV/Thm0Luoqf2mERUvK9g791FZpUJV1ZGXO6RL2/i/WFJUj5ZTVXy5pRjpWYO+ZzPcReNrlilmztA==
   dependencies:
     "@firebase/component" "0.7.0"
@@ -1809,21 +1752,9 @@
     tslib "^2.1.0"
     web-vitals "^4.2.4"
 
-"@firebase/remote-config-compat@0.2.19":
-  version "0.2.19"
-  resolved "https://registry.npmjs.org/@firebase/remote-config-compat/-/remote-config-compat-0.2.19.tgz"
-  integrity sha512-y7PZAb0l5+5oIgLJr88TNSelxuASGlXyAKj+3pUc4fDuRIdPNBoONMHaIUa9rlffBR5dErmaD2wUBJ7Z1a513Q==
-  dependencies:
-    "@firebase/component" "0.7.0"
-    "@firebase/logger" "0.5.0"
-    "@firebase/remote-config" "0.6.6"
-    "@firebase/remote-config-types" "0.4.0"
-    "@firebase/util" "1.13.0"
-    tslib "^2.1.0"
-
 "@firebase/remote-config-compat@0.2.20":
   version "0.2.20"
-  resolved "https://registry.yarnpkg.com/@firebase/remote-config-compat/-/remote-config-compat-0.2.20.tgz#4bca09b1361867d0c882411970486ee06622e071"
+  resolved "https://registry.npmjs.org/@firebase/remote-config-compat/-/remote-config-compat-0.2.20.tgz"
   integrity sha512-P/ULS9vU35EL9maG7xp66uljkZgcPMQOxLj3Zx2F289baTKSInE6+YIkgHEi1TwHoddC/AFePXPpshPlEFkbgg==
   dependencies:
     "@firebase/component" "0.7.0"
@@ -1833,30 +1764,14 @@
     "@firebase/util" "1.13.0"
     tslib "^2.1.0"
 
-"@firebase/remote-config-types@0.4.0":
-  version "0.4.0"
-  resolved "https://registry.npmjs.org/@firebase/remote-config-types/-/remote-config-types-0.4.0.tgz"
-  integrity sha512-7p3mRE/ldCNYt8fmWMQ/MSGRmXYlJ15Rvs9Rk17t8p0WwZDbeK7eRmoI1tvCPaDzn9Oqh+yD6Lw+sGLsLg4kKg==
-
 "@firebase/remote-config-types@0.5.0":
   version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@firebase/remote-config-types/-/remote-config-types-0.5.0.tgz#f0f503b32edda3384f5252f9900cd9613adbb99c"
+  resolved "https://registry.npmjs.org/@firebase/remote-config-types/-/remote-config-types-0.5.0.tgz"
   integrity sha512-vI3bqLoF14L/GchtgayMiFpZJF+Ao3uR8WCde0XpYNkSokDpAKca2DxvcfeZv7lZUqkUwQPL2wD83d3vQ4vvrg==
-
-"@firebase/remote-config@0.6.6":
-  version "0.6.6"
-  resolved "https://registry.npmjs.org/@firebase/remote-config/-/remote-config-0.6.6.tgz"
-  integrity sha512-Yelp5xd8hM4NO1G1SuWrIk4h5K42mNwC98eWZ9YLVu6Z0S6hFk1mxotAdCRmH2luH8FASlYgLLq6OQLZ4nbnCA==
-  dependencies:
-    "@firebase/component" "0.7.0"
-    "@firebase/installations" "0.6.19"
-    "@firebase/logger" "0.5.0"
-    "@firebase/util" "1.13.0"
-    tslib "^2.1.0"
 
 "@firebase/remote-config@0.7.0":
   version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@firebase/remote-config/-/remote-config-0.7.0.tgz#0e5e5879a7a9121c9da55606be8fa40ff70ddae1"
+  resolved "https://registry.npmjs.org/@firebase/remote-config/-/remote-config-0.7.0.tgz"
   integrity sha512-dX95X6WlW7QlgNd7aaGdjAIZUiQkgWgNS+aKNu4Wv92H1T8Ue/NDUjZHd9xb8fHxLXIHNZeco9/qbZzr500MjQ==
   dependencies:
     "@firebase/component" "0.7.0"
@@ -1897,14 +1812,9 @@
   dependencies:
     tslib "^2.1.0"
 
-"@firebase/webchannel-wrapper@1.0.4":
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/@firebase/webchannel-wrapper/-/webchannel-wrapper-1.0.4.tgz"
-  integrity sha512-6m8+P+dE/RPl4OPzjTxcTbQ0rGeRyeTvAi9KwIffBVCiAMKrfXfLZaqD1F+m8t4B5/Q5aHsMozOgirkH1F5oMQ==
-
 "@firebase/webchannel-wrapper@1.0.5":
   version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@firebase/webchannel-wrapper/-/webchannel-wrapper-1.0.5.tgz#39cf5a600450cb42f1f0b507cc385459bf103b27"
+  resolved "https://registry.npmjs.org/@firebase/webchannel-wrapper/-/webchannel-wrapper-1.0.5.tgz"
   integrity sha512-+uGNN7rkfn41HLO0vekTFhTxk61eKa8mTpRGLO0QSqlQdKvIoGAvLp3ppdVIWbTGYJWM6Kp0iN+PjMIOcnVqTw==
 
 "@gorhom/bottom-sheet@^4.6.4":
@@ -2283,18 +2193,18 @@
     invariant "^2.2.4"
 
 "@react-native-firebase/analytics@^23.3.1":
-  version "23.3.1"
-  resolved "https://registry.npmjs.org/@react-native-firebase/analytics/-/analytics-23.3.1.tgz"
-  integrity sha512-a9h1CZshCRDRC2Cv/Eloy9L0LkCidRL0npvBAu9L56pYXH3GvjfOrM2d07uznX9V++79nBSKoKgypzZLOFwgWw==
+  version "23.4.1"
+  resolved "https://registry.npmjs.org/@react-native-firebase/analytics/-/analytics-23.4.1.tgz"
+  integrity sha512-9yuWIrdiBIXsgmnOCYOJNOXS4cMWfYgorBey39BLa/P7wwVBZvTSg4yw6gtsHjkg/ptAMaCRItpBF6rd2k+1uw==
   dependencies:
     superstruct "^2.0.2"
 
 "@react-native-firebase/app@^23.4.0":
-  version "23.4.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-23.4.0.tgz#e245da5d48d13cf5029df78d2bf4f3772857e17e"
-  integrity sha512-HaHFrr5D2o5EAKbDOds579Vp8f6QtH3pMeteZuIj/0UaHYD2wdTutNWOsiiJ1tmNJZi7kbfgY0qL/cSgzBGZjw==
+  version "23.4.1"
+  resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-23.4.1.tgz"
+  integrity sha512-AVxk9dS3plHjIUDWUlKSEAbKrEtGweLZXEMZpJokvLyNbeL1i4dDAUkDriPzjIEgtxaFX3rUxFuBRQvLHlsmAA==
   dependencies:
-    firebase "12.2.1"
+    firebase "12.4.0"
 
 "@react-native-firebase/crashlytics@23.2.1":
   version "23.2.1"
@@ -2304,14 +2214,16 @@
     stacktrace-js "^2.0.2"
 
 "@react-native-firebase/remote-config@^23.4.0":
-  version "23.4.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/remote-config/-/remote-config-23.4.0.tgz#d35bad0f304bfe4afe5e2194a417a9c66eef3268"
-  integrity sha512-hizKzKPywSbhmkZInD1O9zwT9Ty2HUXaHKCsYkcsqdszksngwSD+w6rIxXdNSM2JJ3rWqd+2dIFFqfN49N+HUA==
+  version "23.4.1"
+  resolved "https://registry.npmjs.org/@react-native-firebase/remote-config/-/remote-config-23.4.1.tgz"
+  integrity sha512-DNdC8wmIL1shZduh9L/94ZfP6yaZ/TnzNMuwkNli1U8LjgQNGAKH/8uM5oIgaH8TapetW0ua3IaAWZ/wupLONQ==
+  dependencies:
+    text-encoding "^0.7.0"
 
-"@react-native/assets-registry@0.79.5":
-  version "0.79.5"
-  resolved "https://registry.npmjs.org/@react-native/assets-registry/-/assets-registry-0.79.5.tgz"
-  integrity sha512-N4Kt1cKxO5zgM/BLiyzuuDNquZPiIgfktEQ6TqJ/4nKA8zr4e8KJgU6Tb2eleihDO4E24HmkvGc73naybKRz/w==
+"@react-native/assets-registry@0.79.6":
+  version "0.79.6"
+  resolved "https://registry.yarnpkg.com/@react-native/assets-registry/-/assets-registry-0.79.6.tgz#cecc2a1140a9584d590000b951a08a0611ec30c3"
+  integrity sha512-UVSP1224PWg0X+mRlZNftV5xQwZGfawhivuW8fGgxNK9MS/U84xZ+16lkqcPh1ank6MOt239lIWHQ1S33CHgqA==
 
 "@react-native/babel-plugin-codegen@0.79.5":
   version "0.79.5"
@@ -2383,12 +2295,25 @@
     nullthrows "^1.1.1"
     yargs "^17.6.2"
 
-"@react-native/community-cli-plugin@0.79.5":
-  version "0.79.5"
-  resolved "https://registry.npmjs.org/@react-native/community-cli-plugin/-/community-cli-plugin-0.79.5.tgz"
-  integrity sha512-ApLO1ARS8JnQglqS3JAHk0jrvB+zNW3dvNJyXPZPoygBpZVbf8sjvqeBiaEYpn8ETbFWddebC4HoQelDndnrrA==
+"@react-native/codegen@0.79.6":
+  version "0.79.6"
+  resolved "https://registry.yarnpkg.com/@react-native/codegen/-/codegen-0.79.6.tgz#25e9bb68ce02afcdb01b9b2b0bf8a3a7fd99bf8b"
+  integrity sha512-iRBX8Lgbqypwnfba7s6opeUwVyaR23mowh9ILw7EcT2oLz3RqMmjJdrbVpWhGSMGq2qkPfqAH7bhO8C7O+xfjQ==
   dependencies:
-    "@react-native/dev-middleware" "0.79.5"
+    "@babel/core" "^7.25.2"
+    "@babel/parser" "^7.25.3"
+    glob "^7.1.1"
+    hermes-parser "0.25.1"
+    invariant "^2.2.4"
+    nullthrows "^1.1.1"
+    yargs "^17.6.2"
+
+"@react-native/community-cli-plugin@0.79.6":
+  version "0.79.6"
+  resolved "https://registry.yarnpkg.com/@react-native/community-cli-plugin/-/community-cli-plugin-0.79.6.tgz#6d95bc10b0dff0150f8e971b4b0f0867b8c0c06c"
+  integrity sha512-ZHVst9vByGsegeaddkD2YbZ6NvYb4n3pD9H7Pit94u+NlByq2uBJghoOjT6EKqg+UVl8tLRdi88cU2pDPwdHqA==
+  dependencies:
+    "@react-native/dev-middleware" "0.79.6"
     chalk "^4.0.0"
     debug "^2.2.0"
     invariant "^2.2.4"
@@ -2401,6 +2326,11 @@
   version "0.79.5"
   resolved "https://registry.npmjs.org/@react-native/debugger-frontend/-/debugger-frontend-0.79.5.tgz"
   integrity sha512-WQ49TRpCwhgUYo5/n+6GGykXmnumpOkl4Lr2l2o2buWU9qPOwoiBqJAtmWEXsAug4ciw3eLiVfthn5ufs0VB0A==
+
+"@react-native/debugger-frontend@0.79.6":
+  version "0.79.6"
+  resolved "https://registry.yarnpkg.com/@react-native/debugger-frontend/-/debugger-frontend-0.79.6.tgz#ec0ea9c2f140a564d26789a18dc097519f1b9c48"
+  integrity sha512-lIK/KkaH7ueM22bLO0YNaQwZbT/oeqhaghOvmZacaNVbJR1Cdh/XAqjT8FgCS+7PUnbxA8B55NYNKGZG3O2pYw==
 
 "@react-native/dev-middleware@0.79.5":
   version "0.79.5"
@@ -2419,25 +2349,47 @@
     serve-static "^1.16.2"
     ws "^6.2.3"
 
-"@react-native/gradle-plugin@0.79.5":
-  version "0.79.5"
-  resolved "https://registry.npmjs.org/@react-native/gradle-plugin/-/gradle-plugin-0.79.5.tgz"
-  integrity sha512-K3QhfFNKiWKF3HsCZCEoWwJPSMcPJQaeqOmzFP4RL8L3nkpgUwn74PfSCcKHxooVpS6bMvJFQOz7ggUZtNVT+A==
+"@react-native/dev-middleware@0.79.6":
+  version "0.79.6"
+  resolved "https://registry.yarnpkg.com/@react-native/dev-middleware/-/dev-middleware-0.79.6.tgz#62a4c0b987e5d100eae3e8c95c58ae1c8abe377a"
+  integrity sha512-BK3GZBa9c7XSNR27EDRtxrgyyA3/mf1j3/y+mPk7Ac0Myu85YNrXnC9g3mL5Ytwo0g58TKrAIgs1fF2Q5Mn6mQ==
+  dependencies:
+    "@isaacs/ttlcache" "^1.4.1"
+    "@react-native/debugger-frontend" "0.79.6"
+    chrome-launcher "^0.15.2"
+    chromium-edge-launcher "^0.2.0"
+    connect "^3.6.5"
+    debug "^2.2.0"
+    invariant "^2.2.4"
+    nullthrows "^1.1.1"
+    open "^7.0.3"
+    serve-static "^1.16.2"
+    ws "^6.2.3"
 
-"@react-native/js-polyfills@0.79.5":
-  version "0.79.5"
-  resolved "https://registry.npmjs.org/@react-native/js-polyfills/-/js-polyfills-0.79.5.tgz"
-  integrity sha512-a2wsFlIhvd9ZqCD5KPRsbCQmbZi6KxhRN++jrqG0FUTEV5vY7MvjjUqDILwJd2ZBZsf7uiDuClCcKqA+EEdbvw==
+"@react-native/gradle-plugin@0.79.6":
+  version "0.79.6"
+  resolved "https://registry.yarnpkg.com/@react-native/gradle-plugin/-/gradle-plugin-0.79.6.tgz#02d996aae3df87512c2a56e1f5fefffc883c8a18"
+  integrity sha512-C5odetI6py3CSELeZEVz+i00M+OJuFZXYnjVD4JyvpLn462GesHRh+Se8mSkU5QSaz9cnpMnyFLJAx05dokWbA==
+
+"@react-native/js-polyfills@0.79.6":
+  version "0.79.6"
+  resolved "https://registry.yarnpkg.com/@react-native/js-polyfills/-/js-polyfills-0.79.6.tgz#11dab284ace2708f0483833cfff0c9aee81274df"
+  integrity sha512-6wOaBh1namYj9JlCNgX2ILeGUIwc6OP6MWe3Y5jge7Xz9fVpRqWQk88Q5Y9VrAtTMTcxoX3CvhrfRr3tGtSfQw==
 
 "@react-native/normalize-colors@0.79.5":
   version "0.79.5"
   resolved "https://registry.npmjs.org/@react-native/normalize-colors/-/normalize-colors-0.79.5.tgz"
   integrity sha512-nGXMNMclZgzLUxijQQ38Dm3IAEhgxuySAWQHnljFtfB0JdaMwpe0Ox9H7Tp2OgrEA+EMEv+Od9ElKlHwGKmmvQ==
 
-"@react-native/virtualized-lists@0.79.5":
-  version "0.79.5"
-  resolved "https://registry.npmjs.org/@react-native/virtualized-lists/-/virtualized-lists-0.79.5.tgz"
-  integrity sha512-EUPM2rfGNO4cbI3olAbhPkIt3q7MapwCwAJBzUfWlZ/pu0PRNOnMQ1IvaXTf3TpeozXV52K1OdprLEI/kI5eUA==
+"@react-native/normalize-colors@0.79.6":
+  version "0.79.6"
+  resolved "https://registry.yarnpkg.com/@react-native/normalize-colors/-/normalize-colors-0.79.6.tgz#e076519b6dba9150dad7f935c1b0a64ea0a90033"
+  integrity sha512-0v2/ruY7eeKun4BeKu+GcfO+SHBdl0LJn4ZFzTzjHdWES0Cn+ONqKljYaIv8p9MV2Hx/kcdEvbY4lWI34jC/mQ==
+
+"@react-native/virtualized-lists@0.79.6":
+  version "0.79.6"
+  resolved "https://registry.yarnpkg.com/@react-native/virtualized-lists/-/virtualized-lists-0.79.6.tgz#ab395e3a1edba1c8c564d3a85961f213cc164a99"
+  integrity sha512-khA/Hrbb+rB68YUHrLubfLgMOD9up0glJhw25UE3Kntj32YDyuO0Tqc81ryNTcCekFKJ8XrAaEjcfPg81zBGPw==
   dependencies:
     invariant "^2.2.4"
     nullthrows "^1.1.1"
@@ -4628,9 +4580,9 @@ expo-constants@~17.1.7:
     "@expo/env" "~1.0.7"
 
 expo-file-system@^19.0.14:
-  version "19.0.14"
-  resolved "https://registry.yarnpkg.com/expo-file-system/-/expo-file-system-19.0.14.tgz#1169fd9fcba8a5f1ef8e3c232ef8c62274ac4803"
-  integrity sha512-0CA7O5IYhab11TlxQlJAx0Xm9pdkk/zEHNiW+Hh/T4atWi9U/J38CIp7iNYSrBvy9dC3rJbze5D1ANcKKr4mSQ==
+  version "19.0.17"
+  resolved "https://registry.npmjs.org/expo-file-system/-/expo-file-system-19.0.17.tgz"
+  integrity sha512-WwaS01SUFrxBnExn87pg0sCTJjZpf2KAOzfImG0o8yhkU7fbYpihpl/oocXBEsNbj58a8hVt1Y4CVV5c1tzu/g==
 
 expo-file-system@~18.1.11:
   version "18.1.11"
@@ -4830,52 +4782,18 @@ find-up@^5.0.0:
     locate-path "^6.0.0"
     path-exists "^4.0.0"
 
-firebase@12.2.1:
-  version "12.2.1"
-  resolved "https://registry.npmjs.org/firebase/-/firebase-12.2.1.tgz"
-  integrity sha512-UkuW2ZYaq/QuOQ24bfaqmkVqoBFhkA/ptATfPuRtc5vdm+zhwc3mfZBwFe6LqH9yrCN/6rAblgxKz2/0tDvA7w==
+firebase@12.4.0, firebase@^12.3.0:
+  version "12.4.0"
+  resolved "https://registry.npmjs.org/firebase/-/firebase-12.4.0.tgz"
+  integrity sha512-/chNgDQ6ppPPGOQO4jctxOa/5JeQxuhaxA7Y90K0I+n/wPfoO8mRveedhVUdo7ExLcWUivnnow/ouSLYSI5Icw==
   dependencies:
-    "@firebase/ai" "2.2.1"
-    "@firebase/analytics" "0.10.18"
-    "@firebase/analytics-compat" "0.2.24"
-    "@firebase/app" "0.14.2"
+    "@firebase/ai" "2.4.0"
+    "@firebase/analytics" "0.10.19"
+    "@firebase/analytics-compat" "0.2.25"
+    "@firebase/app" "0.14.4"
     "@firebase/app-check" "0.11.0"
     "@firebase/app-check-compat" "0.4.0"
-    "@firebase/app-compat" "0.5.2"
-    "@firebase/app-types" "0.9.3"
-    "@firebase/auth" "1.11.0"
-    "@firebase/auth-compat" "0.6.0"
-    "@firebase/data-connect" "0.3.11"
-    "@firebase/database" "1.1.0"
-    "@firebase/database-compat" "2.1.0"
-    "@firebase/firestore" "4.9.1"
-    "@firebase/firestore-compat" "0.4.1"
-    "@firebase/functions" "0.13.1"
-    "@firebase/functions-compat" "0.4.1"
-    "@firebase/installations" "0.6.19"
-    "@firebase/installations-compat" "0.2.19"
-    "@firebase/messaging" "0.12.23"
-    "@firebase/messaging-compat" "0.2.23"
-    "@firebase/performance" "0.7.9"
-    "@firebase/performance-compat" "0.2.22"
-    "@firebase/remote-config" "0.6.6"
-    "@firebase/remote-config-compat" "0.2.19"
-    "@firebase/storage" "0.14.0"
-    "@firebase/storage-compat" "0.4.0"
-    "@firebase/util" "1.13.0"
-
-firebase@^12.3.0:
-  version "12.3.0"
-  resolved "https://registry.yarnpkg.com/firebase/-/firebase-12.3.0.tgz#fc24c1c91d4001e747c3b3dd452e250c4aa862ff"
-  integrity sha512-/JVja0IDO8zPETGv4TvvBwo7RwcQFz+RQ3JBETNtUSeqsDdI9G7fhRTkCy1sPKnLzW0xpm/kL8GOj6ncndTT3g==
-  dependencies:
-    "@firebase/ai" "2.3.0"
-    "@firebase/analytics" "0.10.18"
-    "@firebase/analytics-compat" "0.2.24"
-    "@firebase/app" "0.14.3"
-    "@firebase/app-check" "0.11.0"
-    "@firebase/app-check-compat" "0.4.0"
-    "@firebase/app-compat" "0.5.3"
+    "@firebase/app-compat" "0.5.4"
     "@firebase/app-types" "0.9.3"
     "@firebase/auth" "1.11.0"
     "@firebase/auth-compat" "0.6.0"
@@ -7238,19 +7156,19 @@ react-native-webview@^13.12.5:
     escape-string-regexp "^4.0.0"
     invariant "2.2.4"
 
-react-native@0.79.5:
-  version "0.79.5"
-  resolved "https://registry.npmjs.org/react-native/-/react-native-0.79.5.tgz"
-  integrity sha512-jVihwsE4mWEHZ9HkO1J2eUZSwHyDByZOqthwnGrVZCh6kTQBCm4v8dicsyDa6p0fpWNE5KicTcpX/XXl0ASJFg==
+react-native@0.79.6:
+  version "0.79.6"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.79.6.tgz#ee95428f67da2f62ede473eaa6e8a2f4ee40e272"
+  integrity sha512-kvIWSmf4QPfY41HC25TR285N7Fv0Pyn3DAEK8qRL9dA35usSaxsJkHfw+VqnonqJjXOaoKCEanwudRAJ60TBGA==
   dependencies:
     "@jest/create-cache-key-function" "^29.7.0"
-    "@react-native/assets-registry" "0.79.5"
-    "@react-native/codegen" "0.79.5"
-    "@react-native/community-cli-plugin" "0.79.5"
-    "@react-native/gradle-plugin" "0.79.5"
-    "@react-native/js-polyfills" "0.79.5"
-    "@react-native/normalize-colors" "0.79.5"
-    "@react-native/virtualized-lists" "0.79.5"
+    "@react-native/assets-registry" "0.79.6"
+    "@react-native/codegen" "0.79.6"
+    "@react-native/community-cli-plugin" "0.79.6"
+    "@react-native/gradle-plugin" "0.79.6"
+    "@react-native/js-polyfills" "0.79.6"
+    "@react-native/normalize-colors" "0.79.6"
+    "@react-native/virtualized-lists" "0.79.6"
     abort-controller "^3.0.0"
     anser "^1.4.9"
     ansi-regex "^5.0.0"
@@ -8213,6 +8131,11 @@ test-exclude@^6.0.0:
     "@istanbuljs/schema" "^0.1.2"
     glob "^7.1.4"
     minimatch "^3.0.4"
+
+text-encoding@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.npmjs.org/text-encoding/-/text-encoding-0.7.0.tgz"
+  integrity sha512-oJQ3f1hrOnbRLOcwKz0Liq2IcrvDeZRHXhd9RgLrsT+DjWY/nty1Hi7v3dtkaEYbPYe0mUoOfzRrMwfXXwgPUA==
 
 thenify-all@^1.0.0:
   version "1.6.0"

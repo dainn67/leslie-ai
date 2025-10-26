@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
-import TTSInstance from "./src/core/service/ttsService";
 import { Provider } from "react-redux";
 import { store } from "./src/app/store";
 import { RootNavigator } from "./src/app/RootNavigator";
