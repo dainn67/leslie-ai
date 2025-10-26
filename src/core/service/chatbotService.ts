@@ -16,10 +16,11 @@ import { MessageType, ChatMessage, MessageStatus, Sender } from "../../models/ch
 import { Question, createQuestionString, createQuestion } from "../../models/question";
 import { UserProgress } from "../../models/userProgress";
 import { convertDateToDDMMYYYY } from "../../utils";
-import { AsyncStorageService, FirebaseService, getDiagnosticTest, getQuestionsByTestId } from ".";
+import { AsyncStorageService, FirebaseService, getDiagnosticTest } from ".";
 import { FirebaseConstants } from "../../constants";
 import { GameType } from "../../features/game/screens/GameScreen";
 import { createFlashcard, Flashcard } from "../../models";
+import { getQuestionsByTestId } from "../../storage/database/tables";
 
 export const Delimiter = "--//--";
 

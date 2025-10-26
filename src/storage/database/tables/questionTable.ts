@@ -1,5 +1,7 @@
-import { Question } from "../../../models/question";
+import { Question, QuestionType } from "../../../models/question";
 import { db } from "../../../core/service";
+import { getQuestionsFromQuery } from "../../../utils";
+import { TestQuestionTable } from ".";
 
 export const QuestionTable = {
   tableName: "Question",
@@ -122,4 +124,35 @@ export const deleteQuestions = (questionIds: number[]) => {
     db.execSync(`DELETE FROM ${AnswerTable.tableName} WHERE ${AnswerTable.columnQuestionId} IN (${questionIds.join(", ")})`);
     db.execSync(`DELETE FROM ${QuestionTable.tableName} WHERE ${QuestionTable.columnQuestionId} IN (${questionIds.join(", ")})`);
   });
+};
+
+export const getAllQuestions = (): Question[] => {
+  const query = `SELECT * FROM ${QuestionTable.tableName}`;
+  return getQuestionsFromQuery(query);
+};
+
+export const getQuestionsByType = (type: QuestionType) => {
+  const sql = `SELECT * FROM ${QuestionTable.tableName} WHERE ${QuestionTable.columnType} = "${type}"`;
+  return getQuestionsFromQuery(sql);
+};
+
+export const getQuestionsByAIType = (isGenerated: boolean) => {
+  const sql = `SELECT * FROM ${QuestionTable.tableName} WHERE ${QuestionTable.columnIsGenerated} = ${isGenerated ? 1 : 0}`;
+  return getQuestionsFromQuery(sql);
+};
+
+export const getQuestionsByTestId = (testId: number) => {
+  const questionIdSql = `SELECT ${TestQuestionTable.columnQuestionId} FROM ${TestQuestionTable.tableName} WHERE ${TestQuestionTable.columnTestId} = ${testId}`;
+
+  const idRows = db.getAllSync(questionIdSql);
+
+  const questionIds = idRows.map((row: any) => row.questionId);
+
+  const questionSql = `SELECT * FROM ${QuestionTable.tableName} WHERE ${QuestionTable.columnQuestionId} IN (${questionIds.join(", ")})`;
+  return getQuestionsFromQuery(questionSql);
+};
+
+export const clearQuestionTables = () => {
+  const originalQuestionIds = getQuestionsByAIType(true).map((q) => q.questionId);
+  deleteQuestions(originalQuestionIds);
 };

@@ -1,5 +1,6 @@
 import { db } from "../../../core/service";
 import { Flashcard } from "../../../models";
+import { getFlashcardsFromQuery } from "../../../utils";
 
 export const FlashcardTable = {
   tableName: "Flashcard",
@@ -64,4 +65,9 @@ export const deleteFlashcards = (flashCardIds: number[]) => {
       `DELETE FROM ${FlashcardTable.tableName} WHERE ${FlashcardTable.columnFlashcardId} IN (${flashCardIds.join(", ")})`
     );
   });
+};
+
+export const getAllFlashcards = (): Flashcard[] => {
+  const query = `SELECT * FROM ${FlashcardTable.tableName}`;
+  return getFlashcardsFromQuery(query);
 };

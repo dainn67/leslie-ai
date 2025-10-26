@@ -28,6 +28,7 @@ import { DifyConfig, FirebaseConstants } from "../../../constants";
 import { NameDialog } from "../../common/dialogs";
 import { RootStackParamList } from "../../../app/RootNavigator";
 import { GameType } from "../../game/screens/GameScreen";
+import { getAllFlashcards } from "../../../storage/database/tables/flashCardTable";
 
 type ChatbotScreenNavigationProp = DrawerNavigationProp<RootStackParamList, "Main">;
 type ChatbotScreenRouteProp = RouteProp<RootStackParamList, "Main">;
@@ -215,9 +216,10 @@ export const ChatbotScreen = () => {
   };
 
   const handleDevClick = async () => {
-    // console.log(ApiServiceInstance.chatApi);
-    // console.log("a:", await AsyncStorageService.getIsUsingNginrok());
-    logDatabasePath();
+    // logDatabasePath();
+    getAllFlashcards().forEach((flashcard) => {
+      console.log(flashcard.front);
+    });
   };
 
   return (

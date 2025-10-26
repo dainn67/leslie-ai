@@ -2,6 +2,7 @@ import * as SQLite from "expo-sqlite";
 import { File, Directory, Paths } from "expo-file-system";
 import { Asset } from "expo-asset";
 import {
+  clearQuestionTables,
   createQuestionTable,
   createTestQuestionTable,
   createTestTable,
@@ -10,7 +11,6 @@ import {
   updateTestTables,
 } from "../../../storage/database/tables";
 import { AsyncStorageService } from "./asyncStorageService";
-import { clearQuestionTables } from "..";
 import { createFlashcardTable, updateFlashcardTables } from "../../../storage/database/tables/flashCardTable";
 
 export const DB_NAME = "leslieai.db";
@@ -60,7 +60,6 @@ export const loadDatabase = async () => {
 };
 
 export const clearDatabase = () => {
-  // TODO: Currently only delete generated questions
   clearQuestionTables();
 };
 
