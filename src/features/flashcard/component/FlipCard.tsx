@@ -87,12 +87,8 @@ export const FlipCard = ({
 
   return (
     <View style={styles.container}>
-      <Pressable
-        pointerEvents="box-none"
-        onPress={handleFlip}
-        style={[styles.cardContainer, { width, height, backgroundColor: "red" }]}
-      >
-        <Animated.View style={[styles.card, styles.cardFront, frontAnimatedStyle]}>
+      <Pressable pointerEvents="box-none" onPress={handleFlip} style={[styles.cardContainer, { width, height }]}>
+        <Animated.View style={[styles.card, styles.cardFront, frontAnimatedStyle, { backgroundColor: colors.primary }]}>
           <IconButton
             icon={bookmarked ? AppIcons.bookmarked : AppIcons.bookmark}
             style={styles.saveButton}
