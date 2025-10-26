@@ -85,7 +85,6 @@ export const FlashcardScreen = () => {
           <ScrollView contentContainerStyle={styles.scrollContent}>
             <View style={styles.gridContainer}>
               {flashcards.map((card, index) => {
-                console.log("bookmarked", card.flashcardId, mapBookmarked[card.flashcardId]);
                 return (
                   <View key={index} style={styles.cardWrapper}>
                     <FlipCard

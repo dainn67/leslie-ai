@@ -15,7 +15,7 @@ interface FlashcardsMessageProps {
 export const FlashcardsMessage = ({ flashcards }: FlashcardsMessageProps) => {
   const [currentFlashcardIndex, setCurrentFlashcardIndex] = useState(0);
   const [flippedStatus, setFlippedStatus] = useState<boolean[]>(flashcards.map(() => false));
-  const [mapBookmark, setMapBookmark] = useState<boolean[]>(flashcards.map(() => false));
+  const [mapBookmark, setMapBookmark] = useState<{ [key: number]: boolean }>({});
   const currentFlashcard = flashcards[currentFlashcardIndex];
 
   const handleFlip = () => {
@@ -26,14 +26,16 @@ export const FlashcardsMessage = ({ flashcards }: FlashcardsMessageProps) => {
     });
   };
 
-  const handleBookmark = (isBookmarked: boolean) => {
+  const handleBookmark = () => {
+    const newBookmarkState = !mapBookmark[currentFlashcard.flashcardId];
+
     setMapBookmark((prev) => {
-      const newMap = [...prev];
-      newMap[currentFlashcardIndex] = isBookmarked;
+      const newMap = { ...prev };
+      newMap[currentFlashcard.flashcardId] = newBookmarkState;
       return newMap;
     });
 
-    if (isBookmarked) {
+    if (newBookmarkState) {
       ToastService.show({ message: "Đã lưu", type: "success" });
       FirebaseService.logEvent(FirebaseConstants.SAVE_GENERATED_FLASHCARD);
       insertFlashcards([currentFlashcard]);
@@ -68,7 +70,7 @@ export const FlashcardsMessage = ({ flashcards }: FlashcardsMessageProps) => {
           front={currentFlashcard.front}
           back={currentFlashcard.back}
           flipped={flippedStatus[currentFlashcardIndex]}
-          bookmarked={mapBookmark[currentFlashcardIndex]}
+          bookmarked={mapBookmark[currentFlashcard.flashcardId]}
           onFlip={handleFlip}
           onBookmark={handleBookmark}
         />
