@@ -11,10 +11,11 @@ import { useAppTheme } from "../../../theme";
 import { CustomText } from "../../../components/text/customText";
 import { ToastService } from "../../../core/service/toastService";
 import { QuestionNumberSelector } from "../components/QuestionNumberSelector";
-import { FirebaseService, getAllQuestions } from "../../../core/service";
+import { FirebaseService } from "../../../core/service";
 import { FirebaseConstants } from "../../../constants";
 import { RootStackParamList } from "../../../app/RootNavigator";
 import { GameType } from "../../game/screens/GameScreen";
+import { getAllQuestions } from "../../../storage/database/tables";
 
 export const QuestionsScreen = () => {
   // Drawer & navigation

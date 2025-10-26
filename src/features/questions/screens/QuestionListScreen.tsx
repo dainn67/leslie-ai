@@ -8,11 +8,11 @@ import { RouteProp, useNavigation, useRoute, useFocusEffect } from "@react-navig
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { QuestionView } from "../../chatbot/components/chatBubble/QuestionView";
 import { QuestionNumberSelector } from "../components/QuestionNumberSelector";
-import { deleteQuestions, insertQuestions } from "../../../storage/database/tables";
+import { deleteQuestions, getQuestionsByType, insertQuestions } from "../../../storage/database/tables";
 import { SimpleTextInput } from "../../../components/input/SimpleTextInput";
 import { useAppTheme } from "../../../theme";
 import { CustomText } from "../../../components/text/customText";
-import { createReviseQuestionSet, FirebaseService, getQuestionsByType } from "../../../core/service";
+import { createReviseQuestionSet, FirebaseService } from "../../../core/service";
 import { RootStackParamList } from "../../../app/RootNavigator";
 import { GameType } from "../../game/screens/GameScreen";
 import { FirebaseConstants } from "../../../constants";
