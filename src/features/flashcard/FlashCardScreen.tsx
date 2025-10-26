@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MainButton from "../../components/buttons/MainButton";
 import { Ionicons } from "@expo/vector-icons";
 import { AppBar } from "../../components/AppBar";
@@ -11,31 +11,47 @@ import { FlipCard } from "./component/FlipCard";
 import { ScrollView, View, StyleSheet, Dimensions } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { QuestionNumberSelector } from "../questions/components/QuestionNumberSelector";
-
-// Sample flashcard data - replace with your actual data
-const flashcards = [
-  { id: 1, front: "Hello", back: "Xin chào" },
-  { id: 2, front: "Goodbye", back: "Tạm biệt" },
-  { id: 3, front: "Thank you", back: "Cảm ơn" },
-  { id: 4, front: "Please", back: "Làm ơn" },
-  { id: 5, front: "Yes", back: "Vâng" },
-  { id: 6, front: "No", back: "Không" },
-  { id: 7, front: "Water", back: "Nước" },
-  { id: 8, front: "Food", back: "Thức ăn" },
-];
+import { Flashcard } from "../../models";
+import { deleteFlashcards, getAllFlashcards, insertFlashcards } from "../../storage/database/tables/flashCardTable";
 
 export const FlashcardScreen = () => {
   const navigation = useNavigation<DrawerNavigationProp<RootStackParamList, "Main">>();
   const { width } = Dimensions.get("window");
   const [amountSelectorVisible, setAmountSelectorVisible] = useState(false);
 
-  // Calculate card dimensions for 2 columns
-  const cardWidth = (width - 60) / 2; // 60 = total horizontal padding and spacing
-  const cardHeight = cardWidth * 1.4; // Maintain aspect ratio
+  // Data
+  const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
+  const [listBookmarked, setListBookmarked] = useState<boolean[]>([]);
+
+  // UI
+  const cardWidth = (width - 60) / 2;
+  const cardHeight = cardWidth * 1.4;
+
+  useEffect(() => {
+    const flashcards = getAllFlashcards();
+    setFlashcards(flashcards);
+    setListBookmarked(flashcards.map(() => true));
+  }, []);
 
   const handleOpenDrawer = () => {
     FirebaseService.logEvent(FirebaseConstants.OPEN_MENU);
     navigation.openDrawer();
+  };
+
+  const handleBookmark = (isBookmarked: boolean, index: number) => {
+    setListBookmarked((prev) => {
+      const newList = [...prev];
+      newList[index] = isBookmarked;
+      return newList;
+    });
+
+    if (isBookmarked) {
+      ToastService.show({ message: "Đã lưu", type: "success" });
+      FirebaseService.logEvent(FirebaseConstants.SAVE_GENERATED_FLASHCARD);
+      insertFlashcards([flashcards[index]]);
+    } else {
+      deleteFlashcards([flashcards[index].flashcardId]);
+    }
   };
 
   const handlePractice = () => {
@@ -58,9 +74,16 @@ export const FlashcardScreen = () => {
 
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <View style={styles.gridContainer}>
-            {flashcards.map((card) => (
-              <View key={card.id} style={styles.cardWrapper}>
-                <FlipCard front={card.front} back={card.back} width={cardWidth} height={cardHeight} />
+            {flashcards.map((card, index) => (
+              <View key={index} style={styles.cardWrapper}>
+                <FlipCard
+                  front={card.front}
+                  back={card.back}
+                  width={cardWidth}
+                  height={cardHeight}
+                  bookmarked={listBookmarked[index]}
+                  onBookmark={(isBookmarked) => handleBookmark(isBookmarked, index)}
+                />
               </View>
             ))}
           </View>

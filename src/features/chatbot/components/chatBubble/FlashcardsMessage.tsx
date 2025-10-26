@@ -4,7 +4,7 @@ import { Flashcard } from "../../../../models";
 import { FlipCard } from "../../../flashcard/component/FlipCard";
 import { CustomText } from "../../../../components/text/customText";
 import { Ionicons } from "@expo/vector-icons"; // 👈 modern icons
-import { FirebaseService } from "../../../../core/service";
+import { FirebaseService, ToastService } from "../../../../core/service";
 import { FirebaseConstants } from "../../../../constants";
 import { deleteFlashcards, insertFlashcards } from "../../../../storage/database/tables/flashCardTable";
 
@@ -34,6 +34,7 @@ export const FlashcardsMessage = ({ flashcards }: FlashcardsMessageProps) => {
     });
 
     if (isBookmarked) {
+      ToastService.show({ message: "Đã lưu", type: "success" });
       FirebaseService.logEvent(FirebaseConstants.SAVE_GENERATED_FLASHCARD);
       insertFlashcards([currentFlashcard]);
     } else {
