@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, interpolate } from "react-native-reanimated";
+import { IconButton } from "../../../components/buttons";
+import { AppIcons } from "../../../constants";
 
 interface FlipCardProps {
   front: string;
@@ -10,10 +12,21 @@ interface FlipCardProps {
   height?: number;
   flipped?: boolean;
   onFlip?: () => void;
+  onBookmark?: (isBookmarked: boolean) => void;
 }
 
-export const FlipCard = ({ front, back, duration = 600, width = 200, height = 300, flipped = false, onFlip }: FlipCardProps) => {
+export const FlipCard = ({
+  front,
+  back,
+  duration = 600,
+  width = 200,
+  height = 300,
+  flipped = false,
+  onFlip,
+  onBookmark,
+}: FlipCardProps) => {
   const [isFlipped, setIsFlipped] = useState(flipped);
+  const [isBookmarked, setIsBookmarked] = useState(false);
 
   const rotateValue = useSharedValue(flipped ? 180 : 0);
 
@@ -21,6 +34,12 @@ export const FlipCard = ({ front, back, duration = 600, width = 200, height = 30
     setIsFlipped((prev) => !prev);
     rotateValue.value = withTiming(isFlipped ? 0 : 180, { duration });
     onFlip?.();
+  };
+
+  const handleBookmarkPress = () => {
+    const newValue = !isBookmarked;
+    setIsBookmarked(newValue);
+    onBookmark?.(newValue);
   };
 
   /**
@@ -71,12 +90,23 @@ export const FlipCard = ({ front, back, duration = 600, width = 200, height = 30
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={handleFlip} style={[styles.cardContainer, { width, height }]}>
+      <Pressable pointerEvents="box-none" onPress={handleFlip} style={[styles.cardContainer, { width, height }]}>
         <Animated.View style={[styles.card, styles.cardFront, frontAnimatedStyle]}>
+          <IconButton
+            icon={isBookmarked ? AppIcons.bookmarked : AppIcons.bookmark}
+            style={styles.saveButton}
+            onPress={handleBookmarkPress}
+          />
+
           <Text style={styles.text}>{front}</Text>
         </Animated.View>
 
-        <Animated.View style={[styles.card, styles.cardBack, backAnimatedStyle]}>
+        <Animated.View pointerEvents="box-none" style={[styles.card, styles.cardBack, backAnimatedStyle]}>
+          <IconButton
+            icon={isBookmarked ? AppIcons.bookmarked : AppIcons.bookmark}
+            style={styles.saveButton}
+            onPress={handleBookmarkPress}
+          />
           <Text style={styles.text}>{back}</Text>
         </Animated.View>
       </Pressable>
@@ -89,34 +119,33 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
   cardContainer: {
     width: 200,
     height: 300,
   },
-
   card: {
     width: "100%",
     height: "100%",
-    backgroundColor: "#ffffff",
     borderRadius: 16,
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
-    // Prevents the back of the card from showing during rotation
     backfaceVisibility: "hidden",
   },
-
   cardFront: {
     position: "absolute",
     backgroundColor: "#4A90E2",
   },
-
   cardBack: {
     position: "absolute",
     backgroundColor: "#50C878",
   },
-
+  saveButton: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    backgroundColor: "rgba(255,255,255,0.2)",
+  },
   text: {
     fontSize: 22,
     fontWeight: "600",
