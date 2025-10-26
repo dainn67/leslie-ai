@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, interpolate } from "react-native-reanimated";
 
@@ -9,16 +9,18 @@ interface FlipCardProps {
   width?: number;
   height?: number;
   flipped?: boolean;
+  onFlip?: () => void;
 }
 
-export const FlipCard = ({ front, back, duration = 600, width = 200, height = 300, flipped = false }: FlipCardProps) => {
+export const FlipCard = ({ front, back, duration = 600, width = 200, height = 300, flipped = false, onFlip }: FlipCardProps) => {
   const [isFlipped, setIsFlipped] = useState(flipped);
 
-  const rotateValue = useSharedValue(0);
+  const rotateValue = useSharedValue(flipped ? 180 : 0);
 
   const handleFlip = () => {
     setIsFlipped((prev) => !prev);
     rotateValue.value = withTiming(isFlipped ? 0 : 180, { duration });
+    onFlip?.();
   };
 
   /**

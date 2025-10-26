@@ -11,7 +11,16 @@ interface FlashcardsMessageProps {
 
 export const FlashcardsMessage = ({ flashcards }: FlashcardsMessageProps) => {
   const [currentFlashcardIndex, setCurrentFlashcardIndex] = useState(0);
+  const [flippedStatus, setFlippedStatus] = useState<boolean[]>(flashcards.map(() => false));
   const currentFlashcard = flashcards[currentFlashcardIndex];
+
+  const handleFlip = () => {
+    setFlippedStatus((prev) => {
+      const newStatus = [...prev];
+      newStatus[currentFlashcardIndex] = !newStatus[currentFlashcardIndex];
+      return newStatus;
+    });
+  };
 
   const goToPrevious = () => {
     if (currentFlashcardIndex > 0) {
@@ -34,7 +43,13 @@ export const FlashcardsMessage = ({ flashcards }: FlashcardsMessageProps) => {
 
       {/* Flashcard */}
       <View style={styles.flashcardContainer}>
-        <FlipCard key={currentFlashcardIndex} front={currentFlashcard.front} back={currentFlashcard.back} />
+        <FlipCard
+          key={currentFlashcardIndex}
+          front={currentFlashcard.front}
+          back={currentFlashcard.back}
+          flipped={flippedStatus[currentFlashcardIndex]}
+          onFlip={handleFlip}
+        />
         <CustomText style={styles.counterText}>
           {currentFlashcardIndex + 1} / {flashcards.length}
         </CustomText>
