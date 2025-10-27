@@ -40,26 +40,31 @@ export const RootNavigator = () => {
     const loadRemoteConfigs = async () => {
       const cfg = await FirebaseService.initializeRemoteConfig();
 
-      console.log("Firebase initialized:", FirebaseService.isInitialized());
+      if (!cfg) {
+        console.log("Firebase not initialized");
+        return;
+      }
 
-      if (!cfg) return;
-      const isDomainAvaiable = await checkDomainAvailable(cfg.dify_domain, true);
-      if (isDomainAvaiable) {
-        ApiServiceInstance.setApiBaseUrl(cfg.dify_domain);
-        AsyncStorageService.setIsUsingNginrok(true);
-      } else {
-        const isBakDomainAvailable = await checkDomainAvailable(cfg.dify_domain_bak, false);
-        if (isBakDomainAvailable) {
-          ApiServiceInstance.setApiBaseUrl(cfg.dify_domain_bak);
-          AsyncStorageService.setIsUsingNginrok(false);
-        }
+      // Check domains available
+      let selectedDomain = "";
+      if (await checkDomainAvailable(cfg.dify_domain)) {
+        selectedDomain = cfg.dify_domain;
+      } else if (await checkDomainAvailable(cfg.dify_domain_bak)) {
+        selectedDomain = cfg.dify_domain_bak;
+      }
+
+      // Set API base URL if domain is available
+      if (selectedDomain) {
+        ApiServiceInstance.setApiBaseUrl(selectedDomain);
+        AsyncStorageService.setIsUsingNginrok(selectedDomain.includes("ngrok"));
+        console.log("Selected domain:", selectedDomain);
       }
 
       setRemoteConfig(cfg);
     };
 
-    const checkDomainAvailable = async (domain: string, isFromNginrok: boolean) => {
-      const token = isFromNginrok ? DIFY_CHAT_NGINROK_API_KEY : DIFY_CHAT_API_KEY;
+    const checkDomainAvailable = async (domain: string) => {
+      const token = domain.includes("ngrok") ? DIFY_CHAT_NGINROK_API_KEY : DIFY_CHAT_API_KEY;
       const result = await ApiClient.getData({ url: `${domain}/v1/info`, token });
       return result && result.author_name !== undefined && result.name !== undefined;
     };
