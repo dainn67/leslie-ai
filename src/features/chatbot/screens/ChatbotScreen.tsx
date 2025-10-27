@@ -217,7 +217,11 @@ export const ChatbotScreen = () => {
     setNameDialogVisible(false);
 
     TTSInstance.init(name);
-    handleSend({ noUserMessage: true, actionId: DifyConfig.askLevelActionId });
+    handleSend({
+      noUserMessage: true,
+      actionId: DifyConfig.askLevelActionId,
+      newUserProgress: createTmpUserProgress(userProgress, { userName: name }),
+    });
     initilized.current = true;
   };
 
