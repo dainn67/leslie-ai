@@ -40,10 +40,12 @@ export const RootNavigator = () => {
     const loadRemoteConfigs = async () => {
       const cfg = await FirebaseService.initializeRemoteConfig();
 
-      if (!cfg) {
+      if (!FirebaseService.isInitialized()) {
         console.log("Firebase not initialized");
         return;
       }
+
+      if (!cfg) return;
 
       // Check domains available
       let selectedDomain = "";
