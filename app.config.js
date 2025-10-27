@@ -4,11 +4,11 @@ export default {
     name: "AIkaze",
     slug: "leslieai",
     icon: "./assets/images/app-logo.png",
-    version: "1.1.0",
+    version: "1.1.1",
     android: {
       package: "com.leslie.app",
       googleServicesFile: "./android/app/google-services.json",
-      versionCode: 23,
+      versionCode: 25,
       adaptiveIcon: {
         foregroundImage: "./assets/images/app-logo.png",
         backgroundColor: "#ffffff",
