@@ -15,6 +15,7 @@ import { RootStackParamList } from "./RootNavigator";
 import { Divider } from "../features/common/dividers/Divider";
 import { ShareAppButton } from "../features/drawer/ShareAppButton";
 import { FlashcardScreen } from "../features/flashcard/FlashcardScreen";
+import { useTranslation } from "react-i18next";
 
 // Define DrawerParamList for type safety
 export type DrawerParamList = {
@@ -29,6 +30,7 @@ type ChatbotScreenRouteProp = RouteProp<RootStackParamList, "Main">;
 
 export const DrawerNavigator = () => {
   const { colors } = useAppTheme();
+  const { t } = useTranslation();
 
   // Params
   const route = useRoute<ChatbotScreenRouteProp>();
@@ -75,7 +77,7 @@ export const DrawerNavigator = () => {
         options={{
           drawerLabel: ({ color }) => (
             <CustomText weight="Regular" style={{ color }}>
-              Chatbot
+              {t("tab_chabot_title")}
             </CustomText>
           ),
           drawerIcon: ({ color, size }) => <Ionicons name="chatbubbles-outline" size={size} color={color} />,
@@ -92,7 +94,7 @@ export const DrawerNavigator = () => {
         options={{
           drawerLabel: ({ color }) => (
             <CustomText weight="Regular" style={{ color }}>
-              Câu hỏi đã lưu
+              {t("tab_saved_question_title")}
             </CustomText>
           ),
           drawerIcon: ({ color, size }) => <Ionicons name="list-outline" size={size} color={color} />,
@@ -109,7 +111,7 @@ export const DrawerNavigator = () => {
         options={{
           drawerLabel: ({ color }) => (
             <CustomText weight="Regular" style={{ color }}>
-              Flash Card
+              {t("tab_flashcard_title")}
             </CustomText>
           ),
           drawerIcon: ({ color, size }) => <Ionicons name="flash-outline" size={size} color={color} />,
@@ -126,7 +128,7 @@ export const DrawerNavigator = () => {
         options={{
           drawerLabel: ({ color }) => (
             <CustomText weight="Regular" style={{ color }}>
-              Phản hồi & góp ý
+              {t("tab_feedback_title")}
             </CustomText>
           ),
           drawerIcon: ({ color, size }) => <Ionicons name="mail-outline" size={size} color={color} />,

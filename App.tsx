@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
+import { I18nextProvider } from "react-i18next";
+import i18n from "./src/locales";
 import { Provider } from "react-redux";
 import { store } from "./src/app/store";
 import { RootNavigator } from "./src/app/RootNavigator";
@@ -14,14 +16,19 @@ import { updateUserProgress } from "./src/features/userProgress/userProgressSlic
 import { setTheme } from "./src/features/theme/themeSlice";
 
 export default function App() {
+  // TODO: Setup language
+  i18n.changeLanguage("vi");
+
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaProvider>
-        <Provider store={store}>
-          <AppContent />
-        </Provider>
-      </SafeAreaProvider>
-    </GestureHandlerRootView>
+    <I18nextProvider i18n={i18n}>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <SafeAreaProvider>
+          <Provider store={store}>
+            <AppContent />
+          </Provider>
+        </SafeAreaProvider>
+      </GestureHandlerRootView>
+    </I18nextProvider>
   );
 }
 
