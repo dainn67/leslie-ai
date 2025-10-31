@@ -23,7 +23,7 @@ export default {
       resizeMode: "contain",
       backgroundColor: "#000000",
     },
-    plugins: ["expo-sqlite"],
+    plugins: ["expo-sqlite", "react-native-localize"],
     extra: {
       DIFY_CHAT_API_KEY: process.env.DIFY_CHAT_API_KEY,
       DIFY_CHAT_NGINROK_API_KEY: process.env.DIFY_CHAT_NGINROK_API_KEY,
