@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { Ionicons } from '@expo/vector-icons';
-import { StyleSheet, TouchableOpacity, View, KeyboardAvoidingView, Platform, TextInput } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useAppTheme } from '../../../theme';
-import { AppConfig } from '../../../constants/appConfig';
+import React, { useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
+import { StyleSheet, TouchableOpacity, View, KeyboardAvoidingView, Platform, TextInput } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useAppTheme } from "../../../theme";
+import { AppConfig } from "../../../constants/appConfig";
+import { useTranslation } from "react-i18next";
 
 interface ChatInputProps {
   disable?: boolean;
@@ -12,21 +13,21 @@ interface ChatInputProps {
 }
 
 export const ChatInput = ({ disable, placeHolderText, onSend }: ChatInputProps) => {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const { colors } = useAppTheme();
-
+  const { t } = useTranslation();
   const styles = getStyles(message, colors);
 
   const handleSend = () => {
     if (message.trim() && !disable) {
       onSend(message.trim());
-      setMessage('');
+      setMessage("");
     }
   };
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{ backgroundColor: colors.background }}
       keyboardVerticalOffset={0}
     >
@@ -38,7 +39,7 @@ export const ChatInput = ({ disable, placeHolderText, onSend }: ChatInputProps) 
             </View>
             <TextInput
               style={[styles.textInput, disable && styles.textInputDisabled]}
-              placeholder={(placeHolderText ?? disable) ? 'Đang suy nghĩ ...' : 'Nhập câu hỏi'}
+              placeholder={(placeHolderText ?? disable) ? t("chatbot_screen_thinking") : t("chatbot_screen_placeholder")}
               placeholderTextColor={colors.placeholder}
               value={message}
               onSubmitEditing={handleSend}
@@ -48,7 +49,7 @@ export const ChatInput = ({ disable, placeHolderText, onSend }: ChatInputProps) 
               editable={!disable}
             />
             {message.length > 0 && !disable && (
-              <TouchableOpacity style={styles.clearButton} onPress={() => setMessage('')} activeOpacity={0.7}>
+              <TouchableOpacity style={styles.clearButton} onPress={() => setMessage("")} activeOpacity={0.7}>
                 <Ionicons name="close-circle" size={20} color={colors.text} />
               </TouchableOpacity>
             )}
@@ -60,7 +61,7 @@ export const ChatInput = ({ disable, placeHolderText, onSend }: ChatInputProps) 
             onPress={handleSend}
             activeOpacity={0.8}
           >
-            <Ionicons name="send" size={18} color={'white'} />
+            <Ionicons name="send" size={18} color={"white"} />
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -71,8 +72,8 @@ export const ChatInput = ({ disable, placeHolderText, onSend }: ChatInputProps) 
 const getStyles = (message: string, colors: any) =>
   StyleSheet.create({
     inputContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: "row",
+      alignItems: "center",
       paddingHorizontal: 20,
       paddingVertical: 16,
       borderTopWidth: 0.5,
@@ -80,8 +81,8 @@ const getStyles = (message: string, colors: any) =>
     },
     inputBox: {
       flex: 1,
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: "row",
+      alignItems: "center",
       backgroundColor: colors.background,
       borderRadius: 28,
       paddingHorizontal: 4,
@@ -97,8 +98,8 @@ const getStyles = (message: string, colors: any) =>
       height: 36,
       borderRadius: 100,
       backgroundColor: colors.secondary,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
       marginLeft: 4,
     },
     textInput: {
@@ -117,8 +118,8 @@ const getStyles = (message: string, colors: any) =>
       width: 32,
       height: 32,
       borderRadius: 16,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
       marginRight: 4,
     },
     sendButton: {
@@ -127,8 +128,8 @@ const getStyles = (message: string, colors: any) =>
       width: 48,
       height: 48,
       borderRadius: 24,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
     },
     sendButtonDisabled: {
       backgroundColor: colors.secondary,

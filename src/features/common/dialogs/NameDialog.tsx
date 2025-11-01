@@ -4,22 +4,15 @@ import { useAppTheme } from "../../../theme";
 import { Ionicons } from "@expo/vector-icons";
 import { CustomText } from "../../../components/text/customText";
 import MainButton from "../../../components/buttons/MainButton";
+import { useTranslation } from "react-i18next";
 
 interface NameDialogProps {
-  title?: string;
-  placeholder?: string;
-  confirmText?: string;
   visible: boolean;
   onConfirm: (name: string) => void;
 }
 
-export const NameDialog = ({
-  title = "こんにちは! Tên bạn là gì nhỉ ?",
-  placeholder = "Tên của bạn...",
-  confirmText = "Tiếp tục",
-  visible,
-  onConfirm,
-}: NameDialogProps) => {
+export const NameDialog = ({ visible, onConfirm }: NameDialogProps) => {
+  const { t } = useTranslation();
   const { colors, isDarkMode } = useAppTheme();
   const [name, setName] = useState("");
   const [isFocused, setIsFocused] = useState(false);
@@ -41,7 +34,7 @@ export const NameDialog = ({
           </View>
 
           <CustomText weight="Regular" style={[styles.title, { color: colors.text }]}>
-            {title}
+            {t("name_dialog_title")}
           </CustomText>
 
           <View style={styles.inputContainer}>
@@ -54,7 +47,7 @@ export const NameDialog = ({
                   color: colors.text,
                 },
               ]}
-              placeholder={placeholder}
+              placeholder={t("name_dialog_placeholder")}
               placeholderTextColor={isDarkMode ? colors.placeholder : "#aaa"}
               value={name}
               onChangeText={setName}
@@ -66,7 +59,7 @@ export const NameDialog = ({
             />
           </View>
 
-          <MainButton title={confirmText} onPress={handleConfirm} disabled={!name.trim()} />
+          <MainButton title={t("continue")} onPress={handleConfirm} disabled={!name.trim()} />
         </View>
       </View>
     </Modal>

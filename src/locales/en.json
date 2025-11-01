@@ -1,8 +1,22 @@
 {
-  "hello": "Hello",
-  "welcome": "Welcome to the app!",
+  "onboarding_subtitle_1": "Study for JLPT with personal AI tutor",
+  "onboarding_title_2": "Diverse questions",
+  "onboarding_subtitle_2": "Suitable for all levels",
+  "onboarding_title_3": "Personalized learning",
+  "onboarding_subtitle_3": "Build your own learning plan",
+  "onboarding_start_now": "Start now",
+
   "tab_chabot_title": "Chatbot",
-  "tab_saved_question_title": "Chatbot",
-  "tab_flashcard_title": "Flashcard",
-  "tab_feedback_title": "Feedback"
+  "tab_saved_question_title": "Saved Questions",
+  "tab_flashcard_title": "Flashcards",
+  "tab_feedback_title": "Feedback",
+
+  "name_dialog_title": "こんにちは! How should I call you ?",
+  "name_dialog_placeholder": "Your name...",
+
+  "chatbot_screen_placeholder": "Enter your question...",
+  "chatbot_screen_thinking": "Thinking...",
+
+  "next": "Next",
+  "continue": "Continue"
 }

@@ -1,8 +1,22 @@
 {
-  "hello": "Xin chào",
-  "welcome": "Chào mừng bạn đến với ứng dụng!",
+  "onboarding_subtitle_1": "Ôn thi JLPT cùng gia sư AI",
+  "onboarding_title_2": "Câu hỏi đa dạng",
+  "onboarding_subtitle_2": "Phù hợp với mọi trình độ",
+  "onboarding_title_3": "Học tập cá nhân hoá",
+  "onboarding_subtitle_3": "Xây dựng kế hoạch học tập riêng",
+  "onboarding_start_now": "Bắt đầu ngay",
+
   "tab_chabot_title": "Chatbot",
   "tab_saved_question_title": "Câu hỏi đã lưu",
   "tab_flashcard_title": "Flash Cards",
-  "tab_feedback_title": "Phản hồi & góp ý"
+  "tab_feedback_title": "Phản hồi & góp ý",
+
+  "name_dialog_title": "こんにちは! Tên bạn là gì nhỉ ?",
+  "name_dialog_placeholder": "Tên của bạn...",
+
+  "chatbot_screen_placeholder": "Nhập câu hỏi...",
+  "chatbot_screen_thinking": "Đang suy nghĩ...",
+
+  "next": "Tiếp theo",
+  "continue": "Tiếp tục"
 }

@@ -9,6 +9,7 @@ import { RootStackParamList } from "../../../app/RootNavigator";
 import { AppConfig, FirebaseConstants } from "../../../constants";
 import { AsyncStorageService } from "../../../core/service/storageServices/asyncStorageService";
 import { FirebaseService } from "../../../core/service";
+import { useTranslation } from "react-i18next";
 
 type OnboardingScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "Onboarding">;
 
@@ -20,30 +21,35 @@ interface OnboardingData {
   subtitle: string;
 }
 
-const onboardingData: OnboardingData[] = [
-  {
-    id: "1",
-    title: `${AppConfig.name}`,
-    subtitle: "Ôn thi JLPT cùng gia sư AI",
-  },
-  {
-    id: "2",
-    title: "Câu hỏi đa dạng",
-    subtitle: "Phù hợp với mọi trình độ",
-  },
-  {
-    id: "3",
-    title: "Học tập cá nhân hoá",
-    subtitle: "Xây dựng kế hoạch học tập riêng",
-  },
-];
+const getOnboardingData = (): OnboardingData[] => {
+  const { t } = useTranslation();
+  return [
+    {
+      id: "1",
+      title: `${AppConfig.name}`,
+      subtitle: t("onboarding_subtitle_1"),
+    },
+    {
+      id: "2",
+      title: t("onboarding_title_2"),
+      subtitle: t("onboarding_subtitle_2"),
+    },
+    {
+      id: "3",
+      title: t("onboarding_title_3"),
+      subtitle: t("onboarding_subtitle_3"),
+    },
+  ];
+};
 
 const OnboardingScreen: React.FC = () => {
   const navigation = useNavigation<OnboardingScreenNavigationProp>();
   const flatListRef = useRef<FlatList>(null);
-
+  const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const { colors } = useAppTheme();
+
+  const onboardingData = getOnboardingData();
 
   const handleNext = () => {
     if (currentIndex < onboardingData.length - 1) {
@@ -119,7 +125,7 @@ const OnboardingScreen: React.FC = () => {
       {/* Next Button */}
       <View style={styles.buttonContainer}>
         <MainButton
-          title={currentIndex === onboardingData.length - 1 ? "Bắt đầu ngay" : "Tiếp theo"}
+          title={currentIndex === onboardingData.length - 1 ? t("onboarding_start_now") : t("next")}
           onPress={handleNext}
           style={styles.nextButton}
         />
