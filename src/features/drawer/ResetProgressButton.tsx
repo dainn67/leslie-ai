@@ -10,6 +10,7 @@ import { clearUserProgress } from "../userProgress/userProgressSlice";
 import { clearChat } from "../chatbot/slice/chatbotSlice";
 import { FirebaseConstants } from "../../constants";
 import { AsyncStorageService, clearDatabase, FirebaseService } from "../../core/service";
+import { useTranslation } from "react-i18next";
 
 interface ResetProgressButtonProps {
   navigation: DrawerContentComponentProps["navigation"];
@@ -17,12 +18,13 @@ interface ResetProgressButtonProps {
 
 export const ResetProgressButton = ({ navigation }: ResetProgressButtonProps) => {
   const { colors } = useAppTheme();
+  const { t } = useTranslation();
   const dialog = useDialog();
   const userProgress = useAppSelector((state) => state.userProgress.userProgress);
   const dispatch = useAppDispatch();
 
   const handleToggle = () => {
-    dialog.showConfirm("Xoá hết tiến trình của bạn ?", () => {
+    dialog.showConfirm(t("drawer_reset_progress"), () => {
       clearDatabase();
       dispatch(clearUserProgress({ userName: userProgress.userName }));
       setTimeout(() => {

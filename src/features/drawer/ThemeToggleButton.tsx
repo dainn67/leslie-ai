@@ -8,11 +8,13 @@ import { useAppTheme } from "../../theme";
 import { CustomText } from "../../components/text/customText";
 import { FirebaseConstants } from "../../constants";
 import { FirebaseService } from "../../core/service";
+import { useTranslation } from "react-i18next";
 
 export const ThemeToggleButton = () => {
   const dispatch = useDispatch();
   const themeMode = useSelector((state: RootState) => state.theme.mode);
   const { colors } = useAppTheme();
+  const { t } = useTranslation();
 
   const handleToggle = () => {
     dispatch(toggleTheme());
@@ -23,11 +25,11 @@ export const ThemeToggleButton = () => {
   };
 
   const getIconName = () => {
-    return themeMode === "dark" ? "moon" : "sunny";
+    return themeMode === "dark" ? "sunny" : "moon";
   };
 
   const getLabel = () => {
-    return themeMode === "dark" ? "Dark Mode" : "Light Mode";
+    return themeMode === "dark" ? t("drawer_theme_lightmode") : t("drawer_theme_darkmode");
   };
 
   return (

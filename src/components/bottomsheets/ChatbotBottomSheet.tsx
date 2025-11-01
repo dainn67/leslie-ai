@@ -18,6 +18,7 @@ import { Question } from "../../models/question";
 import { ChatInput } from "../../features/chatbot/components/ChatInput";
 import { ChatMessageList } from "../../features/chatbot/components/ChatMessageList";
 import { useDialog } from "../../core/providers";
+import { useTranslation } from "react-i18next";
 
 interface ChatbotBottomSheetProps {
   visible: boolean;
@@ -29,6 +30,7 @@ const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 export const ChatbotBottomSheet: React.FC<ChatbotBottomSheetProps> = ({ visible, question, onClose }) => {
   const questionId = question.questionId.toString();
+  const { t } = useTranslation();
 
   const messages = useAppSelector((state) => getMessagesByCID(state.chatbot, questionId));
   const latestMessage = useAppSelector((state) => getLatestMessageByCID(state.chatbot, questionId));
@@ -107,7 +109,7 @@ export const ChatbotBottomSheet: React.FC<ChatbotBottomSheetProps> = ({ visible,
                 <View style={styles.closeButton}>
                   <TouchableOpacity
                     onPress={() =>
-                      dialog.showConfirm("Bạn có muốn xoá hội thoại?", () => {
+                      dialog.showConfirm(t("chatbot_screen_delete_conversation"), () => {
                         dispatch(clearChat({ cid: questionId }));
                       })
                     }

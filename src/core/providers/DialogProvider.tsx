@@ -1,11 +1,7 @@
 import React, { ReactNode, useContext, useState, createContext, useRef } from "react";
 import { ConfirmDialog, AlertDialog } from "../../features/common/dialogs";
 import { MyDatePicker } from "../../components/datePicker/MyDatePicker";
-
-export enum DialogType {
-  CONFIRM = "confirm",
-  ALERT = "alert",
-}
+import { useTranslation } from "react-i18next";
 
 type DialogContextType = {
   showConfirm: (message: string, onConfirm: () => void, onCancel?: () => void, confirmText?: string, cancelText?: string) => void;
@@ -31,35 +27,24 @@ export const DialogProvider = ({ children }: { children: ReactNode }) => {
 
   const [datePickerVisible, setDatePickerVisible] = useState(false);
 
+  const { t } = useTranslation();
+
   // Use useRef for callbacks
   const confirmCallback = useRef<(() => void) | null>(null);
   const cancelCallback = useRef<(() => void) | null>(null);
   const closeCallback = useRef<(() => void) | null>(null);
   const dateCallback = useRef<((date: Date | undefined) => void) | null>(null);
 
-  const [confirmText, setConfirmText] = useState("Xác nhận");
-  const [cancelText, setCancelText] = useState("Hủy");
-  const [buttonText, setButtonText] = useState("Đóng");
-
-  const showConfirm = (
-    message: string,
-    onConfirm: () => void,
-    onCancel?: () => void,
-    confirmTextParam?: string,
-    cancelTextParam?: string
-  ) => {
+  const showConfirm = (message: string, onConfirm: () => void, onCancel?: () => void) => {
     setConfirmMessage(message);
     confirmCallback.current = onConfirm;
     cancelCallback.current = onCancel || (() => {});
-    setConfirmText(confirmTextParam || "Xác nhận");
-    setCancelText(cancelTextParam || "Hủy");
     setConfirmVisible(true);
   };
 
   const showAlert = (message: string, onClose?: () => void, buttonTextParam?: string) => {
     setAlertMessage(message);
     closeCallback.current = onClose || (() => {});
-    setButtonText(buttonTextParam || "Đóng");
     setAlertVisible(true);
   };
 
@@ -110,15 +95,15 @@ export const DialogProvider = ({ children }: { children: ReactNode }) => {
       {/* Confirm Dialog */}
       <ConfirmDialog
         message={confirmMessage}
-        confirmText={confirmText}
-        cancelText={cancelText}
+        confirmText={t("confirm")}
+        cancelText={t("cancel")}
         visible={confirmVisible}
         onConfirm={handleConfirm}
         onCancel={handleCancel}
       />
 
       {/* Alert Dialog */}
-      <AlertDialog message={alertMessage} buttonText={buttonText} visible={alertVisible} onClose={handleAlertClose} />
+      <AlertDialog message={alertMessage} buttonText={t("close")} visible={alertVisible} onClose={handleAlertClose} />
 
       {/* Exam Date picker */}
       <MyDatePicker

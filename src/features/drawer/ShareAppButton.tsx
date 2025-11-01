@@ -1,23 +1,20 @@
 import React from "react";
 import { TouchableOpacity, StyleSheet, Share } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { DrawerContentComponentProps } from "@react-navigation/drawer";
 import { useAppTheme } from "../../theme";
 import { CustomText } from "../../components/text/customText";
 import { AppConfig, FirebaseConstants } from "../../constants";
 import { FirebaseService } from "../../core/service";
+import { useTranslation } from "react-i18next";
 
-interface ShareAppButtonProps {
-  navigation: DrawerContentComponentProps["navigation"];
-}
-
-export const ShareAppButton = ({ navigation }: ShareAppButtonProps) => {
+export const ShareAppButton = () => {
   const { colors } = useAppTheme();
+  const { t } = useTranslation();
 
   const handleShare = async () => {
     try {
       await Share.share({
-        message: `Thử ${AppConfig.name} - Trợ lý ôn thi JLPT thông minh: https://play.google.com/store/apps/details?id=${AppConfig.androidPackageName}`,
+        message: `${AppConfig.name} - ${t("drawer_share_app_content")}: https://play.google.com/store/apps/details?id=${AppConfig.androidPackageName}`,
       });
       FirebaseService.logEvent(FirebaseConstants.SHARE_APP);
     } catch (error) {
@@ -28,7 +25,7 @@ export const ShareAppButton = ({ navigation }: ShareAppButtonProps) => {
   return (
     <TouchableOpacity style={styles.button} onPress={handleShare}>
       <Ionicons name="share-social" size={24} color={colors.primary} style={styles.icon} />
-      <CustomText style={[styles.label, { color: colors.text }]}>Chia Sẻ Ứng Dụng</CustomText>
+      <CustomText style={[styles.label, { color: colors.text }]}>{t("drawer_share_app")}</CustomText>
     </TouchableOpacity>
   );
 };

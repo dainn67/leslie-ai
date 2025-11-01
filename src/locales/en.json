@@ -6,17 +6,27 @@
   "onboarding_subtitle_3": "Build your own learning plan",
   "onboarding_start_now": "Start now",
 
-  "tab_chabot_title": "Chatbot",
-  "tab_saved_question_title": "Saved Questions",
-  "tab_flashcard_title": "Flashcards",
-  "tab_feedback_title": "Feedback",
+  "drawer_chatbot_title": "Chatbot",
+  "drawer_saved_question_title": "Saved Questions",
+  "drawer_flashcard_title": "Flashcards",
+  "drawer_feedback_title": "Feedback",
+  "drawer_set_exam_date": "Set Exam Date",
+  "drawer_theme_lightmode": "Light Mode",
+  "drawer_theme_darkmode": "Dark Mode",
+  "drawer_share_app": "Share App",
+  "drawer_share_app_content": "Smart JLPT study assistant",
+  "drawer_reset_progress": "Clear your progress ?",
+  "drawer_version": "Version",
 
   "name_dialog_title": "こんにちは! How should I call you ?",
   "name_dialog_placeholder": "Your name...",
 
   "chatbot_screen_placeholder": "Enter your question...",
   "chatbot_screen_thinking": "Thinking...",
+  "chatbot_screen_delete_conversation": "Delete conversation ?",
 
   "next": "Next",
-  "continue": "Continue"
+  "continue": "Continue",
+  "confirm": "Confirm",
+  "cancel": "Cancel"
 }

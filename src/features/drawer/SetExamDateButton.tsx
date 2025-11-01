@@ -8,9 +8,12 @@ import { useAppDispatch } from "../../hooks/hooks";
 import { updateUserProgress } from "../userProgress/userProgressSlice";
 import { FirebaseService } from "../../core/service";
 import { FirebaseConstants } from "../../constants";
+import { useTranslation } from "react-i18next";
 
 export const SetExamDateButton = () => {
   const { colors } = useAppTheme();
+  const { t } = useTranslation();
+
   const dialog = useDialog();
   const dispatch = useAppDispatch();
 
@@ -26,7 +29,7 @@ export const SetExamDateButton = () => {
   return (
     <TouchableOpacity style={styles.button} onPress={handleClick}>
       <Ionicons name={"calendar"} size={24} color={colors.primary} style={styles.icon} />
-      <CustomText style={[styles.label, { color: colors.text }]}>Đặt Ngày Thi</CustomText>
+      <CustomText style={[styles.label, { color: colors.text }]}>{t("drawer_set_exam_date")}</CustomText>
     </TouchableOpacity>
   );
 };

@@ -56,10 +56,12 @@ export const DrawerNavigator = () => {
           </DrawerContentScrollView>
 
           {/* Actions */}
-          <ShareAppButton navigation={props.navigation} />
           <SetExamDateButton />
           <ThemeToggleButton />
+
           <Divider />
+
+          <ShareAppButton />
           <ResetProgressButton navigation={props.navigation} />
           <VersionText />
         </View>
@@ -77,7 +79,7 @@ export const DrawerNavigator = () => {
         options={{
           drawerLabel: ({ color }) => (
             <CustomText weight="Regular" style={{ color }}>
-              {t("tab_chabot_title")}
+              {t("drawer_chatbot_title")}
             </CustomText>
           ),
           drawerIcon: ({ color, size }) => <Ionicons name="chatbubbles-outline" size={size} color={color} />,
@@ -94,7 +96,7 @@ export const DrawerNavigator = () => {
         options={{
           drawerLabel: ({ color }) => (
             <CustomText weight="Regular" style={{ color }}>
-              {t("tab_saved_question_title")}
+              {t("drawer_saved_question_title")}
             </CustomText>
           ),
           drawerIcon: ({ color, size }) => <Ionicons name="list-outline" size={size} color={color} />,
@@ -111,7 +113,7 @@ export const DrawerNavigator = () => {
         options={{
           drawerLabel: ({ color }) => (
             <CustomText weight="Regular" style={{ color }}>
-              {t("tab_flashcard_title")}
+              {t("drawer_flashcard_title")}
             </CustomText>
           ),
           drawerIcon: ({ color, size }) => <Ionicons name="flash-outline" size={size} color={color} />,
@@ -128,7 +130,7 @@ export const DrawerNavigator = () => {
         options={{
           drawerLabel: ({ color }) => (
             <CustomText weight="Regular" style={{ color }}>
-              {t("tab_feedback_title")}
+              {t("drawer_feedback_title")}
             </CustomText>
           ),
           drawerIcon: ({ color, size }) => <Ionicons name="mail-outline" size={size} color={color} />,

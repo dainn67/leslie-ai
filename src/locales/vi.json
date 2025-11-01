@@ -6,17 +6,27 @@
   "onboarding_subtitle_3": "Xây dựng kế hoạch học tập riêng",
   "onboarding_start_now": "Bắt đầu ngay",
 
-  "tab_chabot_title": "Chatbot",
-  "tab_saved_question_title": "Câu hỏi đã lưu",
-  "tab_flashcard_title": "Flash Cards",
-  "tab_feedback_title": "Phản hồi & góp ý",
+  "drawer_chatbot_title": "Chatbot",
+  "drawer_saved_question_title": "Câu hỏi đã lưu",
+  "drawer_flashcard_title": "Flash Cards",
+  "drawer_feedback_title": "Phản hồi & góp ý",
+  "drawer_set_exam_date": "Đặt Ngày Thi",
+  "drawer_theme_lightmode": "Chế độ sáng",
+  "drawer_theme_darkmode": "Chế độ tối",
+  "drawer_share_app": "Chia sẻ ứng dụng",
+  "drawer_share_app_content": "Trợ lý ôn thi JLPT thông minh",
+  "drawer_reset_progress": "Xoá hết tiến trình của bạn ?",
+  "drawer_version": "Phiên bản",
 
   "name_dialog_title": "こんにちは! Tên bạn là gì nhỉ ?",
   "name_dialog_placeholder": "Tên của bạn...",
 
   "chatbot_screen_placeholder": "Nhập câu hỏi...",
   "chatbot_screen_thinking": "Đang suy nghĩ...",
+  "chatbot_screen_delete_conversation": "Xoá hội thoại ?",
 
   "next": "Tiếp theo",
-  "continue": "Tiếp tục"
+  "continue": "Tiếp tục",
+  "confirm": "Xác nhận",
+  "cancel": "Hủy"
 }

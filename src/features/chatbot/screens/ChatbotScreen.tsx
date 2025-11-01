@@ -31,6 +31,7 @@ import { GameType } from "../../game/screens/GameScreen";
 import { getAllFlashcards } from "../../../storage/database/tables/flashCardTable";
 import { CompositeNavigationProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useTranslation } from "react-i18next";
 
 // Composite navigation type to handle both drawer and stack navigation
 type ChatbotScreenNavigationProp = CompositeNavigationProp<
@@ -47,7 +48,7 @@ export const ChatbotScreen = () => {
   // Drawer
   const navigation = useNavigation<ChatbotScreenNavigationProp>();
   const dialog = useDialog();
-
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const messages = useAppSelector((state) => getMessagesByCID(state.chatbot));
   const difyConversationId = useAppSelector((state) => getDifyConversationIdByCID(state.chatbot));
@@ -199,7 +200,7 @@ export const ChatbotScreen = () => {
   };
 
   const handleClearChat = () => {
-    dialog.showConfirm("Xoá hội thoại?", () => {
+    dialog.showConfirm(t("chatbot_screen_delete_conversation"), () => {
       FirebaseService.logEvent(FirebaseConstants.CLEAR_CHAT);
       dispatch(clearChat({}));
     });
