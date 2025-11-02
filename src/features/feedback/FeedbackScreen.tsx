@@ -58,12 +58,15 @@ export const FeedbackScreen = () => {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <AppBar title="Phản hồi" leftIcon={<Ionicons name="menu" size={24} color="white" />} onLeftPress={handleOpenDrawer} />
+      <AppBar
+        title={t("feedback_screen_title")}
+        leftIcon={<Ionicons name="menu" size={24} color="white" />}
+        onLeftPress={handleOpenDrawer}
+      />
 
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={[styles.title, { color: colors.text }]}>{t("feedback_screen_title")}</Text>
           <Text style={[styles.subtitle, { color: colors.placeholder }]}>{t("feedback_screen_subtitle")}</Text>
         </View>
 
