@@ -17,6 +17,7 @@ import { insertQuestions, deleteQuestions } from "../../../storage/database/tabl
 import { ChatbotBottomSheet } from "../../../components/bottomsheets/ChatbotBottomSheet";
 import { RootStackParamList } from "../../../app/RootNavigator";
 import { Question } from "../../../models";
+import { useTranslation } from "react-i18next";
 
 type GameScreenRouteProp = RouteProp<RootStackParamList, "GameScreen">;
 type GameScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "GameScreen">;
@@ -36,6 +37,7 @@ export const GameScreen = () => {
   const { questions, gameType } = route.params.props;
 
   const { colors } = useAppTheme();
+  const { t } = useTranslation();
 
   const questionList = useAppSelector((state: RootState) => state.game.questions);
 
@@ -120,7 +122,7 @@ export const GameScreen = () => {
   return (
     <View style={[style.container, { backgroundColor: colors.background }]}>
       <AppBar
-        title={"Câu hỏi"}
+        title={t("question")}
         leftIcon={<Ionicons name="arrow-back" size={24} color="white" />}
         onLeftPress={() => navigation.pop()}
         onDevClick={handleDevClick}
@@ -171,7 +173,7 @@ export const GameScreen = () => {
         </>
       ) : (
         <View style={[style.container, { backgroundColor: colors.background, justifyContent: "center", alignItems: "center" }]}>
-          <CustomText>Lỗi khi tải câu hỏi. Vui lòng thử lại sau</CustomText>
+          <CustomText>{t("game_screen_error_loading_question")}</CustomText>
         </View>
       )}
     </View>

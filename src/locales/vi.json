@@ -24,12 +24,25 @@
   "chatbot_screen_placeholder": "Nhập câu hỏi...",
   "chatbot_screen_thinking": "Đang suy nghĩ...",
   "chatbot_screen_delete_conversation": "Xoá hội thoại ?",
+  "chatbot_generating_question": "Đang tạo câu hỏi",
+  "chatbot_generating_flashcard": "Đang tạo Flashcards",
+  "chatbot_cannot_load_question": "Không thể tải câu hỏi",
 
   "question_type_vocabulary": "Từ Vựng",
   "question_type_grammar": "Ngữ Pháp",
   "question_type_reading": "Đọc Hiểu",
   "question_type_listening": "Nghe Hiểu",
   "questions_screen_empty_title": "Các câu hỏi đã lưu sẽ hiển thị ở đây.\nHiện bạn chưa lưu lại câu hỏi nào",
+  "review_all_questions": "Ôn tập tổng hợp",
+  "create_new_question": "Tạo câu hỏi mới",
+  "question_search_placeholder": "Tìm kiếm câu hỏi...",
+
+  "game_screen_error_loading_question": "Lỗi khi tải câu hỏi. Vui lòng thử lại sau",
+  "question_number_selector_title": "Số lượng câu hỏi",
+  "question_number_selector_subtitle": "Chọn số lượng câu hỏi bạn muốn làm",
+
+  "question": "Câu hỏi",
+  "practice": "Ôn tập",
 
   "next": "Tiếp theo",
   "continue": "Tiếp tục",

@@ -24,12 +24,25 @@
   "chatbot_screen_placeholder": "Enter your question...",
   "chatbot_screen_thinking": "Thinking...",
   "chatbot_screen_delete_conversation": "Delete conversation ?",
+  "chatbot_generating_question": "Generating question",
+  "chatbot_generating_flashcard": "Generating Flashcards",
+  "chatbot_cannot_load_question": "Cannot load question",
 
   "question_type_vocabulary": "Vocabulary",
   "question_type_grammar": "Grammar",
   "question_type_reading": "Reading",
   "question_type_listening": "Listening",
   "questions_screen_empty_title": "Saved questions will be displayed here.\nYou haven't saved any questions yet",
+  "review_all_questions": "Review All Questions",
+  "create_new_question": "Create New Question",
+  "question_search_placeholder": "Search questions...",
+
+  "game_screen_error_loading_question": "Error loading question. Please try again later",
+  "question_number_selector_title": "Question Amount",
+  "question_number_selector_subtitle": "Select the number of questions you want to practice",
+
+  "question": "Question",
+  "practice": "Practice",
 
   "next": "Next",
   "continue": "Continue",

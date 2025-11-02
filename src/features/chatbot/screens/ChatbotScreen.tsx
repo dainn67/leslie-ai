@@ -142,7 +142,7 @@ export const ChatbotScreen = () => {
     } else if (result?.ui === "doDiagnostic") {
       const questions = result?.questions;
       if (!questions) {
-        ToastService.show({ message: "Không thể tải câu hỏi", type: "error" });
+        ToastService.show({ message: t("chatbot_cannot_load_question"), type: "error" });
       } else {
         navigation.navigate("GameScreen", { props: { questions, gameType: GameType.Diagnostic } });
       }

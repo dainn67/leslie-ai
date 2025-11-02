@@ -11,6 +11,7 @@ import { useAppTheme } from "../../../../theme";
 import { ToastService } from "../../../../core/service";
 import { GameType } from "../../../game/screens/GameScreen";
 import { useDialog } from "../../../../core/providers";
+import { useTranslation } from "react-i18next";
 
 interface QuestionViewProps {
   question: Question;
@@ -40,6 +41,7 @@ export const QuestionView = ({
   setPlayAudio,
 }: QuestionViewProps) => {
   const { colors } = useAppTheme();
+  const { t } = useTranslation();
   const dialog = useDialog();
 
   const getAnswerLabel = (index: number) => {
@@ -72,7 +74,7 @@ export const QuestionView = ({
         <View style={styles.questionHeaderContent}>
           <View style={styles.questionIndex}>
             <CustomText style={[styles.questionNumberText, { color: colors.placeholder }]}>
-              Câu hỏi {questionIndex + 1}/{totalQuestions}:
+              {t("question")} {questionIndex + 1}/{totalQuestions}:
             </CustomText>
           </View>
           <CustomText style={[styles.questionText, { color: colors.text }]}>{question.question}</CustomText>

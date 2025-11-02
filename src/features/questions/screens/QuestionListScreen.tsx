@@ -21,14 +21,13 @@ import { useTranslation } from "react-i18next";
 type QuestionListScreenRouteProp = RouteProp<RootStackParamList, "QuestionListScreen">;
 type QuestionListScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "QuestionListScreen">;
 
-const questionTypeTitles = QuestionTypeTitles();
-
 export const QuestionListScreen = () => {
   const navigation = useNavigation<QuestionListScreenNavigationProp>();
   const route = useRoute<QuestionListScreenRouteProp>();
   const { colors } = useAppTheme();
   const { t } = useTranslation();
   const { type } = route.params as { type: QuestionType };
+  const questionTypeTitles = QuestionTypeTitles();
 
   const [questions, setQuestions] = useState<Question[]>([]);
   const [filteredQuestions, setFilteredQuestions] = useState<Question[]>([]);
@@ -162,7 +161,7 @@ export const QuestionListScreen = () => {
           <View style={styles.emptyContainer}>
             <CustomText style={styles.emptyText}>{t("questions_screen_empty_title")}</CustomText>
             <MainButton
-              title={"Tạo câu hỏi mới"}
+              title={t("create_new_question")}
               style={{ borderRadius: 100, marginTop: 16 }}
               onPress={handleNavigateToChatbotScreen}
             />
@@ -171,7 +170,7 @@ export const QuestionListScreen = () => {
 
         {filteredQuestions.length > 0 && (
           <MainButton
-            title="Ôn tập"
+            title={t("practice")}
             style={styles.buttonContainer}
             textStyle={{ color: "white" }}
             disabled={filteredQuestions.length === 0}
@@ -202,7 +201,7 @@ export const QuestionListScreen = () => {
                 value={searchWord}
                 inputRef={inputRef}
                 onChangeText={handleSearch}
-                placeholder="Tìm kiếm câu hỏi..."
+                placeholder={t("question_search_placeholder")}
               />
             </View>
           </Animated.View>

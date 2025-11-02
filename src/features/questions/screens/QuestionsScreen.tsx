@@ -25,8 +25,6 @@ type QuestionsScreenNavigationProp = CompositeNavigationProp<
   NativeStackNavigationProp<RootStackParamList>
 >;
 
-const questionTypeTitles = QuestionTypeTitles();
-
 export const QuestionsScreen = () => {
   // Drawer & navigation
   const navigation = useNavigation<QuestionsScreenNavigationProp>();
@@ -40,6 +38,7 @@ export const QuestionsScreen = () => {
 
   // Data
   const [allQuestions, setAllQuestions] = useState<Question[]>([]);
+  const questionTypeTitles = QuestionTypeTitles();
 
   useEffect(() => {
     const allQuestions = getAllQuestions();
@@ -95,7 +94,7 @@ export const QuestionsScreen = () => {
             </TouchableOpacity>
           ))}
         </View>
-        <MainButton title={"Ôn tập tổng hợp"} style={styles.buttonContainer} onPress={handleReviewAll} />
+        <MainButton title={t("review_all_questions")} style={styles.buttonContainer} onPress={handleReviewAll} />
 
         {/* Question number selector */}
         <QuestionNumberSelector

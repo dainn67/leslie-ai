@@ -3,6 +3,7 @@ import { Animated, View, StyleSheet, ViewStyle } from "react-native";
 import { CustomText } from "../../../../components/text/customText";
 import { useAppTheme } from "../../../../theme";
 import { MessageType } from "../../../../models";
+import { useTranslation } from "react-i18next";
 
 interface LoadingMessageProps {
   type: MessageType;
@@ -15,6 +16,7 @@ export const LoadingMessage = ({ type, style }: LoadingMessageProps) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   const { isDarkMode } = useAppTheme();
+  const { t } = useTranslation();
 
   useEffect(() => {
     // Fade in animation
@@ -97,7 +99,7 @@ export const LoadingMessage = ({ type, style }: LoadingMessageProps) => {
         <View style={styles.contentContainer}>
           {type !== MessageType.STREAM_TEXT && (
             <CustomText style={[styles.loadingText, { color: isDarkMode ? "white" : "#65676B" }]}>
-              {type === MessageType.QUESTIONS ? "Đang tạo câu hỏi" : "Đang tạo Flashcards"}
+              {type === MessageType.QUESTIONS ? t("chatbot_generating_question") : t("chatbot_generating_flashcard")}
             </CustomText>
           )}
           <View style={[styles.dotsContainer, { marginLeft: type !== MessageType.STREAM_TEXT ? 8 : 0 }]}>

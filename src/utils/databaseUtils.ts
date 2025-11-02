@@ -12,6 +12,7 @@ export const getQuestionsFromQuery = (query: string): Question[] => {
   const answerQuery = `SELECT * FROM ${AnswerTable.tableName} WHERE ${AnswerTable.columnQuestionId} IN (${questions.map((question) => question.questionId).join(", ")})`;
 
   const answers = db.getAllSync(answerQuery);
+
   answers.forEach((answer: any) => {
     const question = questions.find((question) => question.questionId === answer.questionId);
     if (question) question.answers.push(createAnswer(answer));

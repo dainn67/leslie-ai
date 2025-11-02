@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react';
-import { Dimensions, Modal, StyleSheet, View, TouchableOpacity } from 'react-native';
-import { useAppTheme } from '../../../theme';
-import { CustomText } from '../../../components/text/customText';
-import MainButton from '../../../components/buttons/MainButton';
+import React, { useMemo } from "react";
+import { Dimensions, Modal, StyleSheet, View, TouchableOpacity } from "react-native";
+import { useAppTheme } from "../../../theme";
+import { CustomText } from "../../../components/text/customText";
+import MainButton from "../../../components/buttons/MainButton";
+import { useTranslation } from "react-i18next";
 
 interface QuestionNumberSelectorProps {
   title?: string;
@@ -14,7 +15,6 @@ interface QuestionNumberSelectorProps {
 }
 
 export const QuestionNumberSelector = ({
-  title = 'Chọn số lượng câu hỏi',
   totalQuestions = 30,
   selectedQuestion = 0,
   visible,
@@ -22,6 +22,7 @@ export const QuestionNumberSelector = ({
   onSelectQuestion,
 }: QuestionNumberSelectorProps) => {
   const { colors } = useAppTheme();
+  const { t } = useTranslation();
 
   const questionOptions = useMemo(() => {
     const options: number[] = [];
@@ -51,10 +52,10 @@ export const QuestionNumberSelector = ({
           {/* Header */}
           <View style={styles.header}>
             <CustomText weight="Bold" size={20} style={[styles.title, { color: colors.text }]}>
-              {title}
+              {t("question_number_selector_title")}
             </CustomText>
             <CustomText size={14} style={[styles.subtitle, { color: colors.text }]}>
-              Chọn số lượng câu hỏi bạn muốn làm
+              {t("question_number_selector_subtitle")}
             </CustomText>
           </View>
 
@@ -96,9 +97,9 @@ export const QuestionNumberSelector = ({
           {/* Footer */}
           <View style={styles.footer}>
             <MainButton
-              title={'Hủy'}
+              title={"Hủy"}
               onPress={() => setVisible(false)}
-              style={{ width: '100%', backgroundColor: colors.alert }}
+              style={{ width: "100%", backgroundColor: colors.alert }}
             />
           </View>
         </View>
@@ -107,20 +108,20 @@ export const QuestionNumberSelector = ({
   );
 };
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     paddingHorizontal: 24,
   },
   dialog: {
     width: width * 0.85,
     borderRadius: 20,
     padding: 28,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 10,
@@ -128,52 +129,52 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 20,
     elevation: 10,
-    maxHeight: '80%',
+    maxHeight: "80%",
   },
   header: {
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 24,
   },
   title: {
     marginBottom: 8,
-    textAlign: 'center',
+    textAlign: "center",
   },
   subtitle: {
-    textAlign: 'center',
+    textAlign: "center",
     opacity: 0.8,
   },
   optionsContainer: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
     marginVertical: 10,
   },
   optionButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 100,
     borderWidth: 1,
     width: 40,
     height: 40,
     marginHorizontal: 10,
-    position: 'relative',
+    position: "relative",
   },
   optionText: {
-    textAlign: 'center',
+    textAlign: "center",
   },
   checkIcon: {
     width: 12,
     height: 12,
     borderRadius: 6,
-    position: 'absolute',
+    position: "absolute",
     top: 8,
     right: 8,
   },
   footer: {
     marginTop: 24,
-    alignItems: 'center',
+    alignItems: "center",
   },
   cancelButton: {
     paddingVertical: 12,
@@ -181,13 +182,13 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   cancelText: {
-    textAlign: 'center',
+    textAlign: "center",
   },
   fallbackContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     paddingVertical: 20,
   },
   fallbackText: {
-    textAlign: 'center',
+    textAlign: "center",
   },
 });
