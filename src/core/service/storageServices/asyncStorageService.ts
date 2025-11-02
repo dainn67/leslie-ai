@@ -29,6 +29,15 @@ export class AsyncStorageService {
     await saveToAsyncStorage(AsyncStorageConstants.OPEN_APP_COUNT, 0);
   };
 
+  // Language
+  static setLanguage = async (language: string): Promise<void> => {
+    await saveToAsyncStorage(AsyncStorageConstants.LANGUAGE, language);
+  };
+
+  static getLanguage = async (): Promise<string> => {
+    return (await loadFromAsyncStorage(AsyncStorageConstants.LANGUAGE)) ?? "en";
+  };
+
   // User progress
   static setUserProgress = async (userProgress: any): Promise<void> => {
     await saveToAsyncStorage(AsyncStorageConstants.USER_PROGRESS, userProgress);

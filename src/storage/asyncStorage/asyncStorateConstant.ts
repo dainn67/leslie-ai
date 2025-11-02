@@ -5,4 +5,5 @@ export class AsyncStorageConstants {
   static readonly FIRST_TIME_LOAD_DATABASE = "firstTimeLoadDatabase";
   static readonly OPEN_APP_COUNT = "openAppCount";
   static readonly IS_USING_NGINROK = "isUsingNginrok";
+  static readonly LANGUAGE = "language";
 }

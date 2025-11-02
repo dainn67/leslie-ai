@@ -11,6 +11,7 @@ import { GameScreen, GameProps } from "../features/game/screens/GameScreen";
 import { ResultScreen } from "../features/game/screens/ResultScreen";
 import { QuestionListScreen } from "../features/questions/screens/QuestionListScreen";
 import { ApiClient } from "../api/apiClient";
+import i18n from "../locales";
 
 const { DIFY_CHAT_API_KEY, DIFY_CHAT_NGINROK_API_KEY } = Constants.expoConfig?.extra ?? {};
 
@@ -30,6 +31,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export const RootNavigator = () => {
   const [initialRoute, setInitialRoute] = useState<keyof RootStackParamList | null>(null);
   const [remoteConfig, setRemoteConfig] = useState<any>(null);
+  const [language, setLanguage] = useState<string | null>(null);
 
   useEffect(() => {
     const checkOnboarding = async () => {
@@ -65,18 +67,25 @@ export const RootNavigator = () => {
       setRemoteConfig(cfg);
     };
 
+    const loadLanguage = async () => {
+      const language = await AsyncStorageService.getLanguage();
+      setLanguage(language);
+      i18n.changeLanguage(language);
+    };
+
     const checkDomainAvailable = async (domain: string) => {
       const token = domain.includes("ngrok") ? DIFY_CHAT_NGINROK_API_KEY : DIFY_CHAT_API_KEY;
       const result = await ApiClient.getData({ url: `${domain}/v1/info`, token });
       return result && result.author_name !== undefined && result.name !== undefined;
     };
 
+    loadLanguage();
     checkOnboarding();
     loadRemoteConfigs();
   }, []);
 
   // Prevent rendering until we know the route
-  if (!initialRoute || !remoteConfig) return null;
+  if (!initialRoute || !remoteConfig || !language) return null;
 
   return (
     <NavigationContainer>

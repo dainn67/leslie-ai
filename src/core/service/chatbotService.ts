@@ -230,6 +230,8 @@ export class ChatbotService {
 
     dispatch(addLoading({ cid: questionId }));
 
+    const language = await AsyncStorageService.getLanguage();
+
     const isUsingNginrok = await AsyncStorageService.getIsUsingNginrok();
     const chatApiKey = isUsingNginrok ? DIFY_CHAT_NGINROK_API_KEY : DIFY_CHAT_API_KEY;
     const assistantApiKey = isUsingNginrok ? DIFY_ASSISTANT_NGINROK_API_KEY : DIFY_ASSISTANT_API_KEY;
@@ -280,6 +282,7 @@ export class ChatbotService {
           analyze_chat_game: analyzeChatGame ? 1 : 0,
           question_string: questionString,
           user_progress_string: userProgressString,
+          language: language,
         },
         conversation_id: difyConversationId,
         response_mode: "streaming",
@@ -419,12 +422,14 @@ export class ChatbotService {
     message,
     gameType,
     userName,
+    language,
     onYieldWord,
     onEvaluateLevel,
   }: {
     message: string;
     gameType: GameType;
     userName: string;
+    language: string;
     onYieldWord: (word: string) => void;
     onEvaluateLevel: (level: string) => void;
   }) => {
@@ -445,6 +450,7 @@ export class ChatbotService {
         query: message,
         inputs: {
           game_type: gameType,
+          language: language,
         },
         response_mode: "streaming",
         user: userName ?? "",
