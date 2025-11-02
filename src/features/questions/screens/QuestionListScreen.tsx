@@ -21,6 +21,8 @@ import { useTranslation } from "react-i18next";
 type QuestionListScreenRouteProp = RouteProp<RootStackParamList, "QuestionListScreen">;
 type QuestionListScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "QuestionListScreen">;
 
+const questionTypeTitles = QuestionTypeTitles();
+
 export const QuestionListScreen = () => {
   const navigation = useNavigation<QuestionListScreenNavigationProp>();
   const route = useRoute<QuestionListScreenRouteProp>();
@@ -30,7 +32,6 @@ export const QuestionListScreen = () => {
 
   const [questions, setQuestions] = useState<Question[]>([]);
   const [filteredQuestions, setFilteredQuestions] = useState<Question[]>([]);
-  const questionTypeTitles = QuestionTypeTitles();
 
   const [amountSelectorVisible, setAmountSelectorVisible] = useState(false);
   const [searchWord, setSearchWord] = useState("");

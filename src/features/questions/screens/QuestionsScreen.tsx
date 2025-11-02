@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import MainButton from "../../../components/buttons/MainButton";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { AppBar } from "../../../components/AppBar";
@@ -25,6 +25,8 @@ type QuestionsScreenNavigationProp = CompositeNavigationProp<
   NativeStackNavigationProp<RootStackParamList>
 >;
 
+const questionTypeTitles = QuestionTypeTitles();
+
 export const QuestionsScreen = () => {
   // Drawer & navigation
   const navigation = useNavigation<QuestionsScreenNavigationProp>();
@@ -34,7 +36,6 @@ export const QuestionsScreen = () => {
   const { colors } = useAppTheme();
   const { width } = Dimensions.get("window");
   const { t } = useTranslation();
-  const questionTypeTitles = useMemo(() => QuestionTypeTitles(), []);
   const gridItemWidth = (width - 60) / 2;
 
   // Data

@@ -11,6 +11,7 @@ import { GameScreen, GameProps } from "../features/game/screens/GameScreen";
 import { ResultScreen } from "../features/game/screens/ResultScreen";
 import { QuestionListScreen } from "../features/questions/screens/QuestionListScreen";
 import { ApiClient } from "../api/apiClient";
+import { ActivityIndicator, View } from "react-native";
 
 const { DIFY_CHAT_API_KEY, DIFY_CHAT_NGINROK_API_KEY } = Constants.expoConfig?.extra ?? {};
 
@@ -76,7 +77,13 @@ export const RootNavigator = () => {
   }, []);
 
   // Prevent rendering until we know the route
-  if (!initialRoute || !remoteConfig) return null;
+  if (!initialRoute || !remoteConfig) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
   return (
     <NavigationContainer>
