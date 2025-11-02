@@ -230,7 +230,8 @@ export class ChatbotService {
 
     dispatch(addLoading({ cid: questionId }));
 
-    const language = await AsyncStorageService.getLanguage();
+    const languageCode = await AsyncStorageService.getLanguage();
+    const language = languageCode === "vi" ? "Vietnamese" : "English";
 
     const isUsingNginrok = await AsyncStorageService.getIsUsingNginrok();
     const chatApiKey = isUsingNginrok ? DIFY_CHAT_NGINROK_API_KEY : DIFY_CHAT_API_KEY;

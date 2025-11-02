@@ -12,6 +12,7 @@ import { ResultScreen } from "../features/game/screens/ResultScreen";
 import { QuestionListScreen } from "../features/questions/screens/QuestionListScreen";
 import { ApiClient } from "../api/apiClient";
 import i18n from "../locales";
+import { loadLanguage } from "../core/service/locale_service";
 
 const { DIFY_CHAT_API_KEY, DIFY_CHAT_NGINROK_API_KEY } = Constants.expoConfig?.extra ?? {};
 
@@ -67,10 +68,9 @@ export const RootNavigator = () => {
       setRemoteConfig(cfg);
     };
 
-    const loadLanguage = async () => {
-      const language = await AsyncStorageService.getLanguage();
-      setLanguage(language);
-      i18n.changeLanguage(language);
+    const initLanguage = async () => {
+      await loadLanguage();
+      setLanguage(i18n.language);
     };
 
     const checkDomainAvailable = async (domain: string) => {
@@ -79,7 +79,7 @@ export const RootNavigator = () => {
       return result && result.author_name !== undefined && result.name !== undefined;
     };
 
-    loadLanguage();
+    initLanguage();
     checkOnboarding();
     loadRemoteConfigs();
   }, []);
