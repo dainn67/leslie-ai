@@ -12,11 +12,20 @@ import { FirebaseConstants } from "../../constants";
 import { FirebaseService } from "../../core/service";
 import { useAppSelector } from "../../hooks/hooks";
 import { DrawerParamList } from "../../app/DrawerNavigator";
+import { useTranslation } from "react-i18next";
 
 export const FeedbackScreen = () => {
-  const categories = ["Nội dung", "Trải nghiệm", "Giao diện", "Lỗi", "Tính năng", "Khác"];
-
   const { colors } = useAppTheme();
+  const { t } = useTranslation();
+
+  const categories = [
+    t("feedback_category_content"),
+    t("feedback_category_experience"),
+    t("feedback_category_interface"),
+    t("feedback_category_error"),
+    t("feedback_category_feature"),
+    t("feedback_category_other"),
+  ];
   const userProgress = useAppSelector((state) => state.userProgress.userProgress);
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -37,7 +46,7 @@ export const FeedbackScreen = () => {
       type: DiscordWebhookType.FEEDBACK,
     });
 
-    ToastService.show({ message: "Đã gửi thành công" });
+    ToastService.show({ message: t("feedback_success_message") });
     setSelectedCategories([]);
     setMessage("");
   };
@@ -54,13 +63,13 @@ export const FeedbackScreen = () => {
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={[styles.title, { color: colors.text }]}>Chia sẻ ý kiến của bạn</Text>
-          <Text style={[styles.subtitle, { color: colors.placeholder }]}>Phản hồi của bạn giúp chúng tôi cải thiện ứng dụng</Text>
+          <Text style={[styles.title, { color: colors.text }]}>{t("feedback_screen_title")}</Text>
+          <Text style={[styles.subtitle, { color: colors.placeholder }]}>{t("feedback_screen_subtitle")}</Text>
         </View>
 
         {/* Categories */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>Loại phản hồi</Text>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>{t("feedback_category_title")}</Text>
           <View style={styles.categoryGrid}>
             {categories.map((category) => {
               const selected = selectedCategories.includes(category);
@@ -91,7 +100,7 @@ export const FeedbackScreen = () => {
             <TextInput
               value={email}
               onChangeText={setEmail}
-              placeholder="Email để nhận phản hồi về vấn đề sớm nhất"
+              placeholder={t("feedback_email_placeholder")}
               placeholderTextColor={colors.placeholder}
               keyboardType="email-address"
               autoCapitalize="none"
@@ -102,7 +111,7 @@ export const FeedbackScreen = () => {
 
         {/* Message Input */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>Nội dung</Text>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>{t("feedback_message_title")}</Text>
           <View
             style={[
               styles.messageInputContainer,
@@ -112,7 +121,7 @@ export const FeedbackScreen = () => {
             <TextInput
               value={message}
               onChangeText={setMessage}
-              placeholder="Mô tả chi tiết về phản hồi của bạn..."
+              placeholder={t("feedback_message_placeholder")}
               placeholderTextColor={colors.placeholder}
               multiline
               textAlignVertical="top"
@@ -124,7 +133,7 @@ export const FeedbackScreen = () => {
         {/* Submit Button */}
         <View style={styles.submitContainer}>
           <MainButton
-            title="Gửi phản hồi"
+            title={t("feedback_submit_button")}
             onPress={handleSubmit}
             disabled={!canSubmit}
             style={[styles.submitButton, { opacity: canSubmit ? 1 : 0.5 }]}

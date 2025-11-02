@@ -24,7 +24,7 @@ export const ResetProgressButton = ({ navigation }: ResetProgressButtonProps) =>
   const dispatch = useAppDispatch();
 
   const handleToggle = () => {
-    dialog.showConfirm(t("drawer_reset_progress"), () => {
+    dialog.showConfirm(t("drawer_reset_progress_title"), () => {
       clearDatabase();
       dispatch(clearUserProgress({ userName: userProgress.userName }));
       setTimeout(() => {
@@ -41,7 +41,7 @@ export const ResetProgressButton = ({ navigation }: ResetProgressButtonProps) =>
   return (
     <TouchableOpacity style={styles.button} onPress={handleToggle}>
       <Ionicons name={"trash"} size={24} color={colors.primary} style={styles.icon} />
-      <CustomText style={[styles.label, { color: colors.text }]}>Xoá Dữ Liệu</CustomText>
+      <CustomText style={[styles.label, { color: colors.text }]}>{t("drawer_reset_progress")}</CustomText>
     </TouchableOpacity>
   );
 };

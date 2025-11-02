@@ -13,10 +13,13 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Flashcard } from "../../models";
 import { deleteFlashcards, getAllFlashcards, insertFlashcards } from "../../storage/database/tables/flashCardTable";
 import { CustomText } from "../../components/text/customText";
+import { useTranslation } from "react-i18next";
 
 export const FlashcardScreen = () => {
   const navigation = useNavigation<DrawerNavigationProp<DrawerParamList, "FlashCardScreen">>();
   const { width } = Dimensions.get("window");
+  const { t } = useTranslation();
+
   // const [amountSelectorVisible, setAmountSelectorVisible] = useState(false);
 
   // Data
@@ -103,11 +106,9 @@ export const FlashcardScreen = () => {
           </ScrollView>
         ) : (
           <View style={styles.emptyContainer}>
-            <CustomText style={styles.emptyText}>
-              {"Các Flashcard đã lưu sẽ hiển thị ở đây.\nHiện bạn chưa lưu Flashcard nào"}
-            </CustomText>
+            <CustomText style={styles.emptyText}>{t("flashcard_screen_empty_title")}</CustomText>
             <MainButton
-              title={"Tạo Flashcard mới"}
+              title={t("create_new_flashcard")}
               style={{ borderRadius: 100, marginTop: 16 }}
               onPress={handleNavigateToChatbotScreen}
             />
