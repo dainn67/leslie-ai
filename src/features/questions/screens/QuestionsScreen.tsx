@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import MainButton from "../../../components/buttons/MainButton";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { AppBar } from "../../../components/AppBar";
@@ -18,6 +18,7 @@ import { RootStackParamList } from "../../../app/RootNavigator";
 import { DrawerParamList } from "../../../app/DrawerNavigator";
 import { GameType } from "../../game/screens/GameScreen";
 import { getAllQuestions } from "../../../storage/database/tables";
+import { useTranslation } from "react-i18next";
 
 type QuestionsScreenNavigationProp = CompositeNavigationProp<
   DrawerNavigationProp<DrawerParamList, "QuestionsScreen">,
@@ -32,6 +33,8 @@ export const QuestionsScreen = () => {
   const [amountSelectorVisible, setAmountSelectorVisible] = useState(false);
   const { colors } = useAppTheme();
   const { width } = Dimensions.get("window");
+  const { t } = useTranslation();
+  const questionTypeTitles = useMemo(() => QuestionTypeTitles(), []);
   const gridItemWidth = (width - 60) / 2;
 
   // Data
@@ -69,7 +72,7 @@ export const QuestionsScreen = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <AppBar
-        title={"Câu hỏi đã lưu"}
+        title={t("drawer_saved_question_title")}
         leftIcon={<Ionicons name="menu" size={24} color="white" />}
         onLeftPress={handleOpenDrawer}
       />
@@ -87,7 +90,7 @@ export const QuestionsScreen = () => {
                 {type === QuestionType.Reading && "📖"}
                 {type === QuestionType.Listening && "🎧"}
               </CustomText>
-              <CustomText style={{ textAlign: "center", color: colors.textOnPrimary }}>{QuestionTypeTitles[type]}</CustomText>
+              <CustomText style={{ textAlign: "center", color: colors.textOnPrimary }}>{questionTypeTitles[type]}</CustomText>
             </TouchableOpacity>
           ))}
         </View>

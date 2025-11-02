@@ -16,6 +16,7 @@ import { createReviseQuestionSet, FirebaseService } from "../../../core/service"
 import { RootStackParamList } from "../../../app/RootNavigator";
 import { GameType } from "../../game/screens/GameScreen";
 import { FirebaseConstants } from "../../../constants";
+import { useTranslation } from "react-i18next";
 
 type QuestionListScreenRouteProp = RouteProp<RootStackParamList, "QuestionListScreen">;
 type QuestionListScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "QuestionListScreen">;
@@ -24,11 +25,12 @@ export const QuestionListScreen = () => {
   const navigation = useNavigation<QuestionListScreenNavigationProp>();
   const route = useRoute<QuestionListScreenRouteProp>();
   const { colors } = useAppTheme();
-
+  const { t } = useTranslation();
   const { type } = route.params as { type: QuestionType };
 
   const [questions, setQuestions] = useState<Question[]>([]);
   const [filteredQuestions, setFilteredQuestions] = useState<Question[]>([]);
+  const questionTypeTitles = QuestionTypeTitles();
 
   const [amountSelectorVisible, setAmountSelectorVisible] = useState(false);
   const [searchWord, setSearchWord] = useState("");
@@ -124,13 +126,13 @@ export const QuestionListScreen = () => {
 
   const handleNavigateToChatbotScreen = () => {
     FirebaseService.logEvent(FirebaseConstants.START_CREATING_QUESTIONS);
-    navigation.navigate("Main", { initialMessage: `Tạo câu hỏi mới về ${QuestionTypeTitles[type]}` });
+    navigation.navigate("Main", { initialMessage: `Tạo câu hỏi mới về ${questionTypeTitles[type]}` });
   };
 
   return (
     <View style={styles.container}>
       <AppBar
-        title={QuestionTypeTitles[type]}
+        title={questionTypeTitles[type]}
         leftIcon={<Ionicons name="arrow-back" size={24} color="white" />}
         rightIcon={<Ionicons name={isSearchVisible ? "search-circle-outline" : "search"} size={24} color="white" />}
         onLeftPress={() => navigation.pop()}
@@ -157,9 +159,7 @@ export const QuestionListScreen = () => {
           </ScrollView>
         ) : (
           <View style={styles.emptyContainer}>
-            <CustomText style={styles.emptyText}>
-              {"Các câu hỏi đã lưu sẽ hiển thị ở đây.\nHiện bạn chưa lưu lại câu hỏi nào"}
-            </CustomText>
+            <CustomText style={styles.emptyText}>{t("questions_screen_empty_title")}</CustomText>
             <MainButton
               title={"Tạo câu hỏi mới"}
               style={{ borderRadius: 100, marginTop: 16 }}

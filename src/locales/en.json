@@ -25,6 +25,12 @@
   "chatbot_screen_thinking": "Thinking...",
   "chatbot_screen_delete_conversation": "Delete conversation ?",
 
+  "question_type_vocabulary": "Vocabulary",
+  "question_type_grammar": "Grammar",
+  "question_type_reading": "Reading",
+  "question_type_listening": "Listening",
+  "questions_screen_empty_title": "Saved questions will be displayed here.\nYou haven't saved any questions yet",
+
   "next": "Next",
   "continue": "Continue",
   "confirm": "Confirm",

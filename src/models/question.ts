@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Answer, createAnswer } from "./answer";
 
 export enum QuestionType {
@@ -7,11 +8,14 @@ export enum QuestionType {
   Listening = "listening",
 }
 
-export const QuestionTypeTitles: Record<QuestionType, string> = {
-  [QuestionType.Vocabulary]: "Từ Vựng",
-  [QuestionType.Grammar]: "Ngữ Pháp",
-  [QuestionType.Reading]: "Đọc Hiểu",
-  [QuestionType.Listening]: "Nghe Hiểu",
+export const QuestionTypeTitles = (): Record<QuestionType, string> => {
+  const { t } = useTranslation();
+  return {
+    [QuestionType.Vocabulary]: t("question_type_vocabulary"),
+    [QuestionType.Grammar]: t("question_type_grammar"),
+    [QuestionType.Reading]: t("question_type_reading"),
+    [QuestionType.Listening]: t("question_type_listening"),
+  };
 };
 
 export type Question = {

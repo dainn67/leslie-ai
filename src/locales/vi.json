@@ -25,6 +25,12 @@
   "chatbot_screen_thinking": "Đang suy nghĩ...",
   "chatbot_screen_delete_conversation": "Xoá hội thoại ?",
 
+  "question_type_vocabulary": "Từ Vựng",
+  "question_type_grammar": "Ngữ Pháp",
+  "question_type_reading": "Đọc Hiểu",
+  "question_type_listening": "Nghe Hiểu",
+  "questions_screen_empty_title": "Các câu hỏi đã lưu sẽ hiển thị ở đây.\nHiện bạn chưa lưu lại câu hỏi nào",
+
   "next": "Tiếp theo",
   "continue": "Tiếp tục",
   "confirm": "Xác nhận",
