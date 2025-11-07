@@ -11,6 +11,7 @@ export const FirebaseConstants = {
   RESET_PROGRESS: "clear_progress",
   TOGGLE_THEME: "toggle_theme",
   UPDATE_EXAM_DATE: "update_exam_date",
+  CHANGE_LANGUAGE: "change_language",
 
   // Chatbot screen
   MESSAGE_SENT: "message_sent",

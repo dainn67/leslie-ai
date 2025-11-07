@@ -3,3 +3,4 @@ export * from "./appIcons";
 export * from "./apiConfig";
 export * from "./difyConfig";
 export * from "./firebaseConstants";
+export * from "./languages";
