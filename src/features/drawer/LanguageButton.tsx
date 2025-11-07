@@ -52,7 +52,7 @@ export const LanguageButton = ({ selectedLanguage, languages, onLanguageChange, 
     <View style={[styles.container, style]}>
       {/* Language Button */}
       <TouchableOpacity
-        style={[styles.button, { backgroundColor: colors.backgroundSecondary }]}
+        style={[styles.button, { backgroundColor: colors.grey + "85" }]}
         onPress={() => setIsDropdownVisible(true)}
         activeOpacity={0.7}
       >
@@ -94,27 +94,23 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 12,
-    paddingVertical: 8,
+    paddingHorizontal: 8,
     borderRadius: 24,
-    minWidth: 80,
+    paddingRight: 10,
   },
   flagContainer: {
     width: 28,
     height: 28,
-    borderRadius: 14,
     justifyContent: "center",
     alignItems: "center",
     overflow: "hidden",
-    backgroundColor: "#F0F0F0",
   },
   flagText: {
-    fontSize: 18,
+    fontSize: 15,
   },
   languageCode: {
-    fontSize: 14,
-    fontWeight: "600",
-    marginLeft: 8,
+    fontSize: 12,
+    marginLeft: 4,
     textTransform: "uppercase",
   },
   languageName: {
