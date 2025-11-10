@@ -10,6 +10,7 @@ import { createResultSummary, FirebaseService } from "../../../../core/service";
 import { IconButton } from "../../../../components/buttons";
 import { AppIcons } from "../../../../constants/appIcons";
 import { FirebaseConstants } from "../../../../constants";
+import { useTranslation } from "react-i18next";
 
 interface QuestionsMessageProps {
   questions: Question[];
@@ -23,7 +24,8 @@ export const QuestionsMessage = ({ questions, onAnalyze }: QuestionsMessageProps
   const [mapAnswer, setMapAnswer] = useState<{ [key: number]: number }>({});
   const [mapBookmark, setMapBookmark] = useState<boolean[]>(questions.map(() => false));
   const [playAudio, setPlayAudio] = useState(false);
-
+  const { t } = useTranslation();
+  
   useEffect(() => {
     // Analyze when all questions are answered
     if (!analyzed) {
@@ -102,7 +104,7 @@ export const QuestionsMessage = ({ questions, onAnalyze }: QuestionsMessageProps
           <CustomText
             style={[styles.navButtonText, styles.navButtonTextPrev, currentQuestionIndex === 0 && styles.disabledButtonText]}
           >
-            Trước
+            {t("previous")}
           </CustomText>
         </TouchableOpacity>
 
@@ -118,7 +120,7 @@ export const QuestionsMessage = ({ questions, onAnalyze }: QuestionsMessageProps
               currentQuestionIndex === questions.length - 1 && styles.disabledButtonText,
             ]}
           >
-            Tiếp
+            {t("next")}
           </CustomText>
         </TouchableOpacity>
       </View>
