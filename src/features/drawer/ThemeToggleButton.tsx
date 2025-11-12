@@ -46,14 +46,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 16,
     paddingVertical: 12,
-    marginHorizontal: 16,
-    marginVertical: 8,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "grey",
   },
   icon: {
-    marginRight: 12,
+    marginRight: 16,
   },
   label: {
     fontSize: 16,

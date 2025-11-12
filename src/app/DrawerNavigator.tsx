@@ -69,6 +69,9 @@ export const DrawerNavigator = () => {
           </DrawerContentScrollView>
 
           {/* Actions */}
+
+          <Divider />
+
           <SetExamDateButton />
           <ThemeToggleButton />
 
@@ -76,6 +79,9 @@ export const DrawerNavigator = () => {
 
           <ShareAppButton />
           <ResetProgressButton navigation={props.navigation} />
+
+          <Divider />
+
           <View
             style={{
               flexDirection: "row",
