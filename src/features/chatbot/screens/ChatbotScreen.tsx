@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import TTSInstance from "../../../core/service/ttsService";
-import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { AppBar } from "../../../components/AppBar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -10,7 +9,6 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 import { AppConfig } from "../../../constants/appConfig";
 import { updateUserProgress } from "../../userProgress/userProgressSlice";
 import { createChatMessage, MessageStatus } from "../../../models/chatMessage";
-import { MyDatePicker } from "../../../components/datePicker/MyDatePicker";
 import { convertDateToDDMMYYYY, normalizeDate } from "../../../utils/utils";
 import { createTmpUserProgress, UserProgress } from "../../../models/userProgress";
 import {
@@ -45,10 +43,11 @@ export const ChatbotScreen = () => {
   const route = useRoute<ChatbotScreenRouteProp>();
   const initialMessage = route.params?.initialMessage || "";
 
+  const { t } = useTranslation();
+
   // Drawer
   const navigation = useNavigation<ChatbotScreenNavigationProp>();
   const dialog = useDialog();
-  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const messages = useAppSelector((state) => getMessagesByCID(state.chatbot));
   const difyConversationId = useAppSelector((state) => getDifyConversationIdByCID(state.chatbot));
@@ -57,7 +56,6 @@ export const ChatbotScreen = () => {
   const userProgress = useAppSelector((state) => state.userProgress.userProgress);
   const isGenerating = ![MessageStatus.DONE, MessageStatus.ERROR].includes(messages[messages.length - 1]?.status);
 
-  const [datePickerVisible, setDatePickerVisible] = useState(false);
   const [nameDialogVisible, setNameDialogVisible] = useState(false);
 
   const initilized = useRef(false);
@@ -138,7 +136,7 @@ export const ChatbotScreen = () => {
     const result = ChatbotService.handleClickAction({ actionId });
 
     if (result?.ui === "openDatePicker") {
-      setDatePickerVisible(true);
+      dialog.showDatePicker(handleSelectExamDate);
     } else if (result?.ui === "doDiagnostic") {
       const questions = result?.questions;
       if (!questions) {
@@ -146,8 +144,6 @@ export const ChatbotScreen = () => {
       } else {
         navigation.navigate("GameScreen", { props: { questions, gameType: GameType.Diagnostic } });
       }
-    } else if (result?.ui === "openDatePicker") {
-      dialog.showDatePicker(handleSelectExamDate);
     } else {
       const updatedData = result?.sendMessage;
       if (updatedData) dispatch(updateUserProgress(updatedData));
@@ -236,26 +232,16 @@ export const ChatbotScreen = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       {/* Main chatbot screen */}
-      <View style={{ flex: 1 }}>
-        <AppBar
-          title={AppConfig.name}
-          leftIcon={<Ionicons name="menu" size={24} color="white" />}
-          rightIcon={<Ionicons name="trash" size={24} color="white" />}
-          onLeftPress={handleOpenMenu}
-          onRightPress={handleClearChat}
-          onDevClick={handleDevClick}
-        />
-        <ChatMessageList messages={messages} onClickAction={handleClickAction} onAnalyze={handleAnalyze} />
-        <ChatInput disable={isGenerating} onSend={handleManuallySend} />
-      </View>
-
-      {/* Date picker to set exam date if not set */}
-      <MyDatePicker
-        visible={datePickerVisible}
-        setVisible={setDatePickerVisible}
-        date={userProgress.examDate ? new Date(userProgress.examDate) : new Date()}
-        handleChange={handleSelectExamDate}
+      <AppBar
+        title={AppConfig.name}
+        leftIcon={<Ionicons name="menu" size={24} color="white" />}
+        rightIcon={<Ionicons name="trash" size={24} color="white" />}
+        onLeftPress={handleOpenMenu}
+        onRightPress={handleClearChat}
+        onDevClick={handleDevClick}
       />
+      <ChatMessageList messages={messages} onClickAction={handleClickAction} onAnalyze={handleAnalyze} />
+      <ChatInput disable={isGenerating} onSend={handleManuallySend} />
 
       <NameDialog visible={nameDialogVisible} onConfirm={handleSetName} />
     </GestureHandlerRootView>
