@@ -197,8 +197,6 @@ export class ChatbotService {
       }
     }
 
-    console.log(splittedText.slice(0, 5));
-
     return splittedText;
   };
 
