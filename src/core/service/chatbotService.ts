@@ -639,7 +639,7 @@ export class ChatbotService {
     }
     if (id === DifyConfig.setSuggestDiagnostic) {
       // Suggest diagnostic test
-      return { sendMessage: { target: DifyConfig.levelUnknown } };
+      return { sendMessage: { level: DifyConfig.levelUnknown } };
     }
     if (id === DifyConfig.setDoDiagnostic) {
       const diagnosticTest = getDiagnosticTest();
