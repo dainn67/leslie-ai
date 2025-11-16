@@ -7,7 +7,7 @@ import { connectSSE } from "../../api/sseClient";
 import { AppDispatch } from "../../app/store";
 import { DifyConfig } from "../../constants/difyConfig";
 import {
-  updateLastMessageData,
+  updateMessageData,
   updateConversationId,
   updateConversationSummary,
   addLoading,
@@ -239,6 +239,7 @@ export class ChatbotService {
 
     const token = question ? assistantApiKey : chatApiKey;
 
+    let messageId: string | undefined;
     let fullText = "";
     let wordIndex = 0;
     let wordLength = 0;
@@ -291,20 +292,20 @@ export class ChatbotService {
         auto_generate_name: false,
       },
       onMessage: (data) => {
+        messageId = data["message_id"];
         const type = data["event"];
-        const messageId = data["message_id"];
         const text = data["answer"];
-        const conversationId = data["conversation_id"];
+        const difyConversationId = data["conversation_id"];
         const nodeTitle = data["data"]?.["title"];
 
         if (nodeTitle) {
           const isGeneratedQuestions = nodeTitle == DifyConfig.titleGenQuestions;
           const isGeneratedFlashcards = nodeTitle == DifyConfig.titleGenFlashcards;
           if (!isQuestionJson && isGeneratedQuestions) {
-            dispatch(updateLastMessageData({ messageType: MessageType.QUESTIONS, cid: cid }));
+            dispatch(updateMessageData({ messageType: MessageType.QUESTIONS, cid: cid }));
             isQuestionJson = true;
           } else if (!isFlashcardJson && isGeneratedFlashcards) {
-            dispatch(updateLastMessageData({ messageType: MessageType.FLASHCARDS, cid: cid }));
+            dispatch(updateMessageData({ messageType: MessageType.FLASHCARDS, cid: cid }));
             isFlashcardJson = true;
           }
         }
@@ -313,8 +314,8 @@ export class ChatbotService {
           fullText += text;
         } else if (type === DifyConfig.typeWorkflowStart) {
           startReceiveMessage = true;
-          dispatch(updateLastMessageData({ messageId, cid: cid }));
-          dispatch(updateConversationId({ conversationId, cid: cid }));
+          dispatch(updateMessageData({ messageId, cid }));
+          dispatch(updateConversationId({ difyConversationId, cid }));
         } else if (type === DifyConfig.typeMessageEnd) {
           const usage = data["metadata"]["usage"];
           console.log(
@@ -324,19 +325,19 @@ export class ChatbotService {
       },
       onDone: () => {
         wordLength = ChatbotService.splitCustomWords(fullText).length;
-        dispatch(updateLastMessageData({ fullText: fullText, cid: cid }));
+        dispatch(updateMessageData({ messageId, fullText, cid }));
         if (isQuestionJson) {
           const { questions, summary } = ChatbotService.extractQuestionsFromJson(fullText);
-          dispatch(updateLastMessageData({ questions, summary, status: MessageStatus.DONE, cid: cid }));
+          dispatch(updateMessageData({ messageId, questions, summary, status: MessageStatus.DONE, cid }));
         } else if (isFlashcardJson) {
           const { flashcards, summary } = ChatbotService.extractFlashcardsFromJson(fullText);
-          dispatch(updateLastMessageData({ flashcards, summary, status: MessageStatus.DONE, cid: cid }));
+          dispatch(updateMessageData({ messageId, flashcards, summary, status: MessageStatus.DONE, cid }));
         }
       },
       onError: (error) => {
         if (!hasError) {
           hasError = true;
-          dispatch(updateLastMessageData({ status: MessageStatus.ERROR, cid: cid }));
+          dispatch(updateMessageData({ messageId, status: MessageStatus.ERROR, cid }));
 
           // Log errors
           DiscordService.sendDiscordMessage({
@@ -362,29 +363,29 @@ export class ChatbotService {
           if (words.length >= wordIndex + 1) {
             // Start streaming
             if (!startStreaming) {
-              if (!isQuestionJson) dispatch(updateLastMessageData({ status: MessageStatus.STREAMING, cid: cid }));
+              if (!isQuestionJson) dispatch(updateMessageData({ messageId, status: MessageStatus.STREAMING, cid }));
               startStreaming = true;
             }
 
             const nextWord = words[wordIndex];
-            dispatch(updateLastMessageData({ nextWord, cid: cid }));
+            dispatch(updateMessageData({ messageId, nextWord, cid }));
 
             wordIndex++;
 
             // Stop interval at lastword, after original stream is done
             if (wordLength > 0 && wordIndex == wordLength - 1) {
               const lastWord = words[wordIndex];
-              dispatch(updateLastMessageData({ nextWord: lastWord, cid: cid }));
+              dispatch(updateMessageData({ messageId, nextWord: lastWord, cid }));
 
               const splittedText = fullText.split(Delimiter);
               // Extract the suggested actions here to wait for the stream to finish
               const suggestedActions = ChatbotService.extractSuggestedActions(fullText);
-              dispatch(updateLastMessageData({ suggestedActions, cid: cid }));
+              dispatch(updateMessageData({ messageId, suggestedActions, cid }));
 
               // Extract the summary when finished
               const summary = splittedText[splittedText.length - 1].trim();
-              dispatch(updateLastMessageData({ summary, cid: cid }));
-              dispatch(updateLastMessageData({ status: MessageStatus.DONE, cid: cid }));
+              dispatch(updateMessageData({ messageId, summary, cid }));
+              dispatch(updateMessageData({ status: MessageStatus.DONE, cid }));
 
               clearInterval(interval);
             }
@@ -394,12 +395,12 @@ export class ChatbotService {
             const splittedText = fullText.split(Delimiter);
             // Extract the suggested actions here to wait for the stream to finish
             const suggestedActions = ChatbotService.extractSuggestedActions(fullText);
-            dispatch(updateLastMessageData({ suggestedActions, cid: cid }));
+            dispatch(updateMessageData({ suggestedActions, cid }));
 
             // Extract the summary when finished
             const summary = splittedText[splittedText.length - 1].trim();
-            dispatch(updateLastMessageData({ summary, cid: cid }));
-            dispatch(updateLastMessageData({ status: MessageStatus.DONE, cid: cid }));
+            dispatch(updateMessageData({ summary, cid }));
+            dispatch(updateMessageData({ messageId, status: MessageStatus.DONE, cid }));
 
             clearInterval(interval);
           }

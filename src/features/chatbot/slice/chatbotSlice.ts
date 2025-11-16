@@ -60,9 +60,9 @@ const chatbotSlice = createSlice({
         }),
       ];
     },
-    updateConversationId: (state, action: PayloadAction<{ cid?: string; conversationId: string }>) => {
+    updateConversationId: (state, action: PayloadAction<{ cid?: string; difyConversationId: string }>) => {
       const cid = action.payload.cid ?? mainCID;
-      state.difyConversationId[cid] = action.payload.conversationId;
+      state.difyConversationId[cid] = action.payload.difyConversationId;
     },
     updateConversationSummary: (state, action: PayloadAction<{ cid?: string; conversationSummary: string }>) => {
       const cid = action.payload.cid ?? mainCID;
@@ -70,7 +70,7 @@ const chatbotSlice = createSlice({
         state.conversationSummary[cid] = action.payload.conversationSummary;
       }
     },
-    updateLastMessageData: (
+    updateMessageData: (
       state,
       action: PayloadAction<{
         cid?: string;
@@ -85,11 +85,17 @@ const chatbotSlice = createSlice({
         summary?: string;
       }>
     ) => {
-      const cid = action.payload.cid ?? mainCID;
-      const message = state.messages[cid]?.at(-1);
+      const payload = action.payload;
+      const cid = payload.cid ?? mainCID;
+      const messageId = payload.messageId;
+
+      const foundMessage = state.messages[cid]?.find((m) => m.messageId === messageId);
+      const message = messageId && foundMessage ? foundMessage : state.messages[cid]?.at(-1);
+
       if (message) {
+        if (!message.messageId && messageId) message.messageId = messageId;
         // Loop through the payload and map to fields if exist
-        Object.entries(action.payload).forEach(([key, value]) => {
+        Object.entries(payload).forEach(([key, value]) => {
           if (value !== undefined && value !== null) {
             if (key === "nextWord") {
               message.words.push(value as string);
@@ -110,6 +116,6 @@ const chatbotSlice = createSlice({
   },
 });
 
-export const { addMessage, addLoading, updateConversationId, updateConversationSummary, updateLastMessageData, clearChat } =
+export const { addMessage, addLoading, updateConversationId, updateConversationSummary, updateMessageData, clearChat } =
   chatbotSlice.actions;
 export default chatbotSlice.reducer;

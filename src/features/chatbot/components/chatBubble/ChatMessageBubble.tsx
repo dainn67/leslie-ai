@@ -36,7 +36,7 @@ export const ChatMessageBubble = ({
   const showButtons = isStreamText && message.suggestedActions.length > 0;
 
   return (
-    <View id={message.id} style={styles.container}>
+    <View id={message.messageId} style={styles.container}>
       <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
         {hasError && <CustomText>Vui lòng thử lại sau...</CustomText>}
 

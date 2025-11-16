@@ -22,7 +22,7 @@ export enum MessageStatus {
 }
 
 export type ChatMessage = {
-  id: string;
+  messageId: string;
 
   // Streaming text
   words: string[];
@@ -51,7 +51,7 @@ export const createChatMessage = (partial?: Partial<ChatMessage>): ChatMessage =
   const words = partial?.words ?? ChatbotService.splitCustomWords(fullText);
   const timestamp = new Date().toISOString();
   return {
-    id: partial?.id ?? timestamp,
+    messageId: partial?.messageId ?? timestamp,
     fullText,
     words,
     wordsLength: partial?.wordsLength ?? words.length,
