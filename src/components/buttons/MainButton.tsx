@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { TouchableOpacity, View, StyleSheet, ViewStyle, TextStyle, StyleProp, ActivityIndicator } from 'react-native';
-import { CustomText } from '../text/customText';
-import { useAppTheme } from '../../theme';
+import React, { useState } from "react";
+import { TouchableOpacity, View, StyleSheet, ViewStyle, TextStyle, StyleProp, ActivityIndicator } from "react-native";
+import { CustomText } from "../text/customText";
+import { useAppTheme } from "../../theme";
 
 interface MainButtonProps {
   title: string;
@@ -15,11 +15,20 @@ interface MainButtonProps {
 // Component MainButton
 const MainButton = ({ title, onPress, disabled = false, loading = false, style, textStyle }: MainButtonProps) => {
   const [isPressed, setIsPressed] = useState(false);
+  const [pressedTime, setPressedTime] = useState(0);
+
+  const handlePress = () => {
+    const now = Date.now();
+    if (now - pressedTime < 500) return;
+
+    onPress();
+    setPressedTime(now);
+  };
 
   const handlePressIn = () => setIsPressed(true);
   const handlePressOut = () => setIsPressed(false);
 
-  const text = title.replaceAll('**', '').replace(/<[^>]*>/g, '');
+  const text = title.replaceAll("**", "").replace(/<[^>]*>/g, "");
 
   // Get passed in border radius
   const flattenedStyle = StyleSheet.flatten(style || {});
@@ -45,7 +54,7 @@ const MainButton = ({ title, onPress, disabled = false, loading = false, style, 
   return (
     <View style={containerStyles}>
       <TouchableOpacity
-        onPress={onPress}
+        onPress={handlePress}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         disabled={disabled || loading}
@@ -60,16 +69,16 @@ const MainButton = ({ title, onPress, disabled = false, loading = false, style, 
 
 const styles = StyleSheet.create({
   button: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     paddingHorizontal: 20,
     paddingVertical: 12,
     minHeight: 44,
   },
   text: {
     fontSize: 16,
-    fontWeight: '600',
-    color: 'white',
+    fontWeight: "600",
+    color: "white",
   },
 });
 
