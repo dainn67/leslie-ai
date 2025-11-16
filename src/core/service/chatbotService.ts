@@ -331,6 +331,7 @@ export class ChatbotService {
           dispatch(updateMessageData({ messageId, questions, summary, status: MessageStatus.DONE, cid }));
         } else if (isFlashcardJson) {
           const { flashcards, summary } = ChatbotService.extractFlashcardsFromJson(fullText);
+          console.log(`done: ${flashcards.length}`);
           dispatch(updateMessageData({ messageId, flashcards, summary, status: MessageStatus.DONE, cid }));
         }
       },
@@ -354,7 +355,7 @@ export class ChatbotService {
 
         let startStreaming = false;
         const interval = setInterval(() => {
-          if (isQuestionJson) clearInterval(interval);
+          if (isQuestionJson || isFlashcardJson) clearInterval(interval);
 
           // Split word every time update to find latest words
           const words = ChatbotService.splitCustomWords(fullText);
@@ -363,7 +364,9 @@ export class ChatbotService {
           if (words.length >= wordIndex + 1) {
             // Start streaming
             if (!startStreaming) {
-              if (!isQuestionJson) dispatch(updateMessageData({ messageId, status: MessageStatus.STREAMING, cid }));
+              if (!isQuestionJson && !isFlashcardJson) {
+                dispatch(updateMessageData({ messageId, status: MessageStatus.STREAMING, cid }));
+              }
               startStreaming = true;
             }
 
