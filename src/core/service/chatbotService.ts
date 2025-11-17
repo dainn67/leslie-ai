@@ -331,7 +331,6 @@ export class ChatbotService {
           dispatch(updateMessageData({ messageId, questions, summary, status: MessageStatus.DONE, cid }));
         } else if (isFlashcardJson) {
           const { flashcards, summary } = ChatbotService.extractFlashcardsFromJson(fullText);
-          console.log(`done: ${flashcards.length}`);
           dispatch(updateMessageData({ messageId, flashcards, summary, status: MessageStatus.DONE, cid }));
         }
       },
