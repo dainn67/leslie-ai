@@ -5,7 +5,6 @@ import { I18nextProvider } from "react-i18next";
 import { Provider } from "react-redux";
 import { store } from "./src/app/store";
 import { RootNavigator } from "./src/app/RootNavigator";
-import { ActivityIndicator, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { DialogProvider } from "./src/core/providers";
