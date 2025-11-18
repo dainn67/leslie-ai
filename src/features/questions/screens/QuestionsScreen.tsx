@@ -66,7 +66,7 @@ export const QuestionsScreen = () => {
   const handleSelectQuestion = (amount: number) => {
     const questions = allQuestions.slice(0, amount);
     FirebaseService.logEvent(FirebaseConstants.REVIEW_ALL_QUESTIONS, { amount });
-    navigation.navigate("GameScreen", { props: { questions, gameType: GameType.Practice } });
+    navigation.navigate("GameScreen", { questions, gameType: GameType.Practice });
   };
 
   return (
