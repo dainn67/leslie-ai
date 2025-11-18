@@ -22,7 +22,7 @@ import { useDialog } from "../../../core/providers";
 import { ChatMessageList, ChatInput } from "../components";
 import { AsyncStorageService, ChatbotService, FirebaseService, ToastService } from "../../../core/service";
 import { DifyConfig, FirebaseConstants } from "../../../constants";
-import { NameDialog } from "../../common/dialogs";
+import { NameDialog } from "../../../components/dialogs";
 import { RootStackParamList } from "../../../app/RootNavigator";
 import { DrawerParamList } from "../../../app/DrawerNavigator";
 import { GameType } from "../../game/screens/GameScreen";
