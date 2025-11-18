@@ -10,6 +10,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { DialogProvider } from "./src/core/providers";
 import { useAppInitialization } from "./src/hooks/hooks";
+import { SplashScreen } from "./src/features/splash/screen/SplashScreen";
 
 export default function App() {
   return (
@@ -28,13 +29,7 @@ export default function App() {
 const AppContent = () => {
   const { isReady } = useAppInitialization();
 
-  if (!isReady) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
+  if (!isReady) return <SplashScreen />;
 
   return (
     <DialogProvider>
