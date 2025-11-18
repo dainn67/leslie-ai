@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import OnboardingScreen from "../features/onboarding/screen/OnboardingScreen";
 import ApiServiceInstance from "../core/service/api/apiService";
-import Constants from "expo-constants";
 import i18n from "../locales";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -13,8 +12,7 @@ import { ResultScreen } from "../features/game/screens/ResultScreen";
 import { QuestionListScreen } from "../features/questions/screens/QuestionListScreen";
 import { ApiClient } from "../api/apiClient";
 import { loadLanguage } from "../core/service/locale_service";
-
-const { DIFY_CHAT_API_KEY, DIFY_CHAT_NGINROK_API_KEY } = Constants.expoConfig?.extra ?? {};
+import { env } from "../constants";
 
 export type RootStackParamList = {
   Onboarding: undefined;
@@ -74,7 +72,7 @@ export const RootNavigator = () => {
     };
 
     const checkDomainAvailable = async (domain: string) => {
-      const token = domain.includes("ngrok") ? DIFY_CHAT_NGINROK_API_KEY : DIFY_CHAT_API_KEY;
+      const token = env.getDifyChatApiKey(domain.includes("ngrok"));
       const result = await ApiClient.getData({ url: `${domain}/v1/info`, token });
       return result && result.author_name !== undefined && result.name !== undefined;
     };

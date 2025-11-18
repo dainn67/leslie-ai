@@ -1,4 +1,3 @@
-import Constants from "expo-constants";
 import ApiServiceInstance from "./api/apiService";
 import { DiscordService, DiscordWebhookType } from "./discordService";
 import { UserProgressService } from "./userProgressService";
@@ -17,25 +16,12 @@ import { Question, createQuestionString, createQuestion } from "../../models/que
 import { UserProgress } from "../../models/userProgress";
 import { convertDateToDDMMYYYY } from "../../utils";
 import { AsyncStorageService, FirebaseService, getDiagnosticTest } from ".";
-import { FirebaseConstants } from "../../constants";
+import { env, FirebaseConstants } from "../../constants";
 import { GameType } from "../../features/game/screens/GameScreen";
 import { createFlashcard, Flashcard } from "../../models";
 import { getQuestionsByTestId } from "../../storage/database/tables";
 
 export const Delimiter = "--//--";
-
-const {
-  DIFY_CHAT_API_KEY,
-  DIFY_CHAT_NGINROK_API_KEY,
-  DIFY_ANALYZE_GAME_RESULT_API_KEY,
-  DIFY_ANALYZE_GAME_RESULT_NGINROK_API_KEY,
-  DIFY_ASSISTANT_API_KEY,
-  DIFY_ASSISTANT_NGINROK_API_KEY,
-  DIFY_EXTRACT_CONTEXT_API_KEY,
-  DIFY_EXTRACT_CONTEXT_NGINROK_API_KEY,
-  DIFY_ANALYZE_PROGRESS_API_KEY,
-  DIFY_ANALYZE_PROGRESS_NGINROK_API_KEY,
-} = Constants.expoConfig?.extra ?? {};
 
 export class ChatbotService {
   static splitCustomWords = (input: string) => {
@@ -234,8 +220,8 @@ export class ChatbotService {
     const language = languageCode === "vi" ? "Vietnamese" : "English";
 
     const isUsingNginrok = await AsyncStorageService.getIsUsingNginrok();
-    const chatApiKey = isUsingNginrok ? DIFY_CHAT_NGINROK_API_KEY : DIFY_CHAT_API_KEY;
-    const assistantApiKey = isUsingNginrok ? DIFY_ASSISTANT_NGINROK_API_KEY : DIFY_ASSISTANT_API_KEY;
+    const chatApiKey = env.getDifyChatApiKey(isUsingNginrok);
+    const assistantApiKey = env.getDifyAssistantApiKey(isUsingNginrok);
 
     const token = question ? assistantApiKey : chatApiKey;
 
@@ -444,7 +430,7 @@ export class ChatbotService {
     let hasError = false;
 
     const isUsingNginrok = await AsyncStorageService.getIsUsingNginrok();
-    const analyzeGameResultApiKey = isUsingNginrok ? DIFY_ANALYZE_GAME_RESULT_NGINROK_API_KEY : DIFY_ANALYZE_GAME_RESULT_API_KEY;
+    const analyzeGameResultApiKey = env.getDifyAnalyzeGameResultApiKey(isUsingNginrok);
 
     // Original stream
     connectSSE({
@@ -535,8 +521,8 @@ export class ChatbotService {
     userName?: string;
   }) => {
     const isUsingNginrok = await AsyncStorageService.getIsUsingNginrok();
-    const extractContextApiKey = isUsingNginrok ? DIFY_EXTRACT_CONTEXT_NGINROK_API_KEY : DIFY_EXTRACT_CONTEXT_API_KEY;
-    const analyzeProgressApiKey = isUsingNginrok ? DIFY_ANALYZE_PROGRESS_NGINROK_API_KEY : DIFY_ANALYZE_PROGRESS_API_KEY;
+    const extractContextApiKey = env.getDifyExtractContextApiKey(isUsingNginrok);
+    const analyzeProgressApiKey = env.getDifyAnalyzeProgressApiKey(isUsingNginrok);
     const token = type === "context" ? extractContextApiKey : analyzeProgressApiKey;
 
     const result = await ApiClient.postData({
