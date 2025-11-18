@@ -412,14 +412,12 @@ export class ChatbotService {
     message,
     gameType,
     userName,
-    language,
     onYieldWord,
     onEvaluateLevel,
   }: {
     message: string;
     gameType: GameType;
     userName: string;
-    language: string;
     onYieldWord: (word: string) => void;
     onEvaluateLevel: (level: string) => void;
   }) => {
@@ -431,6 +429,9 @@ export class ChatbotService {
 
     const isUsingNginrok = await AsyncStorageService.getIsUsingNginrok();
     const analyzeGameResultApiKey = env.getDifyAnalyzeGameResultApiKey(isUsingNginrok);
+
+    const languageCode = await AsyncStorageService.getLanguage();
+    const language = languageCode === "vi" ? "Vietnamese" : "English";
 
     // Original stream
     connectSSE({

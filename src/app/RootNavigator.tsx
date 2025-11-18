@@ -13,10 +13,7 @@ export type RootStackParamList = {
   Onboarding: undefined;
   Main: { initialMessage?: string };
   GameScreen: { props: GameProps };
-  ResultScreen: {
-    props: GameProps;
-    mapAnswerIds: { [key: number]: number };
-  };
+  ResultScreen: GameProps & { mapAnswerIds: { [key: number]: number } };
   QuestionListScreen: { type: QuestionType };
 };
 
@@ -42,9 +39,9 @@ export const RootNavigator = () => {
       <Stack.Navigator initialRouteName={initialRoute} screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="Main" component={DrawerNavigator} />
-        <Stack.Screen name="QuestionListScreen" component={QuestionListScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="GameScreen" component={GameScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="ResultScreen" component={ResultScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="QuestionListScreen" component={QuestionListScreen} />
+        <Stack.Screen name="GameScreen" component={GameScreen} />
+        <Stack.Screen name="ResultScreen" component={ResultScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
