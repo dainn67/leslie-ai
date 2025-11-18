@@ -48,6 +48,12 @@ export const RootNavigator = () => {
 
       if (!cfg) return;
 
+      const checkDomainAvailable = async (domain: string) => {
+        const token = env.getDifyChatApiKey(domain.includes("ngrok"));
+        const result = await ApiClient.getData({ url: `${domain}/v1/info`, token });
+        return result && result.author_name !== undefined && result.name !== undefined;
+      };
+
       // Check domains available
       let selectedDomain = "";
       if (await checkDomainAvailable(cfg.dify_domain)) {
@@ -69,12 +75,6 @@ export const RootNavigator = () => {
     const initLanguage = async () => {
       await loadLanguage();
       setLanguage(i18n.language);
-    };
-
-    const checkDomainAvailable = async (domain: string) => {
-      const token = env.getDifyChatApiKey(domain.includes("ngrok"));
-      const result = await ApiClient.getData({ url: `${domain}/v1/info`, token });
-      return result && result.author_name !== undefined && result.name !== undefined;
     };
 
     initLanguage();
