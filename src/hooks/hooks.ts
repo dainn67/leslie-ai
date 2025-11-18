@@ -2,9 +2,13 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
 import { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
-import { initializeDatabase, UserProgressService, AsyncStorageService } from "../core/service";
+import { initializeDatabase, UserProgressService, AsyncStorageService, FirebaseService } from "../core/service";
 import { setTheme } from "../features/theme/themeSlice";
 import { updateUserProgress } from "../features/userProgress/userProgressSlice";
+import { ApiClient } from "../api/apiClient";
+import { env } from "../constants";
+import { loadLanguage } from "../core/service/locale_service";
+import ApiServiceInstance from "../core/service/api/apiService";
 
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
@@ -12,7 +16,10 @@ export const useAppDispatch = () => useDispatch<AppDispatch>();
 
 export const useAppInitialization = () => {
   const dispatch = useAppDispatch();
+
   const [isInitialized, setIsInitialized] = useState(false);
+  const [isLanguageLoaded, setIsLanguageLoaded] = useState(false);
+  const [isRemoteConfigLoaded, setIsRemoteConfigLoaded] = useState(false);
 
   // Load fonts
   const [fontsLoaded, fontError] = useFonts({
@@ -23,7 +30,7 @@ export const useAppInitialization = () => {
   });
 
   useEffect(() => {
-    async function initializeApp() {
+    const initializeApp = async () => {
       try {
         // Initialize database
         await initializeDatabase();
@@ -42,12 +49,52 @@ export const useAppInitialization = () => {
         console.error("App initialization error:", error);
       }
       setIsInitialized(true);
-    }
+    };
+
+    const loadRemoteConfigs = async () => {
+      const cfg = await FirebaseService.initializeRemoteConfig();
+
+      if (!FirebaseService.isInitialized()) {
+        console.log("Firebase not initialized");
+        return;
+      }
+
+      if (!cfg) return;
+
+      const checkDomainAvailable = async (domain: string) => {
+        const token = env.getDifyChatApiKey(domain.includes("ngrok"));
+        const result = await ApiClient.getData({ url: `${domain}/v1/info`, token });
+        return result && result.author_name !== undefined && result.name !== undefined;
+      };
+
+      // Check domains available
+      let selectedDomain = "";
+      if (await checkDomainAvailable(cfg.dify_domain)) {
+        selectedDomain = cfg.dify_domain;
+      } else if (await checkDomainAvailable(cfg.dify_domain_bak)) {
+        selectedDomain = cfg.dify_domain_bak;
+      }
+
+      // Set API base URL if domain is available
+      if (selectedDomain) {
+        ApiServiceInstance.setApiBaseUrl(selectedDomain);
+        AsyncStorageService.setIsUsingNginrok(selectedDomain.includes("ngrok"));
+        console.log("Selected domain:", selectedDomain);
+        setIsRemoteConfigLoaded(true);
+      }
+    };
+
+    const initLanguage = async () => {
+      await loadLanguage();
+      setIsLanguageLoaded(true);
+    };
 
     initializeApp();
+    loadRemoteConfigs();
+    initLanguage();
   }, [dispatch]);
 
-  const isReady = fontsLoaded && isInitialized && !fontError;
+  const isReady = fontsLoaded && isInitialized && !fontError && isLanguageLoaded && isRemoteConfigLoaded;
 
   return { isReady };
 };

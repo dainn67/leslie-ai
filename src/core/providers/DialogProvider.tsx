@@ -1,5 +1,5 @@
 import React, { ReactNode, useContext, useState, createContext, useRef } from "react";
-import { ConfirmDialog, AlertDialog } from "../../features/common/dialogs";
+import { ConfirmDialog, AlertDialog } from "../../components/dialogs";
 import { MyDatePicker } from "../../components/datePicker/MyDatePicker";
 import { useTranslation } from "react-i18next";
 

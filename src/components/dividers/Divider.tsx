@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { useAppTheme } from "../../../theme";
+import { useAppTheme } from "../../theme";
 
 export const Divider = () => {
   const { colors } = useAppTheme();

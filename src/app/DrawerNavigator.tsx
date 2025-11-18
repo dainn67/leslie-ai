@@ -13,7 +13,7 @@ import { FirebaseConstants } from "../constants";
 import { FirebaseService, AsyncStorageService } from "../core/service";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { RootStackParamList } from "./RootNavigator";
-import { Divider } from "../features/common/dividers/Divider";
+import { Divider } from "../components/dividers/Divider";
 import { ShareAppButton } from "../features/drawer/ShareAppButton";
 import { FlashcardScreen } from "../features/flashcard/FlashcardScreen";
 import { useTranslation } from "react-i18next";
