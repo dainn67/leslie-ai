@@ -1,7 +1,7 @@
 import Constants from "expo-constants";
 import ApiServiceInstance from "./api/apiService";
 import { DiscordService, DiscordWebhookType } from "./discordService";
-import { UserProgressService } from "./userProgressSerivice";
+import { UserProgressService } from "./userProgressService";
 import { ApiClient } from "../../api/apiClient";
 import { connectSSE } from "../../api/sseClient";
 import { AppDispatch } from "../../app/store";

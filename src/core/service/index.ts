@@ -1,5 +1,5 @@
 export * from "./chatbotService";
-export * from "./userProgressSerivice";
+export * from "./userProgressService";
 export * from "./discordService";
 export * from "./toastService";
 export * from "./firebaseService";

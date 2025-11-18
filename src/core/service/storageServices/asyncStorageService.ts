@@ -1,6 +1,6 @@
 import { ThemeMode } from "../../../features/theme/themeSlice";
 import { loadFromAsyncStorage, saveToAsyncStorage } from "../../../storage/asyncStorage/asyncStorage";
-import { AsyncStorageConstants } from "../../../storage/asyncStorage/asyncStorateConstant";
+import { AsyncStorageConstants } from "../../../storage/asyncStorage/asyncStorageConstant";
 
 export class AsyncStorageService {
   // Onboarding
