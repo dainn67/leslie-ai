@@ -142,7 +142,7 @@ export const ChatbotScreen = () => {
       if (!questions) {
         ToastService.show({ message: t("chatbot_cannot_load_question"), type: "error" });
       } else {
-        navigation.navigate("GameScreen", { props: { questions, gameType: GameType.Diagnostic } });
+        navigation.navigate("GameScreen", { questions, gameType: GameType.Diagnostic });
       }
     } else {
       const updatedData = result?.sendMessage;

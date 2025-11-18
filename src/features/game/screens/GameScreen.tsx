@@ -34,8 +34,8 @@ export type GameProps = {
 
 export const GameScreen = () => {
   const route = useRoute<GameScreenRouteProp>();
-  const { questions, gameType } = route.params.props;
 
+  const { questions, gameType } = route.params;
   const { colors } = useAppTheme();
   const { t } = useTranslation();
 

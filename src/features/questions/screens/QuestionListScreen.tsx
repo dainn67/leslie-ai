@@ -56,7 +56,7 @@ export const QuestionListScreen = () => {
     FirebaseService.logEvent(FirebaseConstants.REVIEW_QUESTION_SET, { amount });
 
     const selectedQuestions = createReviseQuestionSet(questions, amount);
-    navigation.navigate("GameScreen", { props: { questions: selectedQuestions, gameType: GameType.Practice } });
+    navigation.navigate("GameScreen", { questions: selectedQuestions, gameType: GameType.Practice });
   };
 
   const handleBookmarkPress = (isBookmarked: boolean, question: Question) => {

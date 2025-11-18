@@ -68,7 +68,7 @@ export const ResultScreen = () => {
   }, []);
 
   const handleTryAgain = () => {
-    navigation.replace("GameScreen", { props: { questions, gameType } });
+    navigation.replace("GameScreen", { questions, gameType });
   };
 
   return (

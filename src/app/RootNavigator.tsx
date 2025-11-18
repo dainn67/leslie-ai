@@ -12,7 +12,7 @@ import { QuestionListScreen } from "../features/questions/screens/QuestionListSc
 export type RootStackParamList = {
   Onboarding: undefined;
   Main: { initialMessage?: string };
-  GameScreen: { props: GameProps };
+  GameScreen: GameProps;
   ResultScreen: GameProps & { mapAnswerIds: { [key: number]: number } };
   QuestionListScreen: { type: QuestionType };
 };
