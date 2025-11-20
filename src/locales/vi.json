@@ -66,5 +66,7 @@
   "previous": "Trước",
   "continue": "Tiếp tục",
   "confirm": "Xác nhận",
-  "cancel": "Hủy"
+  "cancel": "Hủy",
+
+  "tts_not_supported": "Hiện TTS chưa hỗ trợ tiếng Nhật\nHãy vào Cài đặt > Văn bản sang giọng nói > Tải về ngôn ngữ Nhật"
 }

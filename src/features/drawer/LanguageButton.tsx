@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { TouchableOpacity, View, StyleSheet, Modal, FlatList, ViewStyle, StyleProp } from "react-native";
 import { useAppTheme } from "../../theme";
 import { CustomText } from "../../components/text/customText";
+import { FirebaseConstants, SUPPORTED_LANGUAGES } from "../../constants";
+import i18n from "../../locales";
+import { AsyncStorageService, FirebaseService } from "../../core/service";
 
 export interface Language {
   code: string;
@@ -10,18 +13,21 @@ export interface Language {
 }
 
 interface LanguageButtonProps {
-  selectedLanguage: Language;
-  languages: Language[];
-  onLanguageChange: (language: Language) => void;
   style?: StyleProp<ViewStyle>;
 }
 
-export const LanguageButton = ({ selectedLanguage, languages, onLanguageChange, style }: LanguageButtonProps) => {
+export const LanguageButton = ({ style }: LanguageButtonProps) => {
+  const [selectedLanguage, setSelectedLanguage] = useState<Language>(
+    SUPPORTED_LANGUAGES.find((lang) => lang.code === i18n.language) || SUPPORTED_LANGUAGES[0]
+  );
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const { colors } = useAppTheme();
 
-  const handleLanguageSelect = (language: Language) => {
-    onLanguageChange(language);
+  const handleLanguageSelect = async (language: Language) => {
+    setSelectedLanguage(language);
+    await AsyncStorageService.setLanguage(language.code);
+    await i18n.changeLanguage(language.code);
+    FirebaseService.logEvent(FirebaseConstants.CHANGE_LANGUAGE, { language: language.code });
     setIsDropdownVisible(false);
   };
 
@@ -75,7 +81,7 @@ export const LanguageButton = ({ selectedLanguage, languages, onLanguageChange, 
             ]}
           >
             <FlatList
-              data={languages}
+              data={SUPPORTED_LANGUAGES}
               renderItem={renderLanguageItem}
               keyExtractor={(item) => item.code}
               showsVerticalScrollIndicator={false}

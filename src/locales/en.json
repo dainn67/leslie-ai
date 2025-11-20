@@ -66,5 +66,7 @@
   "previous": "Previous",
   "continue": "Continue",
   "confirm": "Confirm",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+
+  "tts_not_supported": "TTS does not support Japanese\nPlease go to Settings > Text to Speech > Download Japanese language"
 }

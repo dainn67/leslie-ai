@@ -51,7 +51,7 @@ export const QuestionView = ({
 
   const handleToggleAudio = async () => {
     if (!TTSInstance.containJapaneseVoice) {
-      dialog.showAlert("Hiện TTS hỗ trợ ngôn ngữ Nhật\nHãy vào Cài đặt > Văn bản sang giọng nói > Tải về ngôn ngữ Nhật");
+      dialog.showAlert(t("tts_not_supported"));
       return;
     }
 

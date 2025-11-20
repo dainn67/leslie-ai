@@ -6,10 +6,12 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { CustomText } from "../../../components/text/customText";
 import { useAppTheme } from "../../../theme";
 import { RootStackParamList } from "../../../app/RootNavigator";
-import { AppConfig, FirebaseConstants } from "../../../constants";
+import { AppConfig, FirebaseConstants, SUPPORTED_LANGUAGES } from "../../../constants";
 import { AsyncStorageService } from "../../../core/service/storageServices/asyncStorageService";
 import { FirebaseService } from "../../../core/service";
 import { useTranslation } from "react-i18next";
+import { Language, LanguageButton } from "../../drawer";
+import i18n from "../../../locales";
 
 type OnboardingScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "Onboarding">;
 
@@ -46,8 +48,9 @@ const OnboardingScreen: React.FC = () => {
   const navigation = useNavigation<OnboardingScreenNavigationProp>();
   const flatListRef = useRef<FlatList>(null);
   const { t } = useTranslation();
-  const [currentIndex, setCurrentIndex] = useState(0);
   const { colors } = useAppTheme();
+
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const onboardingData = getOnboardingData();
 
@@ -104,6 +107,8 @@ const OnboardingScreen: React.FC = () => {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       {/* Onboarding Slides */}
+      {/* Top right content */}
+      <LanguageButton style={styles.languageButtonContainer} />
       <FlatList
         ref={flatListRef}
         data={onboardingData}
@@ -140,6 +145,12 @@ const styles = StyleSheet.create({
   },
   flatList: {
     flex: 1,
+  },
+  languageButtonContainer: {
+    position: "absolute",
+    top: 16,
+    right: 16,
+    zIndex: 1,
   },
   slide: {
     width: screenWidth,

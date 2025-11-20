@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import i18n from "../locales";
+import React from "react";
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
 import { View } from "react-native";
 import { useAppTheme } from "../theme";
@@ -10,15 +9,14 @@ import { FeedbackScreen } from "../features/feedback/FeedbackScreen";
 import { QuestionsScreen } from "../features/questions/screens/QuestionsScreen";
 import { VersionText, ResetProgressButton, ThemeToggleButton, SetExamDateButton } from "../features/drawer";
 import { FirebaseConstants } from "../constants";
-import { FirebaseService, AsyncStorageService } from "../core/service";
+import { FirebaseService } from "../core/service";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { RootStackParamList } from "./RootNavigator";
 import { Divider } from "../components/dividers/Divider";
 import { ShareAppButton } from "../features/drawer/ShareAppButton";
 import { FlashcardScreen } from "../features/flashcard/FlashcardScreen";
 import { useTranslation } from "react-i18next";
-import { Language, LanguageButton } from "../features/drawer/LanguageButton";
-import { SUPPORTED_LANGUAGES } from "../constants/languages";
+import { LanguageButton } from "../features/drawer/LanguageButton";
 
 // Define DrawerParamList for type safety
 export type DrawerParamList = {
@@ -34,20 +32,10 @@ type ChatbotScreenRouteProp = RouteProp<RootStackParamList, "Main">;
 export const DrawerNavigator = () => {
   const { colors } = useAppTheme();
   const { t } = useTranslation();
-  const [selectedLanguage, setSelectedLanguage] = useState<Language>(
-    SUPPORTED_LANGUAGES.find((lang) => lang.code === i18n.language) || SUPPORTED_LANGUAGES[0]
-  );
 
   // Params
   const route = useRoute<ChatbotScreenRouteProp>();
   const initialMessage = route.params?.initialMessage || "";
-
-  const handleLanguageChange = async (language: Language) => {
-    setSelectedLanguage(language);
-    await AsyncStorageService.setLanguage(language.code);
-    await i18n.changeLanguage(language.code);
-    FirebaseService.logEvent(FirebaseConstants.CHANGE_LANGUAGE, { language: language.code });
-  };
 
   return (
     <Drawer.Navigator
@@ -91,11 +79,7 @@ export const DrawerNavigator = () => {
             }}
           >
             <VersionText />
-            <LanguageButton
-              selectedLanguage={selectedLanguage}
-              languages={SUPPORTED_LANGUAGES}
-              onLanguageChange={handleLanguageChange}
-            />
+            <LanguageButton />
           </View>
         </View>
       )}
