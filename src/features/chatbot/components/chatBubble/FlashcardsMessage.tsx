@@ -68,30 +68,40 @@ export const FlashcardsMessage = ({ flashcards, onCreateQuestion }: FlashcardsMe
     <View style={styles.container}>
       <View style={styles.flashCardSection}>
         {/* Previous Button */}
-        <TouchableOpacity style={[styles.navButton]} onPress={goToPrevious} disabled={currentFlashcardIndex === 0}>
-          <Ionicons name="chevron-back" size={26} color={currentFlashcardIndex === 0 ? "#BDBDBD" : "#007AFF"} />
+        <TouchableOpacity 
+          style={styles.navButton} 
+          onPress={goToPrevious} 
+          disabled={currentFlashcardIndex === 0}
+        >
+          <Ionicons 
+            name="chevron-back" 
+            size={32} 
+            color={currentFlashcardIndex === 0 ? "#BDBDBD" : "#007AFF"} 
+          />
         </TouchableOpacity>
 
         {/* Flashcard */}
-        <FlipCard
-          key={currentFlashcardIndex}
-          front={currentFlashcard.front}
-          back={currentFlashcard.back}
-          flipped={flippedStatus[currentFlashcardIndex]}
-          bookmarked={mapBookmark[currentFlashcard.flashcardId]}
-          onFlip={handleFlip}
-          onBookmark={handleBookmark}
-        />
+        <View style={styles.flashcardWrapper}>
+          <FlipCard
+            key={currentFlashcardIndex}
+            front={currentFlashcard.front}
+            back={currentFlashcard.back}
+            flipped={flippedStatus[currentFlashcardIndex]}
+            bookmarked={mapBookmark[currentFlashcard.flashcardId]}
+            onFlip={handleFlip}
+            onBookmark={handleBookmark}
+          />
+        </View>
 
         {/* Next Button */}
         <TouchableOpacity
-          style={[styles.navButton]}
+          style={styles.navButton}
           onPress={goToNext}
           disabled={currentFlashcardIndex === flashcards.length - 1}
         >
           <Ionicons
             name="chevron-forward"
-            size={26}
+            size={32}
             color={currentFlashcardIndex === flashcards.length - 1 ? "#BDBDBD" : "#007AFF"}
           />
         </TouchableOpacity>
@@ -119,18 +129,18 @@ const styles = StyleSheet.create({
   },
   flashCardSection: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "stretch",
     justifyContent: "space-between",
-    paddingHorizontal: 12,
-    gap: 12,
+    width: "100%",
+  },
+  flashcardWrapper: {
+    flex: 1,
   },
   navButton: {
-    width: 48,
-    height: 48,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 100,
-    backgroundColor: "#F0F0F0",
+    width: 50,
+    paddingHorizontal: 8,
   },
   createQuestionButton: {
     marginTop: 16,
