@@ -196,6 +196,7 @@ export class ChatbotService {
     questionId,
     difyConversationId,
     question,
+    flashcards,
     dispatch,
   }: {
     message?: string;
@@ -209,6 +210,7 @@ export class ChatbotService {
     difyConversationId?: string;
     question?: Question;
     userProgress?: UserProgress;
+    flashcards?: Flashcard[];
     dispatch: AppDispatch;
   }) => {
     // Called at 2 places: Main chatbot and question chatbot assistant
@@ -253,6 +255,8 @@ export class ChatbotService {
     const questionString = question ? createQuestionString(question) : "";
     const cid = question?.questionId.toString() ?? DifyConfig.mainChatbotConversationId;
 
+    const flashcardsString = flashcards ? flashcards.map((f) => f.front).join(", ") : "";
+
     // Original stream
     connectSSE({
       url: ApiServiceInstance.chatApi,
@@ -269,6 +273,7 @@ export class ChatbotService {
           exam_date: examDateString,
           analyze_chat_game: analyzeChatGame ? 1 : 0,
           question_string: questionString,
+          flashcards_string: flashcardsString,
           user_progress_string: userProgressString,
           language: language,
         },

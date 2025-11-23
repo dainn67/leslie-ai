@@ -106,12 +106,14 @@ export const ChatbotScreen = () => {
     analyzeChatGame = false,
     actionId,
     newUserProgress,
+    flashcards,
   }: {
     text?: string;
     noUserMessage?: boolean;
     analyzeChatGame?: boolean;
     actionId?: string;
     newUserProgress?: UserProgress;
+    flashcards?: Flashcard[];
   }) => {
     const message = text;
     const userMessage = createChatMessage({ fullText: message });
@@ -127,6 +129,7 @@ export const ChatbotScreen = () => {
       userProgress: newUserProgress ?? userProgress,
       analyzeChatGame,
       actionId,
+      flashcards,
       dispatch,
     });
   };
@@ -199,6 +202,8 @@ export const ChatbotScreen = () => {
   const handleCreateQuestionFromFlashcard = (flashcards: Flashcard[]) => {
     // TODO: Tạo câu hỏi từ Flashcard
     console.log(flashcards.map((f) => f.front));
+    const text = t("chatbot_create_question_from_flashcard_content");
+    handleSend({ text, flashcards });
   };
 
   const handleClearChat = () => {
