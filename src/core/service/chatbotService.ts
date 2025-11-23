@@ -290,7 +290,7 @@ export class ChatbotService {
         const nodeTitle = data["data"]?.["title"];
 
         if (nodeTitle) {
-          const isGeneratedQuestions = nodeTitle == DifyConfig.titleGenQuestions;
+          const isGeneratedQuestions = nodeTitle == DifyConfig.titleGenQuestions || nodeTitle == DifyConfig.titleGenFlashcardQuestions;
           const isGeneratedFlashcards = nodeTitle == DifyConfig.titleGenFlashcards;
           if (!isQuestionJson && isGeneratedQuestions) {
             dispatch(updateMessageData({ messageType: MessageType.QUESTIONS, cid: cid }));

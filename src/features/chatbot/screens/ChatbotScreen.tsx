@@ -200,9 +200,7 @@ export const ChatbotScreen = () => {
   };
 
   const handleCreateQuestionFromFlashcard = (flashcards: Flashcard[]) => {
-    // TODO: Tạo câu hỏi từ Flashcard
-    console.log(flashcards.map((f) => f.front));
-    const text = t("chatbot_create_question_from_flashcard_content");
+    const text = t("chatbot_create_question_from_flashcard");
     handleSend({ text, flashcards });
   };
 
