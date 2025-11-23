@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 16,
   },
   flashCardSection: {
     flexDirection: "row",
