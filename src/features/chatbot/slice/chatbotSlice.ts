@@ -21,7 +21,7 @@ const initialState: ChatbotState = {
 
 export const getMessagesByCID = createSelector(
   [(state: ChatbotState) => state, (state: ChatbotState, cid?: string) => cid],
-  (state, cid) => state.messages[cid ?? mainCID] || []
+(state, cid) => state.messages[cid ?? mainCID] || []
 );
 
 export const getLatestMessageByCID = createSelector(

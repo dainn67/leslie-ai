@@ -27,6 +27,7 @@
   "chatbot_generating_question": "Đang tạo câu hỏi",
   "chatbot_generating_flashcard": "Đang tạo Flashcards",
   "chatbot_cannot_load_question": "Không thể tải câu hỏi",
+  "chatbot_create_question_from_flashcard": "Tạo câu hỏi từ Flashcard",
 
   "question_type_vocabulary": "Từ Vựng",
   "question_type_grammar": "Ngữ Pháp",

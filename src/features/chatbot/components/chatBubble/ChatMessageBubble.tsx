@@ -57,9 +57,11 @@ export const ChatMessageBubble = ({
 
         {/* Generated flashcards */}
         {isFlashCards && (
-          <View style={{ flexDirection: "row", flexWrap: "wrap", flex: 1 }}>
-            <FlashcardsMessage flashcards={message.flashcards} />
-          </View>
+          <FlashcardsMessage
+            flashcards={message.flashcards}
+            onCreateQuestion={() => {}}
+            style={{ flexDirection: "row", flexWrap: "wrap", flex: 1 }}
+          />
         )}
       </View>
 

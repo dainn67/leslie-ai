@@ -27,6 +27,7 @@
   "chatbot_generating_question": "Generating question",
   "chatbot_generating_flashcard": "Generating Flashcards",
   "chatbot_cannot_load_question": "Cannot load question",
+  "chatbot_create_question_from_flashcard": "Create Question from Flashcard",
 
   "question_type_vocabulary": "Vocabulary",
   "question_type_grammar": "Grammar",
