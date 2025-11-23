@@ -72,6 +72,10 @@ export const ChatbotBottomSheet: React.FC<ChatbotBottomSheetProps> = ({ visible,
     });
   };
 
+  const onCreateQuestionFromFlashcard = () => {
+    // TODO: Tạo câu hỏi từ Flashcard
+  };
+
   const handleSend = (message: string) => {
     const data = message.trim();
     const userMessage = createChatMessage({ fullText: data });

@@ -12,6 +12,7 @@ interface ChatMessageBubbleProps {
   isLastMessage?: boolean;
   componentHeight: number;
   onClickAction: (title: string, actionId?: string) => void;
+  onCreateQuestionFromFlashcard: () => void;
   onAnalyze?: (summary: string) => void;
 }
 
@@ -20,6 +21,7 @@ export const ChatMessageBubble = ({
   componentHeight,
   isLastMessage,
   onClickAction,
+  onCreateQuestionFromFlashcard,
   onAnalyze,
 }: ChatMessageBubbleProps) => {
   const { colors } = useAppTheme();
@@ -59,8 +61,8 @@ export const ChatMessageBubble = ({
         {isFlashCards && (
           <FlashcardsMessage
             flashcards={message.flashcards}
-            onCreateQuestion={() => {}}
             style={{ flexDirection: "row", flexWrap: "wrap", flex: 1 }}
+            onCreateQuestion={onCreateQuestionFromFlashcard}
           />
         )}
       </View>

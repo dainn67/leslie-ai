@@ -3,14 +3,16 @@ import { ChatMessageBubble } from "./chatBubble/ChatMessageBubble";
 import { ScrollView, View, StyleSheet, LayoutChangeEvent } from "react-native";
 import { useAppTheme } from "../../../theme";
 import { ChatMessage } from "../../../models/chatMessage";
+import { Flashcard } from "../../../models";
 
 interface ChatMessageListProps {
   messages: ChatMessage[];
   onClickAction: (title: string, actionId?: string) => void;
+  onCreateQuestionFromFlashcard?: (flashcards: Flashcard[]) => void;
   onAnalyze?: (summary: string) => void;
 }
 
-export const ChatMessageList = ({ messages, onClickAction, onAnalyze }: ChatMessageListProps) => {
+export const ChatMessageList = ({ messages, onClickAction, onCreateQuestionFromFlashcard, onAnalyze }: ChatMessageListProps) => {
   const scrollViewRef = useRef<ScrollView>(null);
   const { colors } = useAppTheme();
   const [componentHeight, setComponentHeight] = useState(0);
@@ -45,6 +47,7 @@ export const ChatMessageList = ({ messages, onClickAction, onAnalyze }: ChatMess
             message={message}
             componentHeight={componentHeight}
             onClickAction={onClickAction}
+            onCreateQuestionFromFlashcard={() => onCreateQuestionFromFlashcard?.(message.flashcards)}
             onAnalyze={onAnalyze}
           />
         ))}

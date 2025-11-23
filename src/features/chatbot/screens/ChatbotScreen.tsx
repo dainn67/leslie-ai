@@ -30,6 +30,7 @@ import { getAllFlashcards } from "../../../storage/database/tables/flashCardTabl
 import { CompositeNavigationProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
+import { Flashcard } from "../../../models";
 
 // Composite navigation type to handle both drawer and stack navigation
 type ChatbotScreenNavigationProp = CompositeNavigationProp<
@@ -195,6 +196,11 @@ export const ChatbotScreen = () => {
     }, 1000);
   };
 
+  const handleCreateQuestionFromFlashcard = (flashcards: Flashcard[]) => {
+    // TODO: Tạo câu hỏi từ Flashcard
+    console.log(flashcards.map((f) => f.front));
+  };
+
   const handleClearChat = () => {
     dialog.showConfirm(t("chatbot_screen_delete_conversation"), () => {
       FirebaseService.logEvent(FirebaseConstants.CLEAR_CHAT);
@@ -240,7 +246,12 @@ export const ChatbotScreen = () => {
         onRightPress={handleClearChat}
         onDevClick={handleDevClick}
       />
-      <ChatMessageList messages={messages} onClickAction={handleClickAction} onAnalyze={handleAnalyze} />
+      <ChatMessageList
+        messages={messages}
+        onClickAction={handleClickAction}
+        onAnalyze={handleAnalyze}
+        onCreateQuestionFromFlashcard={handleCreateQuestionFromFlashcard}
+      />
       <ChatInput disable={isGenerating} onSend={handleManuallySend} />
 
       <NameDialog visible={nameDialogVisible} onConfirm={handleSetName} />
