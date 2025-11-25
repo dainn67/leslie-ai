@@ -13,6 +13,9 @@ export default {
         foregroundImage: "./assets/images/app-logo.png",
         backgroundColor: "#ffffff",
       },
+      config: {
+        googleMobileAdsAppId: "ca-app-pub-6011704237608953~2270976120",
+      },
     },
     ios: {
       icon: "./assets/images/app-logo.png",
@@ -23,7 +26,16 @@ export default {
       resizeMode: "contain",
       backgroundColor: "#000000",
     },
-    plugins: ["expo-sqlite", "react-native-localize"],
+    plugins: [
+      "expo-sqlite",
+      "react-native-localize",
+      [
+        "react-native-google-mobile-ads",
+        {
+          androidAppId: "ca-app-pub-6011704237608953~2270976120",
+        },
+      ],
+    ],
     extra: {
       DIFY_CHAT_API_KEY: process.env.DIFY_CHAT_API_KEY,
       DIFY_CHAT_NGINROK_API_KEY: process.env.DIFY_CHAT_NGINROK_API_KEY,

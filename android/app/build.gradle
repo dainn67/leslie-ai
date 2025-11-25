@@ -1,8 +1,6 @@
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
-apply plugin: "com.google.gms.google-services"
-apply plugin: "com.google.firebase.crashlytics"
 
 def projectRoot = rootDir.getAbsoluteFile().getParentFile().getAbsolutePath()
 
@@ -94,8 +92,8 @@ android {
         applicationId 'com.leslie.app'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 31
-        versionName "1.2.5"
+        versionCode 32
+        versionName "1.2.6"
     }
     signingConfigs {
         debug {
@@ -152,7 +150,6 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
-    implementation(platform("com.google.firebase:firebase-bom:34.2.0"))
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";
@@ -178,3 +175,5 @@ dependencies {
         implementation jscFlavor
     }
 }
+
+apply plugin: 'com.google.gms.google-services'
