@@ -5,3 +5,4 @@ export * from "./difyConfig";
 export * from "./firebaseConstants";
 export * from "./languages";
 export * from "./envConfig";
+export * from "./adsConfig";

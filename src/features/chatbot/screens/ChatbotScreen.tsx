@@ -31,7 +31,7 @@ import { CompositeNavigationProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
 import { Flashcard } from "../../../models";
-import { TestBannerAds } from "../../ads/TestBannerAds";
+import { BannerAds } from "../../ads/BannerAds";
 
 // Composite navigation type to handle both drawer and stack navigation
 type ChatbotScreenNavigationProp = CompositeNavigationProp<
@@ -256,7 +256,7 @@ export const ChatbotScreen = () => {
         onAnalyze={handleAnalyze}
         onCreateQuestionFromFlashcard={handleCreateQuestionFromFlashcard}
       />
-      <TestBannerAds />
+      <BannerAds />
       <ChatInput disable={isGenerating} onSend={handleManuallySend} />
 
       <NameDialog visible={nameDialogVisible} onConfirm={handleSetName} />

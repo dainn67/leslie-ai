@@ -1,11 +1,11 @@
 import React from "react";
 import { View } from "react-native";
 import { BannerAd, BannerAdSize, TestIds } from "react-native-google-mobile-ads";
-import { AppConfig } from "../../constants";
+import { AdsConfig, AppConfig } from "../../constants";
 
-const bannerId = AppConfig.devMode ? TestIds.BANNER : "ca-app-pub-6011704237608953/2310302283";
+const bannerId = AppConfig.devMode ? TestIds.BANNER : AdsConfig.bannerId;
 
-export const TestBannerAds = () => {
+export const BannerAds = () => {
   return (
     <View style={{ alignItems: "center", marginTop: 20 }}>
       <BannerAd unitId={bannerId} size={BannerAdSize.BANNER} />
