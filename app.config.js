@@ -16,6 +16,7 @@ export default {
       config: {
         googleMobileAdsAppId: "ca-app-pub-6011704237608953~2270976120",
       },
+      edgeToEdgeEnabled: true,
     },
     ios: {
       icon: "./assets/images/app-logo.png",
