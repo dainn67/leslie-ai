@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		2CA234763E066F7AE5E162C5 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 253AE3C98A4976457E09EFD1 /* PrivacyInfo.xcprivacy */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		4ACF5C5D8B0437E00581007A /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F3B493749F9F67FB9A349 /* ExpoModulesProvider.swift */; };
-		79965F87869ACADEA2710805 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 5D2D263A07CEE28FD1F21D20 /* PrivacyInfo.xcprivacy */; };
+		5F4241632B4CDE8632B45281 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FA6BFFB326180E594FCE79 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		F0069AF7CC4924DD147058B1 /* libPods-AIkaze.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18D7D966870B609A882C19CA /* libPods-AIkaze.a */; };
+		C54DD63852F734BE9C2ED53B /* libPods-AIkaze.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 327A9FCB52D46221F0C2F1D3 /* libPods-AIkaze.a */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -20,16 +20,16 @@
 		13B07F961A680F5B00A75B9A /* AIkaze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AIkaze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = AIkaze/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = AIkaze/Info.plist; sourceTree = "<group>"; };
-		18D7D966870B609A882C19CA /* libPods-AIkaze.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AIkaze.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1F3F3B493749F9F67FB9A349 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-AIkaze/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		5D2D263A07CEE28FD1F21D20 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = AIkaze/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		7F8DC881006CBED40134A4E3 /* Pods-AIkaze.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AIkaze.debug.xcconfig"; path = "Target Support Files/Pods-AIkaze/Pods-AIkaze.debug.xcconfig"; sourceTree = "<group>"; };
+		253AE3C98A4976457E09EFD1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = AIkaze/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		2FE31D1184D600E414D7A130 /* Pods-AIkaze.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AIkaze.release.xcconfig"; path = "Target Support Files/Pods-AIkaze/Pods-AIkaze.release.xcconfig"; sourceTree = "<group>"; };
+		327A9FCB52D46221F0C2F1D3 /* libPods-AIkaze.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AIkaze.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4475985DD4AFAB81B923719B /* Pods-AIkaze.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AIkaze.debug.xcconfig"; path = "Target Support Files/Pods-AIkaze/Pods-AIkaze.debug.xcconfig"; sourceTree = "<group>"; };
+		A9FA6BFFB326180E594FCE79 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-AIkaze/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = AIkaze/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = AIkaze/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* AIkaze-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "AIkaze-Bridging-Header.h"; path = "AIkaze/AIkaze-Bridging-Header.h"; sourceTree = "<group>"; };
-		F1407B4BC8BD2A8489B7EEDA /* Pods-AIkaze.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AIkaze.release.xcconfig"; path = "Target Support Files/Pods-AIkaze/Pods-AIkaze.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,21 +37,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0069AF7CC4924DD147058B1 /* libPods-AIkaze.a in Frameworks */,
+				C54DD63852F734BE9C2ED53B /* libPods-AIkaze.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		019CD37CA2CBD27228E9991C /* ExpoModulesProviders */ = {
-			isa = PBXGroup;
-			children = (
-				672146752C1E01E2E6AFF1C6 /* AIkaze */,
-			);
-			name = ExpoModulesProviders;
-			sourceTree = "<group>";
-		};
 		13B07FAE1A68108700A75B9A /* AIkaze */ = {
 			isa = PBXGroup;
 			children = (
@@ -61,36 +53,36 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				5D2D263A07CEE28FD1F21D20 /* PrivacyInfo.xcprivacy */,
+				253AE3C98A4976457E09EFD1 /* PrivacyInfo.xcprivacy */,
 			);
 			name = AIkaze;
+			sourceTree = "<group>";
+		};
+		2B60767558D45D3BDF65BF2F /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				F3D44139A9F10E5290B12339 /* AIkaze */,
+			);
+			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				18D7D966870B609A882C19CA /* libPods-AIkaze.a */,
+				327A9FCB52D46221F0C2F1D3 /* libPods-AIkaze.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		3EBE117247BD62BB53463F63 /* Pods */ = {
+		344D4D7ED470374F866CD27A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				7F8DC881006CBED40134A4E3 /* Pods-AIkaze.debug.xcconfig */,
-				F1407B4BC8BD2A8489B7EEDA /* Pods-AIkaze.release.xcconfig */,
+				4475985DD4AFAB81B923719B /* Pods-AIkaze.debug.xcconfig */,
+				2FE31D1184D600E414D7A130 /* Pods-AIkaze.release.xcconfig */,
 			);
 			name = Pods;
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		672146752C1E01E2E6AFF1C6 /* AIkaze */ = {
-			isa = PBXGroup;
-			children = (
-				1F3F3B493749F9F67FB9A349 /* ExpoModulesProvider.swift */,
-			);
-			name = AIkaze;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -107,8 +99,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				3EBE117247BD62BB53463F63 /* Pods */,
-				019CD37CA2CBD27228E9991C /* ExpoModulesProviders */,
+				344D4D7ED470374F866CD27A /* Pods */,
+				2B60767558D45D3BDF65BF2F /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -132,6 +124,14 @@
 			path = AIkaze/Supporting;
 			sourceTree = "<group>";
 		};
+		F3D44139A9F10E5290B12339 /* AIkaze */ = {
+			isa = PBXGroup;
+			children = (
+				A9FA6BFFB326180E594FCE79 /* ExpoModulesProvider.swift */,
+			);
+			name = AIkaze;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -140,14 +140,14 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "AIkaze" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				A8C649A6EC4F7A088A8577E4 /* [Expo] Configure project */,
+				77B7FBB2188737223A7D2EBB /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				841E2A1B5FAD070F21E61B04 /* [CP] Embed Pods Frameworks */,
-				09DF5EEADD4A1755F0691E31 /* [CP-User] [RNGoogleMobileAds] Configuration */,
+				FD054376F0299DBBD717199F /* [CP] Embed Pods Frameworks */,
+				7EDBA7803C59BE17C7CC2EE6 /* [CP-User] [RNGoogleMobileAds] Configuration */,
 			);
 			buildRules = (
 			);
@@ -197,7 +197,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				79965F87869ACADEA2710805 /* PrivacyInfo.xcprivacy in Resources */,
+				2CA234763E066F7AE5E162C5 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,7 +241,26 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		09DF5EEADD4A1755F0691E31 /* [CP-User] [RNGoogleMobileAds] Configuration */ = {
+		77B7FBB2188737223A7D2EBB /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-AIkaze/expo-configure-project.sh\"\n";
+		};
+		7EDBA7803C59BE17C7CC2EE6 /* [CP-User] [RNGoogleMobileAds] Configuration */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -332,7 +351,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AIkaze/Pods-AIkaze-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		841E2A1B5FAD070F21E61B04 /* [CP] Embed Pods Frameworks */ = {
+		FD054376F0299DBBD717199F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -350,25 +369,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AIkaze/Pods-AIkaze-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A8C649A6EC4F7A088A8577E4 /* [Expo] Configure project */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "[Expo] Configure project";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-AIkaze/expo-configure-project.sh\"\n";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -377,7 +377,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				4ACF5C5D8B0437E00581007A /* ExpoModulesProvider.swift in Sources */,
+				5F4241632B4CDE8632B45281 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,7 +386,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7F8DC881006CBED40134A4E3 /* Pods-AIkaze.debug.xcconfig */;
+			baseConfigurationReference = 4475985DD4AFAB81B923719B /* Pods-AIkaze.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -422,7 +422,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F1407B4BC8BD2A8489B7EEDA /* Pods-AIkaze.release.xcconfig */;
+			baseConfigurationReference = 2FE31D1184D600E414D7A130 /* Pods-AIkaze.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
