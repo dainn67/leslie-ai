@@ -32,6 +32,8 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
 import { Flashcard } from "../../../models";
 import { BannerAds } from "../../ads/BannerAds";
+import { View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 // Composite navigation type to handle both drawer and stack navigation
 type ChatbotScreenNavigationProp = CompositeNavigationProp<
@@ -242,24 +244,26 @@ export const ChatbotScreen = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       {/* Main chatbot screen */}
-      <AppBar
-        title={AppConfig.name}
-        leftIcon={<Ionicons name="menu" size={24} color="white" />}
-        rightIcon={<Ionicons name="trash" size={24} color="white" />}
-        onLeftPress={handleOpenMenu}
-        onRightPress={handleClearChat}
-        onDevClick={handleDevClick}
-      />
-      <ChatMessageList
-        messages={messages}
-        onClickAction={handleClickAction}
-        onAnalyze={handleAnalyze}
-        onCreateQuestionFromFlashcard={handleCreateQuestionFromFlashcard}
-      />
-      <BannerAds />
-      <ChatInput disable={isGenerating} onSend={handleManuallySend} />
+      <SafeAreaView style={{ flex: 1 }}>
+        <AppBar
+          title={AppConfig.name}
+          leftIcon={<Ionicons name="menu" size={24} color="white" />}
+          rightIcon={<Ionicons name="trash" size={24} color="white" />}
+          onLeftPress={handleOpenMenu}
+          onRightPress={handleClearChat}
+          onDevClick={handleDevClick}
+        />
+        <ChatMessageList
+          messages={messages}
+          onClickAction={handleClickAction}
+          onAnalyze={handleAnalyze}
+          onCreateQuestionFromFlashcard={handleCreateQuestionFromFlashcard}
+        />
+        <BannerAds />
+        <ChatInput disable={isGenerating} onSend={handleManuallySend} />
 
-      <NameDialog visible={nameDialogVisible} onConfirm={handleSetName} />
+        <NameDialog visible={nameDialogVisible} onConfirm={handleSetName} />
+      </SafeAreaView>
     </GestureHandlerRootView>
   );
 };

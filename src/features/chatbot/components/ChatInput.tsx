@@ -31,40 +31,38 @@ export const ChatInput = ({ disable, placeHolderText, onSend }: ChatInputProps) 
       style={{ backgroundColor: colors.background }}
       keyboardVerticalOffset={0}
     >
-      <SafeAreaView>
-        <View style={styles.inputContainer}>
-          <View style={[styles.inputBox, disable && styles.inputBoxDisabled]}>
-            <View style={styles.iconContainer}>
-              <Ionicons name="chatbubble-outline" size={18} color={colors.textOnPrimary} />
-            </View>
-            <TextInput
-              style={[styles.textInput, disable && styles.textInputDisabled]}
-              placeholder={(placeHolderText ?? disable) ? t("chatbot_screen_thinking") : t("chatbot_screen_placeholder")}
-              placeholderTextColor={colors.placeholder}
-              value={message}
-              onSubmitEditing={handleSend}
-              onChangeText={setMessage}
-              multiline
-              maxLength={500}
-              editable={!disable}
-            />
-            {message.length > 0 && !disable && (
-              <TouchableOpacity style={styles.clearButton} onPress={() => setMessage("")} activeOpacity={0.7}>
-                <Ionicons name="close-circle" size={20} color={colors.text} />
-              </TouchableOpacity>
-            )}
+      <View style={styles.inputContainer}>
+        <View style={[styles.inputBox, disable && styles.inputBoxDisabled]}>
+          <View style={styles.iconContainer}>
+            <Ionicons name="chatbubble-outline" size={18} color={colors.textOnPrimary} />
           </View>
-
-          <TouchableOpacity
-            style={[styles.sendButton, (message.length === 0 || disable) && styles.sendButtonDisabled]}
-            disabled={message.length === 0 || disable}
-            onPress={handleSend}
-            activeOpacity={0.8}
-          >
-            <Ionicons name="send" size={18} color={"white"} />
-          </TouchableOpacity>
+          <TextInput
+            style={[styles.textInput, disable && styles.textInputDisabled]}
+            placeholder={(placeHolderText ?? disable) ? t("chatbot_screen_thinking") : t("chatbot_screen_placeholder")}
+            placeholderTextColor={colors.placeholder}
+            value={message}
+            onSubmitEditing={handleSend}
+            onChangeText={setMessage}
+            multiline
+            maxLength={500}
+            editable={!disable}
+          />
+          {message.length > 0 && !disable && (
+            <TouchableOpacity style={styles.clearButton} onPress={() => setMessage("")} activeOpacity={0.7}>
+              <Ionicons name="close-circle" size={20} color={colors.text} />
+            </TouchableOpacity>
+          )}
         </View>
-      </SafeAreaView>
+
+        <TouchableOpacity
+          style={[styles.sendButton, (message.length === 0 || disable) && styles.sendButtonDisabled]}
+          disabled={message.length === 0 || disable}
+          onPress={handleSend}
+          activeOpacity={0.8}
+        >
+          <Ionicons name="send" size={18} color={"white"} />
+        </TouchableOpacity>
+      </View>
     </KeyboardAvoidingView>
   );
 };
@@ -75,9 +73,7 @@ const getStyles = (message: string, colors: any) =>
       flexDirection: "row",
       alignItems: "center",
       paddingHorizontal: 20,
-      paddingVertical: 16,
-      borderTopWidth: 0.5,
-      borderColor: colors.grey,
+      paddingVertical: 8,
     },
     inputBox: {
       flex: 1,
