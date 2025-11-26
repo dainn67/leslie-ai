@@ -104,7 +104,9 @@ export const insertQuestions = (questions: Question[]) => {
         return `(${question.questionId}, "${questionString}", "${explanationString}", "${question.type}", "${question.audio}")`;
       })
       .join(", ");
-    db.execSync(`INSERT INTO ${QuestionTable.tableName} ${questionColumns} VALUES ${questionValues}`);
+    const questionSql = `INSERT INTO ${QuestionTable.tableName} ${questionColumns} VALUES ${questionValues}`;
+    console.log("questionSql", questionSql);
+    db.execSync(questionSql);
 
     const answerColumns = `(${AnswerTable.columnQuestionId}, ${AnswerTable.columnAnswerId}, ${AnswerTable.columnAnswer}, ${AnswerTable.columnIsCorrect})`;
     const answerValues = questions
@@ -115,7 +117,9 @@ export const insertQuestions = (questions: Question[]) => {
         })
       )
       .join(", ");
-    db.execSync(`INSERT INTO ${AnswerTable.tableName} ${answerColumns} VALUES ${answerValues}`);
+    const answerSql = `INSERT INTO ${AnswerTable.tableName} ${answerColumns} VALUES ${answerValues}`;
+    console.log("answerSql", answerSql);
+    db.execSync(answerSql);
   });
 };
 

@@ -188,8 +188,8 @@ const styles = StyleSheet.create({
       height: 4,
     },
     shadowOpacity: 0.15,
-    shadowRadius: 16,
-    elevation: 8,
+    shadowRadius: 8,
+    elevation: 5,
   },
   questionHeader: {
     flexDirection: "row",

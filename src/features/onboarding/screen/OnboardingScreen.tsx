@@ -1,17 +1,17 @@
 import React, { useState, useRef } from "react";
 import MainButton from "../../../components/buttons/MainButton";
-import { View, StyleSheet, Dimensions, FlatList, Image, SafeAreaView } from "react-native";
+import { View, StyleSheet, Dimensions, FlatList, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { CustomText } from "../../../components/text/customText";
 import { useAppTheme } from "../../../theme";
 import { RootStackParamList } from "../../../app/RootNavigator";
-import { AppConfig, FirebaseConstants, SUPPORTED_LANGUAGES } from "../../../constants";
+import { AppConfig, FirebaseConstants } from "../../../constants";
 import { AsyncStorageService } from "../../../core/service/storageServices/asyncStorageService";
 import { FirebaseService } from "../../../core/service";
 import { useTranslation } from "react-i18next";
-import { Language, LanguageButton } from "../../drawer";
-import i18n from "../../../locales";
+import { LanguageButton } from "../../drawer";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type OnboardingScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "Onboarding">;
 
@@ -106,9 +106,8 @@ const OnboardingScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      {/* Onboarding Slides */}
-      {/* Top right content */}
       <LanguageButton style={styles.languageButtonContainer} />
+
       <FlatList
         ref={flatListRef}
         data={onboardingData}
@@ -148,7 +147,7 @@ const styles = StyleSheet.create({
   },
   languageButtonContainer: {
     position: "absolute",
-    top: 16,
+    top: 32,
     right: 16,
     zIndex: 1,
   },
@@ -202,8 +201,8 @@ const styles = StyleSheet.create({
   nextButton: {
     borderRadius: 12,
     paddingVertical: 16,
-    marginHorizontal: 40,
-    marginBottom: 24,
+    marginHorizontal: 32,
+    marginBottom: 8,
   },
 });
 
