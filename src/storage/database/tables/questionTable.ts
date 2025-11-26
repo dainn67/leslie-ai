@@ -20,7 +20,7 @@ export const AnswerTable = {
   columnId: "id",
   columnAnswerId: "answerId",
   columnQuestionId: "questionId",
-  columnAnswer: "answer",
+  columnText: "text",
   columnIsCorrect: "isCorrect",
   columnLastUpdate: "lastUpdate",
 };
@@ -44,7 +44,7 @@ export const createQuestionTable = () => {
           ${AnswerTable.columnId} INTEGER PRIMARY KEY AUTOINCREMENT,
           ${AnswerTable.columnAnswerId} INTEGER,
           ${AnswerTable.columnQuestionId} INTEGER,
-          ${AnswerTable.columnAnswer} TEXT,
+          ${AnswerTable.columnText} TEXT,
           ${AnswerTable.columnIsCorrect} INTEGER,
           ${AnswerTable.columnLastUpdate} INTEGER,
           FOREIGN KEY (${AnswerTable.columnQuestionId}) REFERENCES ${QuestionTable.tableName}(${QuestionTable.columnQuestionId}))`
@@ -108,7 +108,7 @@ export const insertQuestions = (questions: Question[]) => {
     console.log("questionSql", questionSql);
     db.execSync(questionSql);
 
-    const answerColumns = `(${AnswerTable.columnQuestionId}, ${AnswerTable.columnAnswerId}, ${AnswerTable.columnAnswer}, ${AnswerTable.columnIsCorrect})`;
+    const answerColumns = `(${AnswerTable.columnQuestionId}, ${AnswerTable.columnAnswerId}, ${AnswerTable.columnText}, ${AnswerTable.columnIsCorrect})`;
     const answerValues = questions
       .flatMap((question) =>
         question.answers.map((answer) => {
