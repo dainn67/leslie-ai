@@ -59,7 +59,7 @@ export const FeedbackScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <AppBar
         title={t("feedback_screen_title")}
         leftIcon={<Ionicons name="menu" size={24} color="white" />}
@@ -154,7 +154,6 @@ export const FeedbackScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
   },
   scrollView: {
     flex: 1,

@@ -71,7 +71,7 @@ export const QuestionsScreen = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
       <AppBar
         title={t("drawer_saved_question_title")}
         leftIcon={<Ionicons name="menu" size={24} color="white" />}

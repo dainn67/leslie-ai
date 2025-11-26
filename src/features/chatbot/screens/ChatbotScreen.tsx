@@ -32,6 +32,7 @@ import { useTranslation } from "react-i18next";
 import { Flashcard } from "../../../models";
 import { BannerAds } from "../../ads/BannerAds";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useAppTheme } from "../../../theme";
 
 // Composite navigation type to handle both drawer and stack navigation
 type ChatbotScreenNavigationProp = CompositeNavigationProp<
@@ -46,6 +47,7 @@ export const ChatbotScreen = () => {
   const initialMessage = route.params?.initialMessage || "";
 
   const { t } = useTranslation();
+  const { colors } = useAppTheme();
 
   // Drawer
   const navigation = useNavigation<ChatbotScreenNavigationProp>();
@@ -240,7 +242,7 @@ export const ChatbotScreen = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
       <AppBar
         title={AppConfig.name}
         leftIcon={<Ionicons name="menu" size={24} color="white" />}

@@ -131,7 +131,7 @@ export const QuestionListScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <AppBar
         title={questionTypeTitles[type]}
         leftIcon={<Ionicons name="arrow-back" size={24} color="white" />}
@@ -223,7 +223,6 @@ export const QuestionListScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
   },
   stackContainer: {
     flex: 1,

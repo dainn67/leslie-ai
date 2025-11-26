@@ -9,18 +9,19 @@ import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { DrawerParamList } from "../../app/DrawerNavigator";
 import { FlipCard } from "./component/FlipCard";
 import { ScrollView, View, StyleSheet, Dimensions } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Flashcard } from "../../models";
 import { deleteFlashcards, getAllFlashcards, insertFlashcards } from "../../storage/database/tables/flashCardTable";
 import { CustomText } from "../../components/text/customText";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BannerAds } from "../ads/BannerAds";
+import { useAppTheme } from "../../theme";
 
 export const FlashcardScreen = () => {
   const navigation = useNavigation<DrawerNavigationProp<DrawerParamList, "FlashCardScreen">>();
   const { width } = Dimensions.get("window");
   const { t } = useTranslation();
+  const { colors } = useAppTheme();
 
   // const [amountSelectorVisible, setAmountSelectorVisible] = useState(false);
 
@@ -82,7 +83,7 @@ export const FlashcardScreen = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
       <View style={[styles.container]}>
         <AppBar title={"Flash Card"} leftIcon={<Ionicons name="menu" size={24} color="white" />} onLeftPress={handleOpenDrawer} />
 
@@ -108,7 +109,7 @@ export const FlashcardScreen = () => {
           </ScrollView>
         ) : (
           <View style={styles.emptyContainer}>
-            <CustomText style={styles.emptyText}>{t("flashcard_screen_empty_title")}</CustomText>
+            <CustomText style={[styles.emptyText, { color: colors.text }]}>{t("flashcard_screen_empty_title")}</CustomText>
             <MainButton
               title={t("create_new_flashcard")}
               style={{ borderRadius: 100, marginTop: 16 }}

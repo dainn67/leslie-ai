@@ -74,7 +74,7 @@ export const ResultScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <AppBar
         title={"Kết quả"}
         leftIcon={<Ionicons name="arrow-back" size={24} color="white" />}
@@ -168,7 +168,6 @@ export const ResultScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
   },
   content: {
     flex: 1,
