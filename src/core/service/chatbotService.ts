@@ -279,7 +279,7 @@ export class ChatbotService {
         },
         conversation_id: difyConversationId,
         response_mode: "streaming",
-        user: userProgress?.userName,
+        user: userProgress?.userName ?? "none",
         auto_generate_name: false,
       },
       onMessage: (data) => {

@@ -37,6 +37,8 @@ export const ChatbotBottomSheet: React.FC<ChatbotBottomSheetProps> = ({ visible,
   const difyConversationId = useAppSelector((state) => getDifyConversationIdByCID(state.chatbot, questionId));
   const conversationSummary = useAppSelector((state) => getConversationSummaryByCID(state.chatbot, questionId));
 
+  const userProgress = useAppSelector((state) => state.userProgress.userProgress);
+
   const isGenerating = latestMessage ? ![MessageStatus.DONE, MessageStatus.ERROR].includes(latestMessage.status) : false;
 
   const dispatch = useAppDispatch();
@@ -68,12 +70,9 @@ export const ChatbotBottomSheet: React.FC<ChatbotBottomSheetProps> = ({ visible,
       questionId,
       difyConversationId,
       conversationSummary,
+      userProgress,
       dispatch,
     });
-  };
-
-  const onCreateQuestionFromFlashcard = () => {
-    // TODO: Tạo câu hỏi từ Flashcard
   };
 
   const handleSend = (message: string) => {
@@ -89,6 +88,7 @@ export const ChatbotBottomSheet: React.FC<ChatbotBottomSheetProps> = ({ visible,
       questionId,
       difyConversationId,
       conversationSummary,
+      userProgress,
       dispatch,
     });
   };
