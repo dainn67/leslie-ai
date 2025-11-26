@@ -99,7 +99,7 @@ export const ResultScreen = () => {
             </View>
 
             <View style={[styles.statCard, { backgroundColor: colors.backgroundSecondary }]}>
-              <View style={[styles.statIcon, { backgroundColor: colors.alert }]}>
+              <View style={[styles.statIcon, { backgroundColor: colors.errorLight }]}>
                 <Ionicons name="close" size={20} color={colors.textOnPrimary} />
               </View>
               <CustomText style={{ color: colors.text }} weight="Bold" size={24}>
@@ -118,7 +118,7 @@ export const ResultScreen = () => {
           </View>
 
           <View style={styles.performanceBar}>
-            <View style={[styles.progressBar, { backgroundColor: colors.alert }]}>
+            <View style={[styles.progressBar, { backgroundColor: colors.errorLight }]}>
               <View
                 style={[
                   styles.progressFill,

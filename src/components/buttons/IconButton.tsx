@@ -1,26 +1,28 @@
-import React from 'react';
-import { Image, ImageSourcePropType, StyleSheet, TouchableOpacity, ViewStyle } from 'react-native';
-import { useAppTheme } from '../../theme';
+import React from "react";
+import { Image, ImageSourcePropType, StyleSheet, TouchableOpacity, ViewStyle } from "react-native";
+import { useAppTheme } from "../../theme";
 
 interface IconButtonProps {
   icon: ImageSourcePropType;
   iconWidth?: number;
   iconHeight?: number;
+  iconColor?: string;
   style?: ViewStyle;
   onPress?: () => void;
 }
 
-export const IconButton = ({ icon, iconWidth, iconHeight, style, onPress }: IconButtonProps) => {
+export const IconButton = ({ icon, iconWidth, iconHeight, iconColor, style, onPress }: IconButtonProps) => {
   const { colors } = useAppTheme();
   const styles = getStyles(iconWidth, iconHeight);
 
   return (
     <TouchableOpacity style={[styles.button, { backgroundColor: colors.backgroundSecondary }, style]} onPress={onPress}>
-      <Image 
-        source={icon} 
-        style={styles.icon} 
+      <Image
+        source={icon}
+        style={styles.icon}
         resizeMode="contain"
-        onError={(error) => console.log('Image error:', error)}
+        onError={(error) => console.log("Image error:", error)}
+        tintColor={iconColor}
       />
     </TouchableOpacity>
   );

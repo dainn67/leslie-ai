@@ -24,3 +24,24 @@ export const useAppTheme = () => {
     themeMode,
   };
 };
+
+// Common color utilities for reusable styling
+export const getAnswerColors = (colors: typeof lightColors | typeof darkColors) => ({
+  correct: {
+    background: colors.successLight,
+    border: colors.success,
+    text: colors.success,
+  },
+  wrong: {
+    background: colors.errorLight,
+    border: colors.error,
+    text: colors.error,
+  },
+  info: {
+    background: colors.infoLight,
+    border: colors.info,
+    text: colors.info,
+  },
+});
+
+export type AppColors = typeof lightColors | typeof darkColors;

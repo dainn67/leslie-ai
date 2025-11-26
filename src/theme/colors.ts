@@ -7,8 +7,12 @@ export const lightColors = {
   textOnPrimary: "#FFFFFF",
   placeholder: "#999999",
   grey: "#e0e0e0",
-  success: "#00FF00",
-  alert: "#FF0000",
+  success: "#4CAF50",
+  successLight: "#E8F5E9", // Background color for success answer
+  error: "#F44336",
+  errorLight: "#FFEBEE", // Background color for error answer
+  info: "#4A90E2",
+  infoLight: "#F0F8FF",
 };
 
 export const darkColors = {
@@ -20,6 +24,10 @@ export const darkColors = {
   textOnPrimary: "#FFFFFF",
   placeholder: "#999999",
   grey: "#444444",
-  success: "#00FF00",
-  alert: "#FF0000",
+  success: "#4CAF50",
+  successLight: "rgba(76, 175, 80, 0.15)", // Background color for success answer
+  error: "#F44336",
+  errorLight: "rgba(244, 67, 54, 0.15)", // Background color for error answer
+  info: "#4A90E2",
+  infoLight: "rgba(74, 144, 226, 0.1)",
 };

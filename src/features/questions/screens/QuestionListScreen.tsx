@@ -144,7 +144,7 @@ export const QuestionListScreen = () => {
         {filteredQuestions.length > 0 ? (
           <ScrollView style={styles.questionListContainer}>
             {filteredQuestions.map((question, index) => (
-              <View key={question.questionId} style={styles.questionContainer}>
+              <View key={index} style={styles.questionContainer}>
                 <QuestionView
                   question={question}
                   questionIndex={index}

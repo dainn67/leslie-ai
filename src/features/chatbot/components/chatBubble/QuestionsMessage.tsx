@@ -11,6 +11,7 @@ import { IconButton } from "../../../../components/buttons";
 import { AppIcons } from "../../../../constants/appIcons";
 import { FirebaseConstants } from "../../../../constants";
 import { useTranslation } from "react-i18next";
+import { useAppTheme } from "../../../../theme";
 
 interface QuestionsMessageProps {
   questions: Question[];
@@ -24,8 +25,10 @@ export const QuestionsMessage = ({ questions, onAnalyze }: QuestionsMessageProps
   const [mapAnswer, setMapAnswer] = useState<{ [key: number]: number }>({});
   const [mapBookmark, setMapBookmark] = useState<boolean[]>(questions.map(() => false));
   const [playAudio, setPlayAudio] = useState(false);
+
   const { t } = useTranslation();
-  
+  const { colors } = useAppTheme();
+
   useEffect(() => {
     // Analyze when all questions are answered
     if (!analyzed) {
@@ -45,6 +48,7 @@ export const QuestionsMessage = ({ questions, onAnalyze }: QuestionsMessageProps
   };
 
   const handleBookmarkPress = (isBookmarked: boolean) => {
+    console.log(isBookmarked);
     setMapBookmark((prev) => {
       const newMap = [...prev];
       newMap[currentQuestionIndex] = isBookmarked;
@@ -77,9 +81,14 @@ export const QuestionsMessage = ({ questions, onAnalyze }: QuestionsMessageProps
       {/* Progress Bar and Reset Button */}
       <View style={styles.progressContainer}>
         <View style={styles.progressBarContainer}>
-          <ProgressBar progress={progress} height={7} />
+          <ProgressBar progress={progress} height={7} backgroundColor={colors.grey} />
         </View>
-        <IconButton icon={AppIcons.reset} onPress={handleReset} />
+        <IconButton
+          icon={AppIcons.reset}
+          onPress={handleReset}
+          iconColor={colors.text}
+          style={{ backgroundColor: colors.background }}
+        />
       </View>
 
       <QuestionView

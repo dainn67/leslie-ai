@@ -40,7 +40,7 @@ export const QuestionView = ({
   onBookmarkPress,
   setPlayAudio,
 }: QuestionViewProps) => {
-  const { colors } = useAppTheme();
+  const { colors, isDarkMode } = useAppTheme();
   const { t } = useTranslation();
   const dialog = useDialog();
 
@@ -67,8 +67,23 @@ export const QuestionView = ({
     onBookmarkPress?.(bookmarked);
   };
 
+  const getCorrectAnswerStyle = () => ({
+    backgroundColor: colors.successLight,
+    borderColor: colors.success,
+  });
+
+  const getWrongAnswerStyle = () => ({
+    backgroundColor: colors.errorLight,
+    borderColor: colors.error,
+  });
+
+  const getExplanationStyle = () => ({
+    backgroundColor: colors.infoLight,
+    borderLeftColor: colors.info,
+  });
+
   return (
-    <View style={[styles.questionCard, { backgroundColor: colors.background }]}>
+    <View style={[styles.questionCard, { backgroundColor: colors.grey }]}>
       <View style={styles.questionHeader}>
         {/* Question Index and Text */}
         <View style={styles.questionHeaderContent}>
@@ -85,7 +100,8 @@ export const QuestionView = ({
           {gameType !== GameType.Diagnostic && (
             <IconButton
               icon={bookmarked ? AppIcons.bookmarked : AppIcons.bookmark}
-              style={styles.saveButton}
+              iconColor={colors.text}
+              style={{ backgroundColor: colors.grey }}
               onPress={() => handleBookmarkPress(!bookmarked)}
             />
           )}
@@ -95,57 +111,65 @@ export const QuestionView = ({
 
       {/* Answers */}
       <View style={styles.answersContainer}>
-        {question.answers.map((a: Answer, index: number) => (
-          <TouchableOpacity
-            key={index}
-            onPress={() => onAnswerSelect?.(a.answerId)}
-            style={[
-              styles.answerCard,
-              { backgroundColor: colors.backgroundSecondary },
-              (selectedAnswer === a.answerId || showCorrectAnswer) && a.isCorrect && styles.correctAnswer,
-              selectedAnswer === a.answerId && !a.isCorrect && styles.wrongAnswer,
-              selectedAnswer !== undefined && selectedAnswer !== a.answerId && a.isCorrect && styles.correctAnswer,
-            ]}
-            disabled={selectedAnswer !== undefined}
-          >
-            <View style={styles.answerContent}>
-              <CustomText
-                style={[
-                  styles.answerLabelText,
-                  { color: colors.placeholder },
-                  selectedAnswer === a.answerId && !a.isCorrect && styles.wrongLabel,
-                  (showCorrectAnswer || (selectedAnswer !== undefined && selectedAnswer !== a.answerId)) &&
-                    a.isCorrect &&
-                    styles.correctLabel,
-                ]}
-              >
-                {getAnswerLabel(index)}
-              </CustomText>
-              <CustomText
-                style={[
-                  styles.answerText,
-                  { color: colors.text },
-                  ((showCorrectAnswer && a.isCorrect) ||
-                    selectedAnswer === a.answerId ||
-                    (selectedAnswer !== undefined && selectedAnswer != a.answerId && a.isCorrect)) &&
-                    styles.selectedAnswerText,
-                ]}
-              >
-                {a.text}
-              </CustomText>
-            </View>
-          </TouchableOpacity>
-        ))}
+        {question.answers.map((a: Answer, index: number) => {
+          const isSelected = selectedAnswer === a.answerId;
+          const isCorrect = a.isCorrect;
+          const shouldShowCorrect =
+            (isSelected || showCorrectAnswer || (selectedAnswer !== undefined && selectedAnswer !== a.answerId)) && isCorrect;
+          const shouldShowWrong = isSelected && !isCorrect;
+
+          return (
+            <TouchableOpacity
+              key={index}
+              onPress={() => onAnswerSelect?.(a.answerId)}
+              style={[
+                styles.answerCard,
+                {
+                  backgroundColor: colors.background,
+                  borderColor: isDarkMode ? colors.grey : "transparent",
+                },
+                shouldShowCorrect && getCorrectAnswerStyle(),
+                shouldShowWrong && getWrongAnswerStyle(),
+              ]}
+              disabled={selectedAnswer !== undefined}
+            >
+              <View style={styles.answerContent}>
+                <CustomText
+                  style={[
+                    styles.answerLabelText,
+                    { color: colors.placeholder },
+                    shouldShowWrong && { color: colors.error },
+                    shouldShowCorrect && { color: colors.success },
+                  ]}
+                >
+                  {getAnswerLabel(index)}
+                </CustomText>
+                <CustomText
+                  style={[
+                    styles.answerText,
+                    { color: colors.text },
+                    (shouldShowCorrect || shouldShowWrong) && {
+                      color: isDarkMode ? colors.text : "#000000",
+                      fontWeight: "600",
+                    },
+                  ]}
+                >
+                  {a.text}
+                </CustomText>
+              </View>
+            </TouchableOpacity>
+          );
+        })}
       </View>
 
       {/* Explanation */}
       {selectedAnswer !== undefined && (
-        <View style={styles.explanationContainer}>
+        <View style={[styles.explanationContainer, getExplanationStyle()]}>
           <View style={styles.explanationHeader}>
             <CustomText style={styles.explanationIcon}>💡</CustomText>
-            <CustomText style={styles.explanationTitle}>Giải thích</CustomText>
+            <CustomText style={[styles.explanationTitle, { color: colors.text }]}>Giải thích</CustomText>
           </View>
-          <CustomText style={styles.explanationText}>{question.explanation}</CustomText>
+          <CustomText style={[styles.explanationText, { color: colors.text, opacity: 0.8 }]}>{question.explanation}</CustomText>
         </View>
       )}
     </View>
@@ -161,11 +185,11 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 4,
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
+    shadowOpacity: 0.15,
+    shadowRadius: 16,
+    elevation: 8,
   },
   questionHeader: {
     flexDirection: "row",
@@ -178,9 +202,6 @@ const styles = StyleSheet.create({
   },
   questionIndex: {
     marginBottom: 2,
-  },
-  saveButton: {
-    marginBottom: 8,
   },
   questionNumberText: {
     fontSize: 14,
@@ -199,7 +220,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginBottom: 12,
     borderWidth: 1.5,
-    borderColor: "transparent",
     overflow: "hidden",
   },
   answerContent: {
@@ -214,37 +234,19 @@ const styles = StyleSheet.create({
     marginRight: 12,
     marginVertical: 4,
   },
-  correctLabel: {
-    color: "#4CAF50",
-  },
-  wrongLabel: {
-    color: "#F44336",
-  },
+  correctLabel: {},
+  wrongLabel: {},
   answerText: {
     fontSize: 16,
     flex: 1,
     lineHeight: 22,
   },
-  selectedAnswerText: {
-    color: "black",
-    fontWeight: "600",
-  },
-  correctAnswer: {
-    backgroundColor: "#E8F5E8",
-    borderColor: "#4CAF50",
-  },
-  wrongAnswer: {
-    backgroundColor: "#FFEBEE",
-    borderColor: "#F44336",
-  },
   explanationContainer: {
-    backgroundColor: "#F0F8FF",
     borderRadius: 4,
     padding: 12,
     paddingVertical: 8,
     marginBottom: 16,
     borderLeftWidth: 4,
-    borderLeftColor: "#4A90E2",
   },
   explanationHeader: {
     flexDirection: "row",
@@ -258,11 +260,9 @@ const styles = StyleSheet.create({
   explanationTitle: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#2C3E50",
   },
   explanationText: {
     fontSize: 14,
-    color: "#34495E",
     lineHeight: 20,
   },
 });
