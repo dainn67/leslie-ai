@@ -7,7 +7,7 @@ const bannerId = AppConfig.devMode ? TestIds.BANNER : AdsConfig.bannerId;
 
 export const BannerAds = () => {
   return (
-    <View style={{ alignItems: "center", marginTop: 20 }}>
+    <View style={{ alignItems: "center" }}>
       <BannerAd unitId={bannerId} size={BannerAdSize.BANNER} />
     </View>
   );
