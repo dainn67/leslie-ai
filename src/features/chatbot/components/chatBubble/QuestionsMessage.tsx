@@ -22,9 +22,10 @@ export const QuestionsMessage = ({ questions, onAnalyze }: QuestionsMessageProps
   // Use local state only for separated question messages
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [analyzed, setAnalyzed] = useState(false);
-  const [mapAnswer, setMapAnswer] = useState<{ [key: number]: number }>({});
-  const [mapBookmark, setMapBookmark] = useState<boolean[]>(questions.map(() => false));
   const [playAudio, setPlayAudio] = useState(false);
+
+  const [mapAnswer, setMapAnswer] = useState<{ [key: number]: number }>({});
+  const [mapBookmark, setMapBookmark] = useState<{ [key: number]: boolean }>({});
 
   const { t } = useTranslation();
   const { colors } = useAppTheme();
@@ -48,10 +49,9 @@ export const QuestionsMessage = ({ questions, onAnalyze }: QuestionsMessageProps
   };
 
   const handleBookmarkPress = (isBookmarked: boolean) => {
-    console.log(isBookmarked);
     setMapBookmark((prev) => {
-      const newMap = [...prev];
-      newMap[currentQuestionIndex] = isBookmarked;
+      const newMap: { [key: number]: boolean } = { ...prev };
+      newMap[question.questionId] = isBookmarked;
       return newMap;
     });
 

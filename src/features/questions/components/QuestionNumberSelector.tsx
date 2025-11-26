@@ -99,7 +99,7 @@ export const QuestionNumberSelector = ({
             <MainButton
               title={"Hủy"}
               onPress={() => setVisible(false)}
-              style={{ width: "100%", backgroundColor: colors.alert }}
+              style={{ width: "100%", backgroundColor: colors.error }}
             />
           </View>
         </View>

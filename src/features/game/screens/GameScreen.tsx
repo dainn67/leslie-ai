@@ -18,6 +18,7 @@ import { ChatbotBottomSheet } from "../../../components/bottomsheets/ChatbotBott
 import { RootStackParamList } from "../../../app/RootNavigator";
 import { Question } from "../../../models";
 import { useTranslation } from "react-i18next";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type GameScreenRouteProp = RouteProp<RootStackParamList, "GameScreen">;
 type GameScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "GameScreen">;
@@ -122,7 +123,7 @@ export const GameScreen = () => {
   const handleDevClick = () => setAutoMode(true);
 
   return (
-    <View style={[style.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView style={[style.container, { backgroundColor: colors.background }]}>
       <AppBar
         title={t("question")}
         leftIcon={<Ionicons name="arrow-back" size={24} color="white" />}
@@ -178,7 +179,7 @@ export const GameScreen = () => {
           <CustomText>{t("game_screen_error_loading_question")}</CustomText>
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 
