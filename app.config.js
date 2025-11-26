@@ -7,7 +7,6 @@ export default {
     version: "1.4.0",
     android: {
       package: "com.leslie.app",
-      googleServicesFile: "./google-services.json",
       versionCode: 34,
       adaptiveIcon: {
         foregroundImage: "./assets/images/app-logo.png",
