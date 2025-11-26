@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import MainButton from "../../../components/buttons/MainButton";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { AppBar } from "../../../components/AppBar";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, CompositeNavigationProp } from "@react-navigation/native";
@@ -19,6 +18,8 @@ import { DrawerParamList } from "../../../app/DrawerNavigator";
 import { GameType } from "../../game/screens/GameScreen";
 import { getAllQuestions } from "../../../storage/database/tables";
 import { useTranslation } from "react-i18next";
+import { BannerAds } from "../../ads/BannerAds";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type QuestionsScreenNavigationProp = CompositeNavigationProp<
   DrawerNavigationProp<DrawerParamList, "QuestionsScreen">,
@@ -70,48 +71,49 @@ export const QuestionsScreen = () => {
   };
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <AppBar
         title={t("drawer_saved_question_title")}
         leftIcon={<Ionicons name="menu" size={24} color="white" />}
         onLeftPress={handleOpenDrawer}
       />
-      <View style={[styles.container, { backgroundColor: colors.background }]}>
-        <View style={styles.gridContainer}>
-          {Object.values(QuestionType).map((type, index) => (
-            <TouchableOpacity
-              key={index}
-              style={[styles.gridItem, { width: gridItemWidth, backgroundColor: colors.primary }]}
-              onPress={() => handleNavigateToQuestionType(type)}
-            >
-              <CustomText style={styles.icon}>
-                {type === QuestionType.Vocabulary && "📝"}
-                {type === QuestionType.Grammar && "📚"}
-                {type === QuestionType.Reading && "📖"}
-                {type === QuestionType.Listening && "🎧"}
-              </CustomText>
-              <CustomText style={{ textAlign: "center", color: colors.textOnPrimary }}>{questionTypeTitles[type]}</CustomText>
-            </TouchableOpacity>
-          ))}
-        </View>
-        <MainButton title={t("review_all_questions")} style={styles.buttonContainer} onPress={handleReviewAll} />
 
-        {/* Question number selector */}
-        <QuestionNumberSelector
-          totalQuestions={allQuestions.length}
-          visible={amountSelectorVisible}
-          setVisible={setAmountSelectorVisible}
-          onSelectQuestion={(amount) => handleSelectQuestion(amount)}
-        />
+      {/* Grid of question types */}
+      <View style={styles.gridContainer}>
+        {Object.values(QuestionType).map((type, index) => (
+          <TouchableOpacity
+            key={index}
+            style={[styles.gridItem, { width: gridItemWidth, backgroundColor: colors.primary }]}
+            onPress={() => handleNavigateToQuestionType(type)}
+          >
+            <CustomText style={styles.icon}>
+              {type === QuestionType.Vocabulary && "📝"}
+              {type === QuestionType.Grammar && "📚"}
+              {type === QuestionType.Reading && "📖"}
+              {type === QuestionType.Listening && "🎧"}
+            </CustomText>
+            <CustomText style={{ textAlign: "center", color: colors.textOnPrimary }}>{questionTypeTitles[type]}</CustomText>
+          </TouchableOpacity>
+        ))}
       </View>
-    </GestureHandlerRootView>
+
+      <BannerAds />
+
+      {/* Review all questions button */}
+      <MainButton title={t("review_all_questions")} style={styles.buttonContainer} onPress={handleReviewAll} />
+
+      {/* Question number selector */}
+      <QuestionNumberSelector
+        totalQuestions={allQuestions.length}
+        visible={amountSelectorVisible}
+        setVisible={setAmountSelectorVisible}
+        onSelectQuestion={(amount) => handleSelectQuestion(amount)}
+      />
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   gridContainer: {
     flex: 1,
     flexDirection: "row",

@@ -17,6 +17,7 @@ import { RootStackParamList } from "../../../app/RootNavigator";
 import { GameType } from "../../game/screens/GameScreen";
 import { FirebaseConstants } from "../../../constants";
 import { useTranslation } from "react-i18next";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type QuestionListScreenRouteProp = RouteProp<RootStackParamList, "QuestionListScreen">;
 type QuestionListScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "QuestionListScreen">;
@@ -130,7 +131,7 @@ export const QuestionListScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <AppBar
         title={questionTypeTitles[type]}
         leftIcon={<Ionicons name="arrow-back" size={24} color="white" />}
@@ -215,7 +216,7 @@ export const QuestionListScreen = () => {
         setVisible={setAmountSelectorVisible}
         onSelectQuestion={(amount) => handleSelectQuestion(amount)}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -253,7 +254,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     borderRadius: 16,
-    margin: 16,
+    marginHorizontal: 16,
+    marginVertical: 8,
   },
   searchInputWrapper: {
     backgroundColor: "white",

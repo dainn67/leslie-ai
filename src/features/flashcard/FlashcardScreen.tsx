@@ -14,6 +14,8 @@ import { Flashcard } from "../../models";
 import { deleteFlashcards, getAllFlashcards, insertFlashcards } from "../../storage/database/tables/flashCardTable";
 import { CustomText } from "../../components/text/customText";
 import { useTranslation } from "react-i18next";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { BannerAds } from "../ads/BannerAds";
 
 export const FlashcardScreen = () => {
   const navigation = useNavigation<DrawerNavigationProp<DrawerParamList, "FlashCardScreen">>();
@@ -80,7 +82,7 @@ export const FlashcardScreen = () => {
   };
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <View style={[styles.container]}>
         <AppBar title={"Flash Card"} leftIcon={<Ionicons name="menu" size={24} color="white" />} onLeftPress={handleOpenDrawer} />
 
@@ -115,6 +117,8 @@ export const FlashcardScreen = () => {
           </View>
         )}
 
+        <BannerAds />
+
         {/* Review button */}
         {/* {flashcards.length > 0 && <MainButton title={"Ôn tập"} style={styles.buttonContainer} onPress={handlePractice} />} */}
 
@@ -127,7 +131,7 @@ export const FlashcardScreen = () => {
         />
         */}
       </View>
-    </GestureHandlerRootView>
+    </SafeAreaView>
   );
 };
 

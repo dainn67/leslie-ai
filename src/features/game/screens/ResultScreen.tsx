@@ -12,6 +12,8 @@ import { createResultSummary, ChatbotService } from "../../../core/service";
 import { RootStackParamList } from "../../../app/RootNavigator";
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 import { updateUserProgress } from "../../userProgress/userProgressSlice";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { BannerAds } from "../../ads/BannerAds";
 
 type ResultScreenRouteProp = RouteProp<RootStackParamList, "ResultScreen">;
 type ResultScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "ResultScreen">;
@@ -72,7 +74,7 @@ export const ResultScreen = () => {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView style={styles.container}>
       <AppBar
         title={"Kết quả"}
         leftIcon={<Ionicons name="arrow-back" size={24} color="white" />}
@@ -153,17 +155,20 @@ export const ResultScreen = () => {
         </View>
       </ScrollView>
 
+      <BannerAds />
+
       {/* Action Buttons */}
       <View style={[styles.buttonContainer, { backgroundColor: colors.background }]}>
         <MainButton title="Thử lại" onPress={handleTryAgain} style={{ backgroundColor: colors.primary }} />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white",
   },
   content: {
     flex: 1,
@@ -243,9 +248,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderTopWidth: 1,
-    borderTopColor: "#E5E7EB",
+    paddingVertical: 8,
   },
   aiInsightSection: {
     marginTop: 16,

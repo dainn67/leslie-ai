@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import TTSInstance from "../../../core/service/ttsService";
 import { Ionicons } from "@expo/vector-icons";
 import { AppBar } from "../../../components/AppBar";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useNavigation, RouteProp, useRoute } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
@@ -32,7 +31,6 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
 import { Flashcard } from "../../../models";
 import { BannerAds } from "../../ads/BannerAds";
-import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 // Composite navigation type to handle both drawer and stack navigation
@@ -242,28 +240,25 @@ export const ChatbotScreen = () => {
   };
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      {/* Main chatbot screen */}
-      <SafeAreaView style={{ flex: 1 }}>
-        <AppBar
-          title={AppConfig.name}
-          leftIcon={<Ionicons name="menu" size={24} color="white" />}
-          rightIcon={<Ionicons name="trash" size={24} color="white" />}
-          onLeftPress={handleOpenMenu}
-          onRightPress={handleClearChat}
-          onDevClick={handleDevClick}
-        />
-        <ChatMessageList
-          messages={messages}
-          onClickAction={handleClickAction}
-          onAnalyze={handleAnalyze}
-          onCreateQuestionFromFlashcard={handleCreateQuestionFromFlashcard}
-        />
-        <BannerAds />
-        <ChatInput disable={isGenerating} onSend={handleManuallySend} />
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+      <AppBar
+        title={AppConfig.name}
+        leftIcon={<Ionicons name="menu" size={24} color="white" />}
+        rightIcon={<Ionicons name="trash" size={24} color="white" />}
+        onLeftPress={handleOpenMenu}
+        onRightPress={handleClearChat}
+        onDevClick={handleDevClick}
+      />
+      <ChatMessageList
+        messages={messages}
+        onClickAction={handleClickAction}
+        onAnalyze={handleAnalyze}
+        onCreateQuestionFromFlashcard={handleCreateQuestionFromFlashcard}
+      />
+      <BannerAds />
+      <ChatInput disable={isGenerating} onSend={handleManuallySend} />
 
-        <NameDialog visible={nameDialogVisible} onConfirm={handleSetName} />
-      </SafeAreaView>
-    </GestureHandlerRootView>
+      <NameDialog visible={nameDialogVisible} onConfirm={handleSetName} />
+    </SafeAreaView>
   );
 };

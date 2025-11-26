@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import MainButton from "../../components/buttons/MainButton";
-import { SafeAreaView, View, Text, Pressable, TextInput, ScrollView, StyleSheet } from "react-native";
+import { View, Text, Pressable, TextInput, ScrollView, StyleSheet } from "react-native";
 import { AppBar } from "../../components/AppBar";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -13,6 +13,8 @@ import { FirebaseService } from "../../core/service";
 import { useAppSelector } from "../../hooks/hooks";
 import { DrawerParamList } from "../../app/DrawerNavigator";
 import { useTranslation } from "react-i18next";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { BannerAds } from "../ads/BannerAds";
 
 export const FeedbackScreen = () => {
   const { colors } = useAppTheme();
@@ -57,7 +59,7 @@ export const FeedbackScreen = () => {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView style={styles.container}>
       <AppBar
         title={t("feedback_screen_title")}
         leftIcon={<Ionicons name="menu" size={24} color="white" />}
@@ -144,6 +146,7 @@ export const FeedbackScreen = () => {
           />
         </View>
       </ScrollView>
+      <BannerAds />
     </SafeAreaView>
   );
 };
@@ -151,6 +154,7 @@ export const FeedbackScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white",
   },
   scrollView: {
     flex: 1,
