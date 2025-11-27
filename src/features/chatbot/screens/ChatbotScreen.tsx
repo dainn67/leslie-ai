@@ -19,13 +19,12 @@ import {
 } from "../slice/chatbotSlice";
 import { useDialog } from "../../../core/providers";
 import { ChatMessageList, ChatInput } from "../components";
-import { AsyncStorageService, ChatbotService, FirebaseService, ToastService } from "../../../core/service";
+import { AsyncStorageService, ChatbotService, FirebaseService, rewardedAdService, ToastService } from "../../../core/service";
 import { DifyConfig, FirebaseConstants } from "../../../constants";
 import { NameDialog } from "../../../components/dialogs";
 import { RootStackParamList } from "../../../app/RootNavigator";
 import { DrawerParamList } from "../../../app/DrawerNavigator";
 import { GameType } from "../../game/screens/GameScreen";
-import { getAllFlashcards } from "../../../storage/database/tables/flashCardTable";
 import { CompositeNavigationProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
@@ -236,8 +235,8 @@ export const ChatbotScreen = () => {
 
   const handleDevClick = async () => {
     // logDatabasePath();
-    getAllFlashcards().forEach((flashcard) => {
-      console.log(flashcard.front);
+    rewardedAdService.show((reward) => {
+      console.log("Reward received:", reward);
     });
   };
 

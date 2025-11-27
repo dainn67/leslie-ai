@@ -1,4 +1,4 @@
-import ApiServiceInstance from "./api/apiService";
+import ApiServiceInstance from "./apiService";
 import { DiscordService, DiscordWebhookType } from "./discordService";
 import { UserProgressService } from "./userProgressService";
 import { ApiClient } from "../../api/apiClient";
@@ -290,7 +290,8 @@ export class ChatbotService {
         const nodeTitle = data["data"]?.["title"];
 
         if (nodeTitle) {
-          const isGeneratedQuestions = nodeTitle == DifyConfig.titleGenQuestions || nodeTitle == DifyConfig.titleGenFlashcardQuestions;
+          const isGeneratedQuestions =
+            nodeTitle == DifyConfig.titleGenQuestions || nodeTitle == DifyConfig.titleGenFlashcardQuestions;
           const isGeneratedFlashcards = nodeTitle == DifyConfig.titleGenFlashcards;
           if (!isQuestionJson && isGeneratedQuestions) {
             dispatch(updateMessageData({ messageType: MessageType.QUESTIONS, cid: cid }));

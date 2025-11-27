@@ -1,4 +1,4 @@
-import { ApiConfig } from "../../../constants";
+import { ApiConfig } from "../../constants";
 
 export class ApiService {
   private static _instance: ApiService;
