@@ -89,6 +89,7 @@ export const ResultScreen = () => {
           </CustomText>
 
           <View style={styles.statsGrid}>
+            {/* Correct Questions */}
             <View style={[styles.statCard, { backgroundColor: colors.backgroundSecondary }]}>
               <View style={[styles.statIcon, { backgroundColor: colors.success }]}>
                 <Ionicons name="checkmark" size={20} color={colors.textOnPrimary} />
@@ -98,8 +99,9 @@ export const ResultScreen = () => {
               </CustomText>
             </View>
 
+            {/* Incorrect Questions */}
             <View style={[styles.statCard, { backgroundColor: colors.backgroundSecondary }]}>
-              <View style={[styles.statIcon, { backgroundColor: colors.errorLight }]}>
+              <View style={[styles.statIcon, { backgroundColor: colors.error }]}>
                 <Ionicons name="close" size={20} color={colors.textOnPrimary} />
               </View>
               <CustomText style={{ color: colors.text }} weight="Bold" size={24}>
@@ -107,6 +109,7 @@ export const ResultScreen = () => {
               </CustomText>
             </View>
 
+            {/* Total Questions */}
             <View style={[styles.statCard, { backgroundColor: colors.backgroundSecondary }]}>
               <View style={[styles.statIcon, { backgroundColor: colors.primary }]}>
                 <Ionicons name="help-circle" size={20} color={colors.textOnPrimary} />
@@ -117,8 +120,9 @@ export const ResultScreen = () => {
             </View>
           </View>
 
+          {/* Progress Bar */}
           <View style={styles.performanceBar}>
-            <View style={[styles.progressBar, { backgroundColor: colors.errorLight }]}>
+            <View style={[styles.progressBar, { backgroundColor: colors.grey }]}>
               <View
                 style={[
                   styles.progressFill,

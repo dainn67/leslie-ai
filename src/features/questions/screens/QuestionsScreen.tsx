@@ -18,7 +18,6 @@ import { DrawerParamList } from "../../../app/DrawerNavigator";
 import { GameType } from "../../game/screens/GameScreen";
 import { getAllQuestions } from "../../../storage/database/tables";
 import { useTranslation } from "react-i18next";
-import { BannerAds } from "../../ads/BannerAds";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 type QuestionsScreenNavigationProp = CompositeNavigationProp<
@@ -96,8 +95,6 @@ export const QuestionsScreen = () => {
           </TouchableOpacity>
         ))}
       </View>
-
-      <BannerAds />
 
       {/* Review all questions button */}
       <MainButton title={t("review_all_questions")} style={styles.buttonContainer} onPress={handleReviewAll} />

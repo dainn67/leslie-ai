@@ -18,6 +18,7 @@ import { GameType } from "../../game/screens/GameScreen";
 import { FirebaseConstants } from "../../../constants";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { BannerAds } from "../../ads/BannerAds";
 
 type QuestionListScreenRouteProp = RouteProp<RootStackParamList, "QuestionListScreen">;
 type QuestionListScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "QuestionListScreen">;
@@ -169,6 +170,10 @@ export const QuestionListScreen = () => {
           </View>
         )}
 
+        <View style={styles.bannerContainer}>
+          <BannerAds />
+        </View>
+
         {filteredQuestions.length > 0 && (
           <MainButton
             title={t("practice")}
@@ -255,6 +260,11 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     marginHorizontal: 16,
     marginVertical: 8,
+  },
+  bannerContainer: {
+    alignItems: "center",
+    marginTop: 8,
+    marginBottom: 4,
   },
   searchInputWrapper: {
     backgroundColor: "white",
