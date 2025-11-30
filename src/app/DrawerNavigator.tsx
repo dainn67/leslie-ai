@@ -17,6 +17,7 @@ import { ShareAppButton } from "../features/drawer/ShareAppButton";
 import { FlashcardScreen } from "../features/flashcard/FlashcardScreen";
 import { useTranslation } from "react-i18next";
 import { LanguageButton } from "../features/drawer/LanguageButton";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 // Define DrawerParamList for type safety
 export type DrawerParamList = {
@@ -50,7 +51,7 @@ export const DrawerNavigator = () => {
         },
       }}
       drawerContent={(props) => (
-        <View style={{ flex: 1, marginBottom: 30 }}>
+        <SafeAreaView style={{ flex: 1, marginBottom: 8 }}>
           {/* Screens */}
           <DrawerContentScrollView {...props}>
             <DrawerItemList {...props} />
@@ -81,7 +82,7 @@ export const DrawerNavigator = () => {
             <VersionText />
             <LanguageButton />
           </View>
-        </View>
+        </SafeAreaView>
       )}
     >
       <Drawer.Screen
