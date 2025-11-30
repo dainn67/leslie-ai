@@ -6,4 +6,6 @@ export class AsyncStorageConstants {
   static readonly OPEN_APP_COUNT = "openAppCount";
   static readonly IS_USING_NGINROK = "isUsingNginrok";
   static readonly LANGUAGE = "language";
+  static readonly PREVIOUS_REVIEW_TIME = "previousReviewTime";
+  static readonly ALREADY_CONFIRM_REVIEW = "alreadyConfirmReview";
 }

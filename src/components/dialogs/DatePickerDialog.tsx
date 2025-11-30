@@ -1,9 +1,8 @@
 import React from "react";
-import { Modal, TouchableOpacity, View } from "react-native";
-import { useAppTheme } from "../../theme";
+import { Modal, TouchableOpacity } from "react-native";
 import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 
-interface MyDatePickerProps {
+interface DatePickerProps {
   visible: boolean;
   date: Date;
   title?: string;
@@ -13,9 +12,7 @@ interface MyDatePickerProps {
   handleChange: (selectedDate: Date | undefined) => void;
 }
 
-export const MyDatePicker = ({ visible, date, setVisible, handleChange }: MyDatePickerProps) => {
-  const { colors } = useAppTheme();
-
+export const MyDatePicker = ({ visible, date, setVisible, handleChange }: DatePickerProps) => {
   const handleDateChange = (event: DateTimePickerEvent, selectedDate: Date | undefined) => {
     if (event.type === "dismissed") {
       setVisible(false);

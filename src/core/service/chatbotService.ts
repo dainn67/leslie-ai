@@ -197,6 +197,7 @@ export class ChatbotService {
     difyConversationId,
     question,
     flashcards,
+    onRequestRating,
     dispatch,
   }: {
     message?: string;
@@ -211,6 +212,7 @@ export class ChatbotService {
     question?: Question;
     userProgress?: UserProgress;
     flashcards?: Flashcard[];
+    onRequestRating?: () => void;
     dispatch: AppDispatch;
   }) => {
     // Called at 2 places: Main chatbot and question chatbot assistant
@@ -351,6 +353,23 @@ export class ChatbotService {
           // Split word every time update to find latest words
           const words = ChatbotService.splitCustomWords(fullText);
 
+          // Function to extract data when finish streaming
+          const extractData = () => {
+            const splittedText = fullText.split(Delimiter);
+            // Extract the suggested actions here to wait for the stream to finish
+            const suggestedActions = ChatbotService.extractSuggestedActions(fullText);
+            dispatch(updateMessageData({ messageId, suggestedActions, cid }));
+
+            // Extract the summary when finished
+            const summary = splittedText[splittedText.length - 1].trim();
+            dispatch(updateMessageData({ messageId, summary, cid }));
+            dispatch(updateMessageData({ status: MessageStatus.DONE, cid }));
+
+            onRequestRating?.();
+
+            clearInterval(interval);
+          };
+
           // Skip if new text haven't arrived yet
           if (words.length >= wordIndex + 1) {
             // Start streaming
@@ -371,32 +390,13 @@ export class ChatbotService {
               const lastWord = words[wordIndex];
               dispatch(updateMessageData({ messageId, nextWord: lastWord, cid }));
 
-              const splittedText = fullText.split(Delimiter);
-              // Extract the suggested actions here to wait for the stream to finish
-              const suggestedActions = ChatbotService.extractSuggestedActions(fullText);
-              dispatch(updateMessageData({ messageId, suggestedActions, cid }));
-
-              // Extract the summary when finished
-              const summary = splittedText[splittedText.length - 1].trim();
-              dispatch(updateMessageData({ messageId, summary, cid }));
-              dispatch(updateMessageData({ status: MessageStatus.DONE, cid }));
-
-              clearInterval(interval);
+              extractData();
             }
           }
 
+          // Double check
           if (wordLength > 0 && wordIndex + 1 > wordLength) {
-            const splittedText = fullText.split(Delimiter);
-            // Extract the suggested actions here to wait for the stream to finish
-            const suggestedActions = ChatbotService.extractSuggestedActions(fullText);
-            dispatch(updateMessageData({ suggestedActions, cid }));
-
-            // Extract the summary when finished
-            const summary = splittedText[splittedText.length - 1].trim();
-            dispatch(updateMessageData({ summary, cid }));
-            dispatch(updateMessageData({ messageId, status: MessageStatus.DONE, cid }));
-
-            clearInterval(interval);
+            extractData();
           }
         }, 20);
       }
@@ -412,6 +412,8 @@ export class ChatbotService {
         dispatch(updateConversationSummary({ cid: cid, conversationSummary: result }));
       });
     }
+
+    return true;
   };
 
   static sendResultAnalytic = async ({

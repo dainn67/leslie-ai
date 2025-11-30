@@ -28,6 +28,8 @@
   "chatbot_generating_flashcard": "Generating Flashcards",
   "chatbot_cannot_load_question": "Cannot load question",
   "chatbot_create_question_from_flashcard": "Create Question from Flashcard",
+  "chatbot_screen_request_rating": "If you like this app, please leave a 5-star review",
+  "chatbot_screen_request_rating_confirm": "Rate 5 stars",
 
   "question_type_vocabulary": "Vocabulary",
   "question_type_grammar": "Grammar",

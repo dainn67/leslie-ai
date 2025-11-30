@@ -9,3 +9,4 @@ export * from "./storageServices/questionService";
 export * from "./storageServices/databaseService";
 export * from "./storageServices/testService";
 export * from "./adServices/rewardedAdService";
+export * from "./inAppServices/reviewService";

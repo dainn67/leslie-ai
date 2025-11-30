@@ -1,6 +1,6 @@
 import React, { ReactNode, useContext, useState, createContext, useRef } from "react";
 import { ConfirmDialog, AlertDialog } from "../../components/dialogs";
-import { MyDatePicker } from "../../components/datePicker/MyDatePicker";
+import { MyDatePicker } from "../../components/dialogs/DatePickerDialog";
 import { useTranslation } from "react-i18next";
 
 type DialogContextType = {

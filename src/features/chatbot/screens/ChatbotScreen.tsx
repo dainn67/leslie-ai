@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import TTSInstance from "../../../core/service/ttsService";
+import ReviewService from "../../../core/service/inAppServices/reviewService";
 import { Ionicons } from "@expo/vector-icons";
 import { AppBar } from "../../../components/AppBar";
 import { useNavigation, RouteProp, useRoute } from "@react-navigation/native";
@@ -109,6 +110,7 @@ export const ChatbotScreen = () => {
     actionId,
     newUserProgress,
     flashcards,
+    shouldRequestRating,
   }: {
     text?: string;
     noUserMessage?: boolean;
@@ -116,12 +118,25 @@ export const ChatbotScreen = () => {
     actionId?: string;
     newUserProgress?: UserProgress;
     flashcards?: Flashcard[];
+    shouldRequestRating?: boolean;
   }) => {
     const message = text;
     const userMessage = createChatMessage({ fullText: message });
 
     // noUserMessage is for initial messages, analyze messages
     if (!noUserMessage) dispatch(addMessage({ message: userMessage }));
+
+    const onRequestRating =
+      shouldRequestRating && ReviewService.canRequestAppReview()
+        ? () => {
+            dialog.showConfirm(
+              t("chatbot_screen_request_rating"),
+              () => ReviewService.requestAppReview(),
+              () => ReviewService.ignoreAppReview(),
+              t("chatbot_screen_request_rating_confirm")
+            );
+          }
+        : undefined;
 
     ChatbotService.sendStreamMessage({
       message,
@@ -132,6 +147,7 @@ export const ChatbotScreen = () => {
       analyzeChatGame,
       actionId,
       flashcards,
+      onRequestRating,
       dispatch,
     });
   };
@@ -182,7 +198,7 @@ export const ChatbotScreen = () => {
       FirebaseService.logEvent(FirebaseConstants.FINISH_ALL_GENERATED_QUESTIONS);
 
       // Analyze chat game
-      handleSend({ text: summary, noUserMessage: true, analyzeChatGame: true });
+      handleSend({ text: summary, noUserMessage: true, analyzeChatGame: true, shouldRequestRating: true });
 
       // Analyze overtime progress
       ChatbotService.sendMessage({
@@ -235,6 +251,7 @@ export const ChatbotScreen = () => {
 
   const handleDevClick = async () => {
     // logDatabasePath();
+
     rewardedAdService.show((reward) => {
       console.log("Reward received:", reward);
     });
