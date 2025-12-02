@@ -233,20 +233,19 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
   explanationContainer: {
-    borderRadius: 4,
+    borderRadius: 12,
     padding: 12,
     paddingVertical: 8,
     marginBottom: 16,
-    borderLeftWidth: 4,
   },
   explanationHeader: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 8,
+    marginBottom: 4,
   },
   explanationIcon: {
-    fontSize: 18,
-    marginRight: 8,
+    fontSize: 16,
+    marginRight: 4,
   },
   explanationTitle: {
     fontSize: 16,
