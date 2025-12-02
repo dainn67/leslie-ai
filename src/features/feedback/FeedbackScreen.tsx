@@ -14,7 +14,6 @@ import { useAppSelector } from "../../hooks/hooks";
 import { DrawerParamList } from "../../core/app/DrawerNavigator";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { BannerAds } from "../ads/BannerAds";
 
 export const FeedbackScreen = () => {
   const { colors } = useAppTheme();
@@ -146,7 +145,6 @@ export const FeedbackScreen = () => {
           />
         </View>
       </ScrollView>
-      <BannerAds />
     </SafeAreaView>
   );
 };

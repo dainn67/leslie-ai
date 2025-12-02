@@ -281,7 +281,7 @@ export class ChatbotService {
         },
         conversation_id: difyConversationId,
         response_mode: "streaming",
-        user: userProgress?.userName ?? "none",
+        user: userProgress?.userName ?? "unknown",
         auto_generate_name: false,
       },
       onMessage: (data) => {
@@ -452,7 +452,7 @@ export class ChatbotService {
           language: language,
         },
         response_mode: "streaming",
-        user: userName ?? "",
+        user: userName ?? "unknown",
         auto_generate_name: false,
       },
       onMessage: (data) => {
@@ -541,7 +541,7 @@ export class ChatbotService {
         query: message,
         inputs: data ?? {},
         response_mode: "blocking",
-        user: userName ?? "",
+        user: userName ?? "unknown",
         auto_generate_name: false,
       },
     });

@@ -33,6 +33,7 @@ import { Flashcard } from "../../../models";
 import { BannerAds } from "../../ads/BannerAds";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAppTheme } from "../../../theme";
+import { KeyboardAvoidingView, Platform } from "react-native";
 
 // Composite navigation type to handle both drawer and stack navigation
 type ChatbotScreenNavigationProp = CompositeNavigationProp<
@@ -258,25 +259,35 @@ export const ChatbotScreen = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
-      <AppBar
-        title={AppConfig.name}
-        leftIcon={<Ionicons name="menu" size={24} color="white" />}
-        rightIcon={<Ionicons name="trash" size={24} color="white" />}
-        onLeftPress={handleOpenMenu}
-        onRightPress={handleClearChat}
-        onDevClick={handleDevClick}
-      />
-      <ChatMessageList
-        messages={messages}
-        onClickAction={handleClickAction}
-        onAnalyze={handleAnalyze}
-        onCreateQuestionFromFlashcard={handleCreateQuestionFromFlashcard}
-      />
-      <BannerAds />
-      <ChatInput disable={isGenerating} onSend={handleManuallySend} />
+    <>
+      <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
+        <AppBar
+          title={AppConfig.name}
+          leftIcon={<Ionicons name="menu" size={24} color="white" />}
+          rightIcon={<Ionicons name="trash" size={24} color="white" />}
+          onLeftPress={handleOpenMenu}
+          onRightPress={handleClearChat}
+          onDevClick={handleDevClick}
+        />
+        <ChatMessageList
+          messages={messages}
+          onClickAction={handleClickAction}
+          onAnalyze={handleAnalyze}
+          onCreateQuestionFromFlashcard={handleCreateQuestionFromFlashcard}
+        />
+        <BannerAds />
+
+        <KeyboardAvoidingView
+          enabled={true}
+          behavior={Platform.OS === "ios" ? "padding" : "padding"}
+          style={{ backgroundColor: colors.background }}
+          keyboardVerticalOffset={0}
+        >
+          <ChatInput disable={isGenerating} onSend={handleManuallySend} />
+        </KeyboardAvoidingView>
+      </SafeAreaView>
 
       <NameDialog visible={nameDialogVisible} onConfirm={handleSetName} />
-    </SafeAreaView>
+    </>
   );
 };
