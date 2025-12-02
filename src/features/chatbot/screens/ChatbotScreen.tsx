@@ -259,9 +259,7 @@ export const ChatbotScreen = () => {
   const handleDevClick = async () => {
     // logDatabasePath();
 
-    adService.show((reward) => {
-      console.log("Reward received:", reward);
-    });
+    dialog.showConfirm("View rewarded Ad to support us ?", () => adService.showRewaredAd());
   };
 
   return (
