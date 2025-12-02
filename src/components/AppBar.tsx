@@ -6,7 +6,7 @@ import { useAppDispatch } from "../hooks/hooks";
 import { toggleDevMode } from "../core/app/AppConfig";
 import { useSelector } from "react-redux";
 import { RootState } from "../core/app/store";
-import { AsyncStorageService } from "../core/service";
+import { AsyncStorageService, ToastService } from "../core/service";
 
 interface AppBarProps {
   title: string;
@@ -40,6 +40,7 @@ export const AppBar: React.FC<AppBarProps> = ({ title, leftIcon, rightIcon, onLe
     if (clickCountRef.current >= 10) {
       dispatch(toggleDevMode());
       AsyncStorageService.setDevMode(!devMode);
+      ToastService.show({ message: "Dev mode: " + (!devMode ? "ON" : "OFF"), type: "success" });
       clickCountRef.current = 0;
     }
   };

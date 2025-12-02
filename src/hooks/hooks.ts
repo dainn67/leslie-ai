@@ -6,6 +6,7 @@ import { initializeDatabase, UserProgressService, AsyncStorageService } from "..
 import { setTheme } from "../features/theme/themeSlice";
 import { updateUserProgress } from "../features/userProgress/userProgressSlice";
 import { loadLanguage } from "../core/service/locale_service";
+import { setDevMode } from "../core/app/AppConfig";
 
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
@@ -38,6 +39,10 @@ export const useAppInitialization = () => {
         // Load theme
         const theme = await AsyncStorageService.getTheme();
         dispatch(setTheme(theme));
+
+        // Load dev mode
+        const devMode = await AsyncStorageService.getDevMode();
+        dispatch(setDevMode(devMode));
 
         // Update open app count for analytics
         await AsyncStorageService.updateOpenAppCount();
