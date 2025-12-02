@@ -12,6 +12,8 @@ import { ToastService } from "../../../../core/service";
 import { GameType } from "../../../game/screens/GameScreen";
 import { useDialog } from "../../../../core/providers";
 import { useTranslation } from "react-i18next";
+import { useAppSelector } from "../../../../hooks/hooks";
+import { RootState } from "../../../../core/app/store";
 
 interface QuestionViewProps {
   question: Question;
@@ -42,6 +44,7 @@ export const QuestionView = ({
 }: QuestionViewProps) => {
   const { colors, isDarkMode } = useAppTheme();
   const { t } = useTranslation();
+  const { devMode } = useAppSelector((state: RootState) => state.appConfig);
   const dialog = useDialog();
 
   const getAnswerLabel = (index: number) => {
@@ -145,9 +148,8 @@ export const QuestionView = ({
                 <CustomText
                   style={[
                     styles.answerText,
-                    { color: colors.text },
+                    { color: devMode && isCorrect ? colors.success : colors.text },
                     (shouldShowCorrect || shouldShowWrong) && {
-                      color: isDarkMode ? colors.text : "#000000",
                       fontWeight: "600",
                     },
                   ]}
