@@ -33,7 +33,7 @@ import { Flashcard } from "../../../models";
 import { BannerAds } from "../../ads/BannerAds";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAppTheme } from "../../../theme";
-import { KeyboardAvoidingView, Platform } from "react-native";
+import { KeyboardAvoidingView } from "react-native";
 
 // Composite navigation type to handle both drawer and stack navigation
 type ChatbotScreenNavigationProp = CompositeNavigationProp<
@@ -277,12 +277,7 @@ export const ChatbotScreen = () => {
         />
         <BannerAds />
 
-        <KeyboardAvoidingView
-          enabled={true}
-          behavior={Platform.OS === "ios" ? "padding" : "padding"}
-          style={{ backgroundColor: colors.background }}
-          keyboardVerticalOffset={0}
-        >
+        <KeyboardAvoidingView behavior={"padding"} style={{ backgroundColor: colors.background }} keyboardVerticalOffset={0}>
           <ChatInput disable={isGenerating} onSend={handleManuallySend} />
         </KeyboardAvoidingView>
       </SafeAreaView>
