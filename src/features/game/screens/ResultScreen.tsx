@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import MainButton from "../../../components/buttons/MainButton";
+import ReviewService from "../../../core/service/inAppServices/reviewService";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { AppBar } from "../../../components/AppBar";
 import { Ionicons } from "@expo/vector-icons";
@@ -14,7 +15,6 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 import { updateUserProgress } from "../../userProgress/userProgressSlice";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BannerAds } from "../../ads/BannerAds";
-import ReviewService from "../../../core/service/inAppServices/reviewService";
 import { useDialog } from "../../../core/providers";
 import { useTranslation } from "react-i18next";
 

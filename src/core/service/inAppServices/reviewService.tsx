@@ -8,13 +8,13 @@ class ReviewService {
   private static instance: ReviewService;
 
   private constructor() {
-    this.loadPreviousReviewTime();
+    this._loadPreviousReviewTime();
   }
 
   private previousReviewPopup: number = -1;
   private alreadyConfirmReview: boolean = false;
 
-  private async loadPreviousReviewTime() {
+  private async _loadPreviousReviewTime() {
     try {
       const savedTime = await loadFromAsyncStorage(AsyncStorageConstants.PREVIOUS_REVIEW_TIME);
       const alreadyConfirmReview = await loadFromAsyncStorage(AsyncStorageConstants.ALREADY_CONFIRM_REVIEW);
