@@ -1,5 +1,5 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../app/store";
+import { AppDispatch, RootState } from "../core/app/store";
 import { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
 import { initializeDatabase, UserProgressService, AsyncStorageService } from "../core/service";

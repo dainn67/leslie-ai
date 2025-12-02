@@ -10,7 +10,7 @@ import { useAppTheme } from "../../../theme";
 import { CustomText } from "../../../components/text/customText";
 import { WordComponent } from "../../../components/streamingText/WordComponent";
 import { createResultSummary, ChatbotService } from "../../../core/service";
-import { RootStackParamList } from "../../../app/RootNavigator";
+import { RootStackParamList } from "../../../core/app/RootNavigator";
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 import { updateUserProgress } from "../../userProgress/userProgressSlice";
 import { SafeAreaView } from "react-native-safe-area-context";

@@ -11,7 +11,7 @@ import { ToastService } from "../../core/service/toastService";
 import { FirebaseConstants } from "../../constants";
 import { FirebaseService } from "../../core/service";
 import { useAppSelector } from "../../hooks/hooks";
-import { DrawerParamList } from "../../app/DrawerNavigator";
+import { DrawerParamList } from "../../core/app/DrawerNavigator";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BannerAds } from "../ads/BannerAds";

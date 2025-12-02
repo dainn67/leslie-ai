@@ -1,5 +1,5 @@
 import { useColorScheme } from "react-native";
-import { RootState } from "../app/store";
+import { RootState } from "../core/app/store";
 import { darkColors, lightColors } from "./colors";
 import { useAppSelector } from "../hooks/hooks";
 

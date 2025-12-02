@@ -13,7 +13,7 @@ import { SimpleTextInput } from "../../../components/input/SimpleTextInput";
 import { useAppTheme } from "../../../theme";
 import { CustomText } from "../../../components/text/customText";
 import { createReviseQuestionSet, FirebaseService } from "../../../core/service";
-import { RootStackParamList } from "../../../app/RootNavigator";
+import { RootStackParamList } from "../../../core/app/RootNavigator";
 import { GameType } from "../../game/screens/GameScreen";
 import { FirebaseConstants } from "../../../constants";
 import { useTranslation } from "react-i18next";
@@ -47,7 +47,6 @@ export const QuestionListScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log("useFocusEffect");
       const questions = getQuestionsByType(type);
       setQuestions(questions);
       setFilteredQuestions(questions);

@@ -81,4 +81,13 @@ export class AsyncStorageService {
   static getIsUsingNginrok = async (): Promise<boolean> => {
     return (await loadFromAsyncStorage(AsyncStorageConstants.IS_USING_NGINROK)) ?? false;
   };
+
+  // Dev mode
+  static setDevMode = async (devMode: boolean): Promise<void> => {
+    await saveToAsyncStorage(AsyncStorageConstants.DEV_MODE, devMode);
+  };
+
+  static getDevMode = async (): Promise<boolean> => {
+    return (await loadFromAsyncStorage(AsyncStorageConstants.DEV_MODE)) ?? false;
+  };
 }

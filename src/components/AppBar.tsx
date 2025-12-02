@@ -1,8 +1,12 @@
-import React from 'react';
-import { View, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
-import { useAppTheme } from '../theme';
-import { CustomText } from './text/customText';
-import { AppConfig } from '../constants/appConfig';
+import React, { useRef } from "react";
+import { View, StyleSheet, TouchableOpacity, SafeAreaView } from "react-native";
+import { useAppTheme } from "../theme";
+import { CustomText } from "./text/customText";
+import { useAppDispatch } from "../hooks/hooks";
+import { toggleDevMode } from "../core/app/AppConfig";
+import { useSelector } from "react-redux";
+import { RootState } from "../core/app/store";
+import { AsyncStorageService } from "../core/service";
 
 interface AppBarProps {
   title: string;
@@ -15,12 +19,40 @@ interface AppBarProps {
 
 export const AppBar: React.FC<AppBarProps> = ({ title, leftIcon, rightIcon, onLeftPress, onRightPress, onDevClick }) => {
   const { colors } = useAppTheme();
+  const dispatch = useAppDispatch();
+  const devMode = useSelector((state: RootState) => state.appConfig.devMode);
+
+  const clickCountRef = useRef(0);
+  const lastClickTimeRef = useRef(0);
+
+  const handleDevClick = () => {
+    const currentTime = Date.now();
+    const timeDiff = currentTime - lastClickTimeRef.current;
+
+    if (timeDiff < 1000) {
+      clickCountRef.current += 1;
+    } else {
+      clickCountRef.current = 1;
+    }
+
+    lastClickTimeRef.current = currentTime;
+
+    if (clickCountRef.current >= 10) {
+      dispatch(toggleDevMode());
+      AsyncStorageService.setDevMode(!devMode);
+      clickCountRef.current = 0;
+    }
+  };
+
+  const handleDevLongPress = () => {
+    onDevClick?.();
+  };
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.primary }]}>
       {leftIcon ? (
         <TouchableOpacity
-          style={[styles.iconContainer, styles.iconButton, { backgroundColor: 'rgba(255, 255, 255, 0.2)' }]}
+          style={[styles.iconContainer, styles.iconButton, { backgroundColor: "rgba(255, 255, 255, 0.2)" }]}
           onPress={onLeftPress}
           activeOpacity={0.7}
         >
@@ -30,15 +62,15 @@ export const AppBar: React.FC<AppBarProps> = ({ title, leftIcon, rightIcon, onLe
         <View style={styles.iconContainer} />
       )}
 
-      <TouchableOpacity style={styles.titleContainer} disabled={!AppConfig.devMode && !onDevClick} onPress={onDevClick}>
-        <CustomText weight="Bold" style={[styles.title, { color: 'white' }]}>
+      <TouchableOpacity style={styles.titleContainer} onPress={handleDevClick} onLongPress={handleDevLongPress}>
+        <CustomText weight="Bold" style={[styles.title, { color: "white" }]}>
           {title}
         </CustomText>
       </TouchableOpacity>
 
       {rightIcon ? (
         <TouchableOpacity
-          style={[styles.iconContainer, styles.iconButton, { backgroundColor: 'rgba(255, 255, 255, 0.2)' }]}
+          style={[styles.iconContainer, styles.iconButton, { backgroundColor: "rgba(255, 255, 255, 0.2)" }]}
           onPress={onRightPress}
           activeOpacity={0.7}
         >
@@ -53,7 +85,7 @@ export const AppBar: React.FC<AppBarProps> = ({ title, leftIcon, rightIcon, onLe
 
 const styles = StyleSheet.create({
   gradient: {
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -63,42 +95,42 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'transparent',
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "transparent",
     paddingHorizontal: 20,
     paddingVertical: 12,
   },
   iconContainer: {
     width: 44,
     height: 44,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   iconButton: {
     borderRadius: 22,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
   },
   titleContainer: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   iconWrapper: {
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    justifyContent: "center",
+    alignItems: "center",
     marginRight: 8,
   },
   title: {
     fontSize: 22,
-    color: '#FFFFFF',
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: "#FFFFFF",
+    fontWeight: "bold",
+    textAlign: "center",
     letterSpacing: 0.5,
   },
 });

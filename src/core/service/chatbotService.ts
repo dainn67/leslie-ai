@@ -3,7 +3,7 @@ import { DiscordService, DiscordWebhookType } from "./discordService";
 import { UserProgressService } from "./userProgressService";
 import { ApiClient } from "../../api/apiClient";
 import { connectSSE } from "../../api/sseClient";
-import { AppDispatch } from "../../app/store";
+import { AppDispatch } from "../app/store";
 import { DifyConfig } from "../../constants/difyConfig";
 import {
   updateMessageData,

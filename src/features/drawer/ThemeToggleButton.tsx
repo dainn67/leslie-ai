@@ -2,7 +2,7 @@ import React from "react";
 import { TouchableOpacity, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
-import { RootState } from "../../app/store";
+import { RootState } from "../../core/app/store";
 import { toggleTheme } from "../theme/themeSlice";
 import { useAppTheme } from "../../theme";
 import { CustomText } from "../../components/text/customText";

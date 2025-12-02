@@ -6,7 +6,7 @@ import { FirebaseService, ToastService } from "../../core/service";
 import { FirebaseConstants } from "../../constants";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
-import { DrawerParamList } from "../../app/DrawerNavigator";
+import { DrawerParamList } from "../../core/app/DrawerNavigator";
 import { FlipCard } from "./component/FlipCard";
 import { ScrollView, View, StyleSheet, Dimensions } from "react-native";
 import { Flashcard } from "../../models";

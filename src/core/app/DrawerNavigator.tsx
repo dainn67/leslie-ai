@@ -1,22 +1,22 @@
 import React from "react";
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
 import { View } from "react-native";
-import { useAppTheme } from "../theme";
+import { useAppTheme } from "../../theme";
 import { Ionicons } from "@expo/vector-icons";
-import { CustomText } from "../components/text/customText";
-import { ChatbotScreen } from "../features/chatbot/screens/ChatbotScreen";
-import { FeedbackScreen } from "../features/feedback/FeedbackScreen";
-import { QuestionsScreen } from "../features/questions/screens/QuestionsScreen";
-import { VersionText, ResetProgressButton, ThemeToggleButton, SetExamDateButton } from "../features/drawer";
-import { FirebaseConstants } from "../constants";
-import { FirebaseService } from "../core/service";
+import { CustomText } from "../../components/text/customText";
+import { ChatbotScreen } from "../../features/chatbot/screens/ChatbotScreen";
+import { FeedbackScreen } from "../../features/feedback/FeedbackScreen";
+import { QuestionsScreen } from "../../features/questions/screens/QuestionsScreen";
+import { VersionText, ResetProgressButton, ThemeToggleButton, SetExamDateButton } from "../../features/drawer";
+import { FirebaseConstants } from "../../constants";
+import { FirebaseService } from "../service";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { RootStackParamList } from "./RootNavigator";
-import { Divider } from "../components/dividers/Divider";
-import { ShareAppButton } from "../features/drawer/ShareAppButton";
-import { FlashcardScreen } from "../features/flashcard/FlashcardScreen";
+import { Divider } from "../../components/dividers/Divider";
+import { ShareAppButton } from "../../features/drawer/ShareAppButton";
+import { FlashcardScreen } from "../../features/flashcard/FlashcardScreen";
 import { useTranslation } from "react-i18next";
-import { LanguageButton } from "../features/drawer/LanguageButton";
+import { LanguageButton } from "../../features/drawer/LanguageButton";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 // Define DrawerParamList for type safety
