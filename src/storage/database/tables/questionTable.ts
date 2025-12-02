@@ -105,7 +105,6 @@ export const insertQuestions = (questions: Question[]) => {
       })
       .join(", ");
     const questionSql = `INSERT INTO ${QuestionTable.tableName} ${questionColumns} VALUES ${questionValues}`;
-    console.log("questionSql", questionSql);
     db.execSync(questionSql);
 
     const answerColumns = `(${AnswerTable.columnQuestionId}, ${AnswerTable.columnAnswerId}, ${AnswerTable.columnText}, ${AnswerTable.columnIsCorrect})`;
@@ -118,7 +117,6 @@ export const insertQuestions = (questions: Question[]) => {
       )
       .join(", ");
     const answerSql = `INSERT INTO ${AnswerTable.tableName} ${answerColumns} VALUES ${answerValues}`;
-    console.log("answerSql", answerSql);
     db.execSync(answerSql);
   });
 };
