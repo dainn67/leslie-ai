@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import MainButton from "../../../components/buttons/MainButton";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { AppBar } from "../../../components/AppBar";
 import { Ionicons } from "@expo/vector-icons";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { RouteProp, useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useAppTheme } from "../../../theme";
 import { CustomText } from "../../../components/text/customText";
@@ -14,6 +14,9 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 import { updateUserProgress } from "../../userProgress/userProgressSlice";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BannerAds } from "../../ads/BannerAds";
+import ReviewService from "../../../core/service/inAppServices/reviewService";
+import { useDialog } from "../../../core/providers";
+import { useTranslation } from "react-i18next";
 
 type ResultScreenRouteProp = RouteProp<RootStackParamList, "ResultScreen">;
 type ResultScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "ResultScreen">;
@@ -22,6 +25,8 @@ export const ResultScreen = () => {
   const route = useRoute<ResultScreenRouteProp>();
   const navigation = useNavigation<ResultScreenNavigationProp>();
   const { colors } = useAppTheme();
+  const { t } = useTranslation();
+  const dialog = useDialog();
 
   const { questions, gameType, mapAnswerIds } = route.params;
   const [correctQuestions, setCorrectQuestions] = useState(0);
@@ -35,39 +40,63 @@ export const ResultScreen = () => {
   const userProgress = useAppSelector((state) => state.userProgress.userProgress);
 
   useEffect(() => {
-    let correctQuestions = 0;
-    let incorrectQuestions = 0;
-    let totalQuestions = questions.length;
+    // Calculate game result
+    const calculateResult = () => {
+      let correctQuestions = 0;
+      let incorrectQuestions = 0;
+      let totalQuestions = questions.length;
 
-    for (const question of questions) {
-      const answer = mapAnswerIds[question.questionId];
-      if (answer !== undefined && answer === question.answers.find((a) => a.isCorrect)?.answerId) {
-        correctQuestions++;
-      } else {
-        incorrectQuestions++;
+      for (const question of questions) {
+        const answer = mapAnswerIds[question.questionId];
+        if (answer !== undefined && answer === question.answers.find((a) => a.isCorrect)?.answerId) {
+          correctQuestions++;
+        } else {
+          incorrectQuestions++;
+        }
       }
-    }
 
-    setCorrectQuestions(correctQuestions);
-    setIncorrectQuestions(incorrectQuestions);
-    setTotalQuestions(totalQuestions);
+      setCorrectQuestions(correctQuestions);
+      setIncorrectQuestions(incorrectQuestions);
+      setTotalQuestions(totalQuestions);
+    };
 
-    const summary = createResultSummary(questions, mapAnswerIds);
+    // Analyze result with AI
+    const analyzeResult = () => {
+      const summary = createResultSummary(questions, mapAnswerIds);
 
-    setAiInsightWords([]);
+      setAiInsightWords([]);
 
-    ChatbotService.sendResultAnalytic({
-      message: summary,
-      gameType: gameType,
-      userName: userProgress.userName,
-      onYieldWord: (word) => {
-        setAiInsightWords((prev) => [...prev, word]);
-      },
-      onEvaluateLevel: (level) => {
-        dispatch(updateUserProgress({ level }));
-      },
-    });
+      ChatbotService.sendResultAnalytic({
+        message: summary,
+        gameType: gameType,
+        userName: userProgress.userName,
+        onYieldWord: (word) => {
+          setAiInsightWords((prev) => [...prev, word]);
+        },
+        onEvaluateLevel: (level) => {
+          dispatch(updateUserProgress({ level }));
+        },
+      });
+    };
+
+    calculateResult();
+    analyzeResult();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        if (ReviewService.canRequestAppReview()) {
+          dialog.showConfirm(
+            t("chatbot_screen_request_rating"),
+            () => ReviewService.requestAppReview(),
+            () => ReviewService.ignoreAppReview(),
+            t("chatbot_screen_request_rating_confirm")
+          );
+        }
+      };
+    }, [])
+  );
 
   const handleTryAgain = () => {
     navigation.replace("GameScreen", { questions, gameType });

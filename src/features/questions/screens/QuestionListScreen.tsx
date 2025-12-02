@@ -47,6 +47,7 @@ export const QuestionListScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
+      console.log("useFocusEffect");
       const questions = getQuestionsByType(type);
       setQuestions(questions);
       setFilteredQuestions(questions);

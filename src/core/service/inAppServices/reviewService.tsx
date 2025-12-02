@@ -21,6 +21,7 @@ class ReviewService {
 
       if (savedTime !== null) {
         this.previousReviewPopup = savedTime;
+        this.alreadyConfirmReview = alreadyConfirmReview ?? false;
       }
     } catch (e) {
       console.log("Failed to load previous review time:", e);
