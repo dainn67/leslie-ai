@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TTSInstance from "../../../../core/service/ttsService";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
-import { CustomText } from "../../../../components/text/customText";
 import { Question } from "../../../../models/question";
 import { QuestionView } from "./QuestionView";
 import { ProgressBar } from "../../../../components/ProgressBar";
@@ -10,8 +9,8 @@ import { createResultSummary, FirebaseService } from "../../../../core/service";
 import { IconButton } from "../../../../components/buttons";
 import { AppIcons } from "../../../../constants/appIcons";
 import { FirebaseConstants } from "../../../../constants";
-import { useTranslation } from "react-i18next";
 import { useAppTheme } from "../../../../theme";
+import { Ionicons } from "@expo/vector-icons";
 
 interface QuestionsMessageProps {
   questions: Question[];
@@ -27,7 +26,6 @@ export const QuestionsMessage = ({ questions, onAnalyze }: QuestionsMessageProps
   const [mapAnswer, setMapAnswer] = useState<{ [key: number]: number }>({});
   const [mapBookmark, setMapBookmark] = useState<{ [key: number]: boolean }>({});
 
-  const { t } = useTranslation();
   const { colors } = useAppTheme();
 
   useEffect(() => {
@@ -91,46 +89,42 @@ export const QuestionsMessage = ({ questions, onAnalyze }: QuestionsMessageProps
         />
       </View>
 
-      <QuestionView
-        question={question}
-        questionIndex={currentQuestionIndex}
-        totalQuestions={questions.length}
-        bookmarked={mapBookmark[question.questionId]}
-        selectedAnswer={mapAnswer[question.questionId]}
-        playAudio={playAudio}
-        onAnswerSelect={handleAnswerSelect}
-        onBookmarkPress={handleBookmarkPress}
-        setPlayAudio={setPlayAudio}
-      />
-
-      {/* Navigation */}
-      <View style={styles.navigationContainer}>
+      <View style={styles.questionContainer}>
+        {/* Previous Button */}
         <TouchableOpacity
-          style={[styles.navButton, styles.prevButton, currentQuestionIndex === 0 && styles.disabledButton]}
+          style={styles.navButton}
           onPress={() => handleChangeQuestion("prev")}
           disabled={currentQuestionIndex === 0}
         >
-          <CustomText
-            style={[styles.navButtonText, styles.navButtonTextPrev, currentQuestionIndex === 0 && styles.disabledButtonText]}
-          >
-            {t("previous")}
-          </CustomText>
+          <Ionicons name="chevron-back" size={32} color={currentQuestionIndex === 0 ? "#BDBDBD" : "#007AFF"} />
         </TouchableOpacity>
 
+        {/* Question View */}
+        <View style={styles.questionViewContainer}>
+          <QuestionView
+            question={question}
+            questionIndex={currentQuestionIndex}
+            totalQuestions={questions.length}
+            bookmarked={mapBookmark[question.questionId]}
+            selectedAnswer={mapAnswer[question.questionId]}
+            playAudio={playAudio}
+            onAnswerSelect={handleAnswerSelect}
+            onBookmarkPress={handleBookmarkPress}
+            setPlayAudio={setPlayAudio}
+          />
+        </View>
+
+        {/* Next Button */}
         <TouchableOpacity
-          style={[styles.navButton, styles.nextButton, currentQuestionIndex === questions.length - 1 && styles.disabledButton]}
+          style={styles.navButton}
           onPress={() => handleChangeQuestion("next")}
           disabled={currentQuestionIndex === questions.length - 1}
         >
-          <CustomText
-            style={[
-              styles.navButtonText,
-              styles.navButtonTextNext,
-              currentQuestionIndex === questions.length - 1 && styles.disabledButtonText,
-            ]}
-          >
-            {t("next")}
-          </CustomText>
+          <Ionicons
+            name="chevron-forward"
+            size={32}
+            color={currentQuestionIndex === questions.length - 1 ? "#BDBDBD" : "#007AFF"}
+          />
         </TouchableOpacity>
       </View>
     </View>
@@ -147,6 +141,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignContent: "center",
     marginBottom: 8,
+    paddingHorizontal: 32,
   },
   progressBarContainer: {
     flex: 1,
@@ -161,44 +156,20 @@ const styles = StyleSheet.create({
     borderColor: "#E8E8E8",
     marginRight: 4,
   },
-  progressTextContainer: {
-    minWidth: 50,
+  questionContainer: {
+    flex: 1,
+    flexDirection: "row",
   },
   navigationContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
   },
   navButton: {
+    paddingHorizontal: 4,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  questionViewContainer: {
     flex: 1,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    marginHorizontal: 4,
-  },
-  prevButton: {
-    backgroundColor: "#F8F9FA",
-    borderWidth: 1,
-    borderColor: "#E8E8E8",
-  },
-  nextButton: {
-    backgroundColor: "#4A90E2",
-  },
-  disabledButton: {
-    backgroundColor: "#F5F5F5",
-    borderColor: "#E0E0E0",
-  },
-  navButtonText: {
-    fontSize: 14,
-    fontWeight: "600",
-    textAlign: "center",
-  },
-  navButtonTextPrev: {
-    color: "black",
-  },
-  navButtonTextNext: {
-    color: "white",
-  },
-  disabledButtonText: {
-    color: "#BDBDBD",
   },
 });

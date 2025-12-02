@@ -85,15 +85,10 @@ export const QuestionView = ({
   return (
     <View style={[styles.questionCard, { backgroundColor: colors.grey }]}>
       <View style={styles.questionHeader}>
-        {/* Question Index and Text */}
-        <View style={styles.questionHeaderContent}>
-          <View style={styles.questionIndex}>
-            <CustomText style={[styles.questionNumberText, { color: colors.placeholder }]}>
-              {t("question")} {questionIndex + 1}/{totalQuestions}:
-            </CustomText>
-          </View>
-          <CustomText style={[styles.questionText, { color: colors.text }]}>{question.question}</CustomText>
-        </View>
+        {/* Question index */}
+        <CustomText style={[styles.questionNumberText, { color: colors.placeholder }]}>
+          {t("question")} {questionIndex + 1}/{totalQuestions}:
+        </CustomText>
 
         {/* Save icon button */}
         <View>
@@ -108,6 +103,9 @@ export const QuestionView = ({
           {question.audio && <IconButton icon={playAudio ? AppIcons.audioOn : AppIcons.audioOff} onPress={handleToggleAudio} />}
         </View>
       </View>
+
+      {/* Question Text */}
+      <CustomText style={[styles.questionText, { color: colors.text }]}>{question.question}</CustomText>
 
       {/* Answers */}
       <View style={styles.answersContainer}>
@@ -179,7 +177,7 @@ export const QuestionView = ({
 const styles = StyleSheet.create({
   questionCard: {
     borderRadius: 16,
-    padding: 20,
+    padding: 16,
     paddingBottom: 0,
     marginBottom: 16,
     shadowColor: "#000",
@@ -193,17 +191,11 @@ const styles = StyleSheet.create({
   },
   questionHeader: {
     flexDirection: "row",
-    alignItems: "flex-start",
-    marginBottom: 20,
-  },
-  questionHeaderContent: {
-    flex: 1,
-    marginRight: 20,
-  },
-  questionIndex: {
-    marginBottom: 2,
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   questionNumberText: {
+    flex: 1,
     fontSize: 14,
     fontWeight: "bold",
   },
@@ -212,6 +204,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     flex: 1,
     lineHeight: 24,
+    marginBottom: 16,
   },
   answersContainer: {
     marginBottom: 4,
@@ -234,8 +227,6 @@ const styles = StyleSheet.create({
     marginRight: 12,
     marginVertical: 4,
   },
-  correctLabel: {},
-  wrongLabel: {},
   answerText: {
     fontSize: 16,
     flex: 1,
