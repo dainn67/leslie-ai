@@ -69,4 +69,4 @@ class ReviewService {
   }
 }
 
-export default ReviewService.getInstance();
+export const reviewService = ReviewService.getInstance();

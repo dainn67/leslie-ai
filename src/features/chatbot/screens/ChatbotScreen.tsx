@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import TTSInstance from "../../../core/service/ttsService";
-import ReviewService from "../../../core/service/inAppServices/reviewService";
 import { Ionicons } from "@expo/vector-icons";
 import { AppBar } from "../../../components/AppBar";
 import { useNavigation, RouteProp, useRoute } from "@react-navigation/native";
@@ -20,7 +19,14 @@ import {
 } from "../slice/chatbotSlice";
 import { useDialog } from "../../../core/providers";
 import { ChatMessageList, ChatInput } from "../components";
-import { AsyncStorageService, ChatbotService, FirebaseService, rewardedAdService, ToastService } from "../../../core/service";
+import {
+  AsyncStorageService,
+  ChatbotService,
+  FirebaseService,
+  adService,
+  ToastService,
+  reviewService,
+} from "../../../core/service";
 import { DifyConfig, FirebaseConstants } from "../../../constants";
 import { NameDialog } from "../../../components/dialogs";
 import { RootStackParamList } from "../../../core/app/RootNavigator";
@@ -128,12 +134,12 @@ export const ChatbotScreen = () => {
     if (!noUserMessage) dispatch(addMessage({ message: userMessage }));
 
     const onRequestRating =
-      shouldRequestRating && ReviewService.canRequestAppReview()
+      shouldRequestRating && reviewService.canRequestAppReview()
         ? () => {
             dialog.showConfirm(
               t("chatbot_screen_request_rating"),
-              () => ReviewService.requestAppReview(),
-              () => ReviewService.ignoreAppReview(),
+              () => reviewService.requestAppReview(),
+              () => reviewService.ignoreAppReview(),
               t("chatbot_screen_request_rating_confirm")
             );
           }
@@ -253,7 +259,7 @@ export const ChatbotScreen = () => {
   const handleDevClick = async () => {
     // logDatabasePath();
 
-    rewardedAdService.show((reward) => {
+    adService.show((reward) => {
       console.log("Reward received:", reward);
     });
   };

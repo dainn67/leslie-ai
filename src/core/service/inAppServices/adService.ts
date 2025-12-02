@@ -3,8 +3,8 @@ import { AdsConfig, AppConfig } from "../../../constants";
 
 type RewardCallback = (reward: { type: string; amount: number }) => void;
 
-class RewardedAdService {
-  private static instance: RewardedAdService;
+class AdService {
+  private static instance: AdService;
   private rewardedAd;
   private loaded = false;
   private rewardCallback: RewardCallback | null = null;
@@ -29,10 +29,10 @@ class RewardedAdService {
   }
 
   static getInstance() {
-    if (!RewardedAdService.instance) {
-      RewardedAdService.instance = new RewardedAdService();
+    if (!AdService.instance) {
+      AdService.instance = new AdService();
     }
-    return RewardedAdService.instance;
+    return AdService.instance;
   }
 
   async show(callback?: RewardCallback) {
@@ -47,4 +47,4 @@ class RewardedAdService {
   }
 }
 
-export const rewardedAdService = RewardedAdService.getInstance();
+export const adService = AdService.getInstance();

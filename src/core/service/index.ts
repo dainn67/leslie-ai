@@ -8,5 +8,5 @@ export * from "./storageServices/asyncStorageService";
 export * from "./storageServices/questionService";
 export * from "./storageServices/databaseService";
 export * from "./storageServices/testService";
-export * from "./adServices/rewardedAdService";
+export * from "./inAppServices/adService";
 export * from "./inAppServices/reviewService";
