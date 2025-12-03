@@ -167,7 +167,7 @@ export const QuestionView = ({
         <View style={[styles.explanationContainer, getExplanationStyle()]}>
           <View style={styles.explanationHeader}>
             <CustomText style={styles.explanationIcon}>💡</CustomText>
-            <CustomText style={[styles.explanationTitle, { color: colors.text }]}>Giải thích</CustomText>
+            <CustomText style={[styles.explanationTitle, { color: colors.text }]}>{t("explanation")}</CustomText>
           </View>
           <CustomText style={[styles.explanationText, { color: colors.text, opacity: 0.8 }]}>{question.explanation}</CustomText>
         </View>
