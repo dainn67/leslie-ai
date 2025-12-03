@@ -1,4 +1,4 @@
-import ApiServiceInstance from "./apiService";
+import { apiService } from "./apiService";
 import { DiscordService, DiscordWebhookType } from "./discordService";
 import { UserProgressService } from "./userProgressService";
 import { ApiClient } from "../../api/apiClient";
@@ -261,7 +261,7 @@ export class ChatbotService {
 
     // Original stream
     connectSSE({
-      url: ApiServiceInstance.chatApi,
+      url: apiService.chatApi,
       token: token,
       body: {
         query: message ?? "none",
@@ -443,7 +443,7 @@ export class ChatbotService {
 
     // Original stream
     connectSSE({
-      url: ApiServiceInstance.chatApi,
+      url: apiService.chatApi,
       token: analyzeGameResultApiKey,
       body: {
         query: message,
@@ -535,7 +535,7 @@ export class ChatbotService {
     const token = type === "context" ? extractContextApiKey : analyzeProgressApiKey;
 
     const result = await ApiClient.postData({
-      url: ApiServiceInstance.chatApi,
+      url: apiService.chatApi,
       token: token,
       body: {
         query: message,
