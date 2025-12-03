@@ -68,16 +68,8 @@ export const FlashcardsMessage = ({ flashcards, onCreateQuestion }: FlashcardsMe
     <View style={styles.container}>
       <View style={styles.flashCardSection}>
         {/* Previous Button */}
-        <TouchableOpacity 
-          style={styles.navButton} 
-          onPress={goToPrevious} 
-          disabled={currentFlashcardIndex === 0}
-        >
-          <Ionicons 
-            name="chevron-back" 
-            size={32} 
-            color={currentFlashcardIndex === 0 ? "#BDBDBD" : "#007AFF"} 
-          />
+        <TouchableOpacity style={styles.navButton} onPress={goToPrevious} disabled={currentFlashcardIndex === 0}>
+          <Ionicons name="chevron-back" size={32} color={currentFlashcardIndex === 0 ? "#BDBDBD" : "#007AFF"} />
         </TouchableOpacity>
 
         {/* Flashcard */}
@@ -94,11 +86,7 @@ export const FlashcardsMessage = ({ flashcards, onCreateQuestion }: FlashcardsMe
         </View>
 
         {/* Next Button */}
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={goToNext}
-          disabled={currentFlashcardIndex === flashcards.length - 1}
-        >
+        <TouchableOpacity style={styles.navButton} onPress={goToNext} disabled={currentFlashcardIndex === flashcards.length - 1}>
           <Ionicons
             name="chevron-forward"
             size={32}
@@ -126,7 +114,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 16,
+    marginTop: 8,
   },
   flashCardSection: {
     flexDirection: "row",
