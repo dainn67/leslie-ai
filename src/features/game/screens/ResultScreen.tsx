@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import MainButton from "../../../components/buttons/MainButton";
-import ReviewService from "../../../core/service/inAppServices/reviewService";
+import { reviewService } from "../../../core/service";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { AppBar } from "../../../components/AppBar";
 import { Ionicons } from "@expo/vector-icons";
@@ -86,11 +86,11 @@ export const ResultScreen = () => {
   useFocusEffect(
     useCallback(() => {
       return () => {
-        if (ReviewService.canRequestAppReview()) {
+        if (reviewService.canRequestAppReview()) {
           dialog.showConfirm(
             t("chatbot_screen_request_rating"),
-            () => ReviewService.requestAppReview(),
-            () => ReviewService.ignoreAppReview(),
+            () => reviewService.requestAppReview(),
+            () => reviewService.ignoreAppReview(),
             t("chatbot_screen_request_rating_confirm")
           );
         }
