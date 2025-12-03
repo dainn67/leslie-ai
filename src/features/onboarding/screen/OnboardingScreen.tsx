@@ -146,10 +146,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   languageButtonContainer: {
-    position: "absolute",
-    top: 32,
-    right: 16,
-    zIndex: 1,
+    alignSelf: "flex-end",
+    marginRight: 16,
   },
   slide: {
     width: screenWidth,

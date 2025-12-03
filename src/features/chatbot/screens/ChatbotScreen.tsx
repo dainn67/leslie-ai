@@ -39,8 +39,9 @@ import { Flashcard } from "../../../models";
 import { BannerAds } from "../../ads/BannerAds";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAppTheme } from "../../../theme";
-import { KeyboardAvoidingView } from "react-native";
+import { KeyboardAvoidingView, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Keyboard } from "react-native";
 
 // Composite navigation type to handle both drawer and stack navigation
 type ChatbotScreenNavigationProp = CompositeNavigationProp<
@@ -54,13 +55,15 @@ export const ChatbotScreen = () => {
   const route = useRoute<ChatbotScreenRouteProp>();
   const initialMessage = route.params?.initialMessage || "";
 
+  // Theme
   const { t } = useTranslation();
   const { colors } = useAppTheme();
-
-  // Drawer
   const navigation = useNavigation<ChatbotScreenNavigationProp>();
   const dialog = useDialog();
+
   const dispatch = useAppDispatch();
+
+  // Data
   const messages = useAppSelector((state) => getMessagesByCID(state.chatbot));
   const difyConversationId = useAppSelector((state) => getDifyConversationIdByCID(state.chatbot));
   const conversationSummary = useAppSelector((state) => getConversationSummaryByCID(state.chatbot));
@@ -69,6 +72,7 @@ export const ChatbotScreen = () => {
   const isGenerating = ![MessageStatus.DONE, MessageStatus.ERROR].includes(messages[messages.length - 1]?.status);
 
   const [nameDialogVisible, setNameDialogVisible] = useState(false);
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
 
   const initilized = useRef(false);
 
@@ -77,6 +81,10 @@ export const ChatbotScreen = () => {
       if (initialMessage) return;
 
       if (!initilized.current) {
+        // Keyboard listener
+        const show = Keyboard.addListener("keyboardDidShow", () => setKeyboardVisible(true));
+        const hide = Keyboard.addListener("keyboardDidHide", () => setKeyboardVisible(false));
+
         if (userProgress.userName.length === 0) {
           setNameDialogVisible(true);
         } else {
@@ -89,6 +97,11 @@ export const ChatbotScreen = () => {
           handleSend({ noUserMessage: true, actionId });
           initilized.current = true;
         }
+
+        return () => {
+          show.remove();
+          hide.remove();
+        };
       } else if (messages.length === 0) {
         const actionId = userProgress.level ? DifyConfig.initChatActionId : DifyConfig.askLevelActionId;
         handleSend({ noUserMessage: true, actionId });
@@ -285,7 +298,7 @@ export const ChatbotScreen = () => {
           />
           <BannerAds />
 
-          <KeyboardAvoidingView behavior={"padding"} style={{ backgroundColor: colors.background }} keyboardVerticalOffset={0}>
+          <KeyboardAvoidingView behavior={"padding"} keyboardVerticalOffset={keyboardVisible ? 50 : 0}>
             <ChatInput disable={isGenerating} onSend={handleManuallySend} />
           </KeyboardAvoidingView>
         </GestureHandlerRootView>
