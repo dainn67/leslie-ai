@@ -124,17 +124,23 @@ export const GameScreen = () => {
 
   return (
     <SafeAreaView style={[style.container, { backgroundColor: colors.background }]}>
+      {/* App Bar */}
       <AppBar
         title={t("question")}
         leftIcon={<Ionicons name="arrow-back" size={24} color="white" />}
         onLeftPress={() => navigation.pop()}
         onDevClick={handleDevClick}
       />
+
+      {/* Question */}
       {question ? (
         <>
+          {/* Progress Bar */}
           <View style={style.progressBar}>
             <ProgressBar progress={progress} />
           </View>
+
+          {/* Question View */}
           <ScrollView style={style.questionContainer}>
             <QuestionView
               questionIndex={currentQuestionIndex}
@@ -150,10 +156,14 @@ export const GameScreen = () => {
             />
           </ScrollView>
 
-          <TouchableOpacity style={style.floatingButton} onPress={() => setIsChatbotVisible(true)}>
-            <Ionicons name="chatbubble-ellipses" size={24} color="white" />
-          </TouchableOpacity>
+          {/* Chatbot Button */}
+          <View style={style.chatbotButtonContainer}>
+            <TouchableOpacity style={style.chatbotButton} onPress={() => setIsChatbotVisible(true)}>
+              <Ionicons name="chatbubble-ellipses" size={24} color="white" />
+            </TouchableOpacity>
+          </View>
 
+          {/* Navigation Buttons */}
           <View style={style.buttonContainer}>
             <TouchableOpacity
               style={[style.navButton, style.prevButton, currentQuestionIndex === 0 && style.disabledButton]}
@@ -238,10 +248,12 @@ const style = StyleSheet.create({
   disabledButtonText: {
     color: "#BDBDBD",
   },
-  floatingButton: {
-    position: "absolute",
-    right: 16,
-    bottom: 150,
+  chatbotButtonContainer: {
+    alignItems: "flex-end",
+    paddingHorizontal: 16,
+    marginBottom: 16,
+  },
+  chatbotButton: {
     width: 56,
     height: 56,
     borderRadius: 28,

@@ -260,6 +260,8 @@ export const ChatbotScreen = () => {
     // logDatabasePath();
 
     dialog.showConfirm("View rewarded Ad to support us ?", () => adService.showRewaredAd());
+
+    // adService.showInterstitialAd();
   };
 
   return (

@@ -145,7 +145,10 @@ export const QuestionListScreen = () => {
         {filteredQuestions.length > 0 ? (
           <ScrollView style={styles.questionListContainer}>
             {filteredQuestions.map((question, index) => (
-              <View key={index} style={styles.questionContainer}>
+              <View
+                key={index}
+                style={[styles.questionContainer, { marginBottom: index === filteredQuestions.length - 1 ? 16 : 0 }]}
+              >
                 <QuestionView
                   question={question}
                   questionIndex={index}
@@ -251,7 +254,8 @@ const styles = StyleSheet.create({
   },
   questionListContainer: {
     flex: 1,
-    padding: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 8,
   },
   questionContainer: {
     paddingHorizontal: 8,
@@ -264,7 +268,6 @@ const styles = StyleSheet.create({
   bannerContainer: {
     alignItems: "center",
     marginTop: 8,
-    marginBottom: 4,
   },
   searchInputWrapper: {
     backgroundColor: "white",
