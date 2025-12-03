@@ -29,4 +29,4 @@ export class ApiService {
   }
 }
 
-export default ApiService.getInstance();
+export const apiService = ApiService.getInstance();
