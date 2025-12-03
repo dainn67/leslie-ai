@@ -62,6 +62,10 @@
   "question_number_selector_title": "Số lượng câu hỏi",
   "question_number_selector_subtitle": "Chọn số lượng câu hỏi bạn muốn làm",
 
+  "result_screen_detailed_statistics": "Thống kê chi tiết",
+  "result_screen_correct_answers": "câu trả lời đúng",
+  "result_screen_ai_analysis": "Phân tích AI",
+
   "question": "Câu hỏi",
   "practice": "Ôn tập",
 
@@ -70,6 +74,7 @@
   "continue": "Tiếp tục",
   "confirm": "Xác nhận",
   "cancel": "Hủy",
+  "try_again": "Thử lại",
 
   "tts_not_supported": "Hiện TTS chưa hỗ trợ tiếng Nhật\nHãy vào Cài đặt > Văn bản sang giọng nói > Tải về ngôn ngữ Nhật"
 }

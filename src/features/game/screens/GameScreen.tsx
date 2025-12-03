@@ -211,7 +211,7 @@ const style = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingHorizontal: 16,
-    marginBottom: 32,
+    marginBottom: 8,
   },
   navButton: {
     flex: 1,

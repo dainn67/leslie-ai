@@ -62,6 +62,10 @@
   "question_number_selector_title": "Question Amount",
   "question_number_selector_subtitle": "Select the number of questions you want to practice",
 
+  "result_screen_detailed_statistics": "Detailed Statistics",
+  "result_screen_correct_answers": "correct answers",
+  "result_screen_ai_analysis": "AI Analysis",
+
   "question": "Question",
   "practice": "Practice",
 
@@ -70,6 +74,7 @@
   "continue": "Continue",
   "confirm": "Confirm",
   "cancel": "Cancel",
+  "try_again": "Try Again",
 
   "tts_not_supported": "TTS does not support Japanese\nPlease go to Settings > Text to Speech > Download Japanese language"
 }

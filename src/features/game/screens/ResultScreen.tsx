@@ -17,6 +17,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { BannerAds } from "../../ads/BannerAds";
 import { useDialog } from "../../../core/providers";
 import { useTranslation } from "react-i18next";
+import { LoadingMessage } from "../../chatbot/components";
+import { MessageType } from "../../../models";
 
 type ResultScreenRouteProp = RouteProp<RootStackParamList, "ResultScreen">;
 type ResultScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "ResultScreen">;
@@ -114,7 +116,7 @@ export const ResultScreen = () => {
         {/* Statistics Section */}
         <View style={[styles.statsSection, { backgroundColor: colors.backgroundSecondary }]}>
           <CustomText style={{ color: colors.text, marginBottom: 12 }} weight="SemiBold" size={18}>
-            Thống kê chi tiết
+            {t("result_screen_detailed_statistics")}
           </CustomText>
 
           <View style={styles.statsGrid}>
@@ -163,7 +165,7 @@ export const ResultScreen = () => {
               />
             </View>
             <CustomText style={[styles.performanceText, { color: colors.text }]} size={14}>
-              {correctQuestions}/{totalQuestions} câu trả lời đúng
+              {correctQuestions}/{totalQuestions} {t("result_screen_correct_answers")}
             </CustomText>
           </View>
         </View>
@@ -176,15 +178,21 @@ export const ResultScreen = () => {
             </View>
 
             <CustomText style={{ color: colors.text }} weight="SemiBold" size={18}>
-              Phân tích AI
+              {t("result_screen_ai_analysis")}
             </CustomText>
           </View>
 
-          <View style={styles.aiInsightItem}>
-            {aiInsightWords.map((word, index) => (
-              <WordComponent key={index} fontSize={16} word={word} color={colors.text} />
-            ))}
-          </View>
+          {aiInsightWords.length > 0 ? (
+            <View style={styles.aiInsightItem}>
+              {aiInsightWords.map((word, index) => (
+                <WordComponent key={index} fontSize={16} word={word} color={colors.text} />
+              ))}
+            </View>
+          ) : (
+            <View style={styles.aiInsightLoadingContainer}>
+              <LoadingMessage type={MessageType.STREAM_TEXT} />
+            </View>
+          )}
         </View>
       </ScrollView>
 
@@ -192,7 +200,7 @@ export const ResultScreen = () => {
 
       {/* Action Buttons */}
       <View style={[styles.buttonContainer, { backgroundColor: colors.background }]}>
-        <MainButton title="Thử lại" onPress={handleTryAgain} style={{ backgroundColor: colors.primary }} />
+        <MainButton title={t("try_again")} onPress={handleTryAgain} style={{ backgroundColor: colors.primary }} />
       </View>
     </SafeAreaView>
   );
@@ -309,6 +317,9 @@ const styles = StyleSheet.create({
   aiInsightItem: {
     flexDirection: "row",
     flexWrap: "wrap",
+  },
+  aiInsightLoadingContainer: {
+    alignSelf: "flex-start",
   },
   aiInsightText: {
     flex: 1,
