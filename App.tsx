@@ -10,6 +10,8 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { DialogProvider } from "./src/core/providers";
 import { useAppInitialization } from "./src/hooks/hooks";
 import { SplashScreen } from "./src/features/splash/screen/SplashScreen";
+import { StatusBar } from "react-native";
+import { useAppTheme } from "./src/theme";
 
 export default function App() {
   return (
@@ -27,12 +29,16 @@ export default function App() {
 
 const AppContent = () => {
   const { isReady } = useAppInitialization();
+  const { isDarkMode } = useAppTheme();
 
   if (!isReady) return <SplashScreen />;
 
   return (
     <DialogProvider>
-      <RootNavigator />
+      <SafeAreaProvider>
+        <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
+        <RootNavigator />
+      </SafeAreaProvider>
       <Toast />
     </DialogProvider>
   );
