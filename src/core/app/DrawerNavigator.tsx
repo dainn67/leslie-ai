@@ -91,7 +91,7 @@ export const DrawerNavigator = () => {
         initialParams={{ initialMessage }}
         listeners={{
           drawerItemPress: (e) => {
-            FirebaseService.logEvent(FirebaseConstants.OPEN_CHATBOT_SCREEN);
+            FirebaseService.logClickEvent(FirebaseConstants.OPEN_CHATBOT_SCREEN);
           },
         }}
         options={{
@@ -108,7 +108,7 @@ export const DrawerNavigator = () => {
         component={QuestionsScreen}
         listeners={{
           drawerItemPress: (e) => {
-            FirebaseService.logEvent(FirebaseConstants.OPEN_SAVED_QUESTIONS_SCREEN);
+            FirebaseService.logClickEvent(FirebaseConstants.OPEN_SAVED_QUESTIONS_SCREEN);
           },
         }}
         options={{
@@ -125,7 +125,7 @@ export const DrawerNavigator = () => {
         component={FlashcardScreen}
         listeners={{
           drawerItemPress: (e) => {
-            FirebaseService.logEvent(FirebaseConstants.OPEN_FLASH_CARD_SCREEN);
+            FirebaseService.logClickEvent(FirebaseConstants.OPEN_FLASH_CARD_SCREEN);
           },
         }}
         options={{
@@ -142,7 +142,7 @@ export const DrawerNavigator = () => {
         component={FeedbackScreen}
         listeners={{
           drawerItemPress: (e) => {
-            FirebaseService.logEvent(FirebaseConstants.OPEN_FEEDBACK_SCREEN);
+            FirebaseService.logClickEvent(FirebaseConstants.OPEN_FEEDBACK_SCREEN);
           },
         }}
         options={{

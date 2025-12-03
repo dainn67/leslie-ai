@@ -622,12 +622,12 @@ export class ChatbotService {
     let id = actionId.toLowerCase().trim();
     if (id === DifyConfig.setExamDateActionId) {
       // Set exam date
-      FirebaseService.logEvent(FirebaseConstants.OPEN_EXAM_DATE_PICKER);
+      FirebaseService.logClickEvent(FirebaseConstants.OPEN_EXAM_DATE_PICKER);
       return { ui: "openDatePicker" }; // signal UI
     }
     if (id === DifyConfig.unknownExamDateActionId) {
       // Skip exam date
-      FirebaseService.logEvent(FirebaseConstants.SKIP_EXAM_DATE);
+      FirebaseService.logClickEvent(FirebaseConstants.SKIP_EXAM_DATE);
       return { sendMessage: { examDate: 0 } };
     }
     if (id === DifyConfig.setBeginnerId) {

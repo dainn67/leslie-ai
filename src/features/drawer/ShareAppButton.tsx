@@ -16,7 +16,7 @@ export const ShareAppButton = () => {
       await Share.share({
         message: `${AppConfig.name} - ${t("drawer_share_app_content")}: https://play.google.com/store/apps/details?id=${AppConfig.androidPackageName}`,
       });
-      FirebaseService.logEvent(FirebaseConstants.SHARE_APP);
+      FirebaseService.logClickEvent(FirebaseConstants.SHARE_APP);
     } catch (error) {
       console.error(error);
     }

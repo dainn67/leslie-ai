@@ -60,7 +60,7 @@ const OnboardingScreen: React.FC = () => {
       setCurrentIndex(nextIndex);
       flatListRef.current?.scrollToIndex({ index: nextIndex, animated: true });
     } else {
-      FirebaseService.logEvent(FirebaseConstants.ONBOARDING_COMPLETED);
+      FirebaseService.logClickEvent(FirebaseConstants.ONBOARDING_COMPLETED);
       AsyncStorageService.setOnboardingCompleted(true);
       navigation.replace("Main", { initialMessage: "" });
     }

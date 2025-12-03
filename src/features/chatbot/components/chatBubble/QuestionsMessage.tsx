@@ -54,7 +54,7 @@ export const QuestionsMessage = ({ questions, onAnalyze }: QuestionsMessageProps
     });
 
     if (isBookmarked) {
-      FirebaseService.logEvent(FirebaseConstants.SAVE_GENERATED_QUESTION);
+      FirebaseService.logClickEvent(FirebaseConstants.SAVE_GENERATED_QUESTION);
       insertQuestions([question]);
     } else {
       deleteQuestions([question.questionId]);

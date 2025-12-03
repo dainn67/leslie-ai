@@ -20,7 +20,7 @@ export const SetExamDateButton = () => {
   const handleClick = () => {
     dialog.showDatePicker((date) => {
       if (date) {
-        FirebaseService.logEvent(FirebaseConstants.UPDATE_EXAM_DATE, { date: date.getTime() });
+        FirebaseService.logClickEvent(FirebaseConstants.UPDATE_EXAM_DATE, { date: date.getTime() });
         dispatch(updateUserProgress({ examDate: date.getTime() }));
       }
     });

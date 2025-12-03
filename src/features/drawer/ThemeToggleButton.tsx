@@ -19,7 +19,7 @@ export const ThemeToggleButton = () => {
   const handleToggle = () => {
     dispatch(toggleTheme());
 
-    FirebaseService.logEvent(FirebaseConstants.TOGGLE_THEME, {
+    FirebaseService.logClickEvent(FirebaseConstants.TOGGLE_THEME, {
       theme: themeMode,
     });
   };

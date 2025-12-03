@@ -46,12 +46,12 @@ export const QuestionsScreen = () => {
   }, []);
 
   const handleOpenDrawer = () => {
-    FirebaseService.logEvent(FirebaseConstants.OPEN_MENU);
+    FirebaseService.logClickEvent(FirebaseConstants.OPEN_MENU);
     navigation.openDrawer();
   };
 
   const handleNavigateToQuestionType = (type: QuestionType) => {
-    FirebaseService.logEvent(FirebaseConstants.OPEN_QUESTION_TYPE_BOX, { type });
+    FirebaseService.logClickEvent(FirebaseConstants.OPEN_QUESTION_TYPE_BOX, { type });
     navigation.navigate("QuestionListScreen", { type });
   };
 
@@ -65,7 +65,7 @@ export const QuestionsScreen = () => {
 
   const handleSelectQuestion = (amount: number) => {
     const questions = allQuestions.slice(0, amount);
-    FirebaseService.logEvent(FirebaseConstants.REVIEW_ALL_QUESTIONS, { amount });
+    FirebaseService.logClickEvent(FirebaseConstants.REVIEW_ALL_QUESTIONS, { amount });
     navigation.navigate("GameScreen", { questions, gameType: GameType.Practice });
   };
 

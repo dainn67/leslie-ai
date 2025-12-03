@@ -30,7 +30,7 @@ export const ResetProgressButton = ({ navigation }: ResetProgressButtonProps) =>
       setTimeout(() => {
         AsyncStorageService.clearData();
         dispatch(clearChat({}));
-        FirebaseService.logEvent(FirebaseConstants.RESET_PROGRESS);
+        FirebaseService.logClickEvent(FirebaseConstants.RESET_PROGRESS);
 
         navigation.closeDrawer();
         navigation.navigate("ChatbotScreen");

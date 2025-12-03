@@ -42,7 +42,7 @@ export const FlashcardScreen = () => {
   );
 
   const handleOpenDrawer = () => {
-    FirebaseService.logEvent(FirebaseConstants.OPEN_MENU);
+    FirebaseService.logClickEvent(FirebaseConstants.OPEN_MENU);
     navigation.openDrawer();
   };
 
@@ -57,7 +57,7 @@ export const FlashcardScreen = () => {
 
     if (newBookmarkState) {
       ToastService.show({ message: "Đã lưu", type: "success" });
-      FirebaseService.logEvent(FirebaseConstants.SAVE_GENERATED_FLASHCARD);
+      FirebaseService.logClickEvent(FirebaseConstants.SAVE_GENERATED_FLASHCARD);
       insertFlashcards([flashcards.find((card) => card.flashcardId === flashcardId)!]);
     } else {
       deleteFlashcards([flashcards.find((card) => card.flashcardId === flashcardId)!.flashcardId]);
@@ -78,7 +78,7 @@ export const FlashcardScreen = () => {
   // };
 
   const handleNavigateToChatbotScreen = () => {
-    FirebaseService.logEvent(FirebaseConstants.START_CREATING_FLASHCARDS);
+    FirebaseService.logClickEvent(FirebaseConstants.START_CREATING_FLASHCARDS);
     navigation.navigate("ChatbotScreen", { initialMessage: `Tạo các Flashcard mới` });
   };
 

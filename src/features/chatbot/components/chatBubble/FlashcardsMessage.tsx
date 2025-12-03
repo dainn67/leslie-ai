@@ -45,7 +45,7 @@ export const FlashcardsMessage = ({ flashcards, onCreateQuestion }: FlashcardsMe
 
     if (newBookmarkState) {
       ToastService.show({ message: "Đã lưu", type: "success" });
-      FirebaseService.logEvent(FirebaseConstants.SAVE_GENERATED_FLASHCARD);
+      FirebaseService.logClickEvent(FirebaseConstants.SAVE_GENERATED_FLASHCARD);
       insertFlashcards([currentFlashcard]);
     } else {
       deleteFlashcards([currentFlashcard.flashcardId]);

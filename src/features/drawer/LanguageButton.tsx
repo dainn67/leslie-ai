@@ -27,7 +27,7 @@ export const LanguageButton = ({ style }: LanguageButtonProps) => {
     setSelectedLanguage(language);
     await AsyncStorageService.setLanguage(language.code);
     await i18n.changeLanguage(language.code);
-    FirebaseService.logEvent(FirebaseConstants.CHANGE_LANGUAGE, { language: language.code });
+    FirebaseService.logClickEvent(FirebaseConstants.CHANGE_LANGUAGE, { language: language.code });
     setIsDropdownVisible(false);
   };
 

@@ -55,7 +55,7 @@ export const QuestionListScreen = () => {
   );
 
   const handleSelectQuestion = (amount: number) => {
-    FirebaseService.logEvent(FirebaseConstants.REVIEW_QUESTION_SET, { amount });
+    FirebaseService.logClickEvent(FirebaseConstants.REVIEW_QUESTION_SET, { amount });
 
     const selectedQuestions = createReviseQuestionSet(questions, amount);
     navigation.navigate("GameScreen", { questions: selectedQuestions, gameType: GameType.Practice });
@@ -87,7 +87,7 @@ export const QuestionListScreen = () => {
         setIsSearchVisible(false);
       });
     } else {
-      FirebaseService.logEvent(FirebaseConstants.OPEN_SEARCH);
+      FirebaseService.logClickEvent(FirebaseConstants.OPEN_SEARCH);
 
       setIsSearchVisible(true);
       Animated.timing(searchAnimation, {
@@ -127,7 +127,7 @@ export const QuestionListScreen = () => {
   };
 
   const handleNavigateToChatbotScreen = () => {
-    FirebaseService.logEvent(FirebaseConstants.START_CREATING_QUESTIONS);
+    FirebaseService.logClickEvent(FirebaseConstants.START_CREATING_QUESTIONS);
     navigation.navigate("Main", { initialMessage: `Tạo câu hỏi mới về ${questionTypeTitles[type]}` });
   };
 

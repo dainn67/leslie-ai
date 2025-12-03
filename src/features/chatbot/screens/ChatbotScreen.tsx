@@ -117,7 +117,7 @@ export const ChatbotScreen = () => {
   }, [initialMessage]);
 
   const handleManuallySend = (text: string) => {
-    FirebaseService.logEvent(FirebaseConstants.MESSAGE_SENT, { message: text });
+    FirebaseService.logClickEvent(FirebaseConstants.MESSAGE_SENT, { message: text });
 
     // Use actionId if user haven't set level yet
     const actionId = userProgress.level ? undefined : DifyConfig.askLevelActionId;
@@ -174,7 +174,7 @@ export const ChatbotScreen = () => {
   };
 
   const handleClickAction = async (title: string, actionId?: string) => {
-    FirebaseService.logEvent(FirebaseConstants.ACTION_CLICKED, { actionId, title });
+    FirebaseService.logClickEvent(FirebaseConstants.ACTION_CLICKED, { actionId, title });
 
     const result = ChatbotService.handleClickAction({ actionId });
 
@@ -202,7 +202,7 @@ export const ChatbotScreen = () => {
   const handleSelectExamDate = (selectedDate: Date | undefined) => {
     if (!selectedDate) return;
 
-    FirebaseService.logEvent(FirebaseConstants.EXAM_DATE_SELECTED, { date: selectedDate.getTime() });
+    FirebaseService.logClickEvent(FirebaseConstants.EXAM_DATE_SELECTED, { date: selectedDate.getTime() });
 
     const dateString = convertDateToDDMMYYYY(selectedDate, "vi");
 
@@ -216,7 +216,7 @@ export const ChatbotScreen = () => {
 
   const handleAnalyze = (summary: string) => {
     setTimeout(() => {
-      FirebaseService.logEvent(FirebaseConstants.FINISH_ALL_GENERATED_QUESTIONS);
+      FirebaseService.logClickEvent(FirebaseConstants.FINISH_ALL_GENERATED_QUESTIONS);
 
       // Analyze chat game
       handleSend({ text: summary, noUserMessage: true, analyzeChatGame: true, shouldRequestRating: true });
@@ -245,18 +245,18 @@ export const ChatbotScreen = () => {
 
   const handleClearChat = () => {
     dialog.showConfirm(t("chatbot_screen_delete_conversation"), () => {
-      FirebaseService.logEvent(FirebaseConstants.CLEAR_CHAT);
+      FirebaseService.logClickEvent(FirebaseConstants.CLEAR_CHAT);
       dispatch(clearChat({}));
     });
   };
 
   const handleOpenMenu = () => {
-    FirebaseService.logEvent(FirebaseConstants.OPEN_MENU);
+    FirebaseService.logClickEvent(FirebaseConstants.OPEN_MENU);
     navigation.openDrawer();
   };
 
   const handleSetName = (name: string) => {
-    FirebaseService.logEvent(FirebaseConstants.ENTER_NAME, { name: name });
+    FirebaseService.logClickEvent(FirebaseConstants.ENTER_NAME, { name: name });
 
     dispatch(updateUserProgress({ userName: name }));
     setNameDialogVisible(false);

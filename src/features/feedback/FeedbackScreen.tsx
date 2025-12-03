@@ -53,7 +53,7 @@ export const FeedbackScreen = () => {
   };
 
   const handleOpenDrawer = () => {
-    FirebaseService.logEvent(FirebaseConstants.OPEN_MENU);
+    FirebaseService.logClickEvent(FirebaseConstants.OPEN_MENU);
     navigation.openDrawer();
   };
 
