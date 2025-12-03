@@ -40,6 +40,7 @@ import { BannerAds } from "../../ads/BannerAds";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAppTheme } from "../../../theme";
 import { KeyboardAvoidingView } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 // Composite navigation type to handle both drawer and stack navigation
 type ChatbotScreenNavigationProp = CompositeNavigationProp<
@@ -267,25 +268,27 @@ export const ChatbotScreen = () => {
   return (
     <>
       <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
-        <AppBar
-          title={AppConfig.name}
-          leftIcon={<Ionicons name="menu" size={24} color="white" />}
-          rightIcon={<Ionicons name="trash" size={24} color="white" />}
-          onLeftPress={handleOpenMenu}
-          onRightPress={handleClearChat}
-          onDevClick={handleDevClick}
-        />
-        <ChatMessageList
-          messages={messages}
-          onClickAction={handleClickAction}
-          onAnalyze={handleAnalyze}
-          onCreateQuestionFromFlashcard={handleCreateQuestionFromFlashcard}
-        />
-        <BannerAds />
+        <GestureHandlerRootView>
+          <AppBar
+            title={AppConfig.name}
+            leftIcon={<Ionicons name="menu" size={24} color="white" />}
+            rightIcon={<Ionicons name="trash" size={24} color="white" />}
+            onLeftPress={handleOpenMenu}
+            onRightPress={handleClearChat}
+            onDevClick={handleDevClick}
+          />
+          <ChatMessageList
+            messages={messages}
+            onClickAction={handleClickAction}
+            onAnalyze={handleAnalyze}
+            onCreateQuestionFromFlashcard={handleCreateQuestionFromFlashcard}
+          />
+          <BannerAds />
 
-        <KeyboardAvoidingView behavior={"padding"} style={{ backgroundColor: colors.background }} keyboardVerticalOffset={0}>
-          <ChatInput disable={isGenerating} onSend={handleManuallySend} />
-        </KeyboardAvoidingView>
+          <KeyboardAvoidingView behavior={"padding"} style={{ backgroundColor: colors.background }} keyboardVerticalOffset={0}>
+            <ChatInput disable={isGenerating} onSend={handleManuallySend} />
+          </KeyboardAvoidingView>
+        </GestureHandlerRootView>
       </SafeAreaView>
 
       <NameDialog visible={nameDialogVisible} onConfirm={handleSetName} />
