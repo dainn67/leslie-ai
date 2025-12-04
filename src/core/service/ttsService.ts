@@ -49,7 +49,7 @@ class TTSService {
           message: `Failed to initialize TTS: ${JSON.stringify(e)}`,
           type: DiscordWebhookType.ERROR,
         });
-        Tts.setDefaultLanguage("en-US");
+        Tts.requestInstallEngine();
       });
   }
 
