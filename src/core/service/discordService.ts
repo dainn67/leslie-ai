@@ -1,5 +1,5 @@
 import { ApiClient } from "../../api/apiClient";
-import { AppConfig, env } from "../../constants";
+import { BaseAppConfig, env } from "../../constants";
 import { AsyncStorageService } from "./storageServices/asyncStorageService";
 
 export enum DiscordWebhookType {
@@ -31,7 +31,7 @@ export class DiscordService {
             },
             {
               name: "Version",
-              value: `${AppConfig.version} (${AppConfig.buildVersion})`,
+              value: `${BaseAppConfig.version} (${BaseAppConfig.buildVersion})`,
             },
           ],
           timestamp: new Date().toISOString(),

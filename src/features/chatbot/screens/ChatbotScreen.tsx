@@ -4,7 +4,7 @@ import { AppBar } from "../../../components/AppBar";
 import { useNavigation, RouteProp, useRoute } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
-import { AppConfig } from "../../../constants/appConfig";
+import { BaseAppConfig } from "../../../constants/baseAppConfig";
 import { updateUserProgress } from "../../userProgress/userProgressSlice";
 import { createChatMessage, MessageStatus } from "../../../models/chatMessage";
 import { convertDateToDDMMYYYY, normalizeDate } from "../../../utils/utils";
@@ -284,7 +284,7 @@ export const ChatbotScreen = () => {
       <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
         <GestureHandlerRootView>
           <AppBar
-            title={AppConfig.name}
+            title={BaseAppConfig.name}
             leftIcon={<Ionicons name="menu" size={24} color="white" />}
             rightIcon={<Ionicons name="trash" size={24} color="white" />}
             onLeftPress={handleOpenMenu}

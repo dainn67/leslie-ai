@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { CustomText } from "../../../components/text/customText";
-import { AppConfig } from "../../../constants/appConfig";
+import { BaseAppConfig } from "../../../constants/baseAppConfig";
 import { useAppTheme } from "../../../theme";
 import { LoadingMessage } from "../../chatbot/components";
 import { MessageType } from "../../../models";
@@ -13,7 +13,7 @@ export const SplashScreen = () => {
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Image source={AppIcons.logo} style={styles.logo} resizeMode="contain" />
-      <CustomText style={[styles.appName, { color: colors.text }]}>{AppConfig.name}</CustomText>
+      <CustomText style={[styles.appName, { color: colors.text }]}>{BaseAppConfig.name}</CustomText>
       <LoadingMessage type={MessageType.STREAM_TEXT} />
     </View>
   );

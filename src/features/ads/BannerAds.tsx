@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import { BannerAd, BannerAdSize, TestIds } from "react-native-google-mobile-ads";
-import { AdsConfig, AppConfig } from "../../constants";
+import { AdsConfig, BaseAppConfig } from "../../constants";
 
-const bannerId = AppConfig.devMode ? TestIds.BANNER : AdsConfig.bannerId;
+const bannerId = BaseAppConfig.devMode ? TestIds.BANNER : AdsConfig.bannerId;
 
 export const BannerAds = () => {
   const [adLoaded, setAdLoaded] = useState(false);

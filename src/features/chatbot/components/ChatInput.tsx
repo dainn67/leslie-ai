@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet, TouchableOpacity, View, TextInput } from "react-native";
 import { useAppTheme } from "../../../theme";
-import { AppConfig } from "../../../constants/appConfig";
+import { BaseAppConfig } from "../../../constants/baseAppConfig";
 import { useTranslation } from "react-i18next";
 
 interface ChatInputProps {
@@ -98,7 +98,7 @@ const getStyles = (message: string, colors: any) =>
       paddingHorizontal: 12,
       paddingVertical: 8,
       maxHeight: 100,
-      fontFamily: AppConfig.fontFamily,
+      fontFamily: BaseAppConfig.fontFamily,
     },
     textInputDisabled: {
       color: colors.placeholder,

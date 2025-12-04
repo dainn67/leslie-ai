@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Animated, View, Linking } from "react-native";
 import { RenderHTML } from "react-native-render-html";
-import { AppConfig } from "../../constants/appConfig";
+import { BaseAppConfig } from "../../constants/baseAppConfig";
 import { CustomText } from "../text/customText";
 import { DiscordService, DiscordWebhookType, ToastService } from "../../core/service";
 
@@ -34,24 +34,26 @@ export const WordComponent = ({ word, fontSize, color }: WordComponentProps) => 
 
     if (!word || word.trim() === "") return <View style={{ width: 0, height: 0 }} />;
 
+    const fontFamily = BaseAppConfig.fontFamily;
+
     if (isHTML(word)) {
       return (
         <RenderHTML
           contentWidth={300}
           source={{ html: word }}
           tagsStyles={{
-            b: { fontWeight: "bold", fontFamily: AppConfig.fontFamily },
-            i: { fontStyle: "italic", fontFamily: AppConfig.fontFamily },
+            b: { fontWeight: "bold", fontFamily },
+            i: { fontStyle: "italic", fontFamily },
             u: { textDecorationLine: "underline" },
-            strong: { fontWeight: "bold", fontFamily: AppConfig.fontFamily },
-            em: { fontStyle: "italic", fontFamily: AppConfig.fontFamily },
+            strong: { fontWeight: "bold", fontFamily },
+            em: { fontStyle: "italic", fontFamily },
             code: {
               backgroundColor: "#f0f0f0",
               padding: 2,
               borderRadius: 3,
               fontSize: fontSize || 14,
               color: color || "black",
-              fontFamily: AppConfig.fontFamily,
+              fontFamily,
             },
             pre: {
               backgroundColor: "#f0f0f0",
@@ -60,19 +62,19 @@ export const WordComponent = ({ word, fontSize, color }: WordComponentProps) => 
               marginVertical: 4,
               fontSize: fontSize || 14,
               color: color || "black",
-              fontFamily: AppConfig.fontFamily,
+              fontFamily,
             },
             p: {
               margin: 0,
               fontSize: fontSize || 14,
               color: color || "black",
-              fontFamily: AppConfig.fontFamily,
+              fontFamily,
             },
             div: {
               margin: 0,
               fontSize: fontSize || 14,
               color: color || "black",
-              fontFamily: AppConfig.fontFamily,
+              fontFamily,
             },
           }}
         />

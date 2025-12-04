@@ -1,4 +1,4 @@
-export * from "./appConfig";
+export * from "./baseAppConfig";
 export * from "./appIcons";
 export * from "./apiConfig";
 export * from "./difyConfig";

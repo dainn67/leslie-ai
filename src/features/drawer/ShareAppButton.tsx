@@ -3,7 +3,7 @@ import { TouchableOpacity, StyleSheet, Share } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useAppTheme } from "../../theme";
 import { CustomText } from "../../components/text/customText";
-import { AppConfig, FirebaseConstants } from "../../constants";
+import { BaseAppConfig, FirebaseConstants } from "../../constants";
 import { FirebaseService } from "../../core/service";
 import { useTranslation } from "react-i18next";
 
@@ -14,7 +14,7 @@ export const ShareAppButton = () => {
   const handleShare = async () => {
     try {
       await Share.share({
-        message: `${AppConfig.name} - ${t("drawer_share_app_content")}: https://play.google.com/store/apps/details?id=${AppConfig.androidPackageName}`,
+        message: `${BaseAppConfig.name} - ${t("drawer_share_app_content")}: https://play.google.com/store/apps/details?id=${BaseAppConfig.androidPackageName}`,
       });
       FirebaseService.logClickEvent(FirebaseConstants.SHARE_APP);
     } catch (error) {

@@ -1,5 +1,5 @@
 import { AdEventType, InterstitialAd, RewardedAd, RewardedAdEventType, TestIds } from "react-native-google-mobile-ads";
-import { AdsConfig, AppConfig } from "../../../constants";
+import { AdsConfig, BaseAppConfig } from "../../../constants";
 
 type RewardCallback = (reward: { type: string; amount: number }) => void;
 
@@ -15,13 +15,13 @@ class AdService {
   private rewardCallback: RewardCallback | null = null;
 
   private constructor() {
-    const rewardedAdUnitId = AppConfig.devMode ? TestIds.REWARDED : AdsConfig.rewardedId;
+    const rewardedAdUnitId = BaseAppConfig.devMode ? TestIds.REWARDED : AdsConfig.rewardedId;
     this.rewardedAd = RewardedAd.createForAdRequest(rewardedAdUnitId);
     this.rewardedAd.addAdEventListener(RewardedAdEventType.LOADED, () => (this.rewardedAdloaded = true));
     this.rewardedAd.addAdEventListener(RewardedAdEventType.EARNED_REWARD, (reward) => this.rewardCallback?.(reward));
     this.rewardedAd.load();
 
-    const interstitialAdUnitId = AppConfig.devMode ? TestIds.INTERSTITIAL : AdsConfig.interstitialId;
+    const interstitialAdUnitId = BaseAppConfig.devMode ? TestIds.INTERSTITIAL : AdsConfig.interstitialId;
     this.interstitialAd = InterstitialAd.createForAdRequest(interstitialAdUnitId);
     this.interstitialAd.addAdEventListener(AdEventType.LOADED, () => (this.interstitialAdloaded = true));
     this.interstitialAd.load();

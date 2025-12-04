@@ -1,22 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AppConfig as BaseAppConfig } from "../../constants/appConfig";
+import { BaseAppConfig } from "../../constants/baseAppConfig";
 
 export interface AppConfigState {
   devMode: boolean;
-  name: string;
-  fontFamily: string;
-  androidPackageName: string;
-  version: string;
-  buildVersion: string;
 }
 
 const initialState: AppConfigState = {
   devMode: BaseAppConfig.devMode,
-  name: BaseAppConfig.name,
-  fontFamily: BaseAppConfig.fontFamily,
-  androidPackageName: BaseAppConfig.androidPackageName,
-  version: BaseAppConfig.version ?? "1",
-  buildVersion: BaseAppConfig.buildVersion ?? "1.0.0",
 };
 
 export const appConfigSlice = createSlice({

@@ -1,6 +1,6 @@
 import * as Application from "expo-application";
 
-export const AppConfig = {
+export const BaseAppConfig = {
   devMode: __DEV__,
   name: "AIkaze",
   fontFamily: "Inter-Regular",

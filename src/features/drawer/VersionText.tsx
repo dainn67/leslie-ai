@@ -1,10 +1,13 @@
 import React from "react";
-import { AppConfig } from "../../constants/appConfig";
 import { CustomText } from "../../components/text/customText";
 import { useAppTheme } from "../../theme";
+import { useSelector } from "react-redux";
+import { RootState } from "../../core/app/store";
+import { BaseAppConfig } from "../../constants";
 
 export const VersionText = () => {
   const { colors } = useAppTheme();
+  const devMode = useSelector((state: RootState) => state.appConfig.devMode);
 
   return (
     <CustomText
@@ -16,6 +19,6 @@ export const VersionText = () => {
         fontStyle: "italic",
         color: colors.text,
       }}
-    >{`v${AppConfig.version} ${AppConfig.devMode ? `(${AppConfig.buildVersion})` : ""}`}</CustomText>
+    >{`v${BaseAppConfig.version} ${devMode ? `(${BaseAppConfig.buildVersion})` : ""}`}</CustomText>
   );
 };

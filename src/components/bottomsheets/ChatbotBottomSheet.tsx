@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { View, StyleSheet, Modal, TouchableWithoutFeedback, Dimensions, TouchableOpacity } from "react-native";
-import { AppConfig } from "../../constants/appConfig";
+import { BaseAppConfig } from "../../constants/baseAppConfig";
 import { CustomText } from "../text/customText";
 import { Ionicons } from "@expo/vector-icons";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
@@ -108,7 +108,7 @@ export const ChatbotBottomSheet: React.FC<ChatbotBottomSheetProps> = ({ visible,
                   </TouchableOpacity>
                 </View>
                 <View style={styles.titleContainer}>
-                  <CustomText style={styles.headerText}>Trợ lý {AppConfig.name}</CustomText>
+                  <CustomText style={styles.headerText}>Trợ lý {BaseAppConfig.name}</CustomText>
                 </View>
                 <View style={styles.closeButton}>
                   <TouchableOpacity

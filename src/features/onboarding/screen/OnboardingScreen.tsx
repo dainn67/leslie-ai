@@ -6,7 +6,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { CustomText } from "../../../components/text/customText";
 import { useAppTheme } from "../../../theme";
 import { RootStackParamList } from "../../../core/app/RootNavigator";
-import { AppConfig, FirebaseConstants } from "../../../constants";
+import { BaseAppConfig, FirebaseConstants } from "../../../constants";
 import { AsyncStorageService } from "../../../core/service/storageServices/asyncStorageService";
 import { FirebaseService } from "../../../core/service";
 import { useTranslation } from "react-i18next";
@@ -28,7 +28,7 @@ const getOnboardingData = (): OnboardingData[] => {
   return [
     {
       id: "1",
-      title: `${AppConfig.name}`,
+      title: `${BaseAppConfig.name}`,
       subtitle: t("onboarding_subtitle_1"),
     },
     {

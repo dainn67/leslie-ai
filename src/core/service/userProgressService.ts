@@ -2,7 +2,7 @@ import { File, Directory, Paths } from "expo-file-system";
 import { UserProgress, createUserProgress } from "../../models/userProgress";
 import { convertDateToDDMMYYYY } from "../../utils";
 import { AsyncStorageService } from "./storageServices/asyncStorageService";
-import { AppConfig } from "../../constants";
+import { BaseAppConfig } from "../../constants";
 
 const dir = new Directory(Paths.document, "userProgress");
 const file = new File(dir, "userProgress.json");
@@ -16,7 +16,7 @@ export class UserProgressService {
   static setUserProgressToStorage = async (userProgress: any) => {
     await AsyncStorageService.setUserProgress(userProgress);
 
-    if (AppConfig.devMode) {
+    if (BaseAppConfig.devMode) {
       try {
         dir.create();
         file.create();

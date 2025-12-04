@@ -2,7 +2,7 @@ import * as StoreReview from "expo-store-review";
 import { ToastService } from "..";
 import { loadFromAsyncStorage, saveToAsyncStorage } from "../../../storage/asyncStorage/asyncStorage";
 import { AsyncStorageConstants } from "../../../storage/asyncStorage/asyncStorageConstant";
-import { AppConfig } from "../../../constants";
+import { BaseAppConfig } from "../../../constants/baseAppConfig";
 
 class ReviewService {
   private static instance: ReviewService;
@@ -54,7 +54,7 @@ class ReviewService {
       const available = await StoreReview.hasAction();
       if (available) {
         await StoreReview.requestReview();
-        if (AppConfig.devMode) console.log("(ReviewService) requestAppReview");
+        if (BaseAppConfig.devMode) console.log("(ReviewService) requestAppReview");
       } else {
         ToastService.show({ message: "Rating popup not available", type: "error" });
       }
