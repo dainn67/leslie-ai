@@ -29,10 +29,6 @@ class TTSService {
 
     try {
       const voices = await Tts.voices();
-      console.log(
-        "voices",
-        voices.map((v) => v.language)
-      );
       this._containJapaneseVoice = voices.some((v) => v.language.includes("ja"));
 
       // Base config

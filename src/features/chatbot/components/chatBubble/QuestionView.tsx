@@ -93,17 +93,22 @@ export const QuestionView = ({
         </CustomText>
 
         {/* Save icon button */}
-        <View>
-          {gameType !== GameType.Diagnostic && (
-            <IconButton
-              icon={bookmarked ? AppIcons.bookmarked : AppIcons.bookmark}
-              iconColor={colors.text}
-              style={{ backgroundColor: colors.grey }}
-              onPress={() => handleBookmarkPress(!bookmarked)}
-            />
-          )}
-          {question.audio && <IconButton icon={playAudio ? AppIcons.audioOn : AppIcons.audioOff} onPress={handleToggleAudio} />}
-        </View>
+        {question.audio && (
+          <IconButton
+            icon={playAudio ? AppIcons.audioOn : AppIcons.audioOff}
+            iconColor={colors.text}
+            style={{ backgroundColor: colors.grey }}
+            onPress={handleToggleAudio}
+          />
+        )}
+        {gameType !== GameType.Diagnostic && (
+          <IconButton
+            icon={bookmarked ? AppIcons.bookmarked : AppIcons.bookmark}
+            iconColor={colors.text}
+            style={{ backgroundColor: colors.grey }}
+            onPress={() => handleBookmarkPress(!bookmarked)}
+          />
+        )}
       </View>
 
       {/* Question Text */}
