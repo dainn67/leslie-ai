@@ -27,28 +27,30 @@ class TTSService {
   async init(name?: string) {
     if (this.isInitialized) return;
 
-    try {
-      const voices = await Tts.voices();
-      this._containJapaneseVoice = voices.some((v) => v.language.includes("ja"));
+    Tts.getInitStatus()
+      .then(async () => {
+        const voices = await Tts.voices();
+        this._containJapaneseVoice = voices.some((v) => v.language.includes("ja"));
 
-      // Base config
-      await Tts.setDefaultRate(0.5);
-      await Tts.setDefaultPitch(1.0);
+        // Base config
+        await Tts.setDefaultRate(0.5);
+        await Tts.setDefaultPitch(1.0);
 
-      if (this._containJapaneseVoice) {
-        await Tts.setDefaultLanguage("ja-JP");
-        await Tts.setDefaultVoice(TTSService.japaneseFemaleVoice);
-      }
+        if (this._containJapaneseVoice) {
+          await Tts.setDefaultLanguage("ja-JP");
+          await Tts.setDefaultVoice(TTSService.japaneseFemaleVoice);
+        }
 
-      this.isInitialized = true;
-    } catch (e) {
-      DiscordService.sendDiscordMessage({
-        name,
-        message: `Failed to initialize TTS: ${JSON.stringify(e)}`,
-        type: DiscordWebhookType.ERROR,
+        this.isInitialized = true;
+      })
+      .catch((e) => {
+        DiscordService.sendDiscordMessage({
+          name,
+          message: `Failed to initialize TTS: ${JSON.stringify(e)}`,
+          type: DiscordWebhookType.ERROR,
+        });
+        Tts.setDefaultLanguage("en-US");
       });
-      await Tts.setDefaultLanguage("en-US");
-    }
   }
 
   async speak(text: string, onFinish: () => void) {
