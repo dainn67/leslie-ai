@@ -19,8 +19,11 @@ export default {
       edgeToEdgeEnabled: true,
     },
     ios: {
-      icon: "./assets/images/app-logo.png",
+      icon: "./assets/images/app-logo-test.png",
       bundleIdentifier: "com.leslie.app",
+      config: {
+        googleMobileAdsAppId: "ca-app-pub-6011704237608953~2270976120",
+      },
     },
     splash: {
       image: "./assets/images/app-logo.png",
@@ -34,6 +37,7 @@ export default {
         "react-native-google-mobile-ads",
         {
           androidAppId: "ca-app-pub-6011704237608953~2270976120",
+          iosAppId: "ca-app-pub-6011704237608953~2270976120",
         },
       ],
     ],
