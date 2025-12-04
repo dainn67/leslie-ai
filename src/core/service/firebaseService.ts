@@ -3,7 +3,7 @@ import remoteConfig from "@react-native-firebase/remote-config";
 import { withTimeout } from "../../utils";
 
 export const FirebaseService = {
-  logEvent: async (name: string, params?: Record<string, any>) => {
+  logClickEvent: async (name: string, params?: Record<string, any>) => {
     try {
       await analytics().logEvent(name, params);
     } catch (e) {
