@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import TTSInstance from "../../../core/service/ttsService";
+import { ttsService } from "../../../core/service";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { useAppTheme } from "../../../theme";
@@ -99,7 +99,7 @@ export const GameScreen = () => {
   };
 
   const handleChangeQuestion = (direction: "next" | "prev") => {
-    TTSInstance.stop();
+    ttsService.stop();
     setPlayAudio(false);
 
     // Check submit

@@ -10,3 +10,4 @@ export * from "./storageServices/databaseService";
 export * from "./storageServices/testService";
 export * from "./inAppServices/adService";
 export * from "./inAppServices/reviewService";
+export * from "./ttsService";

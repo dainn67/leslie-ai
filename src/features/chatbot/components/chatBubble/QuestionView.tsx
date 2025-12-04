@@ -1,6 +1,5 @@
 import React from "react";
 import Tts from "react-native-tts";
-import TTSInstance from "../../../../core/service/ttsService";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { CustomText } from "../../../../components/text/customText";
 import { Question } from "../../../../models/question";
@@ -8,7 +7,7 @@ import { IconButton } from "../../../../components/buttons";
 import { AppIcons } from "../../../../constants/appIcons";
 import { Answer } from "../../../../models/answer";
 import { useAppTheme } from "../../../../theme";
-import { ToastService } from "../../../../core/service";
+import { ToastService, ttsService } from "../../../../core/service";
 import { GameType } from "../../../game/screens/GameScreen";
 import { useDialog } from "../../../../core/providers";
 import { useTranslation } from "react-i18next";
@@ -53,7 +52,7 @@ export const QuestionView = ({
   };
 
   const handleToggleAudio = async () => {
-    if (!TTSInstance.containJapaneseVoice) {
+    if (!ttsService.containJapaneseVoice) {
       dialog.showAlert(t("tts_not_supported"));
       return;
     }
@@ -62,7 +61,7 @@ export const QuestionView = ({
     setPlayAudio(newState);
 
     await Tts.stop();
-    if (newState) TTSInstance.speak(question.audio, () => setPlayAudio(false));
+    if (newState) ttsService.speak(question.audio, () => setPlayAudio(false));
   };
 
   const handleBookmarkPress = (bookmarked: boolean) => {

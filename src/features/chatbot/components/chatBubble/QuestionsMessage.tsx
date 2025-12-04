@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import TTSInstance from "../../../../core/service/ttsService";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { Question } from "../../../../models/question";
 import { QuestionView } from "./QuestionView";
 import { ProgressBar } from "../../../../components/ProgressBar";
 import { deleteQuestions, insertQuestions } from "../../../../storage/database/tables/questionTable";
-import { createResultSummary, FirebaseService } from "../../../../core/service";
+import { createResultSummary, FirebaseService, ttsService } from "../../../../core/service";
 import { IconButton } from "../../../../components/buttons";
 import { AppIcons } from "../../../../constants/appIcons";
 import { FirebaseConstants } from "../../../../constants";
@@ -62,7 +61,7 @@ export const QuestionsMessage = ({ questions, onAnalyze }: QuestionsMessageProps
   };
 
   const handleChangeQuestion = (direction: "next" | "prev") => {
-    TTSInstance.stop();
+    ttsService.stop();
     setPlayAudio(false);
 
     const newIndex = direction === "next" ? currentQuestionIndex + 1 : currentQuestionIndex - 1;

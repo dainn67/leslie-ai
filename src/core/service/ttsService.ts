@@ -11,7 +11,7 @@ class TTSService {
   static japaneseMaleVoice = "ja-jp-x-jad-network";
 
   // Prevent external instantiation
-  private constructor() { }
+  private constructor() {}
 
   static getInstance(): TTSService {
     if (!TTSService.instance) {
@@ -29,6 +29,10 @@ class TTSService {
 
     try {
       const voices = await Tts.voices();
+      console.log(
+        "voices",
+        voices.map((v) => v.language)
+      );
       this._containJapaneseVoice = voices.some((v) => v.language.includes("ja"));
 
       // Base config
@@ -86,8 +90,8 @@ class TTSService {
 
   async speakWithVoice(text: string, voiceId: string): Promise<void> {
     await Tts.setDefaultVoice(voiceId);
-    return this.speak(text, () => { });
+    return this.speak(text, () => {});
   }
 }
 
-export default TTSService.getInstance();
+export const ttsService = TTSService.getInstance();

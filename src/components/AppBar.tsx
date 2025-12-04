@@ -46,7 +46,7 @@ export const AppBar: React.FC<AppBarProps> = ({ title, leftIcon, rightIcon, onLe
   };
 
   const handleDevLongPress = () => {
-    onDevClick?.();
+    if (devMode) onDevClick?.();
   };
 
   return (

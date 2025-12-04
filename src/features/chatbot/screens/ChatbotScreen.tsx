@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import TTSInstance from "../../../core/service/ttsService";
 import { Ionicons } from "@expo/vector-icons";
 import { AppBar } from "../../../components/AppBar";
 import { useNavigation, RouteProp, useRoute } from "@react-navigation/native";
@@ -26,6 +25,7 @@ import {
   adService,
   ToastService,
   reviewService,
+  ttsService,
 } from "../../../core/service";
 import { DifyConfig, FirebaseConstants } from "../../../constants";
 import { NameDialog } from "../../../components/dialogs";
@@ -88,6 +88,7 @@ export const ChatbotScreen = () => {
         if (userProgress.userName.length === 0) {
           setNameDialogVisible(true);
         } else {
+          ttsService.init(userProgress.userName);
           const shouldAskExamDate = (await AsyncStorageService.getOpenAppCount()) == 3;
           const actionId = shouldAskExamDate
             ? DifyConfig.askExamDateActionId
@@ -261,7 +262,7 @@ export const ChatbotScreen = () => {
     dispatch(updateUserProgress({ userName: name }));
     setNameDialogVisible(false);
 
-    TTSInstance.init(name);
+    ttsService.init(name);
     handleSend({
       noUserMessage: true,
       actionId: DifyConfig.askLevelActionId,
