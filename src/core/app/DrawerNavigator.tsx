@@ -18,6 +18,9 @@ import { FlashcardScreen } from "../../features/flashcard/FlashcardScreen";
 import { useTranslation } from "react-i18next";
 import { LanguageButton } from "../../features/drawer/LanguageButton";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { DevScreen } from "../../features/dev/screen/DevScreen";
+import { useSelector } from "react-redux";
+import { RootState } from "./store";
 
 // Define DrawerParamList for type safety
 export type DrawerParamList = {
@@ -25,6 +28,7 @@ export type DrawerParamList = {
   QuestionsScreen: undefined;
   FlashCardScreen: undefined;
   FeedbackScreen: undefined;
+  DevScreen: undefined;
 };
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
@@ -33,6 +37,7 @@ type ChatbotScreenRouteProp = RouteProp<RootStackParamList, "Main">;
 export const DrawerNavigator = () => {
   const { colors } = useAppTheme();
   const { t } = useTranslation();
+  const devMode = useSelector((state: RootState) => state.appConfig.devMode);
 
   // Params
   const route = useRoute<ChatbotScreenRouteProp>();
@@ -154,6 +159,21 @@ export const DrawerNavigator = () => {
           drawerIcon: ({ color, size }) => <Ionicons name="mail-outline" size={size} color={color} />,
         }}
       />
+
+      {devMode && (
+        <Drawer.Screen
+          name="DevScreen"
+          component={DevScreen}
+          options={{
+            drawerLabel: ({ color }) => (
+              <CustomText weight="Regular" style={{ color }}>
+                {"Dev Tab"}
+              </CustomText>
+            ),
+            drawerIcon: ({ color, size }) => <Ionicons name="bug-outline" size={size} color={color} />,
+          }}
+        />
+      )}
     </Drawer.Navigator>
   );
 };
