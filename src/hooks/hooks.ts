@@ -6,7 +6,7 @@ import { initializeDatabase, UserProgressService, AsyncStorageService, FirebaseS
 import { setTheme } from "../features/theme/themeSlice";
 import { updateUserProgress } from "../features/userProgress/userProgressSlice";
 import { loadLanguage } from "../core/service/locale_service";
-import { setDevMode } from "../core/app/AppConfig";
+import { setDevMode, setShowAds } from "../core/app/AppConfig";
 import { ApiClient } from "../api/apiClient";
 import { env } from "../constants";
 import { apiService } from "../core/service/apiService";
@@ -63,6 +63,9 @@ export const useAppInitialization = () => {
         console.log("Firebase not initialized");
         return;
       }
+
+      // Set show ads
+      if (cfg.show_ads) dispatch(setShowAds(cfg.show_ads));
 
       const checkDomainAvailable = async (domain: string) => {
         const token = env.getDifyChatApiKey(domain.includes("ngrok"));

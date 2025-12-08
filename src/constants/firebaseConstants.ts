@@ -38,4 +38,9 @@ export const FirebaseConstants = {
   // Others
   ENTER_NAME: "enter_name",
   SHARE_APP: "share_app",
+
+  // Remote Config
+  DIFY_DOMAIN: "dify_domain",
+  DIFY_DOMAIN_BAK: "dify_domain_bak",
+  SHOW_ADS: "show_ads",
 };

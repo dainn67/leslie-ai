@@ -7,6 +7,7 @@ import {
   getValue,
 } from "@react-native-firebase/remote-config";
 import { withTimeout } from "../../utils";
+import { FirebaseConstants } from "../../constants";
 
 export const FirebaseService = {
   logClickEvent: async (name: string, params?: Record<string, any>) => {
@@ -39,12 +40,13 @@ export const FirebaseService = {
       await withTimeout(fetchAndActivate(config), 3000);
 
       return {
-        dify_domain: getValue(config, "dify_domain").asString(),
-        dify_domain_bak: getValue(config, "dify_domain_bak").asString(),
+        dify_domain: getValue(config, FirebaseConstants.DIFY_DOMAIN).asString(),
+        dify_domain_bak: getValue(config, FirebaseConstants.DIFY_DOMAIN_BAK).asString(),
+        show_ads: getValue(config, FirebaseConstants.SHOW_ADS).asBoolean(),
       };
     } catch (e) {
       console.error("Remote Config init failed:", e);
-      return { dify_domain: "", dify_domain_bak: "" };
+      return { dify_domain: "", dify_domain_bak: "", show_ads: false };
     }
   },
 };
