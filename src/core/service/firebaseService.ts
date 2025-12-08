@@ -9,17 +9,35 @@ import {
 import { withTimeout } from "../../utils";
 import { FirebaseConstants } from "../../constants";
 
-export const FirebaseService = {
-  logClickEvent: async (name: string, params?: Record<string, any>) => {
+export interface RemoteConfig {
+  dify_domain: string;
+  dify_domain_bak: string;
+  show_ads: boolean;
+}
+
+class FirebaseService {
+  private static instance: FirebaseService;
+  private remoteConfig: RemoteConfig | null = null;
+
+  private constructor() {}
+
+  static getInstance(): FirebaseService {
+    if (!FirebaseService.instance) {
+      FirebaseService.instance = new FirebaseService();
+    }
+    return FirebaseService.instance;
+  }
+
+  async logClickEvent(name: string, params?: Record<string, any>): Promise<void> {
     try {
       const analyticsInstance = getAnalytics();
       await logEvent(analyticsInstance, name, params);
     } catch (e) {
       console.error("Analytics event logging failed:", e);
     }
-  },
+  }
 
-  initializeRemoteConfig: async () => {
+  async initializeRemoteConfig(): Promise<RemoteConfig> {
     try {
       const config = getRemoteConfig();
 
@@ -39,14 +57,32 @@ export const FirebaseService = {
       // ⏱ Limit fetchAndActivate to 3s
       await withTimeout(fetchAndActivate(config), 3000);
 
-      return {
+      const remoteConfig: RemoteConfig = {
         dify_domain: getValue(config, FirebaseConstants.DIFY_DOMAIN).asString(),
         dify_domain_bak: getValue(config, FirebaseConstants.DIFY_DOMAIN_BAK).asString(),
         show_ads: getValue(config, FirebaseConstants.SHOW_ADS).asBoolean(),
       };
+
+      // Store remote config in singleton instance
+      this.remoteConfig = remoteConfig;
+
+      return remoteConfig;
     } catch (e) {
       console.error("Remote Config init failed:", e);
-      return { dify_domain: "", dify_domain_bak: "", show_ads: false };
+      const defaultConfig: RemoteConfig = { dify_domain: "", dify_domain_bak: "", show_ads: false };
+      this.remoteConfig = defaultConfig;
+      return defaultConfig;
     }
-  },
-};
+  }
+
+  getRemoteConfig(): RemoteConfig | null {
+    return this.remoteConfig;
+  }
+
+  isRemoteConfigInitialized(): boolean {
+    return this.remoteConfig !== null;
+  }
+}
+
+// Export singleton instance
+export const firebaseService = FirebaseService.getInstance();

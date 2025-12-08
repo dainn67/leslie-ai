@@ -4,7 +4,7 @@ import { View, TouchableOpacity, StyleSheet, ViewStyle } from "react-native";
 import { Flashcard } from "../../../../models";
 import { FlipCard } from "../../../flashcard/component/FlipCard";
 import { Ionicons } from "@expo/vector-icons";
-import { FirebaseService, ToastService } from "../../../../core/service";
+import { firebaseService, ToastService } from "../../../../core/service";
 import { FirebaseConstants } from "../../../../constants";
 import { deleteFlashcards, insertFlashcards } from "../../../../storage/database/tables/flashCardTable";
 import { useTranslation } from "react-i18next";
@@ -45,7 +45,7 @@ export const FlashcardsMessage = ({ flashcards, onCreateQuestion }: FlashcardsMe
 
     if (newBookmarkState) {
       ToastService.show({ message: "Đã lưu", type: "success" });
-      FirebaseService.logClickEvent(FirebaseConstants.SAVE_GENERATED_FLASHCARD);
+      firebaseService.logClickEvent(FirebaseConstants.SAVE_GENERATED_FLASHCARD);
       insertFlashcards([currentFlashcard]);
     } else {
       deleteFlashcards([currentFlashcard.flashcardId]);

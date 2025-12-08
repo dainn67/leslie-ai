@@ -8,7 +8,7 @@ import { useAppTheme } from "../../../theme";
 import { RootStackParamList } from "../../../core/app/RootNavigator";
 import { BaseAppConfig, FirebaseConstants } from "../../../constants";
 import { AsyncStorageService } from "../../../core/service/storageServices/asyncStorageService";
-import { FirebaseService } from "../../../core/service";
+import { firebaseService } from "../../../core/service";
 import { useTranslation } from "react-i18next";
 import { LanguageButton } from "../../drawer";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -60,7 +60,7 @@ const OnboardingScreen: React.FC = () => {
       setCurrentIndex(nextIndex);
       flatListRef.current?.scrollToIndex({ index: nextIndex, animated: true });
     } else {
-      FirebaseService.logClickEvent(FirebaseConstants.ONBOARDING_COMPLETED);
+      firebaseService.logClickEvent(FirebaseConstants.ONBOARDING_COMPLETED);
       AsyncStorageService.setOnboardingCompleted(true);
       navigation.replace("Main", { initialMessage: "" });
     }

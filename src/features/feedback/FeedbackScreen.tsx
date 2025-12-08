@@ -9,7 +9,7 @@ import { useAppTheme } from "../../theme";
 import { DiscordService, DiscordWebhookType } from "../../core/service/discordService";
 import { ToastService } from "../../core/service/toastService";
 import { FirebaseConstants } from "../../constants";
-import { FirebaseService } from "../../core/service";
+import { firebaseService } from "../../core/service";
 import { useAppSelector } from "../../hooks/hooks";
 import { DrawerParamList } from "../../core/app/DrawerNavigator";
 import { useTranslation } from "react-i18next";
@@ -53,7 +53,7 @@ export const FeedbackScreen = () => {
   };
 
   const handleOpenDrawer = () => {
-    FirebaseService.logClickEvent(FirebaseConstants.OPEN_MENU);
+    firebaseService.logClickEvent(FirebaseConstants.OPEN_MENU);
     navigation.openDrawer();
   };
 

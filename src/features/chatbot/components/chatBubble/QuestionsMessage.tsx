@@ -4,7 +4,7 @@ import { Question } from "../../../../models/question";
 import { QuestionView } from "./QuestionView";
 import { ProgressBar } from "../../../../components/ProgressBar";
 import { deleteQuestions, insertQuestions } from "../../../../storage/database/tables/questionTable";
-import { createResultSummary, FirebaseService, ttsService } from "../../../../core/service";
+import { createResultSummary, firebaseService, ttsService } from "../../../../core/service";
 import { IconButton } from "../../../../components/buttons";
 import { AppIcons } from "../../../../constants/appIcons";
 import { FirebaseConstants } from "../../../../constants";
@@ -53,7 +53,7 @@ export const QuestionsMessage = ({ questions, onAnalyze }: QuestionsMessageProps
     });
 
     if (isBookmarked) {
-      FirebaseService.logClickEvent(FirebaseConstants.SAVE_GENERATED_QUESTION);
+      firebaseService.logClickEvent(FirebaseConstants.SAVE_GENERATED_QUESTION);
       insertQuestions([question]);
     } else {
       deleteQuestions([question.questionId]);

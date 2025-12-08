@@ -11,7 +11,7 @@ import { useAppTheme } from "../../../theme";
 import { CustomText } from "../../../components/text/customText";
 import { ToastService } from "../../../core/service/toastService";
 import { QuestionNumberSelector } from "../components/QuestionNumberSelector";
-import { FirebaseService } from "../../../core/service";
+import { firebaseService } from "../../../core/service";
 import { FirebaseConstants } from "../../../constants";
 import { RootStackParamList } from "../../../core/app/RootNavigator";
 import { DrawerParamList } from "../../../core/app/DrawerNavigator";
@@ -46,12 +46,12 @@ export const QuestionsScreen = () => {
   }, []);
 
   const handleOpenDrawer = () => {
-    FirebaseService.logClickEvent(FirebaseConstants.OPEN_MENU);
+    firebaseService.logClickEvent(FirebaseConstants.OPEN_MENU);
     navigation.openDrawer();
   };
 
   const handleNavigateToQuestionType = (type: QuestionType) => {
-    FirebaseService.logClickEvent(FirebaseConstants.OPEN_QUESTION_TYPE_BOX, { type });
+    firebaseService.logClickEvent(FirebaseConstants.OPEN_QUESTION_TYPE_BOX, { type });
     navigation.navigate("QuestionListScreen", { type });
   };
 
@@ -65,7 +65,7 @@ export const QuestionsScreen = () => {
 
   const handleSelectQuestion = (amount: number) => {
     const questions = allQuestions.slice(0, amount);
-    FirebaseService.logClickEvent(FirebaseConstants.REVIEW_ALL_QUESTIONS, { amount });
+    firebaseService.logClickEvent(FirebaseConstants.REVIEW_ALL_QUESTIONS, { amount });
     navigation.navigate("GameScreen", { questions, gameType: GameType.Practice });
   };
 

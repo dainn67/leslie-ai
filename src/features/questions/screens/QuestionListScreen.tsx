@@ -12,7 +12,7 @@ import { deleteQuestions, getQuestionsByType, insertQuestions } from "../../../s
 import { SimpleTextInput } from "../../../components/input/SimpleTextInput";
 import { useAppTheme } from "../../../theme";
 import { CustomText } from "../../../components/text/customText";
-import { createReviseQuestionSet, FirebaseService } from "../../../core/service";
+import { createReviseQuestionSet, firebaseService } from "../../../core/service";
 import { RootStackParamList } from "../../../core/app/RootNavigator";
 import { GameType } from "../../game/screens/GameScreen";
 import { FirebaseConstants } from "../../../constants";
@@ -55,7 +55,7 @@ export const QuestionListScreen = () => {
   );
 
   const handleSelectQuestion = (amount: number) => {
-    FirebaseService.logClickEvent(FirebaseConstants.REVIEW_QUESTION_SET, { amount });
+    firebaseService.logClickEvent(FirebaseConstants.REVIEW_QUESTION_SET, { amount });
 
     const selectedQuestions = createReviseQuestionSet(questions, amount);
     navigation.navigate("GameScreen", { questions: selectedQuestions, gameType: GameType.Practice });
@@ -87,7 +87,7 @@ export const QuestionListScreen = () => {
         setIsSearchVisible(false);
       });
     } else {
-      FirebaseService.logClickEvent(FirebaseConstants.OPEN_SEARCH);
+      firebaseService.logClickEvent(FirebaseConstants.OPEN_SEARCH);
 
       setIsSearchVisible(true);
       Animated.timing(searchAnimation, {
@@ -127,7 +127,7 @@ export const QuestionListScreen = () => {
   };
 
   const handleNavigateToChatbotScreen = () => {
-    FirebaseService.logClickEvent(FirebaseConstants.START_CREATING_QUESTIONS);
+    firebaseService.logClickEvent(FirebaseConstants.START_CREATING_QUESTIONS);
     navigation.navigate("Main", { initialMessage: `Tạo câu hỏi mới về ${questionTypeTitles[type]}` });
   };
 

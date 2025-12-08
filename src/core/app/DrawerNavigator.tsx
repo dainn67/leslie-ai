@@ -9,7 +9,7 @@ import { FeedbackScreen } from "../../features/feedback/FeedbackScreen";
 import { QuestionsScreen } from "../../features/questions/screens/QuestionsScreen";
 import { VersionText, ResetProgressButton, ThemeToggleButton, SetExamDateButton } from "../../features/drawer";
 import { FirebaseConstants } from "../../constants";
-import { FirebaseService } from "../service";
+import { firebaseService } from "../service";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { RootStackParamList } from "./RootNavigator";
 import { Divider } from "../../components/dividers/Divider";
@@ -96,7 +96,7 @@ export const DrawerNavigator = () => {
         initialParams={{ initialMessage }}
         listeners={{
           drawerItemPress: (e) => {
-            FirebaseService.logClickEvent(FirebaseConstants.OPEN_CHATBOT_SCREEN);
+            firebaseService.logClickEvent(FirebaseConstants.OPEN_CHATBOT_SCREEN);
           },
         }}
         options={{
@@ -113,7 +113,7 @@ export const DrawerNavigator = () => {
         component={QuestionsScreen}
         listeners={{
           drawerItemPress: (e) => {
-            FirebaseService.logClickEvent(FirebaseConstants.OPEN_SAVED_QUESTIONS_SCREEN);
+            firebaseService.logClickEvent(FirebaseConstants.OPEN_SAVED_QUESTIONS_SCREEN);
           },
         }}
         options={{
@@ -130,7 +130,7 @@ export const DrawerNavigator = () => {
         component={FlashcardScreen}
         listeners={{
           drawerItemPress: (e) => {
-            FirebaseService.logClickEvent(FirebaseConstants.OPEN_FLASH_CARD_SCREEN);
+            firebaseService.logClickEvent(FirebaseConstants.OPEN_FLASH_CARD_SCREEN);
           },
         }}
         options={{
@@ -147,7 +147,7 @@ export const DrawerNavigator = () => {
         component={FeedbackScreen}
         listeners={{
           drawerItemPress: (e) => {
-            FirebaseService.logClickEvent(FirebaseConstants.OPEN_FEEDBACK_SCREEN);
+            firebaseService.logClickEvent(FirebaseConstants.OPEN_FEEDBACK_SCREEN);
           },
         }}
         options={{

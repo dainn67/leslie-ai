@@ -2,7 +2,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../core/app/store";
 import { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
-import { initializeDatabase, UserProgressService, AsyncStorageService, FirebaseService } from "../core/service";
+import { initializeDatabase, UserProgressService, AsyncStorageService, firebaseService } from "../core/service";
 import { setTheme } from "../features/theme/themeSlice";
 import { updateUserProgress } from "../features/userProgress/userProgressSlice";
 import { loadLanguage } from "../core/service/locale_service";
@@ -57,7 +57,7 @@ export const useAppInitialization = () => {
     };
 
     const loadRemoteConfigs = async () => {
-      const cfg = await FirebaseService.initializeRemoteConfig();
+      const cfg = await firebaseService.initializeRemoteConfig();
 
       if (!cfg) {
         console.log("Firebase not initialized");

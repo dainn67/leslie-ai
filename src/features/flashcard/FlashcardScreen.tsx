@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import MainButton from "../../components/buttons/MainButton";
 import { Ionicons } from "@expo/vector-icons";
 import { AppBar } from "../../components/AppBar";
-import { FirebaseService, ToastService } from "../../core/service";
+import { firebaseService, ToastService } from "../../core/service";
 import { FirebaseConstants } from "../../constants";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
@@ -42,7 +42,7 @@ export const FlashcardScreen = () => {
   );
 
   const handleOpenDrawer = () => {
-    FirebaseService.logClickEvent(FirebaseConstants.OPEN_MENU);
+    firebaseService.logClickEvent(FirebaseConstants.OPEN_MENU);
     navigation.openDrawer();
   };
 
@@ -57,7 +57,7 @@ export const FlashcardScreen = () => {
 
     if (newBookmarkState) {
       ToastService.show({ message: "Đã lưu", type: "success" });
-      FirebaseService.logClickEvent(FirebaseConstants.SAVE_GENERATED_FLASHCARD);
+      firebaseService.logClickEvent(FirebaseConstants.SAVE_GENERATED_FLASHCARD);
       insertFlashcards([flashcards.find((card) => card.flashcardId === flashcardId)!]);
     } else {
       deleteFlashcards([flashcards.find((card) => card.flashcardId === flashcardId)!.flashcardId]);
@@ -78,7 +78,7 @@ export const FlashcardScreen = () => {
   // };
 
   const handleNavigateToChatbotScreen = () => {
-    FirebaseService.logClickEvent(FirebaseConstants.START_CREATING_FLASHCARDS);
+    firebaseService.logClickEvent(FirebaseConstants.START_CREATING_FLASHCARDS);
     navigation.navigate("ChatbotScreen", { initialMessage: `Tạo các Flashcard mới` });
   };
 

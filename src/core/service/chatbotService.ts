@@ -15,7 +15,7 @@ import { MessageType, ChatMessage, MessageStatus, Sender } from "../../models/ch
 import { Question, createQuestionString, createQuestion } from "../../models/question";
 import { UserProgress } from "../../models/userProgress";
 import { convertDateToDDMMYYYY } from "../../utils";
-import { AsyncStorageService, FirebaseService, getDiagnosticTest } from ".";
+import { AsyncStorageService, firebaseService, getDiagnosticTest } from ".";
 import { env, FirebaseConstants } from "../../constants";
 import { GameType } from "../../features/game/screens/GameScreen";
 import { createFlashcard, Flashcard } from "../../models";
@@ -622,12 +622,12 @@ export class ChatbotService {
     let id = actionId.toLowerCase().trim();
     if (id === DifyConfig.setExamDateActionId) {
       // Set exam date
-      FirebaseService.logClickEvent(FirebaseConstants.OPEN_EXAM_DATE_PICKER);
+      firebaseService.logClickEvent(FirebaseConstants.OPEN_EXAM_DATE_PICKER);
       return { ui: "openDatePicker" }; // signal UI
     }
     if (id === DifyConfig.unknownExamDateActionId) {
       // Skip exam date
-      FirebaseService.logClickEvent(FirebaseConstants.SKIP_EXAM_DATE);
+      firebaseService.logClickEvent(FirebaseConstants.SKIP_EXAM_DATE);
       return { sendMessage: { examDate: 0 } };
     }
     if (id === DifyConfig.setBeginnerId) {

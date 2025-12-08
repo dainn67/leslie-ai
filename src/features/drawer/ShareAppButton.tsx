@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useAppTheme } from "../../theme";
 import { CustomText } from "../../components/text/customText";
 import { BaseAppConfig, FirebaseConstants } from "../../constants";
-import { FirebaseService } from "../../core/service";
+import { firebaseService } from "../../core/service";
 import { useTranslation } from "react-i18next";
 
 export const ShareAppButton = () => {
@@ -16,7 +16,7 @@ export const ShareAppButton = () => {
       await Share.share({
         message: `${BaseAppConfig.name} - ${t("drawer_share_app_content")}: https://play.google.com/store/apps/details?id=${BaseAppConfig.androidPackageName}`,
       });
-      FirebaseService.logClickEvent(FirebaseConstants.SHARE_APP);
+      firebaseService.logClickEvent(FirebaseConstants.SHARE_APP);
     } catch (error) {
       console.error(error);
     }

@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { clearUserProgress } from "../userProgress/userProgressSlice";
 import { clearChat } from "../chatbot/slice/chatbotSlice";
 import { FirebaseConstants } from "../../constants";
-import { AsyncStorageService, clearDatabase, FirebaseService } from "../../core/service";
+import { AsyncStorageService, clearDatabase, firebaseService } from "../../core/service";
 import { useTranslation } from "react-i18next";
 
 interface ResetProgressButtonProps {
@@ -30,7 +30,7 @@ export const ResetProgressButton = ({ navigation }: ResetProgressButtonProps) =>
       setTimeout(() => {
         AsyncStorageService.clearData();
         dispatch(clearChat({}));
-        FirebaseService.logClickEvent(FirebaseConstants.RESET_PROGRESS);
+        firebaseService.logClickEvent(FirebaseConstants.RESET_PROGRESS);
 
         navigation.closeDrawer();
         navigation.navigate("ChatbotScreen");

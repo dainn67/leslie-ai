@@ -8,13 +8,15 @@ import { useNavigation } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { FirebaseConstants } from "../../../constants";
 import { DrawerParamList } from "../../../core/app/DrawerNavigator";
-import { apiService, FirebaseService } from "../../../core/service";
+import { apiService, firebaseService } from "../../../core/service";
+import { useAppSelector } from "../../../hooks/hooks";
 
 export const DevScreen = () => {
   const navigation = useNavigation<DrawerNavigationProp<DrawerParamList, "DevScreen">>();
+  const showAds = useAppSelector((state) => state.appConfig.showAds);
 
   const handleOpenDrawer = () => {
-    FirebaseService.logClickEvent(FirebaseConstants.OPEN_MENU);
+    firebaseService.logClickEvent(FirebaseConstants.OPEN_MENU);
     navigation.openDrawer();
   };
 
@@ -23,6 +25,8 @@ export const DevScreen = () => {
       <AppBar title={"Dev Screen"} leftIcon={<Ionicons name="menu" size={24} color="white" />} onLeftPress={handleOpenDrawer} />
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <CustomText>Api url: {apiService.apiBaseUrl}</CustomText>
+        <CustomText>Show ads: {showAds ? "Yes" : "No"}</CustomText>
+        <CustomText>Remote config: {JSON.stringify(firebaseService.getRemoteConfig())}</CustomText>
       </View>
     </SafeAreaView>
   );

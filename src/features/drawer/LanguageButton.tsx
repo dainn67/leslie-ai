@@ -4,7 +4,7 @@ import { useAppTheme } from "../../theme";
 import { CustomText } from "../../components/text/customText";
 import { FirebaseConstants, SUPPORTED_LANGUAGES } from "../../constants";
 import i18n from "../../locales";
-import { AsyncStorageService, FirebaseService } from "../../core/service";
+import { AsyncStorageService, firebaseService } from "../../core/service";
 
 export interface Language {
   code: string;
@@ -27,7 +27,7 @@ export const LanguageButton = ({ style }: LanguageButtonProps) => {
     setSelectedLanguage(language);
     await AsyncStorageService.setLanguage(language.code);
     await i18n.changeLanguage(language.code);
-    FirebaseService.logClickEvent(FirebaseConstants.CHANGE_LANGUAGE, { language: language.code });
+    firebaseService.logClickEvent(FirebaseConstants.CHANGE_LANGUAGE, { language: language.code });
     setIsDropdownVisible(false);
   };
 

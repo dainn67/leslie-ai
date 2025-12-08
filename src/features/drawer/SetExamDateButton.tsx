@@ -6,7 +6,7 @@ import { useAppTheme } from "../../theme";
 import { useDialog } from "../../core/providers";
 import { useAppDispatch } from "../../hooks/hooks";
 import { updateUserProgress } from "../userProgress/userProgressSlice";
-import { FirebaseService } from "../../core/service";
+import { firebaseService } from "../../core/service";
 import { FirebaseConstants } from "../../constants";
 import { useTranslation } from "react-i18next";
 
@@ -20,7 +20,7 @@ export const SetExamDateButton = () => {
   const handleClick = () => {
     dialog.showDatePicker((date) => {
       if (date) {
-        FirebaseService.logClickEvent(FirebaseConstants.UPDATE_EXAM_DATE, { date: date.getTime() });
+        firebaseService.logClickEvent(FirebaseConstants.UPDATE_EXAM_DATE, { date: date.getTime() });
         dispatch(updateUserProgress({ examDate: date.getTime() }));
       }
     });

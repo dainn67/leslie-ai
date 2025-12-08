@@ -7,7 +7,7 @@ import { toggleTheme } from "../theme/themeSlice";
 import { useAppTheme } from "../../theme";
 import { CustomText } from "../../components/text/customText";
 import { FirebaseConstants } from "../../constants";
-import { FirebaseService } from "../../core/service";
+import { firebaseService } from "../../core/service";
 import { useTranslation } from "react-i18next";
 
 export const ThemeToggleButton = () => {
@@ -19,7 +19,7 @@ export const ThemeToggleButton = () => {
   const handleToggle = () => {
     dispatch(toggleTheme());
 
-    FirebaseService.logClickEvent(FirebaseConstants.TOGGLE_THEME, {
+    firebaseService.logClickEvent(FirebaseConstants.TOGGLE_THEME, {
       theme: themeMode,
     });
   };
