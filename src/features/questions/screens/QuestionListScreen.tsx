@@ -173,10 +173,6 @@ export const QuestionListScreen = () => {
           </View>
         )}
 
-        <View style={styles.bannerContainer}>
-          <BannerAds />
-        </View>
-
         {filteredQuestions.length > 0 && (
           <MainButton
             title={t("practice")}
@@ -264,10 +260,6 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     marginHorizontal: 16,
     marginVertical: 8,
-  },
-  bannerContainer: {
-    alignItems: "center",
-    marginTop: 8,
   },
   searchInputWrapper: {
     backgroundColor: "white",

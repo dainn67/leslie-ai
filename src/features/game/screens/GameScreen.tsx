@@ -19,6 +19,7 @@ import { RootStackParamList } from "../../../core/app/RootNavigator";
 import { Question } from "../../../models";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { BannerAds } from "../../ads/BannerAds";
 
 type GameScreenRouteProp = RouteProp<RootStackParamList, "GameScreen">;
 type GameScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "GameScreen">;
@@ -182,6 +183,10 @@ export const GameScreen = () => {
             </TouchableOpacity>
           </View>
 
+          <View style={style.bannerAdsContainer}>
+            <BannerAds />
+          </View>
+
           <ChatbotBottomSheet visible={isChatbotVisible} question={question} onClose={() => setIsChatbotVisible(false)} />
         </>
       ) : (
@@ -247,6 +252,9 @@ const style = StyleSheet.create({
   },
   disabledButtonText: {
     color: "#BDBDBD",
+  },
+  bannerAdsContainer: {
+    alignItems: "center",
   },
   chatbotButtonContainer: {
     alignItems: "flex-end",
