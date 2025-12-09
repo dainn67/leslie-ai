@@ -20,6 +20,7 @@ import { Question } from "../../../models";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BannerAds } from "../../ads/BannerAds";
+import { useDialog } from "../../../core/providers";
 
 type GameScreenRouteProp = RouteProp<RootStackParamList, "GameScreen">;
 type GameScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "GameScreen">;
@@ -36,6 +37,7 @@ export type GameProps = {
 
 export const GameScreen = () => {
   const route = useRoute<GameScreenRouteProp>();
+  const dialog = useDialog();
 
   const { questions, gameType } = route.params;
   const { colors } = useAppTheme();
@@ -105,20 +107,25 @@ export const GameScreen = () => {
 
     // Check submit
     if (direction == "next" && currentQuestionIndex === questionList.length - 1) {
+      showSubmitDialog();
+    } else {
+      // Change question
+      if (direction === "next") {
+        dispatch(setIndex(currentQuestionIndex + 1));
+      } else {
+        dispatch(setIndex(currentQuestionIndex - 1));
+      }
+    }
+  };
+
+  const showSubmitDialog = () => {
+    dialog.showConfirm(t("game_screen_submit"), () => {
       navigation.replace("ResultScreen", {
         questions,
         gameType,
         mapAnswerIds,
       });
-      return;
-    }
-
-    // Change question
-    if (direction === "next") {
-      dispatch(setIndex(currentQuestionIndex + 1));
-    } else {
-      dispatch(setIndex(currentQuestionIndex - 1));
-    }
+    });
   };
 
   const handleDevClick = () => setAutoMode(true);
@@ -129,7 +136,9 @@ export const GameScreen = () => {
       <AppBar
         title={t("question")}
         leftIcon={<Ionicons name="arrow-back" size={24} color="white" />}
+        rightIcon={<Ionicons name="log-out-outline" size={24} color="white" />}
         onLeftPress={() => navigation.pop()}
+        onRightPress={showSubmitDialog}
         onDevClick={handleDevClick}
       />
 

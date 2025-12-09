@@ -59,6 +59,7 @@
   "feedback_success_message": "Feedback sent",
 
   "game_screen_error_loading_question": "Error loading question. Please try again later",
+  "game_screen_submit": "Do you want to submit?",
   "question_number_selector_title": "Question Amount",
   "question_number_selector_subtitle": "Select the number of questions you want to practice",
 

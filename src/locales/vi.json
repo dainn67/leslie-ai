@@ -59,6 +59,7 @@
   "feedback_success_message": "Đã gửi thành công",
 
   "game_screen_error_loading_question": "Lỗi khi tải câu hỏi. Vui lòng thử lại sau",
+  "game_screen_submit": "Bạn có muốn nộp bài không?",
   "question_number_selector_title": "Số lượng câu hỏi",
   "question_number_selector_subtitle": "Chọn số lượng câu hỏi bạn muốn làm",
 
