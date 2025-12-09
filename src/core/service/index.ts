@@ -12,3 +12,4 @@ export * from "./inAppServices/adService";
 export * from "./inAppServices/reviewService";
 export * from "./ttsService";
 export * from "./notificationService";
+export * from "./app/appService";

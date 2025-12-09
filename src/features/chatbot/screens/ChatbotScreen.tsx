@@ -27,6 +27,7 @@ import {
   reviewService,
   ttsService,
   notificationService,
+  AppService,
 } from "../../../core/service";
 import { DifyConfig, FirebaseConstants } from "../../../constants";
 import { NameDialog } from "../../../components/dialogs";
@@ -86,13 +87,11 @@ export const ChatbotScreen = () => {
         const show = Keyboard.addListener("keyboardDidShow", () => setKeyboardVisible(true));
         const hide = Keyboard.addListener("keyboardDidHide", () => setKeyboardVisible(false));
 
-        // Ask for push token permission
-        await notificationService.init();
+        await AppService.init();
 
         if (userProgress.userName.length === 0) {
           setNameDialogVisible(true);
         } else {
-          ttsService.init(userProgress.userName);
           const shouldAskExamDate = (await AsyncStorageService.getOpenAppCount()) == 3;
           const actionId = shouldAskExamDate
             ? DifyConfig.askExamDateActionId
@@ -266,7 +265,6 @@ export const ChatbotScreen = () => {
     dispatch(updateUserProgress({ userName: name }));
     setNameDialogVisible(false);
 
-    ttsService.init(name);
     handleSend({
       noUserMessage: true,
       actionId: DifyConfig.askLevelActionId,

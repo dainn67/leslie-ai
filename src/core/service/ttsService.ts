@@ -24,7 +24,7 @@ class TTSService {
     return this._containJapaneseVoice;
   }
 
-  async init(name?: string) {
+  async init() {
     if (this.isInitialized) return;
 
     Tts.getInitStatus()
@@ -45,7 +45,7 @@ class TTSService {
       })
       .catch((e) => {
         DiscordService.sendDiscordMessage({
-          name,
+          name: "User",
           message: `Failed to initialize TTS: ${JSON.stringify(e)}`,
           type: DiscordWebhookType.ERROR,
         });
