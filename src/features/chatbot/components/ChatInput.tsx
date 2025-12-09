@@ -39,7 +39,6 @@ export const ChatInput = ({ disable, placeHolderText, onSend }: ChatInputProps) 
           onChangeText={setMessage}
           multiline
           maxLength={500}
-          editable={!disable}
         />
         {message.length > 0 && !disable && (
           <TouchableOpacity style={styles.clearButton} onPress={() => setMessage("")} activeOpacity={0.7}>

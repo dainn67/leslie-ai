@@ -282,7 +282,7 @@ export const ChatbotScreen = () => {
   return (
     <>
       <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
-        <GestureHandlerRootView>
+        <GestureHandlerRootView style={{ flex: 1 }}>
           <AppBar
             title={BaseAppConfig.name}
             leftIcon={<Ionicons name="menu" size={24} color="white" />}
@@ -291,14 +291,15 @@ export const ChatbotScreen = () => {
             onRightPress={handleClearChat}
             onDevClick={handleDevClick}
           />
-          <ChatMessageList
-            messages={messages}
-            onClickAction={handleClickAction}
-            onAnalyze={handleAnalyze}
-            onCreateQuestionFromFlashcard={handleCreateQuestionFromFlashcard}
-          />
+          <View style={{ flex: 1 }}>
+            <ChatMessageList
+              messages={messages}
+              onClickAction={handleClickAction}
+              onAnalyze={handleAnalyze}
+              onCreateQuestionFromFlashcard={handleCreateQuestionFromFlashcard}
+            />
+          </View>
           <BannerAds />
-
           <KeyboardAvoidingView behavior={"padding"} keyboardVerticalOffset={keyboardVisible ? 50 : 0}>
             <ChatInput disable={isGenerating} onSend={handleManuallySend} />
           </KeyboardAvoidingView>
