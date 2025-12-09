@@ -86,8 +86,8 @@ export const ChatbotScreen = () => {
         const show = Keyboard.addListener("keyboardDidShow", () => setKeyboardVisible(true));
         const hide = Keyboard.addListener("keyboardDidHide", () => setKeyboardVisible(false));
 
-        const token = await notificationService.getPushToken();
-        console.log("Expo push token:", token);
+        // Ask for push token permission
+        await notificationService.init();
 
         if (userProgress.userName.length === 0) {
           setNameDialogVisible(true);
@@ -279,7 +279,6 @@ export const ChatbotScreen = () => {
     // logDatabasePath();
 
     dialog.showConfirm("View rewarded Ad to support us ?", () => adService.showRewaredAd());
-
     // adService.showInterstitialAd();
   };
 
