@@ -9,4 +9,5 @@ export class AsyncStorageConstants {
   static readonly PREVIOUS_REVIEW_TIME = "previousReviewTime";
   static readonly ALREADY_CONFIRM_REVIEW = "alreadyConfirmReview";
   static readonly DEV_MODE = "devMode";
+  static readonly SKIP_NOTIFICATION_TIME = "skipNotificationTime";
 }

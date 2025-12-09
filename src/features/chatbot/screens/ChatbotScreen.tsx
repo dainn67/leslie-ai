@@ -26,6 +26,7 @@ import {
   ToastService,
   reviewService,
   ttsService,
+  notificationService,
 } from "../../../core/service";
 import { DifyConfig, FirebaseConstants } from "../../../constants";
 import { NameDialog } from "../../../components/dialogs";
@@ -84,6 +85,9 @@ export const ChatbotScreen = () => {
         // Keyboard listener
         const show = Keyboard.addListener("keyboardDidShow", () => setKeyboardVisible(true));
         const hide = Keyboard.addListener("keyboardDidHide", () => setKeyboardVisible(false));
+
+        const token = await notificationService.getPushToken();
+        console.log("Expo push token:", token);
 
         if (userProgress.userName.length === 0) {
           setNameDialogVisible(true);

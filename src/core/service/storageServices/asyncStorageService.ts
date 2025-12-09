@@ -90,4 +90,13 @@ export class AsyncStorageService {
   static getDevMode = async (): Promise<boolean> => {
     return (await loadFromAsyncStorage(AsyncStorageConstants.DEV_MODE)) ?? false;
   };
+
+  // Skip notification time
+  static setSkipNotificationTime = async (skipNotificationTime: Date): Promise<void> => {
+    await saveToAsyncStorage(AsyncStorageConstants.SKIP_NOTIFICATION_TIME, skipNotificationTime.getTime());
+  };
+
+  static getSkipNotificationTime = async (): Promise<number> => {
+    return (await loadFromAsyncStorage(AsyncStorageConstants.SKIP_NOTIFICATION_TIME)) ?? 0;
+  };
 }

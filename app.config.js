@@ -17,10 +17,15 @@ export default {
         googleMobileAdsAppId: "ca-app-pub-6011704237608953~2270976120",
       },
       edgeToEdgeEnabled: true,
+      useNextNotificationsApi: true,
     },
     ios: {
       icon: "./assets/images/app-logo-test.png",
       bundleIdentifier: "com.leslie.app",
+      supportsTablet: true,
+      infoPlist: {
+        UIBackgroundModes: ["remote-notification"],
+      },
       config: {
         googleMobileAdsAppId: "ca-app-pub-6011704237608953~2270976120",
       },
@@ -33,6 +38,13 @@ export default {
     plugins: [
       "expo-sqlite",
       "react-native-localize",
+      [
+        "expo-notifications",
+        {
+          icon: "./assets/images/app-logo.png",
+          color: "#ffffff",
+        },
+      ],
       [
         "react-native-google-mobile-ads",
         {
