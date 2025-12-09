@@ -25,8 +25,6 @@ import {
   adService,
   ToastService,
   reviewService,
-  ttsService,
-  notificationService,
   AppService,
 } from "../../../core/service";
 import { DifyConfig, FirebaseConstants } from "../../../constants";
@@ -83,10 +81,6 @@ export const ChatbotScreen = () => {
       if (initialMessage) return;
 
       if (!initilized.current) {
-        // Keyboard listener
-        const show = Keyboard.addListener("keyboardDidShow", () => setKeyboardVisible(true));
-        const hide = Keyboard.addListener("keyboardDidHide", () => setKeyboardVisible(false));
-
         await AppService.init();
 
         if (userProgress.userName.length === 0) {
@@ -101,6 +95,10 @@ export const ChatbotScreen = () => {
           handleSend({ noUserMessage: true, actionId });
           initilized.current = true;
         }
+
+        // Keyboard listener
+        const show = Keyboard.addListener("keyboardDidShow", () => setKeyboardVisible(true));
+        const hide = Keyboard.addListener("keyboardDidHide", () => setKeyboardVisible(false));
 
         return () => {
           show.remove();
