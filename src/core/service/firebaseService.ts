@@ -13,6 +13,7 @@ export interface RemoteConfig {
   dify_domain: string;
   dify_domain_bak: string;
   show_ads: boolean;
+  min_usable_version: string;
 }
 
 class FirebaseService {
@@ -61,6 +62,7 @@ class FirebaseService {
         dify_domain: getValue(config, FirebaseConstants.DIFY_DOMAIN).asString(),
         dify_domain_bak: getValue(config, FirebaseConstants.DIFY_DOMAIN_BAK).asString(),
         show_ads: getValue(config, FirebaseConstants.SHOW_ADS).asBoolean(),
+        min_usable_version: getValue(config, FirebaseConstants.MIN_USABLE_VERSION).asString(),
       };
 
       // Store remote config in singleton instance
@@ -69,7 +71,7 @@ class FirebaseService {
       return remoteConfig;
     } catch (e) {
       console.error("Remote Config init failed:", e);
-      const defaultConfig: RemoteConfig = { dify_domain: "", dify_domain_bak: "", show_ads: false };
+      const defaultConfig: RemoteConfig = { dify_domain: "", dify_domain_bak: "", show_ads: false, min_usable_version: "" };
       this.remoteConfig = defaultConfig;
       return defaultConfig;
     }

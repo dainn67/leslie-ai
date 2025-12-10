@@ -39,7 +39,7 @@ import { Flashcard } from "../../../models";
 import { BannerAds } from "../../ads/BannerAds";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAppTheme } from "../../../theme";
-import { KeyboardAvoidingView, View } from "react-native";
+import { KeyboardAvoidingView, Linking, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Keyboard } from "react-native";
 
@@ -81,7 +81,12 @@ export const ChatbotScreen = () => {
       if (initialMessage) return;
 
       if (!initilized.current) {
-        await AppService.init();
+        const { requireUpdate } = await AppService.init();
+        if (requireUpdate) {
+          dialog.showConfirm(t("chatbot_screen_update_app"), () => {
+            Linking.openURL(`${BaseAppConfig.playStoreBaseUrl}?id=${BaseAppConfig.androidPackageName}`);
+          });
+        }
 
         if (userProgress.userName.length === 0) {
           setNameDialogVisible(true);

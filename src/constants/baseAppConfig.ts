@@ -7,4 +7,5 @@ export const BaseAppConfig = {
   androidPackageName: "com.leslie.app",
   version: Application.nativeApplicationVersion,
   buildVersion: Application.nativeBuildVersion,
+  playStoreBaseUrl: "https://play.google.com/store/apps/details",
 };

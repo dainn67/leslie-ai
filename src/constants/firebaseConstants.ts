@@ -43,4 +43,5 @@ export const FirebaseConstants = {
   DIFY_DOMAIN: "dify_domain",
   DIFY_DOMAIN_BAK: "dify_domain_bak",
   SHOW_ADS: "show_ads",
+  MIN_USABLE_VERSION: "min_usable_version",
 };
