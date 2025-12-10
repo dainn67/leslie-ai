@@ -83,9 +83,16 @@ export const ChatbotScreen = () => {
       if (!initilized.current) {
         const { requireUpdate } = await AppService.init();
         if (requireUpdate) {
-          dialog.showConfirm(t("chatbot_screen_update_app"), () => {
-            Linking.openURL(`${BaseAppConfig.playStoreBaseUrl}?id=${BaseAppConfig.androidPackageName}`);
-          });
+          dialog.showConfirm(
+            t("chatbot_screen_update_app"),
+            () => {
+              Linking.openURL(`${BaseAppConfig.playStoreBaseUrl}?id=${BaseAppConfig.androidPackageName}`);
+            },
+            undefined,
+            undefined,
+            undefined,
+            false
+          );
         }
 
         if (userProgress.userName.length === 0) {

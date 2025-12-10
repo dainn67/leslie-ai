@@ -4,7 +4,14 @@ import { MyDatePicker } from "../../components/dialogs/DatePickerDialog";
 import { useTranslation } from "react-i18next";
 
 type DialogContextType = {
-  showConfirm: (message: string, onConfirm: () => void, onCancel?: () => void, confirmText?: string, cancelText?: string) => void;
+  showConfirm: (
+    message: string,
+    onConfirm: () => void,
+    onCancel?: () => void,
+    confirmText?: string,
+    cancelText?: string,
+    canCancel?: boolean
+  ) => void;
   showAlert: (message: string, onClose?: () => void, buttonText?: string) => void;
   showDatePicker: (onSelect: (date: Date | undefined) => void) => void;
   hide: () => void;
@@ -21,6 +28,7 @@ export const useDialog = () => {
 export const DialogProvider = ({ children }: { children: ReactNode }) => {
   const [confirmVisible, setConfirmVisible] = useState(false);
   const [confirmMessage, setConfirmMessage] = useState("");
+  const [canCancel, setCanCancel] = useState(true);
 
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
@@ -35,8 +43,16 @@ export const DialogProvider = ({ children }: { children: ReactNode }) => {
   const closeCallback = useRef<(() => void) | null>(null);
   const dateCallback = useRef<((date: Date | undefined) => void) | null>(null);
 
-  const showConfirm = (message: string, onConfirm: () => void, onCancel?: () => void) => {
+  const showConfirm = (
+    message: string,
+    onConfirm: () => void,
+    onCancel?: () => void,
+    confirmText?: string,
+    cancelText?: string,
+    canCancel?: boolean
+  ) => {
     setConfirmMessage(message);
+    setCanCancel(canCancel ?? true);
     confirmCallback.current = onConfirm;
     cancelCallback.current = onCancel || (() => {});
     setConfirmVisible(true);
@@ -98,6 +114,7 @@ export const DialogProvider = ({ children }: { children: ReactNode }) => {
         confirmText={t("confirm")}
         cancelText={t("cancel")}
         visible={confirmVisible}
+        canCancel={canCancel}
         onConfirm={handleConfirm}
         onCancel={handleCancel}
       />

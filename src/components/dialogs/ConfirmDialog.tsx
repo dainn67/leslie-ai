@@ -9,6 +9,7 @@ interface ConfirmDialogProps {
   confirmText?: string;
   cancelText?: string;
   visible: boolean;
+  canCancel?: boolean;
   onConfirm: () => void;
   onCancel: () => void;
 }
@@ -18,6 +19,7 @@ export const ConfirmDialog = ({
   confirmText = "Xác nhận", 
   cancelText = "Hủy", 
   visible, 
+  canCancel = true,
   onConfirm, 
   onCancel 
 }: ConfirmDialogProps) => {
@@ -32,8 +34,20 @@ export const ConfirmDialog = ({
   };
 
   return (
-    <Modal transparent visible={visible} animationType="fade" onRequestClose={handleCancel}>
+    <Modal 
+      transparent 
+      visible={visible} 
+      animationType="fade" 
+      onRequestClose={canCancel ? handleCancel : undefined}
+    >
       <View style={[styles.overlay, { backgroundColor: `${colors.background}50` }]}>
+        {canCancel && (
+          <TouchableOpacity 
+            style={styles.overlayTouchable}
+            activeOpacity={1}
+            onPress={handleCancel}
+          />
+        )}
         <View style={[styles.dialog, { backgroundColor: colors.backgroundSecondary, shadowColor: colors.text }]}>
           <View style={styles.iconContainer}>
             <Ionicons name="help-circle" size={32} color={colors.primary} />
@@ -44,18 +58,25 @@ export const ConfirmDialog = ({
           </CustomText>
 
           <View style={styles.buttonRow}>
-            <TouchableOpacity
-              style={[styles.button, styles.cancelButton, { backgroundColor: colors.backgroundSecondary }]}
-              onPress={handleCancel}
-              activeOpacity={0.8}
-            >
-              <CustomText weight="Regular" style={[styles.cancelText, { color: colors.text }]}>
-                {cancelText}
-              </CustomText>
-            </TouchableOpacity>
+            {canCancel && (
+              <TouchableOpacity
+                style={[styles.button, styles.cancelButton, { backgroundColor: colors.backgroundSecondary }]}
+                onPress={handleCancel}
+                activeOpacity={0.8}
+              >
+                <CustomText weight="Regular" style={[styles.cancelText, { color: colors.text }]}>
+                  {cancelText}
+                </CustomText>
+              </TouchableOpacity>
+            )}
 
             <TouchableOpacity
-              style={[styles.button, styles.confirmButton, { backgroundColor: colors.primary }]}
+              style={[
+                styles.button, 
+                styles.confirmButton, 
+                { backgroundColor: colors.primary },
+                !canCancel && styles.fullWidthButton
+              ]}
               onPress={handleConfirm}
               activeOpacity={0.8}
             >
@@ -78,6 +99,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 24,
+  },
+  overlayTouchable: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
   dialog: {
     width: width * 0.85,
@@ -142,6 +170,9 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "600",
     fontSize: 16,
+  },
+  fullWidthButton: {
+    flex: 1,
   },
 });
 
