@@ -13,7 +13,7 @@ type DialogContextType = {
     canCancel,
   }: {
     message: string;
-    onConfirm: () => void;
+    onConfirm?: () => void;
     onCancel?: () => void;
     confirmText?: string;
     cancelText?: string;
@@ -35,6 +35,8 @@ export const useDialog = () => {
 export const DialogProvider = ({ children }: { children: ReactNode }) => {
   const [confirmVisible, setConfirmVisible] = useState(false);
   const [confirmMessage, setConfirmMessage] = useState("");
+  const [confirmText, setConfirmText] = useState("");
+  const [cancelText, setCancelText] = useState("");
   const [canCancel, setCanCancel] = useState(true);
 
   const [alertVisible, setAlertVisible] = useState(false);
@@ -59,7 +61,7 @@ export const DialogProvider = ({ children }: { children: ReactNode }) => {
     canCancel,
   }: {
     message: string;
-    onConfirm: () => void;
+    onConfirm?: () => void;
     onCancel?: () => void;
     confirmText?: string;
     cancelText?: string;
@@ -67,7 +69,9 @@ export const DialogProvider = ({ children }: { children: ReactNode }) => {
   }) => {
     setConfirmMessage(message);
     setCanCancel(canCancel ?? true);
-    confirmCallback.current = onConfirm;
+    setConfirmText(confirmText ?? t("confirm"));
+    setCancelText(cancelText ?? t("cancel"));
+    confirmCallback.current = onConfirm || (() => {});
     cancelCallback.current = onCancel || (() => {});
     setConfirmVisible(true);
   };
@@ -125,8 +129,8 @@ export const DialogProvider = ({ children }: { children: ReactNode }) => {
       {/* Confirm Dialog */}
       <ConfirmDialog
         message={confirmMessage}
-        confirmText={t("confirm")}
-        cancelText={t("cancel")}
+        confirmText={confirmText}
+        cancelText={cancelText}
         visible={confirmVisible}
         canCancel={canCancel}
         onConfirm={handleConfirm}

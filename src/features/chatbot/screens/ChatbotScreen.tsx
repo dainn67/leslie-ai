@@ -81,9 +81,14 @@ export const ChatbotScreen = () => {
       if (initialMessage) return;
 
       if (!initilized.current) {
-        const { requireUpdate } = AppService.init();
+        const { requireUpdate, internetConnection } = await AppService.init();
 
-        if (requireUpdate) {
+        if (!internetConnection) {
+          dialog.showConfirm({
+            message: t("chatbot_screen_no_internet"),
+            onConfirm: () => {},
+          });
+        } else if (requireUpdate) {
           dialog.showConfirm({
             message: t("chatbot_screen_update_app"),
             canCancel: false,

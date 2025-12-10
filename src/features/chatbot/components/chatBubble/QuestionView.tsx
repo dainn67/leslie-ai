@@ -53,7 +53,7 @@ export const QuestionView = ({
 
   const handleToggleAudio = async () => {
     if (!ttsService.containJapaneseVoice) {
-      dialog.showAlert(t("tts_not_supported"));
+      dialog.showAlert({ message: t("tts_not_supported") });
       return;
     }
 
