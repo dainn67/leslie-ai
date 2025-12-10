@@ -1,6 +1,5 @@
 import { ApiClient } from "../../api/apiClient";
 import { BaseAppConfig, env } from "../../constants";
-import { AsyncStorageService } from "./storageServices/asyncStorageService";
 
 export enum DiscordWebhookType {
   ERROR = "error",

@@ -81,7 +81,8 @@ export const ChatbotScreen = () => {
       if (initialMessage) return;
 
       if (!initilized.current) {
-        const { requireUpdate } = await AppService.init();
+        const { requireUpdate } = AppService.init();
+
         if (requireUpdate) {
           dialog.showConfirm({
             message: t("chatbot_screen_update_app"),

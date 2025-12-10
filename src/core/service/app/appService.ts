@@ -3,9 +3,9 @@ import { BaseAppConfig } from "../../../constants";
 import { compareVersions } from "../../../utils";
 
 export class AppService {
-  static async init() {
+  static init() {
     // Init data
-    await notificationService.init();
+    notificationService.init();
     ttsService.init();
 
     // Check min app version

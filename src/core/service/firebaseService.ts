@@ -20,7 +20,6 @@ export interface RemoteConfig {
 class FirebaseService {
   private static instance: FirebaseService;
   private remoteConfig: RemoteConfig | null = null;
-  private hasFetched: boolean = false;
 
   private constructor() {}
 
@@ -40,11 +39,9 @@ class FirebaseService {
     }
   }
 
-  async initializeRemoteConfig(): Promise<RemoteConfig> {
+  async initializeRemoteConfig(): Promise<RemoteConfig | null> {
     // Nếu đã fetch rồi, trả về config đã có
-    if (this.hasFetched && this.remoteConfig) {
-      return this.remoteConfig;
-    }
+    if (this.remoteConfig) return this.remoteConfig;
 
     try {
       const config = getRemoteConfig();
@@ -55,10 +52,9 @@ class FirebaseService {
         feature_enabled: "false",
       });
 
-      // Set minimum fetch interval to 0 để có thể fetch ngay khi gọi
-      // Nhưng chỉ fetch một lần nhờ flag hasFetched
+      // Set minimum fetch interval to 2 hours
       setConfigSettings(config, {
-        minimumFetchIntervalMillis: 0,
+        minimumFetchIntervalMillis: 2 * 60 * 60 * 1000, // 2 hours
         fetchTimeMillis: 60000,
       });
 
@@ -74,18 +70,13 @@ class FirebaseService {
 
       // Store remote config in singleton instance
       this.remoteConfig = remoteConfig;
-      this.hasFetched = true;
 
       return remoteConfig;
     } catch (e) {
-      console.error("Remote Config init failed:", (e as Error).message);
-      DiscordService.sendDiscordMessage({
-        message: `Remote Config init failed: ${(e as Error).message}`,
-        type: DiscordWebhookType.ERROR,
-      });
-      this.remoteConfig = { dify_domain: "", dify_domain_bak: "", show_ads: false, min_usable_version: "" };
-      this.hasFetched = true; // Đánh dấu đã fetch để tránh retry liên tục
-      return this.remoteConfig;
+      const message = "Remote Config init failed: " + (e as Error).message;
+      console.error(message);
+      DiscordService.sendDiscordMessage({ message, type: DiscordWebhookType.ERROR });
+      return null;
     }
   }
 

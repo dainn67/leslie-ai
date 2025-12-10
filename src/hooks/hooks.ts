@@ -60,7 +60,6 @@ export const useAppInitialization = () => {
       const cfg = await firebaseService.initializeRemoteConfig();
 
       if (!cfg) {
-        console.log("Firebase not initialized");
         setRemoteConfigLoaded(true);
         return;
       }
