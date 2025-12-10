@@ -83,16 +83,11 @@ export const ChatbotScreen = () => {
       if (!initilized.current) {
         const { requireUpdate } = await AppService.init();
         if (requireUpdate) {
-          dialog.showConfirm(
-            t("chatbot_screen_update_app"),
-            () => {
-              Linking.openURL(`${BaseAppConfig.playStoreBaseUrl}?id=${BaseAppConfig.androidPackageName}`);
-            },
-            undefined,
-            undefined,
-            undefined,
-            false
-          );
+          dialog.showConfirm({
+            message: t("chatbot_screen_update_app"),
+            canCancel: false,
+            onConfirm: () => Linking.openURL(`${BaseAppConfig.playStoreBaseUrl}?id=${BaseAppConfig.androidPackageName}`),
+          });
         }
 
         if (userProgress.userName.length === 0) {
@@ -164,12 +159,12 @@ export const ChatbotScreen = () => {
     const onRequestRating =
       shouldRequestRating && reviewService.canRequestAppReview()
         ? () => {
-            dialog.showConfirm(
-              t("chatbot_screen_request_rating"),
-              () => reviewService.requestAppReview(),
-              () => reviewService.ignoreAppReview(),
-              t("chatbot_screen_request_rating_confirm")
-            );
+            dialog.showConfirm({
+              message: t("chatbot_screen_request_rating"),
+              confirmText: t("chatbot_screen_request_rating_confirm"),
+              onConfirm: () => reviewService.requestAppReview(),
+              onCancel: () => reviewService.ignoreAppReview(),
+            });
           }
         : undefined;
 
@@ -193,7 +188,7 @@ export const ChatbotScreen = () => {
     const result = ChatbotService.handleClickAction({ actionId });
 
     if (result?.ui === "openDatePicker") {
-      dialog.showDatePicker(handleSelectExamDate);
+      dialog.showDatePicker({ onSelect: handleSelectExamDate });
     } else if (result?.ui === "doDiagnostic") {
       const questions = result?.questions;
       if (!questions) {
@@ -258,9 +253,12 @@ export const ChatbotScreen = () => {
   };
 
   const handleClearChat = () => {
-    dialog.showConfirm(t("chatbot_screen_delete_conversation"), () => {
-      firebaseService.logClickEvent(FirebaseConstants.CLEAR_CHAT);
-      dispatch(clearChat({}));
+    dialog.showConfirm({
+      message: t("chatbot_screen_delete_conversation"),
+      onConfirm: () => {
+        firebaseService.logClickEvent(FirebaseConstants.CLEAR_CHAT);
+        dispatch(clearChat({}));
+      },
     });
   };
 
@@ -286,7 +284,7 @@ export const ChatbotScreen = () => {
   const handleDevClick = async () => {
     // logDatabasePath();
 
-    dialog.showConfirm("View rewarded Ad to support us ?", () => adService.showRewaredAd());
+    dialog.showConfirm({ message: "View rewarded Ad to support us ?", onConfirm: () => adService.showRewaredAd() });
     // adService.showInterstitialAd();
   };
 

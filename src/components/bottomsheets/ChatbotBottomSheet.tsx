@@ -113,8 +113,9 @@ export const ChatbotBottomSheet: React.FC<ChatbotBottomSheetProps> = ({ visible,
                 <View style={styles.closeButton}>
                   <TouchableOpacity
                     onPress={() =>
-                      dialog.showConfirm(t("chatbot_screen_delete_conversation"), () => {
-                        dispatch(clearChat({ cid: questionId }));
+                      dialog.showConfirm({
+                        message: t("chatbot_screen_delete_conversation"),
+                        onConfirm: () => dispatch(clearChat({ cid: questionId })),
                       })
                     }
                   >

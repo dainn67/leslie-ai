@@ -89,12 +89,12 @@ export const ResultScreen = () => {
     useCallback(() => {
       return () => {
         if (reviewService.canRequestAppReview()) {
-          dialog.showConfirm(
-            t("chatbot_screen_request_rating"),
-            () => reviewService.requestAppReview(),
-            () => reviewService.ignoreAppReview(),
-            t("chatbot_screen_request_rating_confirm")
-          );
+          dialog.showConfirm({
+            message: t("chatbot_screen_request_rating"),
+            onConfirm: () => reviewService.requestAppReview(),
+            onCancel: () => reviewService.ignoreAppReview(),
+            confirmText: t("chatbot_screen_request_rating_confirm"),
+          });
         }
       };
     }, [])

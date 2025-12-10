@@ -20,7 +20,7 @@ export const useAppInitialization = () => {
 
   const [isInitialized, setIsInitialized] = useState(false);
   const [isLanguageLoaded, setIsLanguageLoaded] = useState(false);
-  const [isRemoteConfigLoaded, setIsRemoteConfigLoaded] = useState(false);
+  const [isRemoteConfigLoaded, setRemoteConfigLoaded] = useState(false);
 
   // Load fonts
   const [fontsLoaded, fontError] = useFonts({
@@ -61,6 +61,7 @@ export const useAppInitialization = () => {
 
       if (!cfg) {
         console.log("Firebase not initialized");
+        setRemoteConfigLoaded(true);
         return;
       }
 
@@ -86,7 +87,7 @@ export const useAppInitialization = () => {
         apiService.setApiBaseUrl(selectedDomain);
         AsyncStorageService.setIsUsingNginrok(selectedDomain.includes("ngrok"));
         console.log("Selected domain:", selectedDomain);
-        setIsRemoteConfigLoaded(true);
+        setRemoteConfigLoaded(true);
       }
     };
 

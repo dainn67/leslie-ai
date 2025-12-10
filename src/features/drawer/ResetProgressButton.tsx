@@ -24,17 +24,20 @@ export const ResetProgressButton = ({ navigation }: ResetProgressButtonProps) =>
   const dispatch = useAppDispatch();
 
   const handleToggle = () => {
-    dialog.showConfirm(t("drawer_reset_progress_title"), () => {
-      clearDatabase();
-      dispatch(clearUserProgress({ userName: userProgress.userName }));
-      setTimeout(() => {
-        AsyncStorageService.clearData();
-        dispatch(clearChat({}));
-        firebaseService.logClickEvent(FirebaseConstants.RESET_PROGRESS);
+    dialog.showConfirm({
+      message: t("drawer_reset_progress_title"),
+      onConfirm: () => {
+        clearDatabase();
+        dispatch(clearUserProgress({ userName: userProgress.userName }));
+        setTimeout(() => {
+          AsyncStorageService.clearData();
+          dispatch(clearChat({}));
+          firebaseService.logClickEvent(FirebaseConstants.RESET_PROGRESS);
 
-        navigation.closeDrawer();
-        navigation.navigate("ChatbotScreen");
-      }, 200);
+          navigation.closeDrawer();
+          navigation.navigate("ChatbotScreen");
+        }, 200);
+      },
     });
   };
 

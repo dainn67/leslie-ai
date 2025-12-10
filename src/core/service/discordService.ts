@@ -8,9 +8,7 @@ export enum DiscordWebhookType {
 }
 
 export class DiscordService {
-  static async sendDiscordMessage({ name, message, type }: { name?: string; message: string; type: DiscordWebhookType }) {
-    const username = name ?? (await AsyncStorageService.getUserProgress())?.userName;
-
+  static async sendDiscordMessage({ message, type }: { message: string; type: DiscordWebhookType }) {
     const webhookUrl = env.getDiscordWebhook(DiscordWebhookType.ERROR);
 
     const title = type === DiscordWebhookType.ERROR ? "App Report" : "App Feedback";
@@ -22,7 +20,7 @@ export class DiscordService {
       allowed_mentions: { parse: [] },
       embeds: [
         {
-          title: `Username: ${username || "Unknown"}`,
+          title: "User",
           color: color,
           fields: [
             {

@@ -4,16 +4,23 @@ import { MyDatePicker } from "../../components/dialogs/DatePickerDialog";
 import { useTranslation } from "react-i18next";
 
 type DialogContextType = {
-  showConfirm: (
-    message: string,
-    onConfirm: () => void,
-    onCancel?: () => void,
-    confirmText?: string,
-    cancelText?: string,
-    canCancel?: boolean
-  ) => void;
-  showAlert: (message: string, onClose?: () => void, buttonText?: string) => void;
-  showDatePicker: (onSelect: (date: Date | undefined) => void) => void;
+  showConfirm: ({
+    message,
+    onConfirm,
+    onCancel,
+    confirmText,
+    cancelText,
+    canCancel,
+  }: {
+    message: string;
+    onConfirm: () => void;
+    onCancel?: () => void;
+    confirmText?: string;
+    cancelText?: string;
+    canCancel?: boolean;
+  }) => void;
+  showAlert: ({ message, onClose, buttonText }: { message: string; onClose?: () => void; buttonText?: string }) => void;
+  showDatePicker: ({ onSelect }: { onSelect: (date: Date | undefined) => void }) => void;
   hide: () => void;
 };
 
@@ -43,14 +50,21 @@ export const DialogProvider = ({ children }: { children: ReactNode }) => {
   const closeCallback = useRef<(() => void) | null>(null);
   const dateCallback = useRef<((date: Date | undefined) => void) | null>(null);
 
-  const showConfirm = (
-    message: string,
-    onConfirm: () => void,
-    onCancel?: () => void,
-    confirmText?: string,
-    cancelText?: string,
-    canCancel?: boolean
-  ) => {
+  const showConfirm = ({
+    message,
+    onConfirm,
+    onCancel,
+    confirmText,
+    cancelText,
+    canCancel,
+  }: {
+    message: string;
+    onConfirm: () => void;
+    onCancel?: () => void;
+    confirmText?: string;
+    cancelText?: string;
+    canCancel?: boolean;
+  }) => {
     setConfirmMessage(message);
     setCanCancel(canCancel ?? true);
     confirmCallback.current = onConfirm;
@@ -58,13 +72,13 @@ export const DialogProvider = ({ children }: { children: ReactNode }) => {
     setConfirmVisible(true);
   };
 
-  const showAlert = (message: string, onClose?: () => void, buttonTextParam?: string) => {
+  const showAlert = ({ message, onClose, buttonText }: { message: string; onClose?: () => void; buttonText?: string }) => {
     setAlertMessage(message);
     closeCallback.current = onClose || (() => {});
     setAlertVisible(true);
   };
 
-  const showDatePicker = (onSelect: (date: Date | undefined) => void) => {
+  const showDatePicker = ({ onSelect }: { onSelect: (date: Date | undefined) => void }) => {
     setDatePickerVisible(true);
     dateCallback.current = onSelect;
   };

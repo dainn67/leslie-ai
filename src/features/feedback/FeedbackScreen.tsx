@@ -42,8 +42,7 @@ export const FeedbackScreen = () => {
 
   const handleSubmit = () => {
     DiscordService.sendDiscordMessage({
-      name: userProgress.userName,
-      message: `Categories: ${selectedCategories.join(", ")}\nMessage: ${message.trim()}\nEmail: ${email.trim()}`,
+      message: `Categories: ${selectedCategories.join(", ")}\nUser: ${userProgress.userName}\nMessage: ${message.trim()}\nEmail: ${email.trim()}`,
       type: DiscordWebhookType.FEEDBACK,
     });
 

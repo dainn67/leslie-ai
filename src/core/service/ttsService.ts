@@ -45,7 +45,6 @@ class TTSService {
       })
       .catch((e) => {
         DiscordService.sendDiscordMessage({
-          name: "User",
           message: `Failed to initialize TTS: ${JSON.stringify(e)}`,
           type: DiscordWebhookType.ERROR,
         });

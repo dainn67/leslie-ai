@@ -119,12 +119,15 @@ export const GameScreen = () => {
   };
 
   const showSubmitDialog = () => {
-    dialog.showConfirm(t("game_screen_submit"), () => {
-      navigation.replace("ResultScreen", {
-        questions,
-        gameType,
-        mapAnswerIds,
-      });
+    dialog.showConfirm({
+      message: t("game_screen_submit"),
+      onConfirm: () => {
+        navigation.replace("ResultScreen", {
+          questions,
+          gameType,
+          mapAnswerIds,
+        });
+      },
     });
   };
 
