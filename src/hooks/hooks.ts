@@ -68,24 +68,23 @@ export const useAppInitialization = () => {
       if (cfg.show_ads) dispatch(setShowAds(cfg.show_ads));
 
       const checkDomainAvailable = async (domain: string) => {
-        const token = env.getDifyChatApiKey(domain.includes("ngrok"));
-        const result = await ApiClient.getData({ url: `${domain}/v1/info`, token });
-        return result && result.author_name !== undefined && result.name !== undefined;
+        const result = await ApiClient.getData({ url: `${domain}/health` });
+        const status = result?.status;
+        const gemini_configured = result?.gemini_configured;
+        const openai_configured = result?.openai_configured;
+        return status && (gemini_configured || openai_configured);
       };
 
-      // Check domains available
+      // TODO: Check domains available
       let selectedDomain = "";
-      if (await checkDomainAvailable(cfg.dify_domain)) {
-        selectedDomain = cfg.dify_domain;
-      } else if (await checkDomainAvailable(cfg.dify_domain_bak)) {
-        selectedDomain = cfg.dify_domain_bak;
+      if (await checkDomainAvailable(cfg.chatbot_domain)) {
+        selectedDomain = cfg.chatbot_domain;
       }
 
       // Set API base URL if domain is available
       if (selectedDomain) {
         apiService.setApiBaseUrl(selectedDomain);
-        AsyncStorageService.setIsUsingNginrok(selectedDomain.includes("ngrok"));
-        console.log("Selected domain:", selectedDomain);
+        console.log("Selected domain:", apiService.apiBaseUrl);
         setRemoteConfigLoaded(true);
       }
     };

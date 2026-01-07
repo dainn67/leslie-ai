@@ -3,16 +3,11 @@ import { DiscordWebhookType } from "../core/service";
 
 class EnvConfig {
   // Dify API Keys
-  readonly DIFY_CHAT_API_KEY: string;
-  readonly DIFY_CHAT_NGINROK_API_KEY: string;
-  readonly DIFY_ASSISTANT_API_KEY: string;
-  readonly DIFY_ASSISTANT_NGINROK_API_KEY: string;
-  readonly DIFY_ANALYZE_GAME_RESULT_API_KEY: string;
-  readonly DIFY_ANALYZE_GAME_RESULT_NGINROK_API_KEY: string;
-  readonly DIFY_EXTRACT_CONTEXT_API_KEY: string;
-  readonly DIFY_EXTRACT_CONTEXT_NGINROK_API_KEY: string;
-  readonly DIFY_ANALYZE_PROGRESS_API_KEY: string;
-  readonly DIFY_ANALYZE_PROGRESS_NGINROK_API_KEY: string;
+  readonly CHAT_API_KEY: string;
+  readonly ASSISTANT_API_KEY: string;
+  readonly ANALYZE_GAME_RESULT_API_KEY: string;
+  readonly EXTRACT_CONTEXT_API_KEY: string;
+  readonly ANALYZE_PROGRESS_API_KEY: string;
 
   // Discord Webhooks
   readonly DISCORD_ERROR_WEBHOOKS: string;
@@ -22,16 +17,11 @@ class EnvConfig {
     const extra = Constants.expoConfig?.extra ?? {};
 
     // Dify Keys
-    this.DIFY_CHAT_API_KEY = extra.DIFY_CHAT_API_KEY;
-    this.DIFY_CHAT_NGINROK_API_KEY = extra.DIFY_CHAT_NGINROK_API_KEY;
-    this.DIFY_ASSISTANT_API_KEY = extra.DIFY_ASSISTANT_API_KEY;
-    this.DIFY_ASSISTANT_NGINROK_API_KEY = extra.DIFY_ASSISTANT_NGINROK_API_KEY;
-    this.DIFY_ANALYZE_GAME_RESULT_API_KEY = extra.DIFY_ANALYZE_GAME_RESULT_API_KEY;
-    this.DIFY_ANALYZE_GAME_RESULT_NGINROK_API_KEY = extra.DIFY_ANALYZE_GAME_RESULT_NGINROK_API_KEY;
-    this.DIFY_EXTRACT_CONTEXT_API_KEY = extra.DIFY_EXTRACT_CONTEXT_API_KEY;
-    this.DIFY_EXTRACT_CONTEXT_NGINROK_API_KEY = extra.DIFY_EXTRACT_CONTEXT_NGINROK_API_KEY;
-    this.DIFY_ANALYZE_PROGRESS_API_KEY = extra.DIFY_ANALYZE_PROGRESS_API_KEY;
-    this.DIFY_ANALYZE_PROGRESS_NGINROK_API_KEY = extra.DIFY_ANALYZE_PROGRESS_NGINROK_API_KEY;
+    this.CHAT_API_KEY = extra.CHAT_API_KEY;
+    this.ASSISTANT_API_KEY = extra.DIFY_ASSISTANT_API_KEY;
+    this.ANALYZE_GAME_RESULT_API_KEY = extra.DIFY_ANALYZE_GAME_RESULT_API_KEY;
+    this.EXTRACT_CONTEXT_API_KEY = extra.DIFY_EXTRACT_CONTEXT_API_KEY;
+    this.ANALYZE_PROGRESS_API_KEY = extra.DIFY_ANALYZE_PROGRESS_API_KEY;
 
     // Discord
     this.DISCORD_ERROR_WEBHOOKS = extra.DISCORD_ERROR_WEBHOOKS;
@@ -41,25 +31,15 @@ class EnvConfig {
   /**
    * Get API key based on ngrok usage
    */
-  getDifyChatApiKey(isUsingNginrok: boolean): string {
-    return isUsingNginrok ? this.DIFY_CHAT_NGINROK_API_KEY : this.DIFY_CHAT_API_KEY;
-  }
+  chatApiKey = (): string => this.CHAT_API_KEY;
 
-  getDifyAssistantApiKey(isUsingNginrok: boolean): string {
-    return isUsingNginrok ? this.DIFY_ASSISTANT_NGINROK_API_KEY : this.DIFY_ASSISTANT_API_KEY;
-  }
+  assistantApiKey = (): string => this.ASSISTANT_API_KEY;
 
-  getDifyAnalyzeGameResultApiKey(isUsingNginrok: boolean): string {
-    return isUsingNginrok ? this.DIFY_ANALYZE_GAME_RESULT_NGINROK_API_KEY : this.DIFY_ANALYZE_GAME_RESULT_API_KEY;
-  }
+  analyzeGameResultApiKey = (): string => this.ANALYZE_GAME_RESULT_API_KEY;
 
-  getDifyExtractContextApiKey(isUsingNginrok: boolean): string {
-    return isUsingNginrok ? this.DIFY_EXTRACT_CONTEXT_NGINROK_API_KEY : this.DIFY_EXTRACT_CONTEXT_API_KEY;
-  }
+  extractContextApiKey = (): string => this.EXTRACT_CONTEXT_API_KEY;
 
-  getDifyAnalyzeProgressApiKey(isUsingNginrok: boolean): string {
-    return isUsingNginrok ? this.DIFY_ANALYZE_PROGRESS_NGINROK_API_KEY : this.DIFY_ANALYZE_PROGRESS_API_KEY;
-  }
+  analyzeProgressApiKey = (): string => this.ANALYZE_PROGRESS_API_KEY;
 
   getDiscordWebhook(type: DiscordWebhookType): string {
     return type === DiscordWebhookType.ERROR ? this.DISCORD_ERROR_WEBHOOKS : this.DISCORD_FEEDBACK_WEBHOOKS;

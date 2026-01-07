@@ -11,8 +11,8 @@ import { FirebaseConstants } from "../../constants";
 import { DiscordService, DiscordWebhookType } from ".";
 
 export interface RemoteConfig {
-  dify_domain: string;
-  dify_domain_bak: string;
+  chatbot_domain: string;
+  chatbot_domain_bak: string;
   show_ads: boolean;
   min_usable_version: string;
 }
@@ -62,8 +62,8 @@ class FirebaseService {
       await withTimeout(fetchAndActivate(config), 3000);
 
       const remoteConfig: RemoteConfig = {
-        dify_domain: getValue(config, FirebaseConstants.DIFY_DOMAIN).asString(),
-        dify_domain_bak: getValue(config, FirebaseConstants.DIFY_DOMAIN_BAK).asString(),
+        chatbot_domain: getValue(config, FirebaseConstants.CHATBOT_DOMAIN).asString(),
+        chatbot_domain_bak: getValue(config, FirebaseConstants.CHATBOT_DOMAIN_BAK).asString(),
         show_ads: getValue(config, FirebaseConstants.SHOW_ADS).asBoolean(),
         min_usable_version: getValue(config, FirebaseConstants.MIN_USABLE_VERSION).asString(),
       };

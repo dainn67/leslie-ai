@@ -223,9 +223,8 @@ export class ChatbotService {
     const languageCode = await AsyncStorageService.getLanguage();
     const language = languageCode === "vi" ? "Vietnamese" : "English";
 
-    const isUsingNginrok = await AsyncStorageService.getIsUsingNginrok();
-    const chatApiKey = env.getDifyChatApiKey(isUsingNginrok);
-    const assistantApiKey = env.getDifyAssistantApiKey(isUsingNginrok);
+    const chatApiKey = env.chatApiKey();
+    const assistantApiKey = env.assistantApiKey();
 
     const token = question ? assistantApiKey : chatApiKey;
 
@@ -280,9 +279,7 @@ export class ChatbotService {
           language: language,
         },
         conversation_id: difyConversationId,
-        response_mode: "streaming",
         user: userProgress?.userName ?? "unknown",
-        auto_generate_name: false,
       },
       onMessage: (data) => {
         messageId = data["message_id"];
@@ -310,11 +307,6 @@ export class ChatbotService {
           startReceiveMessage = true;
           dispatch(updateMessageData({ messageId, cid }));
           dispatch(updateConversationId({ difyConversationId, cid }));
-        } else if (type === DifyConfig.typeMessageEnd) {
-          const usage = data["metadata"]["usage"];
-          console.log(
-            `Tokens: ${usage["total_tokens"]} (${usage["prompt_tokens"]} input, ${usage["completion_tokens"]} completion) => ${usage["total_price"]} ${usage["currency"]}`
-          );
         }
       },
       onDone: () => {
@@ -435,8 +427,7 @@ export class ChatbotService {
     let startReceiveMessage = false;
     let hasError = false;
 
-    const isUsingNginrok = await AsyncStorageService.getIsUsingNginrok();
-    const analyzeGameResultApiKey = env.getDifyAnalyzeGameResultApiKey(isUsingNginrok);
+    const analyzeGameResultApiKey = env.analyzeGameResultApiKey();
 
     const languageCode = await AsyncStorageService.getLanguage();
     const language = languageCode === "vi" ? "Vietnamese" : "English";
@@ -451,9 +442,7 @@ export class ChatbotService {
           game_type: gameType,
           language: language,
         },
-        response_mode: "streaming",
         user: userName ?? "unknown",
-        auto_generate_name: false,
       },
       onMessage: (data) => {
         const type = data["event"];
@@ -463,11 +452,6 @@ export class ChatbotService {
           fullText += text;
         } else if (type === DifyConfig.typeWorkflowStart) {
           startReceiveMessage = true;
-        } else if (type === DifyConfig.typeMessageEnd) {
-          const usage = data["metadata"]["usage"];
-          console.log(
-            `Tokens: ${usage["total_tokens"]} (${usage["prompt_tokens"]} input, ${usage["completion_tokens"]} completion) => ${usage["total_price"]} ${usage["currency"]}`
-          );
         }
       },
       onDone: () => {
@@ -529,9 +513,8 @@ export class ChatbotService {
     data?: { [key: string]: any };
     userName?: string;
   }) => {
-    const isUsingNginrok = await AsyncStorageService.getIsUsingNginrok();
-    const extractContextApiKey = env.getDifyExtractContextApiKey(isUsingNginrok);
-    const analyzeProgressApiKey = env.getDifyAnalyzeProgressApiKey(isUsingNginrok);
+    const extractContextApiKey = env.extractContextApiKey();
+    const analyzeProgressApiKey = env.analyzeProgressApiKey();
     const token = type === "context" ? extractContextApiKey : analyzeProgressApiKey;
 
     const result = await ApiClient.postData({

@@ -40,8 +40,8 @@ export const FirebaseConstants = {
   SHARE_APP: "share_app",
 
   // Remote Config
-  DIFY_DOMAIN: "dify_domain",
-  DIFY_DOMAIN_BAK: "dify_domain_bak",
+  CHATBOT_DOMAIN: "chatbot_domain",
+  CHATBOT_DOMAIN_BAK: "chatbot_domain_bak",
   SHOW_ADS: "show_ads",
   MIN_USABLE_VERSION: "min_usable_version",
 };

@@ -3,7 +3,6 @@ export const DifyConfig = {
   titleGenFlashcardQuestions: "Generate Flashcard Questions",
   titleGenFlashcards: "Generate Flashcards",
   typeWorkflowStart: "workflow_started",
-  typeMessageEnd: "message_end",
 
   delimiter: "--//--",
   setExamDateActionId: "ed1",

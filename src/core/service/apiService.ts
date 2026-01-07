@@ -16,7 +16,6 @@ export class ApiService {
 
   public setApiBaseUrl(url: string) {
     let baseUrl = url.endsWith("/") ? url.slice(0, -1) : url;
-    baseUrl = baseUrl.replaceAll("v1/chat-messages/", "");
     this._apiBaseUrl = baseUrl;
   }
 
@@ -25,7 +24,7 @@ export class ApiService {
   }
 
   public get chatApi(): string {
-    return `${this._apiBaseUrl}/v1/chat-messages`;
+    return `${this._apiBaseUrl}/api/chat-flow/aikaze-ai-chatbot`;
   }
 }
 

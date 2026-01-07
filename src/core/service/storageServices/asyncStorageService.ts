@@ -73,15 +73,6 @@ export class AsyncStorageService {
     this.resetOpenAppCount();
   };
 
-  // Api remote config
-  static setIsUsingNginrok = async (isUsingNginrok: boolean): Promise<void> => {
-    await saveToAsyncStorage(AsyncStorageConstants.IS_USING_NGINROK, isUsingNginrok);
-  };
-
-  static getIsUsingNginrok = async (): Promise<boolean> => {
-    return (await loadFromAsyncStorage(AsyncStorageConstants.IS_USING_NGINROK)) ?? false;
-  };
-
   // Dev mode
   static setDevMode = async (devMode: boolean): Promise<void> => {
     await saveToAsyncStorage(AsyncStorageConstants.DEV_MODE, devMode);
