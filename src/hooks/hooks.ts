@@ -8,7 +8,6 @@ import { updateUserProgress } from "../features/userProgress/userProgressSlice";
 import { loadLanguage } from "../core/service/locale_service";
 import { setDevMode, setShowAds } from "../core/app/AppConfig";
 import { ApiClient } from "../api/apiClient";
-import { env } from "../constants";
 import { apiService } from "../core/service/apiService";
 
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
