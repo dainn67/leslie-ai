@@ -303,7 +303,6 @@ export class ChatbotService {
         if (type === "message") {
           fullText += text;
         } else if (type === DifyConfig.typeWorkflowStart) {
-          console.log("xxx", text);
           startReceiveMessage = true;
           dispatch(updateMessageData({ messageId, cid }));
           dispatch(updateConversationId({ difyConversationId, cid }));
