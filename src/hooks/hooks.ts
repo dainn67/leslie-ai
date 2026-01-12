@@ -9,6 +9,7 @@ import { loadLanguage } from "../core/service/locale_service";
 import { setDevMode, setShowAds } from "../core/app/AppConfig";
 import { ApiClient } from "../api/apiClient";
 import { apiService } from "../core/service/apiService";
+import { BaseAppConfig } from "../constants";
 
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
@@ -74,9 +75,11 @@ export const useAppInitialization = () => {
         return status && (gemini_configured || openai_configured);
       };
 
-      // TODO: Check domains available
       let selectedDomain = "";
-      if (await checkDomainAvailable(cfg.chatbot_domain)) {
+      const localDomain = "http://192.168.30.136:8000";
+      if (BaseAppConfig.devMode && (await checkDomainAvailable(localDomain))) {
+        selectedDomain = localDomain;
+      } else if (await checkDomainAvailable(cfg.chatbot_domain)) {
         selectedDomain = cfg.chatbot_domain;
       }
 

@@ -1,7 +1,7 @@
 export const DifyConfig = {
-  titleGenQuestions: "Generate Questions",
-  titleGenFlashcardQuestions: "Generate Flashcard Questions",
-  titleGenFlashcards: "Generate Flashcards",
+  titleGenQuestions: "aikaze_generate_questions",
+  titleGenFlashcardQuestions: "aikaze_generate_flashcard_questions",
+  titleGenFlashcards: "aikaze_generate_flashcards",
   typeWorkflowStart: "workflow_started",
 
   delimiter: "--//--",

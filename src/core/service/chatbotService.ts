@@ -289,8 +289,7 @@ export class ChatbotService {
         const nodeTitle = data["data"]?.["title"];
 
         if (nodeTitle) {
-          const isGeneratedQuestions =
-            nodeTitle == DifyConfig.titleGenQuestions || nodeTitle == DifyConfig.titleGenFlashcardQuestions;
+          const isGeneratedQuestions = [DifyConfig.titleGenQuestions, DifyConfig.titleGenFlashcardQuestions].includes(nodeTitle);
           const isGeneratedFlashcards = nodeTitle == DifyConfig.titleGenFlashcards;
           if (!isQuestionJson && isGeneratedQuestions) {
             dispatch(updateMessageData({ messageType: MessageType.QUESTIONS, cid: cid }));
@@ -304,6 +303,7 @@ export class ChatbotService {
         if (type === "message") {
           fullText += text;
         } else if (type === DifyConfig.typeWorkflowStart) {
+          console.log("xxx", text);
           startReceiveMessage = true;
           dispatch(updateMessageData({ messageId, cid }));
           dispatch(updateConversationId({ difyConversationId, cid }));
