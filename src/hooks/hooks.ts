@@ -2,7 +2,14 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../core/app/store";
 import { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
-import { initializeDatabase, UserProgressService, AsyncStorageService, firebaseService } from "../core/service";
+import {
+  initializeDatabase,
+  UserProgressService,
+  AsyncStorageService,
+  firebaseService,
+  DiscordService,
+  DiscordWebhookType,
+} from "../core/service";
 import { setTheme } from "../features/theme/themeSlice";
 import { updateUserProgress } from "../features/userProgress/userProgressSlice";
 import { loadLanguage } from "../core/service/locale_service";
@@ -60,6 +67,7 @@ export const useAppInitialization = () => {
       const cfg = await firebaseService.initializeRemoteConfig();
 
       if (!cfg) {
+        console.log("No remote config found");
         setRemoteConfigLoaded(true);
         return;
       }
@@ -68,11 +76,22 @@ export const useAppInitialization = () => {
       if (cfg.show_ads) dispatch(setShowAds(cfg.show_ads));
 
       const checkDomainAvailable = async (domain: string) => {
-        const result = await ApiClient.getData({ url: `${domain}/health` });
-        const status = result?.status;
-        const gemini_configured = result?.gemini_configured;
-        const openai_configured = result?.openai_configured;
-        return status && (gemini_configured || openai_configured);
+        let timer: NodeJS.Timeout | undefined;
+        try {
+          return await Promise.race([
+            ApiClient.getData({ url: `${domain}/health` }).then((result) => {
+              const status = result?.status;
+              const gemini_configured = result?.gemini_configured;
+              const openai_configured = result?.openai_configured;
+              return status && (gemini_configured || openai_configured);
+            }),
+            new Promise<boolean>((resolve) => {
+              timer = setTimeout(() => resolve(false), 3000);
+            }),
+          ]);
+        } finally {
+          if (timer) clearTimeout(timer);
+        }
       };
 
       let selectedDomain = "";
@@ -81,6 +100,8 @@ export const useAppInitialization = () => {
         selectedDomain = localDomain;
       } else if (await checkDomainAvailable(cfg.chatbot_domain)) {
         selectedDomain = cfg.chatbot_domain;
+      } else {
+        DiscordService.sendDiscordMessage({ message: "No domain available", type: DiscordWebhookType.ERROR });
       }
 
       // Set API base URL if domain is available
