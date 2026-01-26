@@ -95,10 +95,7 @@ export const useAppInitialization = () => {
       };
 
       let selectedDomain = "";
-      const localDomain = "http://192.168.30.136:8000";
-      if (BaseAppConfig.devMode && (await checkDomainAvailable(localDomain))) {
-        selectedDomain = localDomain;
-      } else if (await checkDomainAvailable(cfg.chatbot_domain)) {
+      if (await checkDomainAvailable(cfg.chatbot_domain)) {
         selectedDomain = cfg.chatbot_domain;
       } else {
         DiscordService.sendDiscordMessage({ message: "No domain available", type: DiscordWebhookType.ERROR });
