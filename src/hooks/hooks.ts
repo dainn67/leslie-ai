@@ -93,18 +93,12 @@ export const useAppInitialization = () => {
         }
       };
 
-      let selectedDomain = "";
       if (await checkDomainAvailable(cfg.chatbot_domain)) {
-        selectedDomain = cfg.chatbot_domain;
-      } else {
-        DiscordService.sendDiscordMessage({ message: "No domain available", type: DiscordWebhookType.ERROR });
-      }
-
-      // Set API base URL if domain is available
-      if (selectedDomain) {
-        apiService.setApiBaseUrl(selectedDomain);
+        apiService.setApiBaseUrl(cfg.chatbot_domain);
         console.log("Selected domain:", apiService.apiBaseUrl);
         setRemoteConfigLoaded(true);
+      } else {
+        DiscordService.sendDiscordMessage({ message: "No domain available", type: DiscordWebhookType.ERROR });
       }
     };
 
