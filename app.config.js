@@ -1,12 +1,37 @@
+import 'dotenv/config';
+
+const APP = process.env.APP
+
+const config = {
+  aikaze: {
+    name: "Main App",
+    slug: "leslieai",
+    package: "com.leslie.app",
+    iosBundle: "com.company.main",
+    androidPackage: "com.company.main",
+    projectId: "1999df9a-b268-4992-933a-54bf931d0952",
+    adMobAppId: "ca-app-pub-6011704237608953~2270976120"
+  },
+  linguaai: {
+    name: "Lingua AI",
+    slug: "linguaai",
+    package: "com.leslie.linguaai",
+    iosBundle: "com.company.new",
+    androidPackage: "com.company.new",
+    projectId: "deb1cfe6-9451-4104-9d76-14e69dc8d629",
+    adMobAppId: "ca-app-pub-6011704237608953~2270976120"
+  }
+}
+
 export default {
   expo: {
     owner: "dainn283",
-    name: "AIkaze",
-    slug: "leslieai",
+    name: config[APP].name,
+    slug: config[APP].slug,
     icon: "./assets/images/app-logo.png",
     version: "1.5.5",
     android: {
-      package: "com.leslie.app",
+      package: config[APP].androidPackage,
       googleServicesFile: "./google-services.json",
       versionCode: 52,
       adaptiveIcon: {
@@ -14,7 +39,7 @@ export default {
         backgroundColor: "#ffffff",
       },
       config: {
-        googleMobileAdsAppId: "ca-app-pub-6011704237608953~2270976120",
+        googleMobileAdsAppId: "",
       },
       edgeToEdgeEnabled: true,
       useNextNotificationsApi: true,
@@ -27,7 +52,7 @@ export default {
         UIBackgroundModes: ["remote-notification"],
       },
       config: {
-        googleMobileAdsAppId: "ca-app-pub-6011704237608953~2270976120",
+        googleMobileAdsAppId: config[APP].adMobAppId,
       },
     },
     splash: {
@@ -48,8 +73,8 @@ export default {
       [
         "react-native-google-mobile-ads",
         {
-          androidAppId: "ca-app-pub-6011704237608953~2270976120",
-          iosAppId: "ca-app-pub-6011704237608953~2270976120",
+          androidAppId: config[APP].adMobAppId,
+          iosAppId: config[APP].adMobAppId,
         },
       ],
     ],
@@ -62,7 +87,7 @@ export default {
       DISCORD_ERROR_WEBHOOKS: process.env.DISCORD_ERROR_WEBHOOKS,
       DISCORD_FEEDBACK_WEBHOOKS: process.env.DISCORD_FEEDBACK_WEBHOOKS,
       eas: {
-        projectId: "1999df9a-b268-4992-933a-54bf931d0952",
+        projectId: config[APP].projectId,
       },
     },
   },
