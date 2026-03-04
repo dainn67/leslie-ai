@@ -92,8 +92,8 @@ android {
         applicationId 'com.leslie.app'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 55
-        versionName "1.5.7"
+        versionCode 56
+        versionName "1.5.8"
     }
     signingConfigs {
         debug {
